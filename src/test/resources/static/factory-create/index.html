@@ -1,0 +1,79 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/factory-create-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = factoryCreateController;
+
+		puppeteer
+		.test( "Factory @OnCreate check 1", function( cb ){
+			var counts = { success: 0, fail: 0 };
+			c.factory.create( "hello" ).field.on( "value", function( e, added, removed, updated ){
+				console.log( added, removed, updated );
+				if( 0 < added.length ) {
+					counts.success += 1;
+				} else {
+					counts.fail += 1;
+				}
+			});
+
+			setTimeout(function(){
+				c.factory.each(function( instance ){
+					instance.field.off( "value" );
+				});
+
+				if( counts.success === 1 && counts.fail === 0 ) {
+					cb.done();
+				} else {
+					cb.fail();
+				}
+			},5000);
+		})
+		.test( "Factory @OnCreate check 2", function( cb ){
+			var counts = { success: 0, fail: 0 };
+
+			c.factory.on( "create", function( e, instance, parameters ){
+				instance.field.on( "value", function( e, added, removed, updated ){
+					console.log( added, removed, updated );
+					if( 0 < added.length ) {
+						counts.success += 1;
+					} else {
+						counts.fail += 1;
+					}
+				});
+			});
+
+			c.factory.create( "hello" );
+
+			setTimeout(function(){
+				c.factory.each(function( instance ){
+					instance.field.off( "value" );
+				});
+
+				if( counts.success === 1 && counts.fail === 0 ) {
+					cb.done();
+				} else {
+					cb.fail();
+				}
+			},5000);
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

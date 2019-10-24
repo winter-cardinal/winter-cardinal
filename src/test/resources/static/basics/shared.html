@@ -1,0 +1,126 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-shared-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsSharedController;
+
+		puppeteer
+		.test("Shared event", function( cb ){
+			c.shared.name.set( "C" );
+			c.shared.name.one( "change", function( e, value ){
+				cb.assertEquals( value, "CB" ).done();
+			});
+		})
+		.test("Shared event unlocked", function( cb ){
+			c.shared.name_unlocked.set( "C" );
+			c.shared.name_unlocked.one( "change", function( e, value ){
+				cb.assertEquals( value, "CB" ).done();
+			});
+		})
+		.test("Shared event direct", function( cb ){
+			c.shared.name_direct.set( "C" );
+			c.shared.name_direct.one( "change", function( e, value ){
+				cb.assertEquals( value, "CB" ).done();
+			});
+		})
+		.test("Shared event direct unlocked", function( cb ){
+			c.shared.name_direct_unlocked.set( "C" );
+			c.shared.name_direct_unlocked.one( "change", function( e, value ){
+				cb.assertEquals( value, "CB" ).done();
+			});
+		})
+		.test("Shared callable", function( cb ){
+			c.shared.hello( "John" )
+			.then(function( result ){
+				cb.assertEquals( result, "Hello, John" ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Shared trigger", function( cb ){
+			c.shared.one( "foo", function( e, value ){
+				return value + "A";
+			}).one( "bar", function( e, value ){
+				cb.assertEquals( value, "AAB" ).done();
+			}).foo();
+		})
+		.test("Shared notify", function( cb ){
+			cb.within( 3000, function(){
+				if( c.shared_notice_count.get() === 2 && c.shared.notice_count.get() === 2 ) cb.done();
+			});
+		})
+		.test("Unshared event", function( cb ){
+			c.unshared.name.set( "C" );
+			c.unshared.name.one( "change", function( e, value ){
+				cb.assertEquals( value, "CB" ).done();
+			});
+		})
+		.test("Unshared event unlocked", function( cb ){
+			c.unshared.name_unlocked.set( "C" );
+			c.unshared.name_unlocked.one( "change", function( e, value ){
+				cb.assertEquals( value, "CB" ).done();
+			});
+		})
+		.test("Unshared event direct", function( cb ){
+			c.unshared.name_direct.set( "C" );
+			c.unshared.name_direct.one( "change", function( e, value ){
+				cb.assertEquals( value, "CB" ).done();
+			});
+		})
+		.test("Unshared event direct unlocked", function( cb ){
+			c.unshared.name_direct_unlocked.set( "C" );
+			c.unshared.name_direct_unlocked.one( "change", function( e, value ){
+				cb.assertEquals( value, "CB" ).done();
+			});
+		})
+		.test("Unshared callable", function( cb ){
+			c.unshared.hello( "John" )
+			.then(function( result ){
+				cb.assertEquals( result, "Hello, John" ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Unshared trigger", function( cb ){
+			c.unshared.one( "foo", function( e, value ){
+				return value + "A";
+			}).one( "bar", function( e, value ){
+				cb.assertEquals( value, "AAB" ).done();
+			}).foo();
+		})
+		.test("Unshared notify", function( cb ){
+			cb.within( 3000, function(){
+				if( c.shared_notice_count.get() === 2 && c.shared.notice_count.get() === 2 ) cb.done();
+			});
+		})
+		.test( c, [
+			"getName_check",
+			"getAttributes_check",
+			"getLocales_check",
+			"getLocale_check",
+			"getRemoteAddress_check",
+			"getPrincipal_check",
+			"getSessionId_check",
+			"getSubSessionId_check"
+		])
+		.execute();
+	}());
+	</script>
+</body>
+</html>

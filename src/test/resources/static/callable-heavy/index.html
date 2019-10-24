@@ -1,0 +1,50 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/callable-heavy-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = callableHeavyController;
+
+		puppeteer
+		.test("Callable heavy check", function( cb ){
+			c.reset().then(function(){
+				for( var i=0; i<1000; ++i ) {
+					c.test( i );
+				}
+
+				setTimeout(function(){
+					c.check().then(function( result ){
+						if( result ) {
+							cb.done();
+						} else {
+							cb.fail( result );
+						}
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				}, 3000);
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script th:utext="${ messageScript }"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script th:inline="javascript">
+	(function(){
+		'use strict';
+
+		var messageSource = wcardinal.util.messageSource;
+
+		puppeteer
+		.test("Message check case 1", function( cb ){
+			var key = /*[[${messageKey1}]]*/ 'a.a';
+			var value = /*[[${messageValue1}]]*/ 'en';
+			cb.assertEquals( messageSource.get( key ), value ).done();
+		})
+		.test("Message check case 2", function( cb ){
+			var key = /*[[${messageKey2}]]*/ 'a.a';
+			var value = /*[[${messageValue2}]]*/ 'en';
+			cb.assertEquals( messageSource.get( key ), value ).done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

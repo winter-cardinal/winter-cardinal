@@ -1,0 +1,105 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-page-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsPageController;
+
+		puppeteer
+		.test("Page isShown", function( cb ){
+			cb.assertEquals( c.page.isShown(), false )
+				.assertEquals( c.getActivePage(), null )
+				.done();
+		})
+		.test("Page show", function( cb ){
+			var count = 0;
+			c.page.one( "show", function( e, name ){
+				if( name === "page" ) {
+					count += 1;
+				}
+			});
+			c.page.show();
+			c.page.off( "show" );
+			cb.within( 3000, function(){
+				if( c.shown.get() === 2 && c.hidden.get() === 0 &&
+					c.page.shown.get() === 2 && c.page.hidden.get() === 0 &&
+					c.getActivePage() === c.page &&
+					count === 1 && 0 <= document.title.indexOf( "page-name-1" ) ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Page show event handler", function( cb ){
+			c.page.one( "show", function( e, name ){
+				cb.assertEquals( name, "page" ).done();
+			});
+		})
+		.test("Page page event handler", function( cb ){
+			c.one( "page", function( e, newPageName, oldPageName ){
+				cb.assertEquals( newPageName, "page" )
+					.assertEquals( oldPageName, "page" )
+					.done();
+			});
+		})
+		.test("Page hide event handler", function( cb ){
+			var called = false;
+			c.page.one( "hide", function( e, name ){
+				called = true;
+			});
+			c.page.off( "hide" );
+			cb.assertEquals( called, false ).done();
+		})
+		.test("Page hide", function( cb ){
+			var count = 0;
+			c.page.one( "hide", function( e, name ){
+				if( name === "page" ) {
+					count += 1;
+				}
+			});
+			c.page.hide();
+			c.page.off( "hide" );
+			cb.within( 3000, function() {
+				if( c.shown.get() === 2 && c.hidden.get() === 2 &&
+					c.page.shown.get() === 2 && c.page.hidden.get() === 2 &&
+					count === 1 && document.title.indexOf( "page-name-1" ) < 0 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Page display name get check", function( cb ){
+			cb.assertEquals( c.page.getDisplayName(), "page-name-1" ).done();
+		})
+		.test("Page display name check", function( cb ){
+			c.display_name_check();
+
+			cb.within( 3000, function() {
+				if( c.page.getDisplayName() === "page-name-2" ) {
+					cb.done();
+				}
+			});
+		})
+		.test( c, [
+			"getDisplayName_PostConstruct_check",
+			"setDisplayName_PostConstruct_check",
+			"show_check"
+		])
+		.execute();
+	}());
+	</script>
+</body>
+</html>

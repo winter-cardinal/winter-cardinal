@@ -1,0 +1,54 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-soft-map-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsSoftMapController;
+
+		puppeteer
+		.test("Soft map initial check 1", function( cb ){
+			cb.within( 4000, function(){
+				if( c.initial_check_result1.get() ) cb.done();
+			});
+		})
+		.test("Soft map check 1", function( cb ){
+			cb.within( 4000, function(){
+				if( c.check_result1.get() ) cb.done();
+			});
+		})
+		.test("Soft map initial check 2", function( cb ){
+			cb.within( 4000, function(){
+				if( c.initial_check_result2.get() ) cb.done();
+			});
+		})
+		.test("Soft map check 2", function( cb ){
+			cb.within( 4000, function(){
+				if( c.check_result2.get() ) cb.done();
+			});
+		})
+		.test("Soft map client side check 1", function( cb ){
+			cb.assertNotEquals( c.field.get( "name1" ), null ).done();
+		})
+		.test("Soft map client side check 2", function( cb ){
+			cb.assertNotEquals( c.field.get( "name2" ), null ).done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

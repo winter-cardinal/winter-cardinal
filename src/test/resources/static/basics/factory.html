@@ -1,0 +1,140 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-factory-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsFactoryController;
+
+		puppeteer
+		.test("Factory size check", function( cb ){
+			cb
+				.assertEquals( c.pages.size(), 1 )
+				.assertEquals( c.popups.size(), 1 )
+				.assertEquals( c.components.size(), 1 )
+				.done();
+		})
+		.test("Factory isEmpty check", function( cb ){
+			cb
+				.assertEquals( c.pages.isEmpty(), false )
+				.assertEquals( c.popups.isEmpty(), false )
+				.assertEquals( c.components.isEmpty(), false )
+				.done();
+		})
+		.test("Factory get check", function( cb ){
+			var page = null;
+			c.pages.each(function(v, i){
+				page = v;
+			});
+
+			var popup = null;
+			c.popups.each(function(v, i){
+				popup = v;
+			});
+
+			var component = null;
+			c.components.each(function(v, i){
+				component = v;
+			});
+
+			cb
+				.assertEquals( c.pages.get( 0 ), page )
+				.assertEquals( c.popups.get( 0 ), popup )
+				.assertEquals( c.components.get( 0 ), component )
+				.assertEquals( c.pages.get( 1 ), null )
+				.assertEquals( c.popups.get( 1 ), null )
+				.assertEquals( c.components.get( 1 ), null )
+				.done();
+		})
+		.test("Factory indexOf check", function( cb ){
+			cb
+				.assertEquals( c.pages.indexOf( c.pages.get( 0 ) ), 0 )
+				.assertEquals( c.popups.indexOf( c.popups.get( 0 ) ), 0 )
+				.assertEquals( c.components.indexOf( c.components.get( 0 ) ), 0 )
+				.assertEquals( c.pages.indexOf( null ), -1 )
+				.assertEquals( c.popups.indexOf( null ), -1 )
+				.assertEquals( c.components.indexOf( null ), -1 )
+				.done();
+		})
+		.test("Factory filter check", function( cb ){
+			var count = 0;
+			var page = null;
+			var index = null;
+			var pages = null;
+			var page0 = c.pages.get( 0 );
+			c.pages.filter(function( v, i, p ){
+				count += 1;
+				page = v;
+				index = i;
+				pages = p;
+				return false;
+			});
+
+			cb
+				.assertEquals( c.pages.size(), 0 )
+				.assertEquals( c.pages.isEmpty(), true )
+				.assertEquals( count, 1 )
+				.assertEquals( page, page0 )
+				.assertEquals( index, 0 )
+				.done();
+		})
+		.test("Factory remove check", function( cb ){
+			var popup = c.popups.get( 0 );
+
+			cb
+				.assertEquals( c.pages.remove( 0 ), null )
+				.assertEquals( c.popups.remove( 1 ), null )
+				.assertEquals( c.popups.remove( 0 ), popup )
+				.assertEquals( c.popups.size(), 0 )
+				.assertEquals( c.popups.isEmpty(), true )
+				.done();
+		})
+		.test("Factory clear check", function( cb ){
+			cb
+				.assertEquals( c.components.clear(), c.components )
+				.assertEquals( c.components.size(), 0 )
+				.assertEquals( c.components.isEmpty(), true )
+				.done();
+		})
+		.test( c, [
+			"checkSize",
+			"checkIsEmpty",
+			"checkGet",
+			"checkContains",
+			"checkIndexOf",
+			"checkRemove",
+			"checkDestroy",
+			"checkClear"
+		])
+		.test("Factory timing check", function( cb ){
+			c.createTiming()
+			.then(function(){
+				c.timings.each(function(timing, index, timings){
+					cb
+					.assertNotEquals( timing, undefined )
+					.assertNotEquals( timing, null )
+					.assertEquals( index, 0 )
+					.assertEquals( timings, c.timings )
+					.done();
+				});
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

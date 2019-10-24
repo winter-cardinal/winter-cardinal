@@ -1,0 +1,49 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-polling-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsPollingController;
+
+		puppeteer
+		.test("Connection check", function( cb ){
+			var s = c.getServer();
+			if( s.isConnected() ) {
+				cb.done();
+			} else {
+				cb.within(3000, function() {
+					if( s.isConnected() ) cb.done();
+				});
+			}
+		})
+		.test("Syncronization check", function( cb ){
+			c.field_string.set( "John" );
+			c.field_string.one( "change", function( e, value ){
+				cb.assertEquals( value, "Hello, John" ).done();
+			});
+		})
+		.test("Callable check", function( cb ){
+			c.hello( "John" ).then(function( result ){
+				cb.assertEquals( result, "Hello, John" ).done();
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

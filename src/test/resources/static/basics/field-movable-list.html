@@ -1,0 +1,700 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-movable-list-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsMovableListController;
+
+		puppeteer
+		.test("Movable list size check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.size(), 3 ).done();
+		})
+		.test("Movable list each check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			c.field_movable_list.each(function( value, index, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( index, count )
+				.assertEquals( field, c.field_movable_list );
+				count += 1;
+			});
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Movable list each default thisArg check", function( cb ) {
+			c.field_movable_list.each(function(){
+				cb.assertEquals( this, c.field_movable_list ).done();
+				return false;
+			});
+		})
+		.test("Movable list each thisArg check", function( cb ) {
+			c.field_movable_list.each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Movable list indexOf check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			for( var i=0, imax=expected.length; i<imax; ++i ){
+				cb.assertEquals( c.field_movable_list.indexOf(expected[ i ]), i );
+			}
+			cb.assertEquals( c.field_movable_list.indexOf( "d" ), -1 ).done();
+		})
+		.test("Movable list lastIndexOf check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			for( var i=0, imax=expected.length; i<imax; ++i ){
+				cb.assertEquals( c.field_movable_list.lastIndexOf(expected[ i ]), i );
+			}
+			cb.assertEquals( c.field_movable_list.lastIndexOf( "d" ), -1 ).done();
+		})
+		.test("Movable list contains check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			for( var i=0, imax=expected.length; i<imax; ++i ){
+				cb.assertEquals( c.field_movable_list.contains(expected[ i ]), true );
+			}
+			cb.assertEquals( c.field_movable_list.contains( "d" ), false ).done();
+		})
+		.test("Movable list containsAll check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var unexpected = [ "a", "b", "c", "d" ];
+			cb.assertEquals( c.field_movable_list.containsAll(expected), true )
+				.assertEquals( c.field_movable_list.containsAll(unexpected), false )
+				.done();
+		})
+		.test("Movable list toArray check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			cb.assertEquals( c.field_movable_list.toArray(), expected ).done();
+		})
+		.test("Movable list toArrayObject check", function( cb ) {
+			var expected = [
+				{index: 0, value: "a"},
+				{index: 1, value: "b"},
+				{index: 2, value: "c"}
+			];
+			cb.assertEquals( c.field_movable_list.toArrayObject(), expected ).done();
+		})
+		.test("Movable list toJson check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			cb.assertEquals( c.field_movable_list.toJson(), expected ).done();
+		})
+		.test("Movable list toString check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			cb.assertEquals( JSON.parse(c.field_movable_list.toString()), expected ).done();
+		})
+		.test("Movable list get check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.get( 0 ), "a" )
+			.assertEquals( c.field_movable_list.get( 1 ), "b" )
+			.assertEquals( c.field_movable_list.get( 2 ), "c" )
+			.assertEquals( c.field_movable_list.get( 3 ) == null, true )
+			.done();
+		})
+		.test("Movable list isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.isEmpty(), false )
+			.done();
+		})
+		.test("Movable list filter check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			c.field_movable_list.filter(function( value, index, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( index, count )
+				.assertEquals( field, c.field_movable_list );
+				count += 1;
+				return (value !== "b");
+			});
+			cb.assertEquals( c.field_movable_list.size(), 2 )
+				.assertEquals( c.field_movable_list.toArray(), ["a", "c"] )
+				.done();
+		})
+		.test("Movable list add check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.add( "d" ), true )
+			.assertEquals( c.field_movable_list.size(), 3 )
+			.assertEquals( c.field_movable_list.toArray(), ["a", "c", "d"] )
+			.done();
+		})
+		.test("Movable list add null value check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.add( null ), true )
+			.assertEquals( c.field_movable_list.size(), 4 )
+			.assertEquals( c.field_movable_list.toArray(), ["a", "c", "d", null] )
+			.done();
+		})
+		.test("Movable list add middle check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.add( 1, "e" ), true )
+			.assertEquals( c.field_movable_list.size(), 5 )
+			.assertEquals( c.field_movable_list.toArray(), ["a", "e", "c", "d", null] )
+			.done();
+		})
+		.test("Movable list set check case 1", function( cb ) {
+			cb.assertEquals( c.field_movable_list.set( 1, "b" ), "e" )
+			.assertEquals( c.field_movable_list.size(), 5 )
+			.assertEquals( c.field_movable_list.toArray(), ["a", "b", "c", "d", null] )
+			.done();
+		})
+		.test("Movable list set check case 2", function( cb ) {
+			c.field_movable_list.one( "change", function( e, added, removed, updated, moved ){
+				c.field_movable_list.set( 1, "b" );
+				if( added.length == 0 && removed.length == 0 &&
+					updated.length == 1 && updated[ 0 ].newValue === "e" &&
+					updated[ 0 ].oldValue === "b" && updated[ 0 ].index === 1 &&
+					moved.length == 0 ) {
+					cb.done();
+				}
+			});
+			c.field_movable_list.set( 1, "e" );
+		})
+		.test("Movable list remove check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.remove( 1 ), "b" )
+			.assertEquals( c.field_movable_list.size(), 4 )
+			.assertEquals( c.field_movable_list.toArray(), ["a", "c", "d", null] )
+			.done();
+		})
+		.test("Movable list clear check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.clear(), c.field_movable_list )
+			.assertEquals( c.field_movable_list.size(), 0 )
+			.assertEquals( c.field_movable_list.toArray(), [] )
+			.done();
+		})
+		.test("Movable list addAll check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.addAll(["x", "y", "z"]), true )
+			.assertEquals( c.field_movable_list.size(), 3 )
+			.assertEquals( c.field_movable_list.toArray(), ["x", "y", "z"] )
+			.done();
+		})
+		.test("Movable list clearAndAdd check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.clearAndAdd( "x" ), true )
+			.assertEquals( c.field_movable_list.size(), 1 )
+			.assertEquals( c.field_movable_list.toArray(), ["x"] )
+			.done();
+		})
+		.test("Movable list clearAndAddAll check", function( cb ) {
+			cb.assertEquals( c.field_movable_list.clearAndAddAll(["x", "y", "z"]), true )
+			.assertEquals( c.field_movable_list.size(), 3 )
+			.assertEquals( c.field_movable_list.toArray(), ["x", "y", "z"] )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// SERVER-SIDE METHODS
+		//----------------------------------------------------------------------
+		.test( c, c.test_methods.get() )
+
+		//----------------------------------------------------------------------
+		// DATA SYNC
+		//----------------------------------------------------------------------
+		.test("Movable list sync server to client", function( cb ){
+			c.start_sync();
+
+			var a = c.sync_movable_list;
+			cb.within( 3000, function(){
+				var av = a.toArray();
+				if( util.isEqual( av, ["a", "b", "c"] ) ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Movable list sync client to server", function( cb ){
+			c.sync_movable_list_result.one( "change", function( e, value ){
+				if( value ) {
+					cb.done();
+				} else {
+					cb.fail( value );
+				}
+			});
+
+			c.sync_movable_list.clear();
+		})
+
+		//----------------------------------------------------------------------
+		// NON-NULL
+		//----------------------------------------------------------------------
+		.test("Non-null list addAll check", function( cb ) {
+			cb.assertEquals( c.field_movable_list_nonnull.addAll(["a", "b", "c"]), true )
+				.assertEquals( c.field_movable_list_nonnull.size(), 3 )
+				.assertEquals( c.field_movable_list_nonnull.toArray(), ["a", "b", "c"] )
+				.done();
+		})
+		.test("Non-null list addAll null check", function( cb ) {
+			var result = true;
+			try {
+				c.field_movable_list_nonnull.addAll([null]);
+				result = false;
+			} catch( e ){
+
+			}
+
+			cb
+			.assertEquals( result, true )
+			.assertEquals( c.field_movable_list_nonnull.size(), 3 )
+			.assertEquals( c.field_movable_list_nonnull.toArray(), ["a", "b", "c"] )
+			.done();
+		})
+		.test("Non-null list add check", function( cb ) {
+			cb.assertEquals( c.field_movable_list_nonnull.add( "d" ), true )
+				.assertEquals( c.field_movable_list_nonnull.size(), 4 )
+				.assertEquals( c.field_movable_list_nonnull.toArray(), ["a", "b", "c", "d"] )
+				.done();
+		})
+		.test("Non-null list add null value check", function( cb ) {
+			var result = true;
+			try {
+				c.field_movable_list_nonnull.add( null );
+				result = false;
+			} catch( e ){
+
+			}
+
+			cb
+			.assertEquals( result, true )
+			.assertEquals( c.field_movable_list_nonnull.size(), 4 )
+			.assertEquals( c.field_movable_list_nonnull.toArray(), ["a", "b", "c", "d"] )
+			.done();
+		})
+		.test("Non-null list add middle check", function( cb ) {
+			cb.assertEquals( c.field_movable_list_nonnull.add( 1, "e" ), true )
+				.assertEquals( c.field_movable_list_nonnull.size(), 5 )
+				.assertEquals( c.field_movable_list_nonnull.toArray(), ["a", "e", "b", "c", "d"] )
+				.done();
+		})
+		.test("Non-null list get check", function( cb ) {
+			cb.assertEquals( c.field_movable_list_nonnull.get( 0 ), "a" )
+				.assertEquals( c.field_movable_list_nonnull.get( 1 ), "e" )
+				.assertEquals( c.field_movable_list_nonnull.get( 2 ), "b" )
+				.assertEquals( c.field_movable_list_nonnull.get( 3 ), "c" )
+				.assertEquals( c.field_movable_list_nonnull.get( 4 ), "d" )
+				.assertEquals( c.field_movable_list_nonnull.get( 5 ) == null, true )
+				.done();
+		})
+		.test("Non-null list set check", function( cb ) {
+			cb.assertEquals( c.field_movable_list_nonnull.set( 1, "E" ), "e" )
+				.assertEquals( c.field_movable_list_nonnull.size(), 5 )
+				.assertEquals( c.field_movable_list_nonnull.toArray(), ["a", "E", "b", "c", "d"] )
+				.done();
+		})
+		.test("Non-null list set null check", function( cb ) {
+			var result = true;
+			try {
+				c.field_movable_list_nonnull.set( 1, null );
+				result = false;
+			} catch( e ) {
+
+			}
+
+			cb
+			.assertEquals( result, true )
+			.assertEquals( c.field_movable_list_nonnull.size(), 5 )
+			.assertEquals( c.field_movable_list_nonnull.toArray(), ["a", "E", "b", "c", "d"] )
+			.done();
+		})
+
+		.test( c, [
+			"nonnull_movable_list_addAll_check",
+			"nonnull_movable_list_addAll_null_check",
+			"nonnull_movable_list_add_check",
+			"nonnull_movable_list_add_null_value_check",
+			"nonnull_movable_list_add_middle_check",
+			"nonnull_movable_list_get_check",
+			"nonnull_movable_list_set_check",
+			"nonnull_movable_list_set_null_check"
+		])
+
+		//----------------------------------------------------------------------
+		// UNINITIALIZED
+		//----------------------------------------------------------------------
+		.test("Uninitialized list event check case 1", function( cb ) {
+			var count = { init: 0, change: 0, value: 0 };
+
+			var value0 = "a";
+
+			c.field_movable_list_uninitialized.one( "init", function( e, added ){
+				cb.assertEquals( added, [{index:0, value:value0}] );
+				count.init += 1;
+			});
+
+			c.field_movable_list_uninitialized.one( "change", function( e, added, removed ){
+				cb.assertEquals( added, [{index:0, value:value0}] )
+					.assertEquals( removed, [] );
+				count.change += 1;
+			});
+
+			c.field_movable_list_uninitialized.one( "value", function( e, added, removed ){
+				cb.assertEquals( added, [{index:0, value:value0}] )
+					.assertEquals( removed, [] );
+				count.value += 1;
+			});
+
+			c.initialize( value0 );
+
+			cb.within(3000, function(){
+				if( count.init === 1 && count.change === 1 && count.value === 1 ) cb.done();
+			});
+		})
+		.test("Uninitialized list event check case 2", function( cb ) {
+			var count = { init: 0, change: 0, value: 0 };
+
+			c.field_movable_list_uninitialized2.one( "init", function( e, added ){
+				cb.assertEquals( added, [] );
+				count.init += 1;
+			});
+
+			c.field_movable_list_uninitialized2.one( "change", function( e, added, removed ){
+				cb.assertEquals( added, [] )
+					.assertEquals( removed, [] );
+				count.change += 1;
+			});
+
+			c.field_movable_list_uninitialized2.one( "value", function( e, added, removed ){
+				cb.assertEquals( added, [] )
+					.assertEquals( removed, [] );
+				count.value += 1;
+			});
+
+			c.initialize();
+
+			cb.within(3000, function(){
+				if( count.init === 1 && count.change === 0 && count.value === 1 ) cb.done();
+			});
+		})
+		.test( c, ["initialize_twice_check"])
+
+		//----------------------------------------------------------------------
+		// MOVE
+		//----------------------------------------------------------------------
+		.test("Movable list move check prepare", function( cb ) {
+			var checked = false;
+			c.field_movable_list_move.one( "change", function( e, added, removed, updated, moved ){
+				checked = ( added.length === 3 && removed.length === 0 &&
+					updated.length === 0 && moved.length === 0 );
+			});
+			c.field_movable_list_move.addAll(["a", "b", "c"]);
+			cb.within( 5000, function(){
+				if( c.field_movable_list_move_added.get() === true && checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Movable list move check case 1", function( cb ) {
+			var checked = false;
+			c.field_movable_list_move.one( "change", function( e, added, removed, updated, moved ){
+				checked = ( added.length === 0 && removed.length === 0 &&
+					updated.length === 0 && moved.length === 1 &&
+					moved[ 0 ].newIndex === 2 && moved[ 0 ].oldIndex === 0 &&
+					moved[ 0 ].value === "a" );
+			});
+			c.field_movable_list_move.move( 0, 2 );
+			cb.within( 5000, function(){
+				if( c.field_movable_list_move_moved_case1.get() === true && checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Movable list move check case 2", function( cb ) {
+			var checked = false;
+			c.field_movable_list_move.one( "change", function( e, added, removed, updated, moved ){
+				checked = ( added.length === 0 && removed.length === 0 &&
+					updated.length === 0 && moved.length === 1 &&
+					moved[ 0 ].newIndex === 0 && moved[ 0 ].oldIndex === 2 &&
+					moved[ 0 ].value === "a" );
+			});
+			c.field_movable_list_move.move( 2, 0 );
+			cb.within( 5000, function(){
+				if( c.field_movable_list_move_moved_case2.get() === true && checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Movable list move check case 3", function( cb ) {
+			var checked = true;
+			c.field_movable_list_move.one( "change", function( e, added, removed, updated, moved ){
+				checked = false;
+			});
+			c.field_movable_list_move.move( 1, 1 );
+			cb.within( 5000, function(){
+				if( checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Movable list move check case 4", function( cb ) {
+			var result = true;
+			try {
+				c.field_movable_list_move.move( -1, 0 );
+				result = false;
+			} catch( e ){
+
+			}
+			cb.assertEquals( result, true ).done();
+		})
+		.test("Movable list move check case 5", function( cb ) {
+			var result = true;
+			try {
+				c.field_movable_list_move.move( 0, 4 );
+				result = false;
+			} catch( e ){
+
+			}
+			cb.assertEquals( result, true ).done();
+		})
+		.test("Movable list move check case 6", function( cb ) {
+			var checked = false;
+			c.field_movable_list_move.one( "change", function( e, added, removed, updated, moved ){
+				checked = ( added.length === 0 && removed.length === 0 &&
+					updated.length === 1 && moved.length === 0 &&
+					updated[ 0 ].newValue === "x" && updated[ 0 ].oldValue === "a" &&
+					updated[ 0 ].index === 0 );
+			});
+			c.field_movable_list_move.set( 0, "x" );
+			cb.within( 5000, function(){
+				if( c.field_movable_list_move_moved_case6.get() === true && checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Movable list move check case 7", function( cb ) {
+			c.lock();
+			try {
+				c.field_movable_list_move.set( 0, "a" );
+				c.field_movable_list_move.move( 0, 1 );
+				c.field_movable_list_move.remove( 2 );
+				c.field_movable_list_move.add( 0, "y" );
+			} finally {
+				c.unlock();
+			}
+
+			cb.within( 5000, function(){
+				if( c.field_movable_list_move_moved_case7.get() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Movable list move check case 8", function( cb ) {
+			c.lock();
+			try {
+				c.field_movable_list_move.set( 0, "a" );
+				c.field_movable_list_move.move( 0, 1 );
+			} finally {
+				c.unlock();
+			}
+
+			cb.within( 5000, function(){
+				if( c.field_movable_list_move_moved_case8.get() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Server-side movable list move check case 1", function( cb ) {
+			var checked = false;
+			c.field_movable_list_move2.one( "change", function( e, added, removed, updated, moved ){
+				checked = (
+					added.length === 0 && removed.length === 0 &&
+					updated.length === 0 && moved.length === 1 &&
+					moved[ 0 ].newIndex === 2 && moved[ 0 ].oldIndex === 0 && moved[ 0 ].value === "a"
+				);
+			});
+			c.move_case1();
+			cb.within( 5000, function(){
+				if( checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Server-side movable list move check case 2", function( cb ) {
+			var checked = false;
+			c.field_movable_list_move2.one( "change", function( e, added, removed, updated, moved ){
+				checked = (
+					added.length === 0 && removed.length === 0 &&
+					updated.length === 0 && moved.length === 1 &&
+					moved[ 0 ].newIndex === 0 && moved[ 0 ].oldIndex === 2 && moved[ 0 ].value === "a"
+				);
+			});
+			c.move_case2();
+			cb.within( 5000, function(){
+				if( checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Server-side movable list move check case 3", function( cb ) {
+			var checked = true;
+			c.field_movable_list_move2.one( "change", function(){
+				checked = false;
+			});
+			c.move_case3();
+			cb.within( 5000, function(){
+				if( checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Server-side movable list move check case 4", function( cb ) {
+			c.move_case4()
+			.then(function( result ){
+				if( result === true ) {
+					cb.done();
+				} else {
+					cb.fail( result );
+				}
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Server-side movable list move check case 5", function( cb ) {
+			c.move_case5()
+			.then(function( result ){
+				if( result === true ) {
+					cb.done();
+				} else {
+					cb.fail( result );
+				}
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Server-side movable list move check case 6", function( cb ) {
+			var checked = false;
+			c.field_movable_list_move2.one( "change", function( e, added, removed, updated, moved ){
+				checked = (
+					added.length === 0 && removed.length === 0 &&
+					updated.length === 1 && moved.length === 0 &&
+					updated[ 0 ].index === 0 && updated[ 0 ].newValue === "x" && updated[ 0 ].oldValue === "a"
+				);
+			});
+			c.move_case6();
+			cb.within( 5000, function(){
+				if( checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Server-side movable list move check case 7", function( cb ) {
+			var checked = false;
+			c.field_movable_list_move2.one( "change", function( e, added, removed, updated, moved ){
+				checked = (
+					added.length === 1 && removed.length === 1 &&
+					updated.length === 1 && moved.length === 1 &&
+					added[ 0 ].index === 1 && added[ 0 ].value === "y" &&
+					removed[ 0 ].index === 2 && removed[ 0 ].value === "c" &&
+					moved[ 0 ].newIndex === 2 && moved[ 0 ].oldIndex === 0 && moved[ 0 ].value === "x" &&
+					updated[ 0 ].index === 2 && updated[ 0 ].newValue === "a" && updated[ 0 ].oldValue === "x"
+				);
+			});
+			c.move_case7();
+			cb.within( 5000, function(){
+				if( checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Server-side movable list move check case 8", function( cb ) {
+			var checked = false;
+			c.field_movable_list_move2.one( "change", function( e, added, removed, updated, moved ){
+				checked = (
+					added.length === 0 && removed.length === 0 &&
+					updated.length === 1 && moved.length === 1 &&
+					moved[ 0 ].newIndex === 1 && moved[ 0 ].oldIndex === 0 && moved[ 0 ].value === "y" &&
+					updated[ 0 ].index === 1 && updated[ 0 ].newValue === "a" && updated[ 0 ].oldValue === "y"
+				);
+			});
+			c.move_case8();
+			cb.within( 5000, function(){
+				if( checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Server-side movable list cross move check", function( cb ) {
+			var checked = false;
+			c.field_movable_list_cross_move.one( "change", function( e, added, removed, updated, newMoved, oldMoved ){
+				checked = (
+					added.length === 0 && removed.length === 0 &&
+					updated.length === 0 && oldMoved.length === 2 && newMoved.length === 2 &&
+					newMoved[ 0 ].newIndex === 0 && newMoved[ 0 ].oldIndex === 3 && newMoved[ 0 ].value === "d" &&
+					newMoved[ 1 ].newIndex === 1 && newMoved[ 1 ].oldIndex === 2 && newMoved[ 1 ].value === "c" &&
+					oldMoved[ 0 ].newIndex === 1 && oldMoved[ 0 ].oldIndex === 2 && oldMoved[ 0 ].value === "c" &&
+					oldMoved[ 1 ].newIndex === 0 && oldMoved[ 1 ].oldIndex === 3 && oldMoved[ 1 ].value === "d"
+				);
+			});
+			c.cross_move();
+			cb.within( 5000, function(){
+				if( checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Server-side movable list complex move check", function( cb ) {
+			var checked = false;
+			c.field_movable_list_complex_move.one( "change", function( e, added, removed, updated, newMoved, oldMoved ){
+				checked = (
+					added.length === 0 && removed.length === 0 &&
+					updated.length === 0 && oldMoved.length === 3 && newMoved.length === 3 &&
+					newMoved[ 0 ].newIndex === 2 && newMoved[ 0 ].oldIndex === 1 && newMoved[ 0 ].value === "b" &&
+					newMoved[ 1 ].newIndex === 3 && newMoved[ 1 ].oldIndex === 3 && newMoved[ 1 ].value === "d" &&
+					newMoved[ 2 ].newIndex === 4 && newMoved[ 2 ].oldIndex === 0 && newMoved[ 2 ].value === "a" &&
+					oldMoved[ 0 ].newIndex === 4 && oldMoved[ 0 ].oldIndex === 0 && oldMoved[ 0 ].value === "a" &&
+					oldMoved[ 1 ].newIndex === 2 && oldMoved[ 1 ].oldIndex === 1 && oldMoved[ 1 ].value === "b" &&
+					oldMoved[ 2 ].newIndex === 3 && oldMoved[ 2 ].oldIndex === 3 && oldMoved[ 2 ].value === "d"
+				);
+			});
+			c.complex_move();
+			cb.within( 5000, function(){
+				if( checked === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Movable list move complex move check init", function( cb ){
+			c.lock();
+			try {
+				c.field_movable_list_complex_move_client.add( "a" );
+				c.field_movable_list_complex_move_client.add( "b" );
+				c.field_movable_list_complex_move_client.add( "c" );
+				c.field_movable_list_complex_move_client.add( "d" );
+				c.field_movable_list_complex_move_client.add( "e" );
+			} finally {
+				c.unlock();
+			}
+
+			cb.within( 5000, function(){
+				if( c.field_movable_list_complex_move_client_init.get() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Movable list move complex move check", function( cb ) {
+			c.lock();
+			try {
+				c.field_movable_list_complex_move_client.move( 0, 4 );
+				c.field_movable_list_complex_move_client.move( 2, 3 );
+				c.field_movable_list_complex_move_client.move( 0, 2 );
+			} finally {
+				c.unlock();
+			}
+
+			cb.within( 5000, function(){
+				if( c.field_movable_list_complex_move_client_result.get() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

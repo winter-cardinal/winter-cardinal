@@ -1,0 +1,62 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-debounced-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsDebouncedController;
+
+		puppeteer
+		.test("Debouncer OnTime check round 1", function( cb ){
+			c.start();
+
+			setTimeout(function(){
+				cb.assertEquals( c.ended.get(), true )
+					.assertEquals( c.elapsed.get(), 2 )
+					.done();
+			}, 2500);
+		})
+		.test("Debouncer OnTime check round 2", function( cb ){
+			c.start();
+
+			setTimeout(function(){
+				cb.assertEquals( c.ended.get(), true )
+					.assertEquals( c.elapsed.get(), 2 )
+					.done();
+			}, 2500);
+		})
+		.test("Debouncer OnNotice check round 1", function( cb ){
+			c.notice();
+
+			setTimeout(function(){
+				cb.assertEquals( c.notified.get(), 1 )
+					.done();
+			}, 1000);
+		})
+		.test("Debouncer OnNotice check round 2", function( cb ){
+			c.notice();
+
+			setTimeout(function(){
+				cb.assertEquals( c.notified.get(), 1 )
+					.done();
+			}, 1000);
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

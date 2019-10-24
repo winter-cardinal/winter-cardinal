@@ -1,0 +1,99 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/disconnect-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = disconnectController;
+		var s = c.getServer();
+		var tickCheck = true;
+		var tickCount = 0;
+		c.tick.on( "value", function( e, newValue, oldValue ){
+			console.log( "Tick value", newValue );
+			if( newValue < oldValue ) {
+				tickCheck = false;
+			}
+			tickCount += 1;
+		});
+
+		// WAIT OPERATION
+		var wait = function( cb ){
+			var startTime = util.now();
+			cb.within( 20000, function(){
+				if( 7500 < util.now() - startTime ) cb.done();
+			});
+		};
+
+		// CALL OPERATION
+		var call = function( cb ){
+			var startTime = util.now();
+			cb.within( 20000, function(){
+				c.getTick().catch(function(){
+					// DO NOTHING
+				});
+				if( 7500 < util.now() - startTime ) {
+					cb.done();
+				}
+			});
+		};
+
+		// DISCONNECT OPERATION
+		var disconnect = function( cb ){
+			cb.assertEquals( s.disconnect(), s );
+
+			cb.within( 10000, function(){
+				if( s.isConnected() === false ) cb.done();
+			});
+		};
+
+		// CONNECT OPERATION
+		var connect = function( cb ){
+			cb.assertEquals( s.connect(), s );
+
+			cb.within( 10000, function(){
+				if( s.isConnected() === true ) cb.done();
+			});
+		};
+
+		puppeteer
+		.test( "isConnected", function( cb ){
+			cb.within( 10000, function(){
+				if( s.isConnected() === true ) cb.done();
+			});
+		})
+		.test( "call", call )
+		.test( "disconnect", disconnect )
+		.test( "wait", wait )
+		.test( "connect", connect )
+		.test( "call", call )
+		.test( "disconnect", disconnect )
+		.test( "wait", wait )
+		.test( "connect", connect )
+		.test( "call", call )
+		.test( "disconnect", disconnect )
+		.test( "wait", wait )
+		.test( "connect", connect)
+		.test( "call", call )
+		.test( "tick check", function( cb ){
+			cb.assertEquals( tickCheck, true ).done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

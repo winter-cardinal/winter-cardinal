@@ -1,0 +1,236 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.js"></script>
+	<script src="/basics-callable-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+
+	<!-- Application code -->
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsCallableController;
+
+		puppeteer
+		.test("Callable check", function( cb ){
+			c.callable( "John" ).then(function( result ){
+				cb.assertEquals( result, "Hello, John" ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable object argument check", function( cb ){
+			c.callable( {name: "John"} ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result.name, "JohnJohn" ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable array argument check", function( cb ){
+			c.callable([ "John" ]).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result[ 0 ], "JohnJohn" ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable double number argument check", function( cb ){
+			c.callable_double( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable double object argument check", function( cb ){
+			c.callable_double_object( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable float argument check", function( cb ){
+			c.callable_float( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable float object argument check", function( cb ){
+			c.callable_float_object( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable int argument check", function( cb ){
+			c.callable_int( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable int object argument check", function( cb ){
+			c.callable_int_object( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable short argument check", function( cb ){
+			c.callable_short( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable short object argument check", function( cb ){
+			c.callable_short_object( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable byte argument check", function( cb ){
+			c.callable_byte( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable byte object argument check", function( cb ){
+			c.callable_byte_object( 1 ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable boolean argument check", function( cb ){
+			c.callable_boolean( true ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, false ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable boolean object argument check", function( cb ){
+			c.callable_boolean_object( true ).then(function( result ){
+				cb.assertNotEquals( result, null )
+					.assertEquals( result, false ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable multiple arguments check", function( cb ){
+			c.callable_multiple( 1, 2, 3 ).then(function( result ){
+				cb.assertEquals( result, 6 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable void check", function( cb ){
+			c.callable_void().then(function( result ){
+				cb.done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable exception check", function( cb ){
+			c.callable_exception().then(function( result ){
+				cb.fail( result );
+			}, function( reason ){
+				cb.assertEquals( reason, "exception" ).done();
+			});
+		})
+		.test("Unknown callable check", function( cb ){
+			c.callable( 1, 2, 3 ).then(function( result ){
+				cb.fail( result );
+			}, function( reason ){
+				cb.assertEquals( reason, "no-such-method" ).done();
+			});
+		})
+		.test("Callable timeout check", function( cb ){
+			c.callable_slow.timeout( 500 ).call().then(function(){
+				cb.fail( "done is called" );
+			}, function( reason ){
+				cb.assertEquals( reason, "timeout" ).done();
+			});
+		})
+		.test( c, [
+			"callable_static",
+			"callable_static_unlocked",
+			"callable_static_locked"
+		])
+		.test("Callable class check", function( cb ){
+			c.callable_class( {field: "john"} )
+			.then(function( result ){
+				cb.assertEquals( result, true ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable 2 classes check", function( cb ){
+			c.callable_2_classes( {field: "john"},  {field: "john"} )
+			.then(function( result ){
+				cb.assertEquals( result, true ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable class array check", function( cb ){
+			c.callable_class_array( [{field: "john"},{field: "john"}] )
+			.then(function( result ){
+				cb.assertEquals( result, true ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable class incompatible check", function( cb ){
+			c.callable_class_incompatible( {foo: "john"} )
+			.then(function( result ){
+				cb.fail( result );
+			}, function( reason ){
+				cb.done();
+			});
+		})
+		.test("Callable class incompatible override check", function( cb ){
+			c.callable_class_incompatible_override( {field: "john"} )
+			.then(function( result ){
+				cb.assertEquals( result, true ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable size check", function( cb ){
+			cb.within(3000, function(){
+				if( c.__mem__._callRequests.size_() === 0 && c.__mem__._callResults.size_() === 0 ) {
+					cb.done();
+				}
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

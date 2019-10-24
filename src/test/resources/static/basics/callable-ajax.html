@@ -1,0 +1,121 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-callable-ajax-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+
+	<!-- Application code -->
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsCallableAjaxController;
+
+		puppeteer
+		.test("Callable ajax check", function( cb ){
+			c.callable_ajax( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax ajax check", function( cb ){
+			c.callable_ajax.ajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax unajax check", function( cb ){
+			c.callable_ajax.unajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax unlocked check", function( cb ){
+			c.callable_ajax_unlocked( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax exception check", function( cb ){
+			c.callable_ajax_exception( 1 ).then(function( result ){
+				cb.fail( result );
+			}, function( reason ){
+				cb.assertEquals( reason, "exception" ).done();
+			});
+		})
+		.test("Callable ajax exception unlocked check", function( cb ){
+			c.callable_ajax_exception_unlocked( 1 ).then(function( result ){
+				cb.fail( result );
+			}, function( reason ){
+				cb.assertEquals( reason, "exception" ).done();
+			});
+		})
+		.test("Callable ajax exception handling 1 check", function( cb ){
+			c.callable_ajax_exception_handled1( 1 ).then(function( result ){
+				cb.fail( result );
+			}, function( reason ){
+				cb.assertEquals( reason, "handler1" ).done();
+			});
+		})
+		.test("Callable ajax exception handling 2 check", function( cb ){
+			c.callable_ajax_exception_handled2( 1 ).then(function( result ){
+				cb.fail( result );
+			}, function( reason ){
+				cb.assertEquals( reason, "handler2" ).done();
+			});
+		})
+		.test("Callable non-ajax ajax check", function( cb ){
+			c.callable_nonajax.ajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable non-ajax unajax check", function( cb ){
+			c.callable_nonajax.unajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax component check", function( cb ){
+			c.component.callable_ajax( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+			.test("Callable ajax component ajax check", function( cb ){
+			c.component.callable_ajax.ajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax component unajax check", function( cb ){
+			c.component.callable_ajax.unajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

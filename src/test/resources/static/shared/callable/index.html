@@ -1,0 +1,56 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="shared-callable-controller-a"></script>
+	<script src="shared-callable-controller-b"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		"use strict";
+
+		var util = wcardinal.util.util;
+		var a = sharedCallableControllerA;
+		var b = sharedCallableControllerB;
+
+		var MAX_COUNT = 20;
+		var done = {A: 0, B: 0};
+		var fail = {A: 0, B: 0};
+		var call = function( type ){
+			console.log( type, "call" );
+			this.component.callable()
+			.then(function(){
+				done[ type ] += 1;
+				if( done[ type ] < MAX_COUNT ) {
+					setTimeout(calls[ type ], 500);
+				}
+				console.log( type, "done", done[ type ] );
+			}, function( reason ){
+				fail[ type ] += 1;
+				console.log( type, reason, fail[ type ] );
+			});
+		};
+		var calls = {
+			A: util.bind(call, a, "A"),
+			B: util.bind(call, b, "B")
+		};
+		calls.A();
+		calls.B();
+
+		puppeteer
+		.test("Shared callable check", function( cb ){
+			cb.within( 30000, function(){
+				if( done.A === MAX_COUNT && done.B === MAX_COUNT && fail.A === 0 && fail.B === 0 ) cb.done();
+			});
+		}, 45000 )
+		.execute();
+	}());
+	</script>
+</html>

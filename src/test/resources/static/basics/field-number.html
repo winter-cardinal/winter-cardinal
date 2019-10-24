@@ -1,0 +1,119 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-number-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsNumberController;
+
+		var makeTest = function( tests, type ) {
+			var field = c[ "field_"+type ];
+
+			tests = tests
+			.test("Server-side "+type+" getAndAdd check", function( cb ) {
+				var checked = false;
+				c[ type+"_getAndAdd" ]( +1 ).then(function( value ){
+					checked = ( value === 0 );
+				}, function(){
+					cb.fail( "Failed to call getAndAdd" );
+				});
+
+				cb.within( 3000, function(){
+					if( field.get() === 1 && checked ) cb.done();
+				});
+			})
+			.test("Server-side "+type+" addAndGet check", function( cb ) {
+				var checked = false;
+				c[ type+"_addAndGet" ]( -1 ).then(function( value ){
+					checked = ( value === 0 );
+				}, function(){
+					cb.fail( "Failed to call addAndGet" );
+				});
+
+				cb.within( 3000, function(){
+					if( field.get() === 0 && checked ) cb.done();
+				});
+			})
+			.test(type+" getAndAdd check", function( cb ) {
+				cb.assertEquals( field.getAndAdd( +1 ), 0 );
+
+				cb.within( 3000, function(){
+					if( field.get() === 2 ) cb.done();
+				});
+			})
+			.test(type+" addAndGet check", function( cb ) {
+				cb.assertEquals( field.addAndGet( -1 ), 1 );
+
+				cb.within( 3000, function(){
+					if( field.get() === 2 ) cb.done();
+				});
+			})
+			.test(type+" incrementAndGet check", function( cb ) {
+				cb.assertEquals( field.incrementAndGet(), 3 );
+
+				cb.within( 3000, function(){
+					if( field.get() === 4 ) cb.done();
+				});
+			})
+			.test(type+" decrementAndGet check", function( cb ) {
+				cb.assertEquals( field.decrementAndGet(), 3 );
+
+				cb.within( 3000, function(){
+					if( field.get() === 4 ) cb.done();
+				});
+			})
+			.test(type+" getAndIncrement check", function( cb ) {
+				cb.assertEquals( field.getAndIncrement(), 4 );
+
+				cb.within( 3000, function(){
+					if( field.get() === 6 ) cb.done();
+				});
+			})
+			.test(type+" getAndDecrement check", function( cb ) {
+				cb.assertEquals( field.getAndDecrement(), 6 );
+
+				cb.within( 3000, function(){
+					if( field.get() === 6 ) cb.done();
+				});
+			})
+			.test( c, [
+				type + "_decrementAndGet_check",
+				type + "_getAndDecrement_check",
+				type + "_getAndIncrement_check",
+				type + "_incrementAndGet_check",
+				type + "_compareTo_check",
+				type + "_compareTo_null_check",
+				type + "_getAndAdd_null_1_check",
+				type + "_addAndGet_null_1_check",
+				type + "_getAndAdd_null_2_check",
+				type + "_addAndGet_null_2_check"
+			]);
+
+			return tests;
+		};
+
+		var tests = puppeteer;
+		tests = makeTest( tests, "long" );
+		tests = makeTest( tests, "float" );
+		tests = makeTest( tests, "double" );
+		tests = makeTest( tests, "int" );
+
+		tests.execute();
+	}());
+	</script>
+</body>
+</html>

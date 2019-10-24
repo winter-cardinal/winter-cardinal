@@ -1,0 +1,307 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-event-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsEventController;
+
+		puppeteer
+		.test("Server-side event loop check", function( cb ){
+			c.field_integer.set( 0 );
+
+			setTimeout(function(){
+				cb.assertEquals( c.field_integer.get(), 1 ).done();
+			}, 3000);
+		})
+		.test("Client-side event loop check", function( cb ){
+			c.field_integer.on( "change", function( e, value ){
+				cb.assertEquals( value, 2 ).done();
+			});
+			c.field_integer.set( 2 );
+		})
+		.test("Server-side event timing check", function( cb ){
+			c.field_3.one( "change", function( e, value ){
+				cb.assertEquals( value, 2 ).done();
+			});
+
+			c.lock();
+			try {
+				c.field_1.set( 1 );
+				c.field_2.set( 1 );
+			} finally {
+				c.unlock();
+			}
+		})
+		.test("Client-side event timing check", function( cb ){
+			c.field_1.one( "change", function(){
+				cb.assertEquals( c.field_1.equals( c.field_2 ), true ).done();
+			});
+
+			c.start();
+		})
+		.test("Full client-side event timing check", function( cb ){
+			c.field_1.one( "change", function(){
+				cb.assertEquals( c.field_1.equals( c.field_2 ), true ).done();
+			});
+
+			c.lock();
+			try {
+				c.field_1.set( 3 );
+				c.field_2.set( 3 );
+			} finally {
+				c.unlock();
+			}
+		})
+		.test("Connectable#onon check", function( cb ){
+			var handler = function(e, value){
+				if( value === 128 ) {
+					c.off("foo", handler);
+					c.offon("foo");
+					cb.done();
+				} else {
+					c.off("foo", handler);
+					c.offon("foo");
+					cb.fail( "Unexpected value " + value )
+				}
+			};
+			c.onon("foo", function( connection ){
+				connection.trigger( this, null, [ 128 ] );
+			});
+			c.on("foo", handler);
+		})
+		.test("Scoped Connectable#onon check", function( cb ){
+			var count = 0;
+			var handler = function(e, value){
+				if( value != null ) {
+					count += value;
+					if( count === 3 ) {
+						c.off("foo", handler);
+						c.offon("foo");
+						cb.done();
+					}
+				} else {
+					c.off("foo", handler);
+					c.offon("foo");
+					cb.fail( "Unexpected value " + value )
+				}
+			};
+			c.onon("foo.bar.hoo", function( connection ){
+				connection.trigger( this, null, [ 3 ] );
+			});
+			c.onon("foo.bar", function( connection ){
+				connection.trigger( this, null, [ 2 ] );
+			});
+			c.onon("foo", function( connection ){
+				connection.trigger( this, null, [ 1 ] );
+			});
+			c.on("foo.bar", handler);
+		})
+		.test("Connectable#onoff check", function( cb ){
+			var handler = function(e, value){
+				if( value === 128 ) {
+					c.offoff("foo");
+					cb.done();
+				} else {
+					c.offoff("foo");
+					cb.fail( "Unexpected value " + value )
+				}
+			};
+			c.onoff("foo", function( connection ){
+				connection.trigger( this, null, [ 128 ] );
+			});
+			c.on("foo", handler);
+			c.off("foo");
+		})
+		.test("Scoped Connectable#onoff check", function( cb ){
+			var count = 0;
+			var handler = function(e, value){
+				if( value != null ) {
+					count += value;
+					if( count === 3 ) {
+						c.offoff("foo");
+						cb.done();
+					}
+				} else {
+					c.offoff("foo");
+					cb.fail( "Unexpected value " + value )
+				}
+			};
+			c.onoff("foo.bar.hoo", function( connection ){
+				connection.trigger( this, null, [ 3 ] );
+			});
+			c.onoff("foo.bar", function( connection ){
+				connection.trigger( this, null, [ 2 ] );
+			});
+			c.onoff("foo", function( connection ){
+				connection.trigger( this, null, [ 1 ] );
+			});
+			c.on("foo.bar", handler);
+			c.off("foo.bar");
+		})
+		.test("Connectable#one check", function( cb ){
+			var count = 0;
+			var handler = function(){
+				count += 1;
+			};
+			c.onon("foo", function( connection ){
+				if( connection.limit === 1 ) {
+					if( connection.handler === handler ) {
+						if( connection.target === this ) {
+							connection.trigger( this );
+						} else {
+							cb.fail( "Unexpected target "+connection.target );
+						}
+					} else {
+						cb.fail( "Unexpected handler "+connection.handler );
+					}
+				} else {
+					cb.fail( "Unexpected limit "+connection.limit );
+				}
+			});
+			c.onoff("foo", function( connection ){
+				if( count === 1 ){
+					if( connection.limit === 0 ){
+						if( connection.handler === handler ){
+							if( connection.target === this ) {
+								c.offon("foo");
+								c.offoff("foo");
+								cb.done();
+							} else {
+								c.offon("foo");
+								c.offoff("foo");
+								cb.fail( "Unexpected target"+connection.target );
+							}
+						} else {
+							cb.fail( "Unexpected handler "+connection.handler );
+						}
+					} else {
+						cb.fail( "Unexpected limit "+connection.limit );
+					}
+				} else {
+					cb.fail( "Unexpected count "+count );
+				}
+			});
+			c.one("foo", handler);
+		})
+		.test("Connectable#on and #off check", function( cb ){
+			var count = 0;
+			var handler = function(){
+				count += 1;
+			};
+			c.onon("foo", function( connection ){
+				if( connection.limit == null ) {
+					if( connection.handler === handler ) {
+						if( connection.target === this ) {
+							connection.trigger( this );
+						} else {
+							cb.fail( "Unexpected target "+connection.target );
+						}
+					} else {
+						cb.fail( "Unexpected handler "+connection.handler );
+					}
+				} else {
+					cb.fail( "Unexpected limit "+connection.limit );
+				}
+			});
+			c.onoff("foo", function( connection ){
+				if( count === 1 ){
+					if( connection.limit == null ){
+						if( connection.handler === handler ){
+							if( connection.target === this ) {
+								c.offon("foo");
+								c.offoff("foo");
+								cb.done();
+							} else {
+								c.offon("foo");
+								c.offoff("foo");
+								cb.fail( "Unexpected target"+connection.target );
+							}
+						} else {
+							cb.fail( "Unexpected handler "+connection.handler );
+						}
+					} else {
+						cb.fail( "Unexpected limit "+connection.limit );
+					}
+				} else {
+					cb.fail( "Unexpected count "+count );
+				}
+			});
+			c.on("foo", handler);
+			c.off("foo");
+		})
+		.test("Connectable#on and #off multiple events", function( cb ){
+			var count = 0;
+			var handler0 = function(){
+				count += 1;
+			};
+			c.on( "a b", handler0 );
+			c.trigger( "a" );
+			c.trigger( "b" );
+			c.off( "a b" );
+			c.trigger( "a" );
+			c.trigger( "b" );
+			cb.assertEquals( count, 2 ).done();
+		})
+		.test("Connectable#off non-existing event", function( cb ){
+			try {
+				cb.assertEquals( c.off("brabra"), c ).done();
+			} catch( e ){
+				cb.fail();
+			}
+		})
+		.test("Connectable#off non-existing handler", function( cb ){
+			var count = 0;
+			var handler0 = function(){
+				count += 1;
+			};
+			var handler1 = function(){
+				count = -1;
+			};
+			c.on("brabra", handler0)
+			try {
+				cb.assertEquals( c.off("brabra", handler1), c );
+			} catch( e ){
+				cb.fail();
+			}
+			c.trigger( "brabra" );
+			c.off("brabra", handler0);
+			c.trigger( "brabra" );
+			cb.assertEquals( count, 1 ).done();
+		})
+		.test("Connectable#on and #off asterisk", function( cb ){
+			var count = 0;
+			var handler0 = function(){
+				count += 1;
+			};
+			c.on( "*", handler0 );
+			c.trigger( "a" );
+			c.trigger( "b" );
+			c.off( "a b" );
+			c.trigger( "a" );
+			c.trigger( "b" );
+			cb.assertEquals( count, 4 );
+			c.off( "*" );
+			c.trigger( "a" );
+			c.trigger( "b" );
+			cb.assertEquals( count, 4 ).done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

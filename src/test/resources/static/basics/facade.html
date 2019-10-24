@@ -1,0 +1,60 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-facade-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsFacadeController;
+
+		puppeteer
+		.test("Facade check round 1", function( cb ){
+			c.start();
+			cb.within(3000, function(){
+				if( c.count.get() === 3 && c.total.get() === 14 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Facade check round 2", function( cb ){
+			c.restart();
+			cb.within(3000, function(){
+				if( c.count.get() === 6 && c.total.get() === 14 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Facade page check", function( cb ){
+			c.start_page();
+			cb.within(3000, function(){
+				if( c.page.isShown() === false && c.page.isHidden() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Facade popup check", function( cb ){
+			c.start_popup();
+			cb.within(3000, function(){
+				if( c.popup.isShown() === false && c.popup.isHidden() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

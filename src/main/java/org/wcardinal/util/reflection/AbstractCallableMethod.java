@@ -1,0 +1,100 @@
+/*
+ * Copyright (C) 2019 Toshiba Corporation
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+package org.wcardinal.util.reflection;
+
+import java.lang.reflect.Method;
+
+import org.springframework.core.ResolvableType;
+import org.springframework.core.annotation.AnnotationUtils;
+
+import com.fasterxml.jackson.databind.JavaType;
+
+import org.wcardinal.controller.annotation.Ajax;
+import org.wcardinal.controller.annotation.ReadOnly;
+import org.wcardinal.controller.annotation.Task;
+import org.wcardinal.controller.annotation.Timeout;
+import org.wcardinal.controller.data.annotation.Historical;
+import org.wcardinal.controller.data.annotation.NonNull;
+import org.wcardinal.util.json.Json;
+
+public class AbstractCallableMethod<T> extends MethodWrapper<T> {
+	final long timeout;
+	final boolean ajax;
+	final JavaType[] types;
+	final boolean task;
+	final boolean historical;
+	final boolean nonnull;
+	final boolean readonly;
+
+	public AbstractCallableMethod( final Method method, final ResolvableType implementationType ){
+		super( method );
+
+		// Timeout
+		final Timeout timeout = AnnotationUtils.findAnnotation(this.method, Timeout.class);
+		this.timeout = ( timeout != null ? timeout.value() : 5000 );
+
+		// Ajax
+		this.ajax = (AnnotationUtils.findAnnotation(this.method, Ajax.class) != null);
+
+		// Types
+		this.types = toTypes( method, implementationType );
+
+		// Task
+		this.task = (AnnotationUtils.findAnnotation(this.method, Task.class) != null);
+
+		// Historical
+		this.historical = (AnnotationUtils.findAnnotation(this.method, Historical.class) != null);
+
+		// Non-null
+		this.nonnull = (AnnotationUtils.findAnnotation(this.method, NonNull.class) != null);
+
+		// Read-only
+		this.readonly = (AnnotationUtils.findAnnotation(this.method, ReadOnly.class) != null);
+	}
+
+	JavaType[] toTypes( final Method method, final ResolvableType implementationType ){
+		final Class<?>[] types = method.getParameterTypes();
+		final JavaType[] result = new JavaType[ types.length ];
+		for( int i=0; i<types.length; ++i ) {
+			final ResolvableType resolved
+				= ResolvableType.forMethodParameter(MethodParameters.forMethod(method, i), implementationType);
+			result[ i ] = Json.mapper.constructType(resolved.getType());
+		}
+		return result;
+	}
+
+	public Object[] cast( final Object[] parameters ){
+		return cast( types, parameters );
+	}
+
+	public static Object[] cast( final JavaType[] types, final Object[] parameters ) {
+		if( types.length != parameters.length ) return null;
+
+		final Object[] result = new Object[ parameters.length ];
+		for( int i=0; i<types.length; ++i ){
+			final JavaType type = types[ i ];
+			final Object parameter = parameters[ i ];
+
+			// Jackson does not handle the primitive types correctly if the given value is null.
+			// Thus, need to check if the parameter is null first.
+			// See https://github.com/FasterXML/jackson-databind/issues/1433
+			if( parameter == null ) {
+				if( type.isPrimitive() ) {
+					return null;
+				} else {
+					result[ i ] = parameter;
+				}
+			} else {
+				try {
+					result[ i ] = Json.mapper.convertValue( parameter, type );
+				} catch( final Exception e ) {
+					return null;
+				}
+			}
+		}
+		return result;
+	}
+}

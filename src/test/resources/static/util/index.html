@@ -1,0 +1,1166 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+
+		puppeteer
+
+		// isPlainObject
+		.test("isPlainObject {}", function( cb ){
+			cb.assertEquals( util.isPlainObject({}), true ).done();
+		})
+		.test("isPlainObject {constructor: 'foo'}", function( cb ){
+			cb.assertEquals( util.isPlainObject({constructor: 'foo'}), true ).done();
+		})
+		.test("isPlainObject new Object()", function( cb ){
+			cb.assertEquals( util.isPlainObject(new Object()), true ).done();
+		})
+		.test("isPlainObject Object({})", function( cb ){
+			cb.assertEquals( util.isPlainObject(Object({})), true ).done();
+		})
+		.test("isPlainObject Object.create(Object.prototype)", function( cb ){
+			cb.assertEquals( util.isPlainObject(Object.create(Object.prototype)), true ).done();
+		})
+		.test("isPlainObject Object.create(null)", function( cb ){
+			cb.assertEquals( util.isPlainObject(Object.create(null)), true ).done();
+		})
+		.test("isPlainObject function(){}", function( cb ){
+			cb.assertEquals( util.isPlainObject(function(){}), false ).done();
+		})
+		.test("isPlainObject []", function( cb ){
+			cb.assertEquals( util.isPlainObject([]), false ).done();
+		})
+		.test("isPlainObject window", function( cb ){
+			cb.assertEquals( util.isPlainObject(window), false ).done();
+		})
+		.test("isPlainObject div", function( cb ){
+			cb.assertEquals( util.isPlainObject(document.createElement("div")), false ).done();
+		})
+		.test("isPlainObject class instance", function( cb ){
+			var instance = (function(){
+				function Klass(){};
+				return new Klass();
+			}());
+
+			cb.assertEquals( util.isPlainObject( instance ), false ).done();
+		})
+		.test("isPlainObject number", function( cb ){
+			cb.assertEquals( util.isPlainObject( 128 ), false ).done();
+		})
+		.test("isPlainObject number object", function( cb ){
+			cb.assertEquals( util.isPlainObject( Number( 128 ) ), false ).done();
+		})
+		.test("isPlainObject new Number()", function( cb ){
+			cb.assertEquals( util.isPlainObject( new Number( 128 ) ), false ).done();
+		})
+		.test("isPlainObject NaN", function( cb ){
+			cb.assertEquals( util.isPlainObject( NaN ), false ).done();
+		})
+		.test("isPlainObject true", function( cb ){
+			cb.assertEquals( util.isPlainObject( true ), false ).done();
+		})
+		.test("isPlainObject false", function( cb ){
+			cb.assertEquals( util.isPlainObject( false ), false ).done();
+		})
+		.test("isPlainObject new Boolean()", function( cb ){
+			cb.assertEquals( util.isPlainObject( new Boolean() ), false ).done();
+		})
+		.test("isPlainObject null", function( cb ){
+			cb.assertEquals( util.isPlainObject( null ), false ).done();
+		})
+		.test("isPlainObject undefined", function( cb ){
+			cb.assertEquals( util.isPlainObject( undefined ), false ).done();
+		})
+		.test("isPlainObject string", function( cb ){
+			cb.assertEquals( util.isPlainObject( "foo" ), false ).done();
+		})
+		.test("isPlainObject string object", function( cb ){
+			cb.assertEquals( util.isPlainObject( String( "foo" ) ), false ).done();
+		})
+		.test("isPlainObject new String()", function( cb ){
+			cb.assertEquals( util.isPlainObject( new String( "foo" ) ), false ).done();
+		})
+		.test("isPlainObject new ArrayBuffer()", function( cb ){
+			cb.assertEquals( util.isPlainObject( new ArrayBuffer() ), false ).done();
+		})
+		.test("isPlainObject new Uint8Array(new ArrayBuffer())", function( cb ){
+			cb.assertEquals( util.isPlainObject( new Uint8Array(new ArrayBuffer()) ), false ).done();
+		})
+		.test("isPlainObject arguments", function( cb ){
+			cb.assertEquals( util.isPlainObject( arguments ), false ).done();
+		})
+
+		// isNumber
+		.test("isNumber {}", function( cb ){
+			cb.assertEquals( util.isNumber({}), false ).done();
+		})
+		.test("isNumber {constructor: 'foo'}", function( cb ){
+			cb.assertEquals( util.isNumber({constructor: 'foo'}), false ).done();
+		})
+		.test("isNumber new Object()", function( cb ){
+			cb.assertEquals( util.isNumber(new Object()), false ).done();
+		})
+		.test("isNumber Object({})", function( cb ){
+			cb.assertEquals( util.isNumber(Object({})), false ).done();
+		})
+		.test("isNumber Object.create(Object.prototype)", function( cb ){
+			cb.assertEquals( util.isNumber(Object.create(Object.prototype)), false ).done();
+		})
+		.test("isNumber Object.create(null)", function( cb ){
+			cb.assertEquals( util.isNumber(Object.create(null)), false ).done();
+		})
+		.test("isNumber function(){}", function( cb ){
+			cb.assertEquals( util.isNumber(function(){}), false ).done();
+		})
+		.test("isNumber []", function( cb ){
+			cb.assertEquals( util.isNumber([]), false ).done();
+		})
+		.test("isNumber window", function( cb ){
+			cb.assertEquals( util.isNumber(window), false ).done();
+		})
+		.test("isNumber div", function( cb ){
+			cb.assertEquals( util.isNumber(document.createElement("div")), false ).done();
+		})
+		.test("isNumber class instance", function( cb ){
+			var instance = (function(){
+				function Klass(){};
+				return new Klass();
+			}());
+
+			cb.assertEquals( util.isNumber( instance ), false ).done();
+		})
+		.test("isNumber number", function( cb ){
+			cb.assertEquals( util.isNumber( 128 ), true ).done();
+		})
+		.test("isNumber number object", function( cb ){
+			cb.assertEquals( util.isNumber( Number( 128 ) ), true ).done();
+		})
+		.test("isNumber new Number()", function( cb ){
+			cb.assertEquals( util.isNumber( new Number( 128 ) ), true ).done();
+		})
+		.test("isNumber NaN", function( cb ){
+			cb.assertEquals( util.isNumber( NaN ), true ).done();
+		})
+		.test("isNumber true", function( cb ){
+			cb.assertEquals( util.isNumber( true ), false ).done();
+		})
+		.test("isNumber false", function( cb ){
+			cb.assertEquals( util.isNumber( false ), false ).done();
+		})
+		.test("isNumber new Boolean()", function( cb ){
+			cb.assertEquals( util.isNumber( new Boolean() ), false ).done();
+		})
+		.test("isNumber null", function( cb ){
+			cb.assertEquals( util.isNumber( null ), false ).done();
+		})
+		.test("isNumber undefined", function( cb ){
+			cb.assertEquals( util.isNumber( undefined ), false ).done();
+		})
+		.test("isNumber string", function( cb ){
+			cb.assertEquals( util.isNumber( "foo" ), false ).done();
+		})
+		.test("isNumber string object", function( cb ){
+			cb.assertEquals( util.isNumber( String( "foo" ) ), false ).done();
+		})
+		.test("isNumber new String()", function( cb ){
+			cb.assertEquals( util.isNumber( new String( "foo" ) ), false ).done();
+		})
+		.test("isNumber new ArrayBuffer()", function( cb ){
+			cb.assertEquals( util.isNumber( new ArrayBuffer() ), false ).done();
+		})
+		.test("isNumber new Uint8Array(new ArrayBuffer())", function( cb ){
+			cb.assertEquals( util.isNumber( new Uint8Array(new ArrayBuffer()) ), false ).done();
+		})
+		.test("isNumber arguments", function( cb ){
+			cb.assertEquals( util.isNumber( arguments ), false ).done();
+		})
+
+		// isString
+		.test("isString {}", function( cb ){
+			cb.assertEquals( util.isString({}), false ).done();
+		})
+		.test("isString {constructor: 'foo'}", function( cb ){
+			cb.assertEquals( util.isString({constructor: 'foo'}), false ).done();
+		})
+		.test("isString new Object()", function( cb ){
+			cb.assertEquals( util.isString(new Object()), false ).done();
+		})
+		.test("isString Object({})", function( cb ){
+			cb.assertEquals( util.isString(Object({})), false ).done();
+		})
+		.test("isString Object.create(Object.prototype)", function( cb ){
+			cb.assertEquals( util.isString(Object.create(Object.prototype)), false ).done();
+		})
+		.test("isString Object.create(null)", function( cb ){
+			cb.assertEquals( util.isString(Object.create(null)), false ).done();
+		})
+		.test("isString function(){}", function( cb ){
+			cb.assertEquals( util.isString(function(){}), false ).done();
+		})
+		.test("isString []", function( cb ){
+			cb.assertEquals( util.isString([]), false ).done();
+		})
+		.test("isString window", function( cb ){
+			cb.assertEquals( util.isString(window), false ).done();
+		})
+		.test("isString div", function( cb ){
+			cb.assertEquals( util.isString(document.createElement("div")), false ).done();
+		})
+		.test("isString class instance", function( cb ){
+			var instance = (function(){
+				function Klass(){};
+				return new Klass();
+			}());
+
+			cb.assertEquals( util.isString( instance ), false ).done();
+		})
+		.test("isString number", function( cb ){
+			cb.assertEquals( util.isString( 128 ), false ).done();
+		})
+		.test("isString number object", function( cb ){
+			cb.assertEquals( util.isString( Number( 128 ) ), false ).done();
+		})
+		.test("isString new Number()", function( cb ){
+			cb.assertEquals( util.isString( new Number( 128 ) ), false ).done();
+		})
+		.test("isString NaN", function( cb ){
+			cb.assertEquals( util.isString( NaN ), false ).done();
+		})
+		.test("isString true", function( cb ){
+			cb.assertEquals( util.isString( true ), false ).done();
+		})
+		.test("isString false", function( cb ){
+			cb.assertEquals( util.isString( false ), false ).done();
+		})
+		.test("isString new Boolean()", function( cb ){
+			cb.assertEquals( util.isString( new Boolean() ), false ).done();
+		})
+		.test("isString null", function( cb ){
+			cb.assertEquals( util.isString( null ), false ).done();
+		})
+		.test("isString undefined", function( cb ){
+			cb.assertEquals( util.isString( undefined ), false ).done();
+		})
+		.test("isString string", function( cb ){
+			cb.assertEquals( util.isString( "foo" ), true ).done();
+		})
+		.test("isString string object", function( cb ){
+			cb.assertEquals( util.isString( String( "foo" ) ), true ).done();
+		})
+		.test("isString new String()", function( cb ){
+			cb.assertEquals( util.isString( new String( "foo" ) ), true ).done();
+		})
+		.test("isString new ArrayBuffer()", function( cb ){
+			cb.assertEquals( util.isString( new ArrayBuffer() ), false ).done();
+		})
+		.test("isString new Uint8Array(new ArrayBuffer())", function( cb ){
+			cb.assertEquals( util.isString( new Uint8Array(new ArrayBuffer()) ), false ).done();
+		})
+		.test("isString arguments", function( cb ){
+			cb.assertEquals( util.isString( arguments ), false ).done();
+		})
+
+		// isArray
+		.test("isArray {}", function( cb ){
+			cb.assertEquals( util.isArray({}), false ).done();
+		})
+		.test("isArray {constructor: 'foo'}", function( cb ){
+			cb.assertEquals( util.isArray({constructor: 'foo'}), false ).done();
+		})
+		.test("isArray new Object()", function( cb ){
+			cb.assertEquals( util.isArray(new Object()), false ).done();
+		})
+		.test("isArray Object({})", function( cb ){
+			cb.assertEquals( util.isArray(Object({})), false ).done();
+		})
+		.test("isArray Object.create(Object.prototype)", function( cb ){
+			cb.assertEquals( util.isArray(Object.create(Object.prototype)), false ).done();
+		})
+		.test("isArray Object.create(null)", function( cb ){
+			cb.assertEquals( util.isArray(Object.create(null)), false ).done();
+		})
+		.test("isArray function(){}", function( cb ){
+			cb.assertEquals( util.isArray(function(){}), false ).done();
+		})
+		.test("isArray []", function( cb ){
+			cb.assertEquals( util.isArray([]), true ).done();
+		})
+		.test("isArray window", function( cb ){
+			cb.assertEquals( util.isArray(window), false ).done();
+		})
+		.test("isArray div", function( cb ){
+			cb.assertEquals( util.isArray(document.createElement("div")), false ).done();
+		})
+		.test("isArray class instance", function( cb ){
+			var instance = (function(){
+				function Klass(){};
+				return new Klass();
+			}());
+
+			cb.assertEquals( util.isArray( instance ), false ).done();
+		})
+		.test("isArray number", function( cb ){
+			cb.assertEquals( util.isArray( 128 ), false ).done();
+		})
+		.test("isArray number object", function( cb ){
+			cb.assertEquals( util.isArray( Number( 128 ) ), false ).done();
+		})
+		.test("isArray new Number()", function( cb ){
+			cb.assertEquals( util.isArray( new Number( 128 ) ), false ).done();
+		})
+		.test("isArray NaN", function( cb ){
+			cb.assertEquals( util.isArray( NaN ), false ).done();
+		})
+		.test("isArray true", function( cb ){
+			cb.assertEquals( util.isArray( true ), false ).done();
+		})
+		.test("isArray false", function( cb ){
+			cb.assertEquals( util.isArray( false ), false ).done();
+		})
+		.test("isArray new Boolean()", function( cb ){
+			cb.assertEquals( util.isArray( new Boolean() ), false ).done();
+		})
+		.test("isArray null", function( cb ){
+			cb.assertEquals( util.isArray( null ), false ).done();
+		})
+		.test("isArray undefined", function( cb ){
+			cb.assertEquals( util.isArray( undefined ), false ).done();
+		})
+		.test("isArray string", function( cb ){
+			cb.assertEquals( util.isArray( "foo" ), false ).done();
+		})
+		.test("isArray string object", function( cb ){
+			cb.assertEquals( util.isArray( String( "foo" ) ), false ).done();
+		})
+		.test("isArray new String()", function( cb ){
+			cb.assertEquals( util.isArray( new String( "foo" ) ), false ).done();
+		})
+		.test("isArray new ArrayBuffer()", function( cb ){
+			cb.assertEquals( util.isArray( new ArrayBuffer() ), false ).done();
+		})
+		.test("isArray new Uint8Array(new ArrayBuffer())", function( cb ){
+			cb.assertEquals( util.isArray( new Uint8Array(new ArrayBuffer()) ), false ).done();
+		})
+		.test("isArray arguments", function( cb ){
+			cb.assertEquals( util.isArray( arguments ), false ).done();
+		})
+
+		// isArrayLike
+		.test("isArrayLike {}", function( cb ){
+			cb.assertEquals( util.isArrayLike({}), false ).done();
+		})
+		.test("isArrayLike {constructor: 'foo'}", function( cb ){
+			cb.assertEquals( util.isArrayLike({constructor: 'foo'}), false ).done();
+		})
+		.test("isArrayLike new Object()", function( cb ){
+			cb.assertEquals( util.isArrayLike(new Object()), false ).done();
+		})
+		.test("isArrayLike Object({})", function( cb ){
+			cb.assertEquals( util.isArrayLike(Object({})), false ).done();
+		})
+		.test("isArrayLike Object.create(Object.prototype)", function( cb ){
+			cb.assertEquals( util.isArrayLike(Object.create(Object.prototype)), false ).done();
+		})
+		.test("isArrayLike Object.create(null)", function( cb ){
+			cb.assertEquals( util.isArrayLike(Object.create(null)), false ).done();
+		})
+		.test("isArrayLike function(){}", function( cb ){
+			cb.assertEquals( util.isArrayLike(function(){}), false ).done();
+		})
+		.test("isArrayLike []", function( cb ){
+			cb.assertEquals( util.isArrayLike([]), true ).done();
+		})
+		.test("isArrayLike window", function( cb ){
+			cb.assertEquals( util.isArrayLike(window), true ).done();
+		})
+		.test("isArrayLike div", function( cb ){
+			cb.assertEquals( util.isArrayLike(document.createElement("div")), false ).done();
+		})
+		.test("isArrayLike class instance", function( cb ){
+			var instance = (function(){
+				function Klass(){};
+				return new Klass();
+			}());
+
+			cb.assertEquals( util.isArrayLike( instance ), false ).done();
+		})
+		.test("isArrayLike number", function( cb ){
+			cb.assertEquals( util.isArrayLike( 128 ), false ).done();
+		})
+		.test("isArrayLike number object", function( cb ){
+			cb.assertEquals( util.isArrayLike( Number( 128 ) ), false ).done();
+		})
+		.test("isArrayLike new Number()", function( cb ){
+			cb.assertEquals( util.isArrayLike( new Number( 128 ) ), false ).done();
+		})
+		.test("isArrayLike NaN", function( cb ){
+			cb.assertEquals( util.isArrayLike( NaN ), false ).done();
+		})
+		.test("isArrayLike true", function( cb ){
+			cb.assertEquals( util.isArrayLike( true ), false ).done();
+		})
+		.test("isArrayLike false", function( cb ){
+			cb.assertEquals( util.isArrayLike( false ), false ).done();
+		})
+		.test("isArrayLike new Boolean()", function( cb ){
+			cb.assertEquals( util.isArrayLike( new Boolean() ), false ).done();
+		})
+		.test("isArrayLike null", function( cb ){
+			cb.assertEquals( util.isArrayLike( null ), false ).done();
+		})
+		.test("isArrayLike undefined", function( cb ){
+			cb.assertEquals( util.isArrayLike( undefined ), false ).done();
+		})
+		.test("isArrayLike string", function( cb ){
+			cb.assertEquals( util.isArrayLike( "foo" ), true ).done();
+		})
+		.test("isArrayLike string object", function( cb ){
+			cb.assertEquals( util.isArrayLike( String( "foo" ) ), true ).done();
+		})
+		.test("isArrayLike new String()", function( cb ){
+			cb.assertEquals( util.isArrayLike( new String( "foo" ) ), true ).done();
+		})
+		.test("isArrayLike new ArrayBuffer()", function( cb ){
+			cb.assertEquals( util.isArrayLike( new ArrayBuffer() ), false ).done();
+		})
+		.test("isArrayLike new Uint8Array(new ArrayBuffer())", function( cb ){
+			cb.assertEquals( util.isArrayLike( new Uint8Array(new ArrayBuffer()) ), true ).done();
+		})
+		.test("isArrayLike arguments", function( cb ){
+			cb.assertEquals( util.isArrayLike( arguments ), true ).done();
+		})
+
+		// isFunction
+		.test("isFunction {}", function( cb ){
+			cb.assertEquals( util.isFunction({}), false ).done();
+		})
+		.test("isFunction {constructor: 'foo'}", function( cb ){
+			cb.assertEquals( util.isFunction({constructor: 'foo'}), false ).done();
+		})
+		.test("isFunction new Object()", function( cb ){
+			cb.assertEquals( util.isFunction(new Object()), false ).done();
+		})
+		.test("isFunction Object({})", function( cb ){
+			cb.assertEquals( util.isFunction(Object({})), false ).done();
+		})
+		.test("isFunction Object.create(Object.prototype)", function( cb ){
+			cb.assertEquals( util.isFunction(Object.create(Object.prototype)), false ).done();
+		})
+		.test("isFunction Object.create(null)", function( cb ){
+			cb.assertEquals( util.isFunction(Object.create(null)), false ).done();
+		})
+		.test("isFunction function(){}", function( cb ){
+			cb.assertEquals( util.isFunction(function(){}), true ).done();
+		})
+		.test("isFunction []", function( cb ){
+			cb.assertEquals( util.isFunction([]), false ).done();
+		})
+		.test("isFunction window", function( cb ){
+			cb.assertEquals( util.isFunction(window), false ).done();
+		})
+		.test("isFunction div", function( cb ){
+			cb.assertEquals( util.isFunction(document.createElement("div")), false ).done();
+		})
+		.test("isFunction class instance", function( cb ){
+			var instance = (function(){
+				function Klass(){};
+				return new Klass();
+			}());
+
+			cb.assertEquals( util.isFunction( instance ), false ).done();
+		})
+		.test("isFunction number", function( cb ){
+			cb.assertEquals( util.isFunction( 128 ), false ).done();
+		})
+		.test("isFunction number object", function( cb ){
+			cb.assertEquals( util.isFunction( Number( 128 ) ), false ).done();
+		})
+		.test("isFunction new Number()", function( cb ){
+			cb.assertEquals( util.isFunction( new Number( 128 ) ), false ).done();
+		})
+		.test("isFunction NaN", function( cb ){
+			cb.assertEquals( util.isFunction( NaN ), false ).done();
+		})
+		.test("isFunction true", function( cb ){
+			cb.assertEquals( util.isFunction( true ), false ).done();
+		})
+		.test("isFunction false", function( cb ){
+			cb.assertEquals( util.isFunction( false ), false ).done();
+		})
+		.test("isFunction new Boolean()", function( cb ){
+			cb.assertEquals( util.isFunction( new Boolean() ), false ).done();
+		})
+		.test("isFunction null", function( cb ){
+			cb.assertEquals( util.isFunction( null ), false ).done();
+		})
+		.test("isFunction undefined", function( cb ){
+			cb.assertEquals( util.isFunction( undefined ), false ).done();
+		})
+		.test("isFunction string", function( cb ){
+			cb.assertEquals( util.isFunction( "foo" ), false ).done();
+		})
+		.test("isFunction string object", function( cb ){
+			cb.assertEquals( util.isFunction( String( "foo" ) ), false ).done();
+		})
+		.test("isFunction new String()", function( cb ){
+			cb.assertEquals( util.isFunction( new String( "foo" ) ), false ).done();
+		})
+		.test("isFunction new ArrayBuffer()", function( cb ){
+			cb.assertEquals( util.isFunction( new ArrayBuffer() ), false ).done();
+		})
+		.test("isFunction new Uint8Array(new ArrayBuffer())", function( cb ){
+			cb.assertEquals( util.isFunction( new Uint8Array(new ArrayBuffer()) ), false ).done();
+		})
+		.test("isFunction arguments", function( cb ){
+			cb.assertEquals( util.isFunction( arguments ), false ).done();
+		})
+
+		// isNaN
+		.test("isNaN {}", function( cb ){
+			cb.assertEquals( util.isNaN({}), false ).done();
+		})
+		.test("isNaN {constructor: 'foo'}", function( cb ){
+			cb.assertEquals( util.isNaN({constructor: 'foo'}), false ).done();
+		})
+		.test("isNaN new Object()", function( cb ){
+			cb.assertEquals( util.isNaN(new Object()), false ).done();
+		})
+		.test("isNaN Object({})", function( cb ){
+			cb.assertEquals( util.isNaN(Object({})), false ).done();
+		})
+		.test("isNaN Object.create(Object.prototype)", function( cb ){
+			cb.assertEquals( util.isNaN(Object.create(Object.prototype)), false ).done();
+		})
+		.test("isNaN Object.create(null)", function( cb ){
+			cb.assertEquals( util.isNaN(Object.create(null)), false ).done();
+		})
+		.test("isNaN function(){}", function( cb ){
+			cb.assertEquals( util.isNaN(function(){}), false ).done();
+		})
+		.test("isNaN []", function( cb ){
+			cb.assertEquals( util.isNaN([]), false ).done();
+		})
+		.test("isNaN window", function( cb ){
+			cb.assertEquals( util.isNaN(window), false ).done();
+		})
+		.test("isNaN div", function( cb ){
+			cb.assertEquals( util.isNaN(document.createElement("div")), false ).done();
+		})
+		.test("isNaN class instance", function( cb ){
+			var instance = (function(){
+				function Klass(){};
+				return new Klass();
+			}());
+
+			cb.assertEquals( util.isNaN( instance ), false ).done();
+		})
+		.test("isNaN number", function( cb ){
+			cb.assertEquals( util.isNaN( 128 ), false ).done();
+		})
+		.test("isNaN number object", function( cb ){
+			cb.assertEquals( util.isNaN( Number( 128 ) ), false ).done();
+		})
+		.test("isNaN new Number()", function( cb ){
+			cb.assertEquals( util.isNaN( new Number( 128 ) ), false ).done();
+		})
+		.test("isNaN NaN", function( cb ){
+			cb.assertEquals( util.isNaN( NaN ), true ).done();
+		})
+		.test("isNaN true", function( cb ){
+			cb.assertEquals( util.isNaN( true ), false ).done();
+		})
+		.test("isNaN false", function( cb ){
+			cb.assertEquals( util.isNaN( false ), false ).done();
+		})
+		.test("isNaN new Boolean()", function( cb ){
+			cb.assertEquals( util.isNaN( new Boolean() ), false ).done();
+		})
+		.test("isNaN null", function( cb ){
+			cb.assertEquals( util.isNaN( null ), false ).done();
+		})
+		.test("isNaN undefined", function( cb ){
+			cb.assertEquals( util.isNaN( undefined ), false ).done();
+		})
+		.test("isNaN string", function( cb ){
+			cb.assertEquals( util.isNaN( "foo" ), false ).done();
+		})
+		.test("isNaN string object", function( cb ){
+			cb.assertEquals( util.isNaN( String( "foo" ) ), false ).done();
+		})
+		.test("isNaN new String()", function( cb ){
+			cb.assertEquals( util.isNaN( new String( "foo" ) ), false ).done();
+		})
+		.test("isNaN new ArrayBuffer()", function( cb ){
+			cb.assertEquals( util.isNaN( new ArrayBuffer() ), false ).done();
+		})
+		.test("isNaN new Uint8Array(new ArrayBuffer())", function( cb ){
+			cb.assertEquals( util.isNaN( new Uint8Array(new ArrayBuffer()) ), false ).done();
+		})
+		.test("isNaN arguments", function( cb ){
+			cb.assertEquals( util.isNaN( arguments ), false ).done();
+		})
+
+		// isBoolean
+		.test("isBoolean {}", function( cb ){
+			cb.assertEquals( util.isBoolean({}), false ).done();
+		})
+		.test("isBoolean {constructor: 'foo'}", function( cb ){
+			cb.assertEquals( util.isBoolean({constructor: 'foo'}), false ).done();
+		})
+		.test("isBoolean new Object()", function( cb ){
+			cb.assertEquals( util.isBoolean(new Object()), false ).done();
+		})
+		.test("isBoolean Object({})", function( cb ){
+			cb.assertEquals( util.isBoolean(Object({})), false ).done();
+		})
+		.test("isBoolean Object.create(Object.prototype)", function( cb ){
+			cb.assertEquals( util.isBoolean(Object.create(Object.prototype)), false ).done();
+		})
+		.test("isBoolean Object.create(null)", function( cb ){
+			cb.assertEquals( util.isBoolean(Object.create(null)), false ).done();
+		})
+		.test("isBoolean function(){}", function( cb ){
+			cb.assertEquals( util.isBoolean(function(){}), false ).done();
+		})
+		.test("isBoolean []", function( cb ){
+			cb.assertEquals( util.isBoolean([]), false ).done();
+		})
+		.test("isBoolean window", function( cb ){
+			cb.assertEquals( util.isBoolean(window), false ).done();
+		})
+		.test("isBoolean div", function( cb ){
+			cb.assertEquals( util.isBoolean(document.createElement("div")), false ).done();
+		})
+		.test("isBoolean class instance", function( cb ){
+			var instance = (function(){
+				function Klass(){};
+				return new Klass();
+			}());
+
+			cb.assertEquals( util.isBoolean( instance ), false ).done();
+		})
+		.test("isBoolean number", function( cb ){
+			cb.assertEquals( util.isBoolean( 128 ), false ).done();
+		})
+		.test("isBoolean number object", function( cb ){
+			cb.assertEquals( util.isBoolean( Number( 128 ) ), false ).done();
+		})
+		.test("isBoolean new Number()", function( cb ){
+			cb.assertEquals( util.isBoolean( new Number( 128 ) ), false ).done();
+		})
+		.test("isBoolean NaN", function( cb ){
+			cb.assertEquals( util.isBoolean( NaN ), false ).done();
+		})
+		.test("isBoolean true", function( cb ){
+			cb.assertEquals( util.isBoolean( true ), true ).done();
+		})
+		.test("isBoolean false", function( cb ){
+			cb.assertEquals( util.isBoolean( false ), true ).done();
+		})
+		.test("isBoolean new Boolean()", function( cb ){
+			cb.assertEquals( util.isBoolean( new Boolean() ), true ).done();
+		})
+		.test("isBoolean null", function( cb ){
+			cb.assertEquals( util.isBoolean( null ), false ).done();
+		})
+		.test("isBoolean undefined", function( cb ){
+			cb.assertEquals( util.isBoolean( undefined ), false ).done();
+		})
+		.test("isBoolean string", function( cb ){
+			cb.assertEquals( util.isBoolean( "foo" ), false ).done();
+		})
+		.test("isBoolean string object", function( cb ){
+			cb.assertEquals( util.isBoolean( String( "foo" ) ), false ).done();
+		})
+		.test("isBoolean new String()", function( cb ){
+			cb.assertEquals( util.isBoolean( new String( "foo" ) ), false ).done();
+		})
+		.test("isBoolean new ArrayBuffer()", function( cb ){
+			cb.assertEquals( util.isBoolean( new ArrayBuffer() ), false ).done();
+		})
+		.test("isBoolean new Uint8Array(new ArrayBuffer())", function( cb ){
+			cb.assertEquals( util.isBoolean( new Uint8Array(new ArrayBuffer()) ), false ).done();
+		})
+		.test("isBoolean arguments", function( cb ){
+			cb.assertEquals( util.isBoolean( arguments ), false ).done();
+		})
+
+		// isEmpty
+		.test("isEmpty []", function( cb ){
+			cb.assertEquals( util.isEmpty( [] ), true ).done();
+		})
+		.test("isEmpty {}", function( cb ){
+			cb.assertEquals( util.isEmpty( {} ), true ).done();
+		})
+		.test("isEmpty [1, 2]", function( cb ){
+			cb.assertEquals( util.isEmpty( [ 1, 2 ] ), false ).done();
+		})
+		.test("isEmpty { foo: null }", function( cb ){
+			cb.assertEquals( util.isEmpty( { foo: null } ), false ).done();
+		})
+		.test("isEmpty arguments 0", function( cb ){
+			(function(){
+				cb.assertEquals( util.isEmpty( arguments ), true ).done();
+			})();
+		})
+		.test("isEmpty arguments 1", function( cb ){
+			(function(){
+				cb.assertEquals( util.isEmpty( arguments ), false ).done();
+			})( 1 );
+		})
+
+		// size
+		.test("size []", function( cb ){
+			cb.assertEquals( util.size( [] ), 0 ).done();
+		})
+		.test("size [ null ]", function( cb ){
+			cb.assertEquals( util.size( [ null ] ), 1 ).done();
+		})
+		.test("size [ null, null ]", function( cb ){
+			cb.assertEquals( util.size( [ null, null ] ), 2 ).done();
+		})
+		.test("size {}", function( cb ){
+			cb.assertEquals( util.size( {} ), 0 ).done();
+		})
+		.test("size { foo: null }", function( cb ){
+			cb.assertEquals( util.size( { foo: null } ), 1 ).done();
+		})
+		.test("size { foo: null, bar: null }", function( cb ){
+			cb.assertEquals( util.size( { foo: null, bar: null } ), 2 ).done();
+		})
+		.test("size arguments 0", function( cb ){
+			(function(){
+				cb.assertEquals( util.size( arguments ), 0 ).done();
+			})();
+		})
+		.test("size arguments 1", function( cb ){
+			(function(){
+				cb.assertEquals( util.size( arguments ), 1 ).done();
+			})( 1 );
+		})
+
+		// clone
+		.test("clone {}", function( cb ){
+			var original = {};
+			var cloned = util.clone( original );
+			cb
+			.assertEquals( cloned === original, false )
+			.assertEquals( util.isEqual( cloned, original ), true )
+			.done();
+		})
+		.test("clone { foo: [], bar: [] }", function( cb ){
+			var original = { foo: [], bar: [] };
+			var cloned = util.clone( original );
+			cb
+			.assertEquals( cloned === original, false )
+			.assertEquals( util.isEqual( cloned, original ), true )
+			.assertEquals( cloned.foo === original.foo, true )
+			.assertEquals( cloned.bar === original.bar, true )
+			.done();
+		})
+		.test("clone []", function( cb ){
+			var original = [];
+			var cloned = util.clone( original );
+			cb
+			.assertEquals( cloned === original, false )
+			.assertEquals( util.isEqual( cloned, original ), true )
+			.done();
+		})
+		.test("clone [{}, {}]", function( cb ){
+			var original = [];
+			var cloned = util.clone( original );
+			cb
+			.assertEquals( cloned === original, false )
+			.assertEquals( util.isEqual( cloned, original ), true )
+			.assertEquals( cloned[ 0 ] === original[ 0 ], true )
+			.assertEquals( cloned[ 1 ] === original[ 1 ], true )
+			.done();
+		})
+		.test("clone 'string'", function( cb ){
+			var original = 'string';
+			var cloned = util.clone( original );
+			cb
+			.assertEquals( cloned === original, true )
+			.done();
+		})
+		.test("clone 128", function( cb ){
+			var original = 128;
+			var cloned = util.clone( original );
+			cb
+			.assertEquals( cloned === original, true )
+			.done();
+		})
+
+		// merge
+		.test("merge {}", function( cb ){
+			var source = {};
+			var dest = {};
+			var merged = util.merge(dest, source);
+			cb
+			.assertEquals( dest === merged, true )
+			.assertEquals( source !== merged, true )
+			.done();
+		})
+		.test("merge { foo: 'foo' }", function( cb ){
+			var source = { foo: 'foo' };
+			var dest = {};
+			var merged = util.merge(dest, source);
+			cb
+			.assertEquals( dest === merged, true )
+			.assertEquals( source !== merged, true )
+			.assertEquals( "foo" in merged, true )
+			.assertEquals( merged.foo === "foo", true )
+			.done();
+		})
+		.test("merge { foo: { bar: 'bar' } }", function( cb ){
+			var source = { foo: { bar: "bar" } };
+			var dest = {};
+			var merged = util.merge(dest, source);
+			cb
+			.assertEquals( dest === merged, true )
+			.assertEquals( source !== merged, true )
+			.assertEquals( "foo" in merged, true )
+			.assertEquals( source.foo !== merged.foo, true )
+			.assertEquals( "bar" in merged.foo, true )
+			.assertEquals( merged.foo.bar === "bar", true )
+			.done();
+		})
+		.test("merge { foo: [] }", function( cb ){
+			var source = { foo: [] };
+			var dest = {};
+			var merged = util.merge(dest, source);
+			cb
+			.assertEquals( dest === merged, true )
+			.assertEquals( source !== merged, true )
+			.assertEquals( source.foo !== merged.foo, true )
+			.assertEquals( source.foo.length === merged.foo.length, true )
+			.done();
+		})
+		.test("merge { foo: ['foo'] }", function( cb ){
+			var source = { foo: ['foo'] };
+			var dest = {};
+			var merged = util.merge(dest, source);
+			cb
+			.assertEquals( dest === merged, true )
+			.assertEquals( source !== merged, true )
+			.assertEquals( source.foo !== merged.foo, true )
+			.assertEquals( merged.foo.length, 1 )
+			.assertEquals( merged.foo[ 0 ], "foo" )
+			.done();
+		})
+		.test("merge { foo: [{ bar: 'bar' }] }", function( cb ){
+			var source = { foo: [{ bar: "bar" }] };
+			var dest = {};
+			var merged = util.merge(dest, source);
+			cb
+			.assertEquals( dest === merged, true )
+			.assertEquals( source !== merged, true )
+			.assertEquals( source.foo !== merged.foo, true )
+			.assertEquals( "foo" in merged, true )
+			.assertEquals( source.foo !== merged.foo, true )
+			.assertEquals( merged.foo.length, 1 )
+			.assertEquals( source.foo[ 0 ] !== merged.foo[ 0 ], true )
+			.assertEquals( merged.foo[ 0 ].bar, "bar" )
+			.done();
+		})
+
+		// sortedIndex
+		.test("sortedIndex [0, 1, 3] integer", function( cb ){
+			var target = [0, 1, 3];
+
+			cb
+			.assertEquals( util.sortedIndex( target, -1 ), 0 )
+			.assertEquals( util.sortedIndex( target, +0 ), 0 )
+			.assertEquals( util.sortedIndex( target, +1 ), 1 )
+			.assertEquals( util.sortedIndex( target, +2 ), 2 )
+			.assertEquals( util.sortedIndex( target, +3 ), 2 )
+			.assertEquals( util.sortedIndex( target, +4 ), 3 )
+			.assertEquals( util.sortedIndex( target, +5 ), 3 )
+			.done();
+		})
+		.test("sortedIndex [0, 1, 3] real", function( cb ){
+			var target = [0, 1, 3];
+
+			cb
+			.assertEquals( util.sortedIndex( target, -0.5 ), 0 )
+			.assertEquals( util.sortedIndex( target, +0.5 ), 1 )
+			.assertEquals( util.sortedIndex( target, +1.5 ), 2 )
+			.assertEquals( util.sortedIndex( target, +2.5 ), 2 )
+			.assertEquals( util.sortedIndex( target, +3.5 ), 3 )
+			.assertEquals( util.sortedIndex( target, +4.5 ), 3 )
+			.done();
+		})
+		.test("sortedIndex ['b', 'd', 'e']", function( cb ){
+			var target = ['b', 'd', 'e'];
+
+			cb
+			.assertEquals( util.sortedIndex( target, 'a' ), 0 )
+			.assertEquals( util.sortedIndex( target, 'b' ), 0 )
+			.assertEquals( util.sortedIndex( target, 'c' ), 1 )
+			.assertEquals( util.sortedIndex( target, 'd' ), 1 )
+			.assertEquals( util.sortedIndex( target, 'e' ), 2 )
+			.assertEquals( util.sortedIndex( target, 'f' ), 3 )
+			.assertEquals( util.sortedIndex( target, 'g' ), 3 )
+			.done();
+		})
+
+		// isEqual
+		.test("isEqual {} {}", function( cb ){
+			cb.assertEquals( util.isEqual( {}, {} ), true ).done();
+		})
+		.test("isEqual {} {}", function( cb ){
+			var a = {};
+			cb.assertEquals( util.isEqual( a, a ), true ).done();
+		})
+		.test("isEqual {} new Object()", function( cb ){
+			cb.assertEquals( util.isEqual( {}, new Object() ), true ).done();
+		})
+		.test("isEqual { foo: 'bar' } { foo: 'bar' }", function( cb ){
+			cb.assertEquals( util.isEqual( { foo: "bar" }, { foo: "bar" } ), true ).done();
+		})
+		.test("isEqual { foo: 'bar' } { foo: 'foo' }", function( cb ){
+			cb.assertEquals( util.isEqual( { foo: "bar" }, { foo: "foo" } ), false ).done();
+		})
+		.test("isEqual { foo: ['bar'] } { foo: ['bar'] }", function( cb ){
+			cb.assertEquals( util.isEqual( { foo: ["bar"] }, { foo: ["bar"] } ), true ).done();
+		})
+		.test("isEqual { foo: ['bar'] } { foo: ['foo'] }", function( cb ){
+			cb.assertEquals( util.isEqual( { foo: ["bar"] }, { foo: ["foo"] } ), false ).done();
+		})
+		.test("isEqual { foo: ['bar', 128] } { foo: ['bar', 128] }", function( cb ){
+			cb.assertEquals( util.isEqual( { foo: ["bar", 128] }, { foo: ["bar", 128] } ), true ).done();
+		})
+		.test("isEqual { foo: ['bar', 128] } { foo: ['bar', 128, null] }", function( cb ){
+			cb.assertEquals( util.isEqual( { foo: ["bar", 128] }, { foo: ["bar", 128, null] } ), false ).done();
+		})
+		.test("isEqual {} { foo: ['bar', 128, null] }", function( cb ){
+			cb.assertEquals( util.isEqual( {}, { foo: ["bar", 128, null] } ), false ).done();
+		})
+		.test("isEqual { foo: ['bar', 128, null] } {}", function( cb ){
+			cb.assertEquals( util.isEqual( { foo: ["bar", 128, null] }, {} ), false ).done();
+		})
+		.test("isEqual [] []", function( cb ){
+			cb.assertEquals( util.isEqual( [], [] ), true ).done();
+		})
+		.test("isEqual [] []", function( cb ){
+			var a = [];
+			cb.assertEquals( util.isEqual( a, a ), true ).done();
+		})
+		.test("isEqual [] new Array()", function( cb ){
+			cb.assertEquals( util.isEqual( [], new Array() ), true ).done();
+		})
+		.test("isEqual [ 'foo' ] [ 'foo' ]", function( cb ){
+			cb.assertEquals( util.isEqual( [ 'foo' ], [ 'foo' ] ), true ).done();
+		})
+		.test("isEqual [ 'foo' ] [ 'bar' ]", function( cb ){
+			cb.assertEquals( util.isEqual( [ 'foo' ], [ 'bar' ] ), false ).done();
+		})
+		.test("isEqual [ ['foo'] ] [ ['foo'] ]", function( cb ){
+			cb.assertEquals( util.isEqual( [ ['foo'] ], [ ['foo'] ] ), true ).done();
+		})
+		.test("isEqual [ ['foo'] ] [ ['bar'] ]", function( cb ){
+			cb.assertEquals( util.isEqual( [ ['foo'] ], [ ['bar'] ] ), false ).done();
+		})
+		.test("isEqual [ ['foo', 128] ] [ ['foo', 128] ]", function( cb ){
+			cb.assertEquals( util.isEqual( [ ['foo', 128] ], [ ['foo', 128] ] ), true ).done();
+		})
+		.test("isEqual [ ['foo', 128] ] [ ['foo', 128, null] ]", function( cb ){
+			cb.assertEquals( util.isEqual( [ ['foo', 128] ], [ ['foo', 128, null] ] ), false ).done();
+		})
+		.test("isEqual [ { foo: 'bar' } ] [ { foo: 'bar' } ]", function( cb ){
+			cb.assertEquals( util.isEqual( [ { foo: 'bar' } ], [ { foo: 'bar' } ] ), true ).done();
+		})
+		.test("isEqual [ { foo: 'bar' } ] [ { foo: 'foo' } ]", function( cb ){
+			cb.assertEquals( util.isEqual( [ { foo: 'bar' } ], [ { foo: 'foo' } ] ), false ).done();
+		})
+		.test("isEqual {} []", function( cb ){
+			cb.assertEquals( util.isEqual( {}, [] ), false ).done();
+		})
+		.test("isEqual NaN NaN", function( cb ){
+			cb.assertEquals( util.isEqual( NaN, NaN ), true ).done();
+		})
+		.test("isEqual null null", function( cb ){
+			cb.assertEquals( util.isEqual( null, null ), true ).done();
+		})
+		.test("isEqual undefined undefined", function( cb ){
+			cb.assertEquals( util.isEqual( undefined, undefined ), true ).done();
+		})
+		.test("isEqual true true", function( cb ){
+			cb.assertEquals( util.isEqual( true, true ), true ).done();
+		})
+		.test("isEqual true false", function( cb ){
+			cb.assertEquals( util.isEqual( true, false ), false ).done();
+		})
+		.test("isEqual arguments arguments", function( cb ){
+			cb.assertEquals( util.isEqual( arguments, arguments ), true ).done();
+		})
+
+		// each
+		.test("each array", function( cb ){
+			var target = [ 0, 1, 2, 3 ];
+			var count = 0;
+			util.each( target, function( value, index, array ){
+				cb
+				.assertEquals( value, index )
+				.assertEquals( index, count )
+				.assertEquals( array, target );
+				count += 1;
+			});
+			cb.assertEquals( count, target.length ).done();
+		})
+		.test("each object", function( cb ){
+			var target = { "0":"0", "1":"1", "2":"2", "3":"3" };
+			var count = 0;
+			util.each( target, function( value, key, object ){
+				cb
+				.assertEquals( value, key )
+				.assertEquals( object, target );
+				count += 1;
+			});
+			cb.assertEquals( count, util.size( target ) ).done();
+		})
+		.test("each arguments", function( cb ){
+			(function(){
+				var target = arguments;
+				var count = 0;
+				util.each( target, function( value, index, array ){
+					cb
+					.assertEquals( value, index )
+					.assertEquals( index, count )
+					.assertEquals( array, target );
+					count += 1;
+				});
+				cb.assertEquals( count, target.length ).done();
+			})();
+		})
+
+		// eachRight
+		.test("eachRight array", function( cb ){
+			var target = [ 0, 1, 2, 3 ];
+			var count = 0;
+			util.eachRight( target, function( value, index, array ){
+				cb
+				.assertEquals( value, index )
+				.assertEquals( index, target.length - 1 - count )
+				.assertEquals( array, target );
+				count += 1;
+			});
+			cb.assertEquals( count, target.length ).done();
+		})
+		.test("eachRight object", function( cb ){
+			var target = { "0":"0", "1":"1", "2":"2", "3":"3" };
+			var count = 0;
+			util.eachRight( target, function( value, key, object ){
+				cb
+				.assertEquals( value, key )
+				.assertEquals( object, target );
+				count += 1;
+			});
+			cb.assertEquals( count, util.size( target ) ).done();
+		})
+		.test("eachRight arguments", function( cb ){
+			(function(){
+				var target = arguments;
+				var count = 0;
+				util.eachRight( target, function( value, index, array ){
+					cb
+					.assertEquals( value, index )
+					.assertEquals( index, target.length - 1 - count )
+					.assertEquals( array, target );
+					count += 1;
+				});
+				cb.assertEquals( count, target.length ).done();
+			})();
+		})
+
+		// bind
+		.test("bind 0", function( cb ){
+			var thisArg = [];
+			var firstArg = {};
+			var secondArg = "x";
+			var returnValue = "y";
+			var bound = util.bind(function(){
+				cb
+				.assertEquals( this, thisArg )
+				.assertEquals( arguments.length, 2 )
+				.assertEquals( arguments[ 0 ], firstArg )
+				.assertEquals( arguments[ 1 ], secondArg );
+				return returnValue;
+			}, thisArg );
+			var returnedValue = bound( firstArg, secondArg );
+			cb.assertEquals( returnedValue, returnValue ).done();
+		})
+		.test("bind 1", function( cb ){
+			var thisArg = [];
+			var firstArg = {};
+			var secondArg = "x";
+			var returnValue = "y";
+			var bound = util.bind(function(){
+				cb
+				.assertEquals( this, thisArg )
+				.assertEquals( arguments.length, 2 )
+				.assertEquals( arguments[ 0 ], firstArg )
+				.assertEquals( arguments[ 1 ], secondArg );
+				return returnValue;
+			}, thisArg, firstArg );
+			var returnedValue = bound( secondArg );
+			cb.assertEquals( returnedValue, returnValue ).done();
+		})
+		.test("bind 2", function( cb ){
+			var thisArg = [];
+			var firstArg = {};
+			var secondArg = "x";
+			var returnValue = "y";
+			var bound = util.bind(function(){
+				cb
+				.assertEquals( this, thisArg )
+				.assertEquals( arguments.length, 2 )
+				.assertEquals( arguments[ 0 ], firstArg )
+				.assertEquals( arguments[ 1 ], secondArg );
+				return returnValue;
+			}, thisArg, firstArg, secondArg );
+			var returnedValue = bound();
+			cb.assertEquals( returnedValue, returnValue ).done();
+		})
+
+		// hasOwn
+		.test("hasOwn", function( cb ){
+			var target = { foo: "bar" };
+			cb
+			.assertEquals( util.hasOwn( target, "foo" ), true )
+			.assertEquals( util.hasOwn( target, "bar" ), false )
+			.done();
+		})
+
+		// MessageSource
+		.test("messageSource", function( cb ){
+			util.merge( wcardinal.util.MessageSource.prototype.source, {"bar": "foo"} );
+
+			cb
+			.assertEquals( wcardinal.util.MessageSource != null, true )
+			.assertEquals( wcardinal.util.messageSource != null, true )
+			.assertEquals( wcardinal.util.messageSource.get( "foo" ), "foo" )
+			.assertEquals( wcardinal.util.messageSource.get( "bar" ), "foo" )
+			.done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

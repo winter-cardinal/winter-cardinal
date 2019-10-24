@@ -1,0 +1,91 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.js"></script>
+	<script src="/basics-trigger-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsTriggerController;
+
+		puppeteer
+		.test("Trigger check", function( cb ){
+			var result = null;
+			c.one( "trigger_check_event", function( e, value ){
+				result = value;
+			});
+			c.trigger_request( "trigger_check_event", 128 );
+			cb.within(3000, function(){
+				if( result === 128 ) cb.done();
+			});
+		})
+		.test("Trigger value check", function( cb ){
+			var result = null;
+			c.one( "trigger_value_check_event", function( e, value ){
+				result = value;
+				return value + 1;
+			});
+			c.one( "trigger_value_check_event_done", function( e, value ){
+				result = value;
+			});
+			c.trigger_request_and( "trigger_value_check_event", 3000, 1 );
+			cb.within(3000, function(){
+				if( result === 3 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Trigger value timeout check", function( cb ){
+			var result = null;
+			c.one( "trigger_value_timeout_check_event", function( e, value ){
+				result = value;
+				return value + 1;
+			});
+			c.one( "trigger_value_timeout_check_event_fail", function( e, value ){
+				result = value;
+			});
+			c.trigger_request_and( "trigger_value_timeout_check_event", 0, 1 );
+			cb.within(3000, function(){
+				if( result === -1 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Trigger result check", function( cb ){
+			c.one( "trigger_result_event", function( e, value ){
+				return value;
+			});
+			var methodResult = null;
+			c.trigger_result().then(function( result ){
+				methodResult = result;
+			});
+			cb.within(3000, function(){
+				if( c.doneCount.get() === 10 && c.failCount.get() === 0 && c.progressCount.get() === 0 && c.alwaysCount.get() === 1 && methodResult === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Trigger size check", function( cb ){
+			cb.within(3000, function(){
+				if( c.__mem__._triggerRequests.size_() === 0 && c.__mem__._triggerResults.size_() === 0 ) {
+					cb.done();
+				}
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

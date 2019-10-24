@@ -1,0 +1,112 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-timeout-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsTimeoutController;
+
+		puppeteer
+		.test("Timeout check round 1", function( cb ){
+			c.start();
+			cb.within(3000, function(){
+				if( c.count.get() === 3 && c.total.get() === 14 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Timeout check round 2", function( cb ){
+			c.restart();
+			cb.within(3000, function(){
+				if( c.count.get() === 6 && c.total.get() === 26 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Timeout runnable check", function( cb ){
+			c.start_runnable();
+			cb.within(3000, function(){
+				if( c.count.get() === 7 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Timeout runnable cancel check", function( cb ){
+			c.start_runnable_cancel()
+			.then(function( result ){
+				if( result ){
+					cb.done();
+				} else {
+					cb.fail( result );
+				}
+			}, function( result ){
+				cb.fail( result );
+			});
+		})
+		.test("Timeout callable check", function( cb ){
+			c.start_callable();
+			cb.within(3000, function(){
+				if( c.count.get() === 8 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Timeout callable cancel check", function( cb ){
+			c.start_callable_cancel();
+			cb.within(3000, function(){
+				if( c.count.get() === 9 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Timeout callable timeout 1 check", function( cb ){
+			c.start_callable_timeout_1();
+			cb.within(3000, function(){
+				if( c.count.get() === 10 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Timeout callable timeout 2 check", function( cb ){
+			c.start_callable_timeout_2();
+			cb.within(3000, function(){
+				if( c.count.get() === 11 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Timeout callable exception 1 check", function( cb ){
+			c.start_callable_exception_1();
+			cb.within(3000, function(){
+				if( c.count.get() === 12 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Timeout callable exception 2 check", function( cb ){
+			c.start_callable_exception_2();
+			cb.within(3000, function(){
+				if( c.count.get() === 13 ) {
+					cb.done();
+				}
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

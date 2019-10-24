@@ -1,0 +1,2346 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-navigable-map-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsNavigableMapController;
+
+		puppeteer
+		.test("Navigable ascending map size check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.size(), 3 ).done();
+		})
+		.test("Navigable descending map size check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.size(), 3 ).done();
+		})
+		.test("Navigable ascending map firstKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.firstKey(), "a" ).done();
+		})
+		.test("Navigable descending map firstKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.firstKey(), "c" ).done();
+		})
+		.test("Navigable ascending map firstEntry check", function( cb ) {
+			var entry = c.field_navigable_map.firstEntry();
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "a" )
+			.assertEquals( entry.getValue(), "a" )
+			.done();
+		})
+		.test("Navigable descending map firstEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.firstEntry();
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "c" )
+			.assertEquals( entry.getValue(), "c" )
+			.done();
+		})
+		.test("Navigable ascending map lastKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.lastKey(), "c" ).done();
+		})
+		.test("Navigable descending map lastKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.lastKey(), "a" ).done();
+		})
+		.test("Navigable ascending map lastEntry check", function( cb ) {
+			var entry = c.field_navigable_map.lastEntry();
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "c" )
+			.assertEquals( entry.getValue(), "c" )
+			.done();
+		})
+		.test("Navigable descending map lastEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.lastEntry();
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "a" )
+			.assertEquals( entry.getValue(), "a" )
+			.done();
+		})
+		.test("Navigable ascending map ceilingKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.ceilingKey( "b" ), "b" ).done();
+		})
+		.test("Navigable descending map ceilingKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.ceilingKey( "b" ), "b" ).done();
+		})
+		.test("Navigable ascending map ceilingEntry check", function( cb ) {
+			var entry = c.field_navigable_map.ceilingEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "b" )
+			.assertEquals( entry.getValue(), "b" )
+			.done();
+		})
+		.test("Navigable descending map ceilingEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.ceilingEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "b" )
+			.assertEquals( entry.getValue(), "b" )
+			.done();
+		})
+		.test("Navigable ascending map floorKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.floorKey( "b" ), "b" ).done();
+		})
+		.test("Navigable descending map floorKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.floorKey( "b" ), "b" ).done();
+		})
+		.test("Navigable ascending map floorEntry check", function( cb ) {
+			var entry = c.field_navigable_map.floorEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "b" )
+			.assertEquals( entry.getValue(), "b" )
+			.done();
+		})
+		.test("Navigable descending map floorEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.floorEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "b" )
+			.assertEquals( entry.getValue(), "b" )
+			.done();
+		})
+		.test("Navigable ascending map higherKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.higherKey( "b" ), "c" ).done();
+		})
+		.test("Navigable descending map higherKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.higherKey( "b" ), "a" ).done();
+		})
+		.test("Navigable ascending map higherEntry check", function( cb ) {
+			var entry = c.field_navigable_map.higherEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "c" )
+			.assertEquals( entry.getValue(), "c" )
+			.done();
+		})
+		.test("Navigable descending map higherEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.higherEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "a" )
+			.assertEquals( entry.getValue(), "a" )
+			.done();
+		})
+		.test("Navigable ascending map lowerKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.lowerKey( "b" ), "a" ).done();
+		})
+		.test("Navigable descending map lowerKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.lowerKey( "b" ), "c" ).done();
+		})
+		.test("Navigable ascending map ceilingKey without 'b' check", function( cb ) {
+			c.field_navigable_map.remove( "b" );
+			cb.assertEquals( c.field_navigable_map.ceilingKey( "b" ), "c" ).done();
+		})
+		.test("Navigable descending map ceilingKey without 'b' check", function( cb ) {
+			c.field_descending_navigable_map.remove( "b" );
+			cb.assertEquals( c.field_descending_navigable_map.ceilingKey( "b" ), "a" ).done();
+		})
+		.test("Navigable ascending map ceilingEntry without 'b' check", function( cb ) {
+			var entry = c.field_navigable_map.ceilingEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "c" )
+			.assertEquals( entry.getValue(), "c" )
+			.done();
+		})
+		.test("Navigable descending map ceilingEntry without 'b' check", function( cb ) {
+			var entry = c.field_descending_navigable_map.ceilingEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "a" )
+			.assertEquals( entry.getValue(), "a" )
+			.done();
+		})
+		.test("Navigable ascending map floorKey without 'b' check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.floorKey( "b" ), "a" ).done();
+		})
+		.test("Navigable descending map floorKey without 'b' check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.floorKey( "b" ), "c" ).done();
+		})
+		.test("Navigable ascending map floorEntry without 'b' check", function( cb ) {
+			var entry = c.field_navigable_map.floorEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "a" )
+			.assertEquals( entry.getValue(), "a" )
+			.done();
+		})
+		.test("Navigable descending map floorEntry without 'b' check", function( cb ) {
+			var entry = c.field_descending_navigable_map.floorEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "c" )
+			.assertEquals( entry.getValue(), "c" )
+			.done();
+		})
+		.test("Navigable ascending map higherKey without 'b' check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.higherKey( "b" ), "c" ).done();
+		})
+		.test("Navigable descending map higherKey without 'b' check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.higherKey( "b" ), "a" ).done();
+		})
+		.test("Navigable ascending map higherEntry without 'b' check", function( cb ) {
+			var entry = c.field_navigable_map.higherEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "c" )
+			.assertEquals( entry.getValue(), "c" )
+			.done();
+		})
+		.test("Navigable descending map higherEntry without 'b' check", function( cb ) {
+			var entry = c.field_descending_navigable_map.higherEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "a" )
+			.assertEquals( entry.getValue(), "a" )
+			.done();
+		})
+		.test("Navigable ascending map lowerKey without 'b' check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.lowerKey( "b" ), "a" ).done();
+		})
+		.test("Navigable descending map lowerKey without 'b' check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.lowerKey( "b" ), "c" ).done();
+		})
+		.test("Navigable ascending map lowerEntry without 'b' check", function( cb ) {
+			var entry = c.field_navigable_map.lowerEntry( "b" );
+			c.field_navigable_map.put( "b", "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "a" )
+			.assertEquals( entry.getValue(), "a" )
+			.done();
+		})
+		.test("Navigable descending map lowerEntry without 'b' check", function( cb ) {
+			var entry = c.field_descending_navigable_map.lowerEntry( "b" );
+			c.field_descending_navigable_map.put( "b", "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "c" )
+			.assertEquals( entry.getValue(), "c" )
+			.done();
+		})
+		.test("Navigable ascending map lowerEntry check", function( cb ) {
+			var entry = c.field_navigable_map.lowerEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "a" )
+			.assertEquals( entry.getValue(), "a" )
+			.done();
+		})
+		.test("Navigable descending map lowerEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.lowerEntry( "b" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "c" )
+			.assertEquals( entry.getValue(), "c" )
+			.done();
+		})
+		.test("Navigable ascending map each check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			c.field_navigable_map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_navigable_map );
+				count += 1;
+			});
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending map each check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 2;
+			c.field_descending_navigable_map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_descending_navigable_map );
+				count -= 1;
+			});
+			if( count === -1 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable ascending map each default thisArg check", function( cb ) {
+			c.field_navigable_map.each(function(){
+				cb.assertEquals( this, c.field_navigable_map ).done();
+				return false;
+			});
+		})
+		.test("Navigable descending map each default thisArg check", function( cb ) {
+			c.field_descending_navigable_map.each(function(){
+				cb.assertEquals( this, c.field_descending_navigable_map ).done();
+				return false;
+			});
+		})
+		.test("Navigable ascending map each thisArg check", function( cb ) {
+			c.field_navigable_map.each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable descending map each thisArg check", function( cb ) {
+			c.field_descending_navigable_map.each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable ascending map each reverse check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 2;
+			c.field_navigable_map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_navigable_map );
+				count -= 1;
+			}, null, true);
+			if( count === -1 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending map each reverse check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			c.field_descending_navigable_map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_descending_navigable_map );
+				count += 1;
+			}, null, true);
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable ascending map find check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			var result0 = c.field_navigable_map.find(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_navigable_map );
+				count += 1;
+				return false;
+			});
+
+			var result1 = c.field_navigable_map.find(function(){
+				return true;
+			});
+
+			cb
+			.assertEquals( count, 3 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, "a" )
+			.done();
+		})
+		.test("Navigable descending map find check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 2;
+			var result0 = c.field_descending_navigable_map.find(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_descending_navigable_map );
+				count -= 1;
+				return false;
+			});
+
+			var result1 = c.field_descending_navigable_map.find(function(){
+				return true;
+			});
+
+			cb
+			.assertEquals( count, -1 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, "c" )
+			.done();
+		})
+		.test("Navigable ascending map find default thisArg check", function( cb ) {
+			c.field_navigable_map.find(function(){
+				cb.assertEquals( this, c.field_navigable_map ).done();
+				return false;
+			});
+		})
+		.test("Navigable descending map find default thisArg check", function( cb ) {
+			c.field_descending_navigable_map.find(function(){
+				cb.assertEquals( this, c.field_descending_navigable_map ).done();
+				return false;
+			});
+		})
+		.test("Navigable ascending map find thisArg check", function( cb ) {
+			c.field_navigable_map.find(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable descending map find thisArg check", function( cb ) {
+			c.field_descending_navigable_map.find(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable ascending map find reverse check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 2;
+			var result0 = c.field_navigable_map.find(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_navigable_map );
+				count -= 1;
+				return false;
+			}, null, true);
+
+			var result1 = c.field_navigable_map.find(function(){
+				return true;
+			}, null, true);
+
+			cb
+			.assertEquals( count, -1 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, "c" )
+			.done();
+		})
+		.test("Navigable descending map find reverse check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			var result0 = c.field_descending_navigable_map.find(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_descending_navigable_map );
+				count += 1;
+				return false;
+			}, null, true);
+
+			var result1 = c.field_descending_navigable_map.find(function(){
+				return true;
+			}, null, true);
+
+			cb
+			.assertEquals( count, 3 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, "a" )
+			.done();
+		})
+		.test("Navigable ascending map values check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			cb.assertEquals( c.field_navigable_map.values(), expected ).done();
+		})
+		.test("Navigable descending map values check", function( cb ) {
+			var expected = [ "c", "b", "a" ];
+			cb.assertEquals( c.field_descending_navigable_map.values(), expected ).done();
+		})
+		.test("Navigable ascending map toObject check", function( cb ) {
+			var expected = { a:"a", b:"b", c:"c" };
+			cb.assertEquals( c.field_navigable_map.toObject(), expected ).done();
+		})
+		.test("Navigable descending map toObject check", function( cb ) {
+			var expected = { a:"a", b:"b", c:"c" };
+			cb.assertEquals( c.field_descending_navigable_map.toObject(), expected ).done();
+		})
+		.test("Navigable ascending map toJson check", function( cb ) {
+			var expected = { a:"a", b:"b", c:"c" };
+			cb.assertEquals( c.field_navigable_map.toJson(), expected ).done();
+		})
+		.test("Navigable descending map toJson check", function( cb ) {
+			var expected = { a:"a", b:"b", c:"c" };
+			cb.assertEquals( c.field_descending_navigable_map.toJson(), expected ).done();
+		})
+		.test("Navigable ascending map toString check", function( cb ) {
+			var expected = { a:"a", b:"b", c:"c" };
+			cb.assertEquals( JSON.parse(c.field_navigable_map.toString()), expected ).done();
+		})
+		.test("Navigable descending map toString check", function( cb ) {
+			var expected = { a:"a", b:"b", c:"c" };
+			cb.assertEquals( JSON.parse(c.field_descending_navigable_map.toString()), expected ).done();
+		})
+		.test("Navigable ascending map get check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.get( "a" ), "a" )
+			.assertEquals( c.field_navigable_map.get( "b" ), "b" )
+			.assertEquals( c.field_navigable_map.get( "c" ), "c" )
+			.assertEquals( c.field_navigable_map.get( "d" ), null )
+			.done();
+		})
+		.test("Navigable descending map get check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.get( "a" ), "a" )
+			.assertEquals( c.field_descending_navigable_map.get( "b" ), "b" )
+			.assertEquals( c.field_descending_navigable_map.get( "c" ), "c" )
+			.assertEquals( c.field_descending_navigable_map.get( "d" ), null )
+			.done();
+		})
+		.test("Navigable ascending map isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable descending map isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable ascending map containsKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.containsKey( "a" ), true )
+			.assertEquals( c.field_navigable_map.containsKey( "b" ), true )
+			.assertEquals( c.field_navigable_map.containsKey( "c" ), true )
+			.assertEquals( c.field_navigable_map.containsKey( "d" ), false )
+			.done();
+		})
+		.test("Navigable descending map containsKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.containsKey( "a" ), true )
+			.assertEquals( c.field_descending_navigable_map.containsKey( "b" ), true )
+			.assertEquals( c.field_descending_navigable_map.containsKey( "c" ), true )
+			.assertEquals( c.field_descending_navigable_map.containsKey( "d" ), false )
+			.done();
+		})
+		.test("Navigable ascending map containsValue check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.containsValue( "a" ), true )
+			.assertEquals( c.field_navigable_map.containsValue( "b" ), true )
+			.assertEquals( c.field_navigable_map.containsValue( "c" ), true )
+			.assertEquals( c.field_navigable_map.containsValue( "d" ), false )
+			.done();
+		})
+		.test("Navigable descending map containsValue check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.containsValue( "a" ), true )
+			.assertEquals( c.field_descending_navigable_map.containsValue( "b" ), true )
+			.assertEquals( c.field_descending_navigable_map.containsValue( "c" ), true )
+			.assertEquals( c.field_descending_navigable_map.containsValue( "d" ), false )
+			.done();
+		})
+		.test("Navigable ascending map filter check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			c.field_navigable_map.filter(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_navigable_map );
+				count += 1;
+				return (count !== 2);
+			});
+			cb.assertEquals( c.field_navigable_map.size(), 2 )
+				.assertEquals( c.field_navigable_map.values(), ["a", "c"] )
+				.done();
+		})
+		.test("Navigable descending map filter check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 2;
+			c.field_descending_navigable_map.filter(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, c.field_descending_navigable_map );
+				count -= 1;
+				return (count !== 0);
+			});
+			cb.assertEquals( c.field_descending_navigable_map.size(), 2 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["c", "a"] )
+			.done();
+		})
+		.test("Navigable ascending map put check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.put( "b", "b" ), null )
+			.assertEquals( c.field_navigable_map.size(), 3 )
+			.assertEquals( c.field_navigable_map.values(), ["a", "b", "c"] )
+			.done();
+		})
+		.test("Navigable descending map put check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.put( "b", "b" ), null )
+			.assertEquals( c.field_descending_navigable_map.size(), 3 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["c", "b", "a"] )
+			.done();
+		})
+		.test("Navigable ascending map put null value check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.put( "b", null ), "b" )
+			.assertEquals( c.field_navigable_map.size(), 3 )
+			.assertEquals( c.field_navigable_map.values(), ["a", null, "c"] )
+			.done();
+		})
+		.test("Navigable descending map put null value check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.put( "b", null ), "b" )
+			.assertEquals( c.field_descending_navigable_map.size(), 3 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["c", null, "a"] )
+			.done();
+		})
+		.test("Navigable ascending map put case-sensitivity check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.put( "A", "A" ), null )
+			.assertEquals( c.field_navigable_map.size(), 4 )
+			.assertEquals( c.field_navigable_map.values(), ["A", "a", null, "c"] )
+			.done();
+		})
+		.test("Navigable descending map put case-sensitivity check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.put( "A", "A" ), null )
+			.assertEquals( c.field_descending_navigable_map.size(), 4 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["c", null, "a", "A"] )
+			.done();
+		})
+		.test("Navigable ascending map remove check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.remove( "A" ), "A" )
+			.assertEquals( c.field_navigable_map.size(), 3 )
+			.assertEquals( c.field_navigable_map.values(), ["a", null, "c"] )
+			.done();
+		})
+		.test("Navigable descending map remove check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.remove( "A" ), "A" )
+			.assertEquals( c.field_descending_navigable_map.size(), 3 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["c", null, "a"] )
+			.done();
+		})
+		.test("Navigable ascending map clear check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.clear(), c.field_navigable_map )
+			.assertEquals( c.field_navigable_map.size(), 0 )
+			.assertEquals( c.field_navigable_map.values(), [] )
+			.done();
+		})
+		.test("Navigable descending map clear check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.clear(), c.field_descending_navigable_map )
+			.assertEquals( c.field_descending_navigable_map.size(), 0 )
+			.assertEquals( c.field_descending_navigable_map.values(), [] )
+			.done();
+		})
+		.test("Navigable ascending map putAll check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.putAll({x:"x", y:"y", z:"z"}), c.field_navigable_map )
+			.assertEquals( c.field_navigable_map.size(), 3 )
+			.assertEquals( c.field_navigable_map.values(), ["x", "y", "z"] )
+			.done();
+		})
+		.test("Navigable descending map putAll check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.putAll({x:"x", y:"y", z:"z"}), c.field_descending_navigable_map )
+			.assertEquals( c.field_descending_navigable_map.size(), 3 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["z", "y", "x"] )
+			.done();
+		})
+		.test("Navigable ascending map clearAndPut check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.clearAndPut( "x", "x" ), null )
+			.assertEquals( c.field_navigable_map.size(), 1 )
+			.assertEquals( c.field_navigable_map.values(), ["x"] )
+			.done();
+		})
+		.test("Navigable descending map clearAndPut check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.clearAndPut( "x", "x" ), null )
+			.assertEquals( c.field_descending_navigable_map.size(), 1 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["x"] )
+			.done();
+		})
+		.test("Navigable ascending map clearAndPutAll check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.clearAndPutAll({x:"x", y:"y", z:"z"}), c.field_navigable_map )
+			.assertEquals( c.field_navigable_map.size(), 3 )
+			.assertEquals( c.field_navigable_map.values(), ["x", "y", "z"] )
+			.done();
+		})
+		.test("Navigable descending map clearAndPut check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.clearAndPutAll({x:"x", y:"y", z:"z"}), c.field_descending_navigable_map )
+			.assertEquals( c.field_descending_navigable_map.size(), 3 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["z", "y", "x"] )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// TAIL MAP
+		//----------------------------------------------------------------------
+		.test("Navigable ascending tail map size check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.tailMap( "y" ).size(), 2 )
+			.assertEquals( c.field_navigable_map.tailMap( "y", false ).size(), 1 )
+			.assertEquals( c.field_navigable_map.tailMap( "w" ).size(), 3 )
+			.assertEquals( c.field_navigable_map.tailMap( "w", false ).size(), 3 )
+			.done();
+		})
+		.test("Navigable descending tail map size check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.tailMap( "y" ).size(), 2 )
+			.assertEquals( c.field_descending_navigable_map.tailMap( "y", false ).size(), 1 )
+			.assertEquals( c.field_descending_navigable_map.tailMap( "w" ).size(), 0 )
+			.assertEquals( c.field_descending_navigable_map.tailMap( "w", false ).size(), 0 )
+			.done();
+		})
+		.test("Navigable ascending tail map each check", function( cb ) {
+			var expected = [ "y", "z" ];
+			var count = 0;
+			var map = c.field_navigable_map.tailMap("y");
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			});
+			if( count === 2 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending tail map each check", function( cb ) {
+			var expected = [ "y", "x" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.tailMap("y");
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			});
+			if( count === 2 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable ascending tail map each default thisArg check", function( cb ) {
+			var map = c.field_navigable_map.tailMap("y");
+			map.each(function(){
+				cb.assertEquals( this, map ).done();
+				return false;
+			});
+		})
+		.test("Navigable descending tail map each default thisArg check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap();
+			map.each(function(){
+				cb.assertEquals( this, map ).done();
+				return false;
+			});
+		})
+		.test("Navigable ascending tail map each thisArg check", function( cb ) {
+			c.field_navigable_map.tailMap("y").each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable descending tail map each thisArg check", function( cb ) {
+			c.field_descending_navigable_map.tailMap("y").each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable ascending tail map each reverse check", function( cb ) {
+			var expected = [ "z", "y" ];
+			var count = 0;
+			var map = c.field_navigable_map.tailMap("y");
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			}, null, true);
+			if( count === 2 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending tail map each reverse check", function( cb ) {
+			var expected = [ "x", "y" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.tailMap("y");
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			}, null, true);
+			if( count === 2 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable ascending tail map find check", function( cb ) {
+			var expected = [ "y", "z" ];
+			var count = 0;
+			var map = c.field_navigable_map.tailMap("y");
+			var result0 = map.find(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+				return false;
+			});
+
+			var result1 = map.find(function(){
+				return true;
+			});
+
+			cb
+			.assertEquals( count, 2 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, "y" )
+			.done();
+		})
+		.test("Navigable descending tail map find check", function( cb ) {
+			var expected = [ "y", "x" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.tailMap("y");
+			var result0 = map.find(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			});
+
+			var result1 = map.find(function(){
+				return true;
+			});
+
+			cb
+			.assertEquals( count, 2 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, "y" )
+			.done();
+		})
+		.test("Navigable ascending tail map find default thisArg check", function( cb ) {
+			var map = c.field_navigable_map.tailMap("y");
+			map.find(function(){
+				cb.assertEquals( this, map ).done();
+				return false;
+			});
+		})
+		.test("Navigable descending tail map find default thisArg check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap();
+			map.find(function(){
+				cb.assertEquals( this, map ).done();
+				return false;
+			});
+		})
+		.test("Navigable ascending tail map find thisArg check", function( cb ) {
+			c.field_navigable_map.tailMap("y").find(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable descending tail map find thisArg check", function( cb ) {
+			c.field_descending_navigable_map.tailMap("y").find(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable ascending tail map find reverse check", function( cb ) {
+			var expected = [ "z", "y" ];
+			var count = 0;
+			var map = c.field_navigable_map.tailMap("y");
+			var result0 = map.find(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+				return false;
+			}, null, true);
+
+			var result1 = map.find(function(){
+				return true;
+			}, null, true);
+
+			cb
+			.assertEquals( count, 2 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, "z" )
+			.done();
+		})
+		.test("Navigable descending tail map find reverse check", function( cb ) {
+			var expected = [ "x", "y" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.tailMap("y");
+			var result0 = map.find(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+				return false;
+			}, null, true);
+
+			var result1 = map.find(function(){
+				return true;
+			}, null, true);
+
+			cb
+			.assertEquals( count, 2 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, "x" )
+			.done();
+		})
+		.test("Navigable ascending tail map values check", function( cb ) {
+			var expected = [ "y", "z" ];
+			cb.assertEquals( c.field_navigable_map.tailMap("y").values(), expected ).done();
+		})
+		.test("Navigable descending tail map values check", function( cb ) {
+			var expected = [ "y", "x" ];
+			cb.assertEquals( c.field_descending_navigable_map.tailMap("y").values(), expected ).done();
+		})
+		.test("Navigable ascending tail map toObject check", function( cb ) {
+			var expected = { y:"y", z:"z" };
+			cb.assertEquals( c.field_navigable_map.tailMap("y").toObject(), expected ).done();
+		})
+		.test("Navigable descending tail map toObject check", function( cb ) {
+			var expected = { y:"y", x:"x" };
+			cb.assertEquals( c.field_descending_navigable_map.tailMap("y").toObject(), expected ).done();
+		})
+		.test("Navigable ascending tail map toJson check", function( cb ) {
+			var expected = { y:"y", z:"z" };
+			cb.assertEquals( c.field_navigable_map.tailMap("y").toJson(), expected ).done();
+		})
+		.test("Navigable descending tail map toJson check", function( cb ) {
+			var expected = { y:"y", x:"x" };
+			cb.assertEquals( c.field_descending_navigable_map.tailMap("y").toJson(), expected ).done();
+		})
+		.test("Navigable ascending tail map toString check", function( cb ) {
+			var expected = { y:"y", z:"z" };
+			cb.assertEquals( JSON.parse(c.field_navigable_map.tailMap("y").toString()), expected ).done();
+		})
+		.test("Navigable descending tail map toString check", function( cb ) {
+			var expected = { y:"y", x:"x" };
+			cb.assertEquals( JSON.parse(c.field_descending_navigable_map.tailMap("y").toString()), expected ).done();
+		})
+		.test("Navigable ascending tail map get check", function( cb ) {
+			var map = c.field_navigable_map.tailMap("y");
+			cb.assertEquals( map.get( "w" ), null )
+			.assertEquals( map.get( "x" ), null )
+			.assertEquals( map.get( "y" ), "y" )
+			.assertEquals( map.get( "z" ), "z" )
+			.done();
+		})
+		.test("Navigable descending tail map get check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap( "y" );
+			cb.assertEquals( map.get( "w" ), null )
+			.assertEquals( map.get( "x" ), "x" )
+			.assertEquals( map.get( "y" ), "y" )
+			.assertEquals( map.get( "z" ), null )
+			.done();
+		})
+		.test("Navigable ascending tail map isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.tailMap("y").isEmpty(), false )
+			.done();
+		})
+		.test("Navigable descending tail map isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.tailMap("y").isEmpty(), false )
+			.done();
+		})
+		.test("Navigable ascending tail map containsKey check", function( cb ) {
+			var map = c.field_navigable_map.tailMap( "y" );
+			cb.assertEquals( map.containsKey( "w" ), false )
+			.assertEquals( map.containsKey( "x" ), false )
+			.assertEquals( map.containsKey( "y" ), true )
+			.assertEquals( map.containsKey( "z" ), true )
+			.done();
+		})
+		.test("Navigable descending tail map containsKey check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap( "y" );
+			cb.assertEquals( map.containsKey( "w" ), false )
+			.assertEquals( map.containsKey( "x" ), true )
+			.assertEquals( map.containsKey( "y" ), true )
+			.assertEquals( map.containsKey( "z" ), false )
+			.done();
+		})
+		.test("Navigable ascending tail map containsValue check", function( cb ) {
+			var map = c.field_navigable_map.tailMap( "y" );
+			cb.assertEquals( map.containsValue( "w" ), false )
+			.assertEquals( map.containsValue( "x" ), false )
+			.assertEquals( map.containsValue( "y" ), true )
+			.assertEquals( map.containsValue( "z" ), true )
+			.done();
+		})
+		.test("Navigable descending tail map containsValue check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap( "y" );
+			cb.assertEquals( map.containsValue( "w" ), false )
+			.assertEquals( map.containsValue( "x" ), true )
+			.assertEquals( map.containsValue( "y" ), true )
+			.assertEquals( map.containsValue( "z" ), false )
+			.done();
+		})
+		.test("Navigable ascending tail map filter check", function( cb ) {
+			var map = c.field_navigable_map.tailMap( "y" );
+			var expected = [ "y", "z" ];
+			var count = 0;
+			map.filter(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+				return (count !== 2);
+			});
+			cb.assertEquals( c.field_navigable_map.size(), 2 )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( c.field_navigable_map.values(), ["x", "y"] )
+			.assertEquals( map.values(), ["y"] )
+			.done();
+		})
+		.test("Navigable descending tail map filter check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap( "y" );
+			var expected = [ "y", "x" ];
+			var count = 0;
+			map.filter(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+				return (count !== 2);
+			});
+			cb.assertEquals( c.field_descending_navigable_map.size(), 2 )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["z", "y"] )
+			.assertEquals( map.values(), ["y"] )
+			.done();
+		})
+		.test("Navigable ascending tail map put check", function( cb ) {
+			var map = c.field_navigable_map.tailMap("y");
+			cb.assertEquals( map.put( "z", "z" ), null )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.values(), ["y", "z"] )
+			.done();
+		})
+		.test("Navigable descending tail map put check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap("y");
+			cb.assertEquals( map.put( "x", "x" ), null )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.values(), ["y", "x"] )
+			.done();
+		})
+		.test("Navigable ascending tail map put null value check", function( cb ) {
+			var map = c.field_navigable_map.tailMap("y");
+			cb.assertEquals( map.put( "z", null ), "z" )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.values(), ["y", null] )
+			.done();
+		})
+		.test("Navigable descending tail map put null value check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap("y");
+			cb.assertEquals( map.put( "x", null ), "x" )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.values(), ["y", null] )
+			.done();
+		})
+		.test("Navigable ascending tail map put case-sensitivity check", function( cb ) {
+			var map = c.field_navigable_map.tailMap("y");
+			cb.assertException(function(){
+				map.put("X", "X");
+			})
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.values(), ["y", null] )
+			.done();
+		})
+		.test("Navigable descending tail map put case-sensitivity check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap("y");
+			cb.assertEquals( map.put( "X", "X" ), null )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( map.values(), ["y", null, "X"] )
+			.done();
+		})
+		.test("Navigable ascending tail map remove check", function( cb ) {
+			var map = c.field_navigable_map.tailMap("y");
+			cb.assertEquals( map.remove( "z" ), null )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( map.values(), ["y"] )
+			.done();
+		})
+		.test("Navigable descending tail map remove check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap("y");
+			cb.assertEquals( map.remove( "X" ), "X" )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.values(), ["y", null] )
+			.done();
+		})
+		.test("Navigable ascending tail map clear check", function( cb ) {
+			var map = c.field_navigable_map.tailMap("y");
+			cb.assertEquals( map.clear(), map )
+			.assertEquals( c.field_navigable_map.size(), 1 )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( c.field_navigable_map.values(), ["x"] )
+			.assertEquals( map.values(), [] )
+			.done();
+		})
+		.test("Navigable descending tail map clear check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap("y");
+			cb.assertEquals( map.clear(), map )
+			.assertEquals( c.field_descending_navigable_map.size(), 1 )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["z"] )
+			.assertEquals( map.values(), [] )
+			.done();
+		})
+		.test("Navigable ascending tail map putAll check", function( cb ) {
+			var map = c.field_navigable_map.tailMap("y");
+			cb.assertEquals( map.putAll({y:"y", z:"z"}), map )
+			.assertEquals( c.field_navigable_map.size(), 3 )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( c.field_navigable_map.values(), ["x", "y", "z"] )
+			.assertEquals( map.values(), ["y", "z"] )
+			.done();
+		})
+		.test("Navigable descending tail map putAll check", function( cb ) {
+			var map = c.field_descending_navigable_map.tailMap("y");
+			cb.assertEquals( map.putAll({x:"x", y:"y"}), map )
+			.assertEquals( c.field_descending_navigable_map.size(), 3 )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["z", "y", "x"] )
+			.assertEquals( map.values(), ["y", "x"] )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// DESCENDING MAP
+		//----------------------------------------------------------------------
+		.test("Navigable descending map of ascending map size check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().size(), 3 ).done();
+		})
+		.test("Navigable descending map of descending map size check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().size(), 3 ).done();
+		})
+
+
+		.test("Navigable descending map of ascending map firstKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().firstKey(), "z" ).done();
+		})
+		.test("Navigable descending map of descending map firstKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().firstKey(), "x" ).done();
+		})
+		.test("Navigable descending map of ascending map firstEntry check", function( cb ) {
+			var entry = c.field_navigable_map.descendingMap().firstEntry();
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "z" )
+			.assertEquals( entry.getValue(), "z" )
+			.done();
+		})
+		.test("Navigable descending map of descending map firstEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.descendingMap().firstEntry();
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "x" )
+			.assertEquals( entry.getValue(), "x" )
+			.done();
+		})
+		.test("Navigable descending map of ascending map lastKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().lastKey(), "x" ).done();
+		})
+		.test("Navigable descending map of descending map lastKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().lastKey(), "z" ).done();
+		})
+		.test("Navigable descending map of ascending map lastEntry check", function( cb ) {
+			var entry = c.field_navigable_map.descendingMap().lastEntry();
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "x" )
+			.assertEquals( entry.getValue(), "x" )
+			.done();
+		})
+		.test("Navigable descending map of descending map lastEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.descendingMap().lastEntry();
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "z" )
+			.assertEquals( entry.getValue(), "z" )
+			.done();
+		})
+		.test("Navigable descending map of ascending map ceilingKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().ceilingKey( "y" ), "y" ).done();
+		})
+		.test("Navigable descending map of descending map ceilingKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().ceilingKey( "y" ), "y" ).done();
+		})
+		.test("Navigable descending map of ascending map ceilingEntry check", function( cb ) {
+			var entry = c.field_navigable_map.descendingMap().ceilingEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "y" )
+			.assertEquals( entry.getValue(), "y" )
+			.done();
+		})
+		.test("Navigable descending map of descending map ceilingEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.descendingMap().ceilingEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "y" )
+			.assertEquals( entry.getValue(), "y" )
+			.done();
+		})
+		.test("Navigable descending map of ascending map floorKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().floorKey( "y" ), "y" ).done();
+		})
+		.test("Navigable descending map of descending map floorKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().floorKey( "y" ), "y" ).done();
+		})
+		.test("Navigable descending map of ascending map floorEntry check", function( cb ) {
+			var entry = c.field_navigable_map.descendingMap().floorEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "y" )
+			.assertEquals( entry.getValue(), "y" )
+			.done();
+		})
+		.test("Navigable descending map of descending map floorEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.descendingMap().floorEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "y" )
+			.assertEquals( entry.getValue(), "y" )
+			.done();
+		})
+		.test("Navigable descending map of ascending map higherKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().higherKey( "y" ), "x" ).done();
+		})
+		.test("Navigable descending map of descending map higherKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().higherKey( "y" ), "z" ).done();
+		})
+		.test("Navigable descending map of ascending map higherEntry check", function( cb ) {
+			var entry = c.field_navigable_map.descendingMap().higherEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "x" )
+			.assertEquals( entry.getValue(), "x" )
+			.done();
+		})
+		.test("Navigable descending map of descending map higherEntry check", function( cb ) {
+			var entry = c.field_descending_navigable_map.descendingMap().higherEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "z" )
+			.assertEquals( entry.getValue(), "z" )
+			.done();
+		})
+		.test("Navigable descending map of ascending map lowerKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().lowerKey( "y" ), "z" ).done();
+		})
+		.test("Navigable descending map of descending map lowerKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().lowerKey( "y" ), "x" ).done();
+		})
+		.test("Navigable descending map of ascending map ceilingKey without 'y' check", function( cb ) {
+			c.field_navigable_map.remove( "y" );
+			cb.assertEquals( c.field_navigable_map.descendingMap().ceilingKey( "y" ), "x" ).done();
+		})
+		.test("Navigable descending map of descending map ceilingKey without 'y' check", function( cb ) {
+			c.field_descending_navigable_map.remove( "y" );
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().ceilingKey( "y" ), "z" ).done();
+		})
+		.test("Navigable descending map of ascending map ceilingEntry without 'y' check", function( cb ) {
+			var entry = c.field_navigable_map.descendingMap().ceilingEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "x" )
+			.assertEquals( entry.getValue(), "x" )
+			.done();
+		})
+		.test("Navigable descending map of descending map ceilingEntry without 'y' check", function( cb ) {
+			var entry = c.field_descending_navigable_map.descendingMap().ceilingEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "z" )
+			.assertEquals( entry.getValue(), "z" )
+			.done();
+		})
+		.test("Navigable descending map of ascending map floorKey without 'y' check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().floorKey( "y" ), "z" ).done();
+		})
+		.test("Navigable descending map of descending map floorKey without 'y' check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().floorKey( "y" ), "x" ).done();
+		})
+		.test("Navigable descending map of ascending map floorEntry without 'y' check", function( cb ) {
+			var entry = c.field_navigable_map.descendingMap().floorEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "z" )
+			.assertEquals( entry.getValue(), "z" )
+			.done();
+		})
+		.test("Navigable descending map of descending map floorEntry without 'y' check", function( cb ) {
+			var entry = c.field_descending_navigable_map.descendingMap().floorEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "x" )
+			.assertEquals( entry.getValue(), "x" )
+			.done();
+		})
+		.test("Navigable descending map of ascending map higherKey without 'y' check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().higherKey( "y" ), "x" ).done();
+		})
+		.test("Navigable descending map of descending map higherKey without 'y' check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().higherKey( "y" ), "z" ).done();
+		})
+		.test("Navigable descending map of ascending map higherEntry without 'y' check", function( cb ) {
+			var entry = c.field_navigable_map.descendingMap().higherEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "x" )
+			.assertEquals( entry.getValue(), "x" )
+			.done();
+		})
+		.test("Navigable descending map of descending map higherEntry without 'y' check", function( cb ) {
+			var entry = c.field_descending_navigable_map.descendingMap().higherEntry( "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "z" )
+			.assertEquals( entry.getValue(), "z" )
+			.done();
+		})
+		.test("Navigable descending map of ascending map lowerKey without 'y' check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().lowerKey( "y" ), "z" ).done();
+		})
+		.test("Navigable descending map of descending map lowerKey without 'y' check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().lowerKey( "y" ), "x" ).done();
+		})
+		.test("Navigable descending map of ascending map lowerEntry without 'y' check", function( cb ) {
+			var entry = c.field_navigable_map.descendingMap().lowerEntry( "y" );
+			c.field_navigable_map.put( "y", "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "z" )
+			.assertEquals( entry.getValue(), "z" )
+			.done();
+		})
+		.test("Navigable descending map of descending map lowerEntry without 'y' check", function( cb ) {
+			var entry = c.field_descending_navigable_map.descendingMap().lowerEntry( "y" );
+			c.field_descending_navigable_map.put( "y", "y" );
+			if( entry == null ) cb.fail( null );
+			cb.assertEquals( entry.getKey(), "x" )
+			.assertEquals( entry.getValue(), "x" )
+			.done();
+		})
+
+
+
+
+		.test("Navigable descending map of ascending map each check", function( cb ) {
+			var expected = [ "z", "y", "x" ];
+			var count = 0;
+			var map = c.field_navigable_map.descendingMap();
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			});
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending map of descending map each check", function( cb ) {
+			var expected = [ "x", "y", "z" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.descendingMap();
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			});
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending map of ascending map each default thisArg check", function( cb ) {
+			var map = c.field_navigable_map.descendingMap();
+			map.each(function(){
+				cb.assertEquals( this, map ).done();
+				return false;
+			});
+		})
+		.test("Navigable descending map of descending map each default thisArg check", function( cb ) {
+			var map = c.field_descending_navigable_map.descendingMap();
+			map.each(function(){
+				cb.assertEquals( this, map ).done();
+				return false;
+			});
+		})
+		.test("Navigable descending map of ascending map each thisArg check", function( cb ) {
+			c.field_navigable_map.descendingMap().each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable descending map of descending map each thisArg check", function( cb ) {
+			c.field_descending_navigable_map.descendingMap().each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable descending map of ascending map each reverse check", function( cb ) {
+			var expected = [ "x", "y", "z" ];
+			var count = 0;
+			var map = c.field_navigable_map.descendingMap();
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			}, null, true);
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending map of descending map each reverse check", function( cb ) {
+			var expected = [ "z", "y", "x" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.descendingMap();
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			}, null, true);
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending map of ascending map values check", function( cb ) {
+			var expected = [ "z", "y", "x" ];
+			cb.assertEquals( c.field_navigable_map.descendingMap().values(), expected ).done();
+		})
+		.test("Navigable descending map of descending map values check", function( cb ) {
+			var expected = [ "x", "y", "z" ];
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().values(), expected ).done();
+		})
+		.test("Navigable descending map of ascending map toObject check", function( cb ) {
+			var expected = { x:"x", y:"y", z:"z" };
+			cb.assertEquals( c.field_navigable_map.descendingMap().toObject(), expected ).done();
+		})
+		.test("Navigable descending map of descending map toObject check", function( cb ) {
+			var expected = { x:"x", y:"y", z:"z" };
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().toObject(), expected ).done();
+		})
+		.test("Navigable descending map of ascending map toJson check", function( cb ) {
+			var expected = { x:"x", y:"y", z:"z" };
+			cb.assertEquals( c.field_navigable_map.descendingMap().toJson(), expected ).done();
+		})
+		.test("Navigable descending map of descending map toJson check", function( cb ) {
+			var expected = { x:"x", y:"y", z:"z" };
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().toJson(), expected ).done();
+		})
+		.test("Navigable descending map of ascending map toString check", function( cb ) {
+			var expected = { x:"x", y:"y", z:"z" };
+			cb.assertEquals( JSON.parse(c.field_navigable_map.descendingMap().toString()), expected ).done();
+		})
+		.test("Navigable descending map of descending map toString check", function( cb ) {
+			var expected = { x:"x", y:"y", z:"z" };
+			cb.assertEquals( JSON.parse(c.field_descending_navigable_map.descendingMap().toString()), expected ).done();
+		})
+		.test("Navigable descending map of ascending map get check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().get( "w" ), null )
+			.assertEquals( c.field_navigable_map.descendingMap().get( "x" ), "x" )
+			.assertEquals( c.field_navigable_map.descendingMap().get( "y" ), "y" )
+			.assertEquals( c.field_navigable_map.descendingMap().get( "z" ), "z" )
+			.done();
+		})
+		.test("Navigable descending map of descending map get check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().get( "w" ), null )
+			.assertEquals( c.field_descending_navigable_map.descendingMap().get( "x" ), "x" )
+			.assertEquals( c.field_descending_navigable_map.descendingMap().get( "y" ), "y" )
+			.assertEquals( c.field_descending_navigable_map.descendingMap().get( "z" ), "z" )
+			.done();
+		})
+		.test("Navigable descending map of ascending map isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().isEmpty(), false )
+			.done();
+		})
+		.test("Navigable descending map of descending map isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().isEmpty(), false )
+			.done();
+		})
+		.test("Navigable descending map of ascending map containsKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().containsKey( "w" ), false )
+			.assertEquals( c.field_navigable_map.descendingMap().containsKey( "x" ), true )
+			.assertEquals( c.field_navigable_map.descendingMap().containsKey( "y" ), true )
+			.assertEquals( c.field_navigable_map.descendingMap().containsKey( "z" ), true )
+			.done();
+		})
+		.test("Navigable descending map of descending map containsKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().containsKey( "w" ), false )
+			.assertEquals( c.field_descending_navigable_map.descendingMap().containsKey( "x" ), true )
+			.assertEquals( c.field_descending_navigable_map.descendingMap().containsKey( "y" ), true )
+			.assertEquals( c.field_descending_navigable_map.descendingMap().containsKey( "z" ), true )
+			.done();
+		})
+		.test("Navigable descending map of ascending map containsValue check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.descendingMap().containsValue( "w" ), false )
+			.assertEquals( c.field_navigable_map.descendingMap().containsValue( "x" ), true )
+			.assertEquals( c.field_navigable_map.descendingMap().containsValue( "y" ), true )
+			.assertEquals( c.field_navigable_map.descendingMap().containsValue( "z" ), true )
+			.done();
+		})
+		.test("Navigable descending map of descending map containsValue check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.descendingMap().containsValue( "w" ), false )
+			.assertEquals( c.field_descending_navigable_map.descendingMap().containsValue( "x" ), true )
+			.assertEquals( c.field_descending_navigable_map.descendingMap().containsValue( "y" ), true )
+			.assertEquals( c.field_descending_navigable_map.descendingMap().containsValue( "z" ), true )
+			.done();
+		})
+		.test("Navigable descending map of ascending map filter check", function( cb ) {
+			var expected = [ "z", "y", "x" ];
+			var count = 0;
+			var map = c.field_navigable_map.descendingMap();
+			map.filter(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+				return (count !== 2);
+			});
+			cb.assertEquals( map.size(), 2 )
+				.assertEquals( map.values(), ["z", "x"] )
+				.done();
+		})
+		.test("Navigable descending map of descending map filter check", function( cb ) {
+			var expected = [ "x", "y", "z" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.descendingMap();
+			map.filter(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+				return (count !== 2);
+			});
+			cb.assertEquals( map.size(), 2 )
+			.assertEquals( map.values(), ["x", "z"] )
+			.done();
+		})
+		.test("Navigable descending map of ascending map put check", function( cb ) {
+			var map = c.field_navigable_map.descendingMap();
+			cb.assertEquals( map.put( "y", "y" ), null )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( map.values(), ["z", "y", "x"] )
+			.done();
+		})
+		.test("Navigable descending map of descending map put check", function( cb ) {
+			var map = c.field_descending_navigable_map.descendingMap();
+			cb.assertEquals( map.put( "y", "y" ), null )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( map.values(), ["x", "y", "z"] )
+			.done();
+		})
+		.test("Navigable descending map of ascending map put null value check", function( cb ) {
+			var map = c.field_navigable_map.descendingMap();
+			cb.assertEquals( map.put( "y", null ), "y" )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( map.values(), ["z", null, "x"] )
+			.done();
+		})
+		.test("Navigable descending map of descending map put null value check", function( cb ) {
+			var map = c.field_descending_navigable_map.descendingMap();
+			cb.assertEquals( map.put( "y", null ), "y" )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( map.values(), ["x", null, "z"] )
+			.done();
+		})
+		.test("Navigable descending map of ascending map put case-sensitivity check", function( cb ) {
+			var map = c.field_navigable_map.descendingMap();
+			cb.assertEquals( map.put( "X", "X" ), null )
+			.assertEquals( map.size(), 4 )
+			.assertEquals( map.values(), ["z", null, "x", "X"] )
+			.done();
+		})
+		.test("Navigable descending map of descending map put case-sensitivity check", function( cb ) {
+			var map = c.field_descending_navigable_map.descendingMap();
+			cb.assertEquals( map.put( "X", "X" ), null )
+			.assertEquals( map.size(), 4 )
+			.assertEquals( map.values(), ["X", "x", null, "z"] )
+			.done();
+		})
+		.test("Navigable descending map of ascending map remove check", function( cb ) {
+			var map = c.field_navigable_map.descendingMap();
+			cb.assertEquals( map.remove( "X" ), "X" )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( map.values(), ["z", null, "x"] )
+			.done();
+		})
+		.test("Navigable descending map of descending map remove check", function( cb ) {
+			var map = c.field_descending_navigable_map.descendingMap();
+			cb.assertEquals( map.remove( "X" ), "X" )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( map.values(), ["x", null, "z"] )
+			.done();
+		})
+		.test("Navigable descending map of ascending map clear check", function( cb ) {
+			var map = c.field_navigable_map.descendingMap();
+			cb.assertEquals( map.clear(), map )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( map.isEmpty(), true )
+			.assertEquals( map.values(), [] )
+			.done();
+		})
+		.test("Navigable descending map of descending map clear check", function( cb ) {
+			var map = c.field_descending_navigable_map.descendingMap();
+			cb.assertEquals( map.clear(), map )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( map.isEmpty(), true )
+			.assertEquals( map.values(), [] )
+			.done();
+		})
+		.test("Navigable descending map of ascending map putAll check", function( cb ) {
+			var map = c.field_navigable_map.descendingMap();
+			cb.assertEquals( map.putAll({x:"x", y:"y", z:"z"}), map )
+			.assertEquals( c.field_navigable_map.size(), 3 )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( c.field_navigable_map.values(), ["x", "y", "z"] )
+			.assertEquals( map.values(), ["z", "y", "x"] )
+			.done();
+		})
+		.test("Navigable descending map of descending map putAll check", function( cb ) {
+			var map = c.field_descending_navigable_map.descendingMap();
+			cb.assertEquals( map.putAll({x:"x", y:"y", z:"z"}), map )
+			.assertEquals( c.field_descending_navigable_map.size(), 3 )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["z", "y", "x"] )
+			.assertEquals( map.values(), ["x", "y", "z"] )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// HEAD MAP
+		//----------------------------------------------------------------------
+		.test("Navigable ascending head map size check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.headMap( "y", false ).size(), 1 ).done();
+		})
+		.test("Navigable descending head map size check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).size(), 1 ).done();
+		})
+		.test("Navigable ascending head map each check", function( cb ) {
+			var expected = [ "x" ];
+			var count = 0;
+			var map = c.field_navigable_map.headMap( "y", false );
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			});
+			if( count === 1 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending head map each check", function( cb ) {
+			var expected = [ "z" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.headMap( "y", false );
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			});
+			if( count === 1 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable ascending head map each default thisArg check", function( cb ) {
+			var map = c.field_navigable_map.headMap( "y", false );
+			map.each(function(){
+				cb.assertEquals( this, map ).done();
+				return false;
+			});
+		})
+		.test("Navigable descending head map each default thisArg check", function( cb ) {
+			var map = c.field_descending_navigable_map.headMap( "y", false );
+			map.each(function(){
+				cb.assertEquals( this, map ).done();
+				return false;
+			});
+		})
+		.test("Navigable ascending head map each thisArg check", function( cb ) {
+			c.field_navigable_map.headMap( "y", false ).each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable descending head map each thisArg check", function( cb ) {
+			c.field_descending_navigable_map.headMap( "y", false ).each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Navigable ascending head map each reverse check", function( cb ) {
+			var expected = [ "y", "x" ];
+			var count = 0;
+			var map = c.field_navigable_map.headMap( "y", true );
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			}, null, true);
+			if( count === 2 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable descending head map each reverse check", function( cb ) {
+			var expected = [ "y", "z" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.headMap( "y", true );
+			map.each(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( key, expected[ count ] )
+				.assertEquals( field, map );
+				count += 1;
+			}, null, true);
+			if( count === 2 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Navigable ascending head map values check", function( cb ) {
+			var expected = [ "x" ];
+			cb.assertEquals( c.field_navigable_map.headMap( "y", false ).values(), expected ).done();
+		})
+		.test("Navigable descending head map values check", function( cb ) {
+			var expected = [ "z" ];
+			cb.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).values(), expected ).done();
+		})
+		.test("Navigable ascending head map toObject check", function( cb ) {
+			var expected = { x:"x" };
+			cb.assertEquals( c.field_navigable_map.headMap( "y", false ).toObject(), expected ).done();
+		})
+		.test("Navigable descending head map toObject check", function( cb ) {
+			var expected = { z:"z" };
+			cb.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).toObject(), expected ).done();
+		})
+		.test("Navigable ascending head map toJson check", function( cb ) {
+			var expected = { x:"x" };
+			cb.assertEquals( c.field_navigable_map.headMap( "y", false ).toJson(), expected ).done();
+		})
+		.test("Navigable descending head map toJson check", function( cb ) {
+			var expected = { z:"z" };
+			cb.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).toJson(), expected ).done();
+		})
+		.test("Navigable ascending head map toString check", function( cb ) {
+			var expected = { x:"x" };
+			cb.assertEquals( JSON.parse(c.field_navigable_map.headMap( "y", false ).toString()), expected ).done();
+		})
+		.test("Navigable descending head map toString check", function( cb ) {
+			var expected = { z:"z" };
+			cb.assertEquals( JSON.parse(c.field_descending_navigable_map.headMap( "y", false ).toString()), expected ).done();
+		})
+		.test("Navigable ascending head map get check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.headMap( "y", false ).get( "w" ), null )
+			.assertEquals( c.field_navigable_map.headMap( "y", false ).get( "x" ), "x" )
+			.assertEquals( c.field_navigable_map.headMap( "y", false ).get( "y" ), null )
+			.assertEquals( c.field_navigable_map.headMap( "y", false ).get( "z" ), null )
+			.done();
+		})
+		.test("Navigable descending head map get check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).get( "w" ), null )
+			.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).get( "x" ), null )
+			.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).get( "y" ), null )
+			.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).get( "z" ), "z" )
+			.done();
+		})
+		.test("Navigable ascending head map isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.headMap( "y", false ).isEmpty(), false )
+			.done();
+		})
+		.test("Navigable descending head map isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).isEmpty(), false )
+				.done();
+		})
+		.test("Navigable ascending head map containsKey check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.headMap( "y", false ).containsKey( "w" ), false )
+			.assertEquals( c.field_navigable_map.headMap( "y", false ).containsKey( "x" ), true )
+			.assertEquals( c.field_navigable_map.headMap( "y", false ).containsKey( "y" ), false )
+			.assertEquals( c.field_navigable_map.headMap( "y", false ).containsKey( "z" ), false )
+			.done();
+		})
+		.test("Navigable descending head map containsKey check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).containsKey( "w" ), false )
+			.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).containsKey( "x" ), false )
+			.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).containsKey( "y" ), false )
+			.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).containsKey( "z" ), true )
+			.done();
+		})
+		.test("Navigable ascending head map containsValue check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map.headMap( "y", false ).containsValue( "w" ), false )
+			.assertEquals( c.field_navigable_map.headMap( "y", false ).containsValue( "x" ), true )
+			.assertEquals( c.field_navigable_map.headMap( "y", false ).containsValue( "y" ), false )
+			.assertEquals( c.field_navigable_map.headMap( "y", false ).containsValue( "z" ), false )
+			.done();
+		})
+		.test("Navigable descending head map containsValue check", function( cb ) {
+			cb.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).containsValue( "w" ), false )
+			.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).containsValue( "x" ), false )
+			.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).containsValue( "y" ), false )
+			.assertEquals( c.field_descending_navigable_map.headMap( "y", false ).containsValue( "z" ), true )
+			.done();
+		})
+		.test("Navigable ascending head map filter check", function( cb ) {
+			var expected = [ "x", "y" ];
+			var count = 0;
+			var map = c.field_navigable_map.headMap( "y", true );
+			map.filter(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+					.assertEquals( key, expected[ count ] )
+					.assertEquals( field, map );
+				count += 1;
+				return (count !== 2);
+			});
+			cb.assertEquals( c.field_navigable_map.size(), 2 )
+				.assertEquals( map.size(), 1 )
+				.assertEquals( c.field_navigable_map.values(), ["x", "z"] )
+				.assertEquals( map.values(), ["x"] )
+				.done();
+		})
+		.test("Navigable descending head map filter check", function( cb ) {
+			var expected = [ "z", "y" ];
+			var count = 0;
+			var map = c.field_descending_navigable_map.headMap( "y", true );
+			map.filter(function( value, key, field ){
+				cb.assertEquals( value, expected[ count ] )
+					.assertEquals( key, expected[ count ] )
+					.assertEquals( field, map );
+				count += 1;
+				return (count !== 2);
+			});
+			cb.assertEquals( c.field_descending_navigable_map.size(), 2 )
+				.assertEquals( map.size(), 1 )
+				.assertEquals( c.field_descending_navigable_map.values(), [ "z", "x" ] )
+				.assertEquals( map.values(), ["z"] )
+				.done();
+		})
+		.test("Navigable ascending head map put check", function( cb ) {
+			var map = c.field_navigable_map.headMap( "y", false );
+			cb.assertException(function(){
+				map.put( "y", "y" );
+			})
+			.assertEquals( map.size(), 1 )
+			.assertEquals( map.values(), ["x"] )
+			.done();
+		})
+		.test("Navigable descending head map put check", function( cb ) {
+			var map = c.field_descending_navigable_map.headMap( "y", false );
+			cb.assertException(function(){
+				map.put( "y", "y" );
+			})
+			.assertEquals( map.size(), 1 )
+			.assertEquals( map.values(), ["z"] )
+			.done();
+		})
+		.test("Navigable ascending head map put null value check", function( cb ) {
+			var map = c.field_navigable_map.headMap( "y", false );
+			cb.assertEquals( map.put( "x", null ), "x" )
+			.assertEquals( c.field_navigable_map.size(), 2 )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( c.field_navigable_map.values(), [null, "z"] )
+			.assertEquals( map.values(), [null] )
+			.done();
+		})
+		.test("Navigable descending head map put null value check", function( cb ) {
+			var map = c.field_descending_navigable_map.headMap( "y", false );
+			cb.assertEquals( map.put( "z", null ), "z" )
+			.assertEquals( c.field_descending_navigable_map.size(), 2 )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( c.field_descending_navigable_map.values(), [null, "x"] )
+			.assertEquals( map.values(), [null] )
+			.done();
+		})
+		.test("Navigable ascending head map put case-sensitivity check", function( cb ) {
+			var map = c.field_navigable_map.headMap( "y", false );
+			cb.assertEquals( map.put( "X", "X" ), null )
+			.assertEquals( c.field_navigable_map.size(), 3 )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( c.field_navigable_map.values(), ["X", null, "z"] )
+			.assertEquals( map.values(), ["X", null] )
+			.done();
+		})
+		.test("Navigable descending head map put case-sensitivity check", function( cb ) {
+			var map = c.field_descending_navigable_map.headMap( "y", false );
+			cb.assertEquals( map.put( "{", "{" ), null )
+			.assertEquals( c.field_descending_navigable_map.size(), 3 )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["{", null, "x"] )
+			.assertEquals( map.values(), ["{", null] )
+			.done();
+		})
+		.test("Navigable ascending head map remove check", function( cb ) {
+			var map = c.field_navigable_map.headMap( "y", false );
+			cb.assertEquals( map.remove( "X" ), "X" )
+			.assertEquals( c.field_navigable_map.size(), 2 )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( c.field_navigable_map.values(), [null, "z"] )
+			.assertEquals( map.values(), [null] )
+			.done();
+		})
+		.test("Navigable descending head map remove check", function( cb ) {
+			var map = c.field_descending_navigable_map.headMap( "y", false );
+			cb.assertEquals( map.remove( "{" ), "{" )
+			.assertEquals( c.field_descending_navigable_map.size(), 2 )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( c.field_descending_navigable_map.values(), [null, "x"] )
+			.assertEquals( map.values(), [null] )
+			.done();
+		})
+		.test("Navigable ascending head map clear check", function( cb ) {
+			var map = c.field_navigable_map.headMap( "y", false );
+			cb.assertEquals( map.clear(), map )
+			.assertEquals( c.field_navigable_map.size(), 1 )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( c.field_navigable_map.isEmpty(), false )
+			.assertEquals( map.isEmpty(), true )
+			.assertEquals( c.field_navigable_map.values(), ["z"] )
+			.assertEquals( map.values(), [] )
+			.done();
+		})
+		.test("Navigable descending head map clear check", function( cb ) {
+			var map = c.field_descending_navigable_map.headMap( "y", false );
+			cb.assertEquals( map.clear(), map )
+			.assertEquals( c.field_descending_navigable_map.size(), 1 )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( c.field_descending_navigable_map.isEmpty(), false )
+			.assertEquals( map.isEmpty(), true )
+			.assertEquals( c.field_descending_navigable_map.values(), ["x"] )
+			.assertEquals( map.values(), [] )
+			.done();
+		})
+		.test("Navigable ascending head map putAll check", function( cb ) {
+			var map = c.field_navigable_map.headMap( "y", false );
+			cb.assertException(function(){
+				map.putAll({x:"x", y:"y", z:"z"});
+			})
+			.assertEquals( map.putAll({a:"a", b:"b", c:"c"}), map )
+			.assertEquals( c.field_navigable_map.size(), 4 )
+			.assertEquals( map.size(), 3 )
+			.assertEquals( c.field_navigable_map.values(), ["a", "b", "c", "z"] )
+			.assertEquals( map.values(), ["a", "b", "c"] )
+			.done();
+		})
+		.test("Navigable descending head map putAll check", function( cb ) {
+			var map = c.field_descending_navigable_map.headMap( "y", false );
+			cb.assertException(function(){
+				map.putAll({x:"x", y:"y", z:"z"});
+			})
+			.assertEquals( map.putAll({"{":"{", z:"z"}), map )
+			.assertEquals( c.field_descending_navigable_map.size(), 3 )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( c.field_descending_navigable_map.values(), ["{", "z", "x"] )
+			.assertEquals( map.values(), ["{", "z"] )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// DESCENDING MAP OF DESCENDING MAP
+		//----------------------------------------------------------------------
+		.test("Navigable descending map of descending map of ascending map size check", function( cb ) {
+			var map = c.field_navigable_map.descendingMap().descendingMap();
+			cb.assertEquals( map.values(), ["a", "b", "c", "z"] )
+			.assertEquals( map.size(), 4 )
+			.done();
+		})
+		.test("Navigable descending map of descending map of descending map size check", function( cb ) {
+			var map = c.field_descending_navigable_map.descendingMap().descendingMap();
+			cb.assertEquals( map.clear(), map )
+			.assertEquals( map.isEmpty(), true )
+			.assertEquals( map.putAll({a:"a", b:"b", c:"c", z:"z"}), map )
+			.assertEquals( map.size(), 4 )
+			.assertEquals( map.values(), ["z", "c", "b", "a"] )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// SUB MAP
+		//----------------------------------------------------------------------
+		.test("Navigable ascending map subMap 1-arg check", function( cb ) {
+			var map = c.field_navigable_map.subMap( "a" );
+			cb.assertEquals( map.values(), ["a", "b", "c", "z"] )
+			.assertEquals( map.size(), 4 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable ascending map subMap 2-args check", function( cb ) {
+			var map = c.field_navigable_map.subMap( "a", "b" );
+			cb.assertEquals( map.values(), ["a"] )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable ascending map subMap 3-args check 1", function( cb ) {
+			var map = c.field_navigable_map.subMap( "a", "b", false );
+			cb.assertEquals( map.values(), ["a"] )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable ascending map subMap 3-args check 2", function( cb ) {
+			var map = c.field_navigable_map.subMap( "a", false, "b" );
+			cb.assertEquals( map.values(), [] )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( map.isEmpty(), true )
+			.done();
+		})
+		.test("Navigable ascending map subMap 4-args check", function( cb ) {
+			var map = c.field_navigable_map.subMap( "a", false, "b", false );
+			cb.assertEquals( map.values(), [] )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( map.isEmpty(), true )
+			.done();
+		})
+		.test("Navigable descending map subMap 1-arg check", function( cb ) {
+			var map = c.field_descending_navigable_map.subMap( "z" );
+			cb.assertEquals( map.values(), ["z", "c", "b", "a"] )
+			.assertEquals( map.size(), 4 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable descending map subMap 2-args check", function( cb ) {
+			var map = c.field_descending_navigable_map.subMap( "z", "c" );
+			cb.assertEquals( map.values(), ["z"] )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable descending map subMap 3-args check 1", function( cb ) {
+			var map = c.field_descending_navigable_map.subMap( "z", "c", false );
+			cb.assertEquals( map.values(), ["z"] )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable descending map subMap 3-args check 2", function( cb ) {
+			var map = c.field_descending_navigable_map.subMap( "z", false, "c" );
+			cb.assertEquals( map.values(), [] )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( map.isEmpty(), true )
+			.done();
+		})
+		.test("Navigable descending map subMap 4-args check", function( cb ) {
+			var map = c.field_descending_navigable_map.subMap( "z", false, "c", false );
+			cb.assertEquals( map.values(), [] )
+			.assertEquals( map.size(), 0 )
+			.assertEquals( map.isEmpty(), true )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// SUB MAP OF SUB MAP
+		//----------------------------------------------------------------------
+		.test("Navigable sub map of sub map of ascending map [a,c) -> [a,c) check", function( cb ) {
+			var map = c.field_navigable_map.subMap( "a", true, "c", false ).subMap( "a", true, "c", false );
+			cb.assertEquals( map.values(), ["a", "b"] )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable sub map of sub map of ascending map (a,c) -> [a,c) check", function( cb ) {
+			var map = c.field_navigable_map.subMap( "a", false, "c", false );
+			cb.assertException(function(){
+				map.subMap( "a", true, "c", false );
+			})
+			.assertEquals( map.values(), ["b"] )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable sub map of sub map of ascending map [a,c) -> [a,c] check", function( cb ) {
+			var map = c.field_navigable_map.subMap( "a", true, "c", false );
+
+			cb.assertException(function(){
+				map.subMap( "a", true, "c", true );
+			})
+			.assertEquals( map.values(), ["a", "b"] )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable sub map of sub map of descending map [z,b) -> [z,b) check", function( cb ) {
+			var map = c.field_descending_navigable_map.subMap( "z", true, "b", false ).subMap( "z", true, "b", false );
+			cb.assertEquals( map.values(), ["z", "c"] )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable sub map of sub map of descending map (z,b) -> [z,b) check", function( cb ) {
+			var map = c.field_descending_navigable_map.subMap( "z", false, "b", false );
+
+			cb.assertException(function() {
+				map.subMap( "z", true, "b", false );
+			})
+			.assertEquals( map.values(), ["c"] )
+			.assertEquals( map.size(), 1 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+		.test("Navigable sub map of sub map of descending map [z,b) -> [z,b] check", function( cb ) {
+			var map = c.field_descending_navigable_map.subMap( "z", true, "b", false );
+
+			cb.assertException(function() {
+				map.subMap( "z", true, "b", true );
+			})
+			.assertEquals( map.values(), ["z", "c"] )
+			.assertEquals( map.size(), 2 )
+			.assertEquals( map.isEmpty(), false )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// SERVER-SIDE METHODS
+		//----------------------------------------------------------------------
+		.test( c, c.test_methods.get() )
+
+		//----------------------------------------------------------------------
+		// DATA SYNC
+		//----------------------------------------------------------------------
+		.test("Navigable map sync server to client", function( cb ){
+			c.start_sync();
+
+			var a = c.sync_ascending_map;
+			var b = c.sync_descending_map.descendingMap();
+			cb.within( 3000, function(){
+				var av = a.values();
+				var bv = b.values();
+				if( util.isEqual( av, ["a", "b", "c"] ) && util.isEqual( bv, ["a", "b", "c"] ) ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Navigable asceding map sync client to server", function( cb ){
+			c.sync_ascending_map_result.one( "change", function( e, value ){
+				if( value ) {
+					cb.done();
+				} else {
+					cb.fail( value );
+				}
+			});
+
+			c.sync_ascending_map.clear();
+		})
+		.test("Navigable descending map sync client to server", function( cb ){
+			c.sync_descending_map_result.one( "change", function( e, value ){
+				if( value ) {
+					cb.done();
+				} else {
+					cb.fail( value );
+				}
+			});
+
+			c.sync_descending_map.clear();
+		})
+
+		//----------------------------------------------------------------------
+		// SUB MAP EVENTS
+		//----------------------------------------------------------------------
+		.test("Navigable ascending sub map init event check", function( cb ){
+			var map = c.field_navigable_map.clear().putAll({a:"a", b:"b"}).subMap("b", "c");
+
+			map.one( "init", function( e, mapping ){
+				if( util.isEqual({b:"b"}, mapping) ) {
+					cb.done();
+				} else {
+					cb.fail();
+				}
+			});
+		})
+		.test("Navigable ascending sub map value event check", function( cb ){
+			var map = c.field_navigable_map.clear().putAll({a:"a", b:"b"}).subMap("b", "c");
+
+			var isFirst = true;
+			var handler = function( e, added, removed ){
+				if( isFirst ) {
+					isFirst = false;
+					if( util.isEqual({b:"b"}, added) !== true || util.isEqual({}, removed) !== true ){
+						map.off( "value", handler );
+						cb.fail();
+					}
+				} else {
+					map.off( "value", handler );
+					if( util.isEqual({b:"b"}, removed) !== true || util.isEqual({}, added) !== true ) {
+						cb.fail();
+					} else {
+						cb.done();
+					}
+				}
+			};
+
+			map.on( "value", handler );
+			c.field_navigable_map.clear();
+		})
+		.test("Navigable ascending sub map change event check", function( cb ){
+			var map = c.field_navigable_map.clear().putAll({a:"a", b:"b"}).subMap("b", "c");
+
+			var handler = function( e, added, removed ){
+				if( util.isEqual({b:"b"}, removed) !== true || util.isEqual({}, added) !== true ) {
+					cb.fail();
+				} else {
+					cb.done();
+				}
+			};
+
+			map.one( "change", handler );
+			c.field_navigable_map.clear();
+		})
+		.test("Navigable descending sub map init event check", function( cb ){
+			var map = c.field_descending_navigable_map.clear().putAll({a:"a", b:"b"}).subMap("c", "b", true);
+
+			map.one( "init", function( e, mapping ){
+				if( util.isEqual({b:"b"}, mapping) ) {
+					cb.done();
+				} else {
+					cb.fail( mapping );
+				}
+			});
+		})
+		.test("Navigable descending sub map value event check", function( cb ){
+			var map = c.field_descending_navigable_map.clear().putAll({a:"a", b:"b"}).subMap("c", "b", true);
+
+			var isFirst = true;
+			var handler = function( e, added, removed ){
+				if( isFirst ) {
+					isFirst = false;
+					if( util.isEqual({b:"b"}, added) !== true || util.isEqual({}, removed) !== true ){
+						map.off( "value", handler );
+						cb.fail();
+					}
+				} else {
+					map.off( "value", handler );
+					if( util.isEqual({b:"b"}, removed) !== true || util.isEqual({}, added) !== true ) {
+						cb.fail();
+					} else {
+						cb.done();
+					}
+				}
+			};
+
+			map.on( "value", handler );
+			c.field_descending_navigable_map.clear();
+		})
+		.test("Navigable descending sub map change event check", function( cb ){
+			var map = c.field_descending_navigable_map.clear().putAll({a:"a", b:"b"}).subMap("c", "b", true);
+
+			var handler = function( e, added, removed ){
+				if( util.isEqual({b:"b"}, removed) !== true || util.isEqual({}, added) !== true ) {
+					cb.fail();
+				} else {
+					cb.done();
+				}
+			};
+
+			map.one( "change", handler );
+			c.field_descending_navigable_map.clear();
+		})
+
+		//----------------------------------------------------------------------
+		// MEMORY LEAK
+		//----------------------------------------------------------------------
+		.test("Navigable ascending sub map memory leak check", function( cb ){
+			var connector = c.field_navigable_map.connector();
+			var count = 0;
+			util.each( connector.getConnections(), function( connections, name ){
+				count += connections.length;
+			});
+			if( count <= 0 ){
+				cb.done();
+			} else {
+				cb.fail( count );
+			}
+		})
+		.test("Navigable descending sub map memory leak check", function( cb ){
+			var connector = c.field_descending_navigable_map.connector();
+			var count = 0;
+			util.each( connector.getConnections(), function( connections, name ){
+				count += connections.length;
+			});
+			if( count <= 0 ){
+				cb.done();
+			} else {
+				cb.fail( count );
+			}
+		})
+
+		//----------------------------------------------------------------------
+		// NON-NULL
+		//----------------------------------------------------------------------
+		.test("Non-null navigable map putAll check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map_nonnull.putAll({a: "a", b:"b", c:"c"}), c.field_navigable_map_nonnull )
+				.assertEquals( c.field_navigable_map_nonnull.size(), 3 )
+				.assertEquals( c.field_navigable_map_nonnull.values(), ["a", "b", "c"] )
+				.done();
+		})
+		.test("Non-null navigable map putAll null check", function( cb ) {
+			var result = true;
+			try {
+				c.field_navigable_map_nonnull.putAll({d:null});
+				result = false;
+			} catch( e ){
+
+			}
+
+			cb
+			.assertEquals( result, true )
+			.assertEquals( c.field_navigable_map_nonnull.size(), 3 )
+			.assertEquals( c.field_navigable_map_nonnull.values(), ["a", "b", "c"] )
+			.done();
+		})
+		.test("Non-null navigable map put check", function( cb ) {
+			cb.assertEquals( c.field_navigable_map_nonnull.put( "d", "d" ), null )
+				.assertEquals( c.field_navigable_map_nonnull.size(), 4 )
+				.assertEquals( c.field_navigable_map_nonnull.values(), ["a", "b", "c", "d"] )
+				.done();
+		})
+		.test("Non-null navigable map put null value check", function( cb ) {
+			var result = true;
+			try {
+				c.field_navigable_map_nonnull.put( "e", null );
+				result = false;
+			} catch( e ){
+
+			}
+
+			cb
+			.assertEquals( result, true )
+			.assertEquals( c.field_navigable_map_nonnull.size(), 4 )
+			.assertEquals( c.field_navigable_map_nonnull.values(), ["a", "b", "c", "d"] )
+			.done();
+		})
+		.test("Non-null navigable map get check", function( cb ) {
+			cb
+			.assertEquals( c.field_navigable_map_nonnull.get( "a" ), "a" )
+			.assertEquals( c.field_navigable_map_nonnull.get( "b" ), "b" )
+			.assertEquals( c.field_navigable_map_nonnull.get( "c" ), "c" )
+			.assertEquals( c.field_navigable_map_nonnull.get( "d" ), "d" )
+			.assertEquals( c.field_navigable_map_nonnull.get( "e" ) == null, true )
+			.done();
+		})
+
+		.test( c, [
+			"nonnull_navigable_map_putAll_check",
+			"nonnull_navigable_map_putAll_null_check",
+			"nonnull_navigable_map_put_check",
+			"nonnull_navigable_map_put_null_value_check",
+			"nonnull_navigable_map_get_check"
+		])
+
+		//----------------------------------------------------------------------
+		// UNINITIALIZED
+		//----------------------------------------------------------------------
+		.test("Uninitialized navigable map event check case 1", function( cb ) {
+			var count = { init: 0, change: 0, value: 0 };
+
+			var value0 = "a";
+
+			c.field_navigable_map_uninitialized.one( "init", function( e, added ){
+				cb.assertEquals( added, {a:value0} );
+				count.init += 1;
+			});
+
+			c.field_navigable_map_uninitialized.one( "change", function( e, added, removed ){
+				cb.assertEquals( added, {a:value0} )
+					.assertEquals( removed, {} );
+				count.change += 1;
+			});
+
+			c.field_navigable_map_uninitialized.one( "value", function( e, added, removed ){
+				cb.assertEquals( added, {a:value0} )
+					.assertEquals( removed, {} );
+				count.value += 1;
+			});
+
+			c.initialize( value0, value0 );
+
+			cb.within(3000, function(){
+				if( count.init === 1 && count.change === 1 && count.value === 1 ) cb.done();
+			});
+		})
+		.test("Uninitialized navigable map event check case 2", function( cb ) {
+			var count = { init: 0, change: 0, value: 0 };
+
+			var value0 = "a";
+
+			c.field_navigable_map_uninitialized2.one( "init", function( e, added ){
+				cb.assertEquals( added, {} );
+				count.init += 1;
+			});
+
+			c.field_navigable_map_uninitialized2.one( "change", function( e, added, removed ){
+				cb.assertEquals( added, {} )
+					.assertEquals( removed, {} );
+				count.change += 1;
+			});
+
+			c.field_navigable_map_uninitialized2.one( "value", function( e, added, removed ){
+				cb.assertEquals( added, {} )
+					.assertEquals( removed, {} );
+				count.value += 1;
+			});
+
+			c.initialize();
+
+			cb.within(3000, function(){
+				if( count.init === 1 && count.change === 0 && count.value === 1 ) cb.done();
+			});
+		})
+		.test( c, ["initialize_twice_check"])
+		.execute();
+	}());
+	</script>
+</body>
+</html>

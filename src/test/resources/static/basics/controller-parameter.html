@@ -1,0 +1,49 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-parametrized-controller?foo=bar&str=123"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsParametrizedController;
+
+		puppeteer
+		.test("Parameter check", function( cb ){
+			cb.within(3000, function() {
+				cb.assertEquals( c.get_parameter_result.get(), true ).done();
+			});
+		})
+		.test("Parameters check", function( cb ){
+			cb.within(3000, function() {
+				cb.assertEquals( c.get_parameters_result.get(), true ).done();
+			});
+		})
+		.test("Parameter map check", function( cb ){
+			cb.within(3000, function() {
+				cb.assertEquals( c.get_parameter_map_result.get(), true ).done();
+			});
+		})
+		.test("Query string check", function( cb ){
+			cb.assertEquals( c.getServer().getSettings().path.query, "?foo=bar&str=123" ).done();
+		})
+		.test("Content path check", function( cb ){
+			cb.assertEquals( c.getServer().getSettings().path.content, "/basics-parametrized-controller" ).done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

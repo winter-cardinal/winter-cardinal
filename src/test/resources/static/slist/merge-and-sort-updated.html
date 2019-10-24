@@ -1,0 +1,74 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var mergeAndSortUpdated = wcardinal.controller.data.internal.mergeAndSortUpdated;
+
+		var indexComparator = function( a, b ) {
+			return a.index - b.index;
+		};
+
+		var toExpected = function( updated ){
+			var newUpdated = [];
+			var indexToUpdate = {};
+			for( var i=0, imax=updated.length; i<imax; ++i ) {
+				var update = updated[ i ];
+				var previous = indexToUpdate[ update.index ];
+				if( previous == null ) {
+					indexToUpdate[ update.index ] = update;
+					newUpdated.push( update );
+				} else {
+					previous.newValue = update.newValue;
+				}
+			}
+
+			return newUpdated.sort( indexComparator );
+		};
+
+		puppeteer
+		.test( "SList mergeAndSortUpdated check", function( cb ){
+			for( var i=1; i<100; ++i ) {
+				for( var itry=0; itry<100; ++itry ) {
+					var updated = [];
+					for( var j=0, jmax=i * 10; j<jmax; ++j ) {
+						updated.push({
+							index: Math.floor(Math.random() * 10 * i),
+							newValue: i * j,
+							oldValue: i + j
+						});
+					}
+					var expected = toExpected( updated );
+
+					var original = util.cloneDeep( updated );
+					var result = mergeAndSortUpdated( updated );
+					if( ! util.isEqual( result, expected ) ) {
+						console.log( "[I N]", JSON.stringify( original ) );
+						console.log( "[OUT]", JSON.stringify( result ) );
+						console.log( "[EXPECTED]", JSON.stringify( expected ) );
+						cb.fail();
+					}
+				}
+			}
+			cb.done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

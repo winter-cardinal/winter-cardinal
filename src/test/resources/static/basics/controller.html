@@ -1,0 +1,138 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsController;
+
+		puppeteer
+		.test("Controller existence check", function( cb ){
+			cb.assert( "basicsController" in window ).done();
+		})
+		.test("Query string check", function( cb ){
+			cb.assertEquals( c.getServer().getSettings().path.query, "" ).done();
+		})
+		.test("Content path check", function( cb ){
+			cb.assertEquals( c.getServer().getSettings().path.content, "/basics-controller" ).done();
+		})
+		.test("Controller method check", function( cb ){
+			util.each( wcardinal.controller.RootController.prototype, function( func, name ){
+				cb.assert( name in c, name );
+			});
+			cb.done();
+		})
+		.test("Controller name check", function( cb ){
+			cb.assertEquals( c.getName(), "BasicsController" ).done();
+		})
+		.test("Controller locale check", function( cb ){
+			cb.assertNotEquals( c.field_locale_country.get(), null )
+				.assertNotEquals( c.field_locale_language.get(), null ).done();
+		})
+		.test("Controller readability check", function( cb ){
+			cb.assertEquals( c.isReadOnly(), false ).done();
+		})
+		.test("Controller nullability check", function( cb ){
+			cb.assertEquals( c.isNonNull(), false ).done();
+		})
+		.test("Controller histrical check", function( cb ){
+			cb.assertEquals( c.isHistorical(), false ).done();
+		})
+		.test("Controller parent check", function( cb ){
+			cb.assertEquals( c.getParent(), null ).done();
+		})
+		.test("Server existence check", function( cb ){
+			cb.assertNotEquals( c.getServer(), null ).done();
+		})
+		.test( c, [
+			"getName_PostConstruct_check",
+			"getParent_PostConstruct_check",
+			"getParentAsFactory_PostConstruct_check",
+			"getParents_PostConstruct_check",
+			"getRemoteAddress_PostConstruct_check",
+			"show_PostConstruct_check",
+			"hide_PostConstruct_check",
+			"isShown_PostConstruct_check",
+			"isHidden_PostConstruct_check",
+			"isReadOnly_PostConstruct_check",
+			"isNonNull_PostConstruct_check",
+			"isHistorical_PostConstruct_check",
+			"getPrincipal_PostConstruct_check",
+			"getScheduler_PostConstruct_check",
+			"getSessionId_PostConstruct_check",
+			"getSubSessionId_PostConstruct_check",
+			"lock_PostConstruct_check",
+			"unlock_PostConstruct_check",
+			"tryLock_PostConstruct_check",
+			"tryLock_timeout_PostConstruct_check",
+			"isLocked_PostConstruct_check",
+			"isLockedByCurrentThread_PostConstruct_check",
+			"execute_PostConstruct_check",
+			"execute_runnable_PostConstruct_check",
+			"execute_callable_PostConstruct_check",
+			"timeout_PostConstruct_check",
+			"timeout_runnable_PostConstruct_check",
+			"timeout_callable_PostConstruct_check",
+			"interval_PostConstruct_check",
+			"interval_paramter_PostConstruct_check",
+			"interval_runnable_PostConstruct_check",
+			"interval_runnable_startAt_PostConstruct_check",
+			"cancel_by_id_PostConstruct_check",
+			"cancel_PostConstruct_check",
+			"cancelAll_PostConstruct_check",
+			"triggerAndWait_PostConstruct_check",
+			"trigger_PostConstruct_check",
+			"getParameter_PostConstruct_check",
+			"getParameters_PostConstruct_check",
+			"getParameterMap_PostConstruct_check",
+			"getFactoryParameters_PostConstruct_check",
+			"getAttributes_PostConstruct_check",
+			"getLocales_PostConstruct_check",
+			"getLocale_PostConstruct_check",
+			"notify_PostConstruct_check",
+			"notifyAsync_PostConstruct_check",
+
+			"getName_check",
+			"getParent_check",
+			"getParentAsFactory_check",
+			"getParents_check",
+			"getParent_child_check",
+			"getParents_child_check",
+			"getRemoteAddress_check",
+			"getPrincipal_check",
+			"getScheduler_check",
+			"getSessionId_check",
+			"getSubSessionId_check",
+			"tryLock_check",
+			"tryLock_timeout_check",
+			"show_check",
+			"hide_check",
+			"isShown_check",
+			"isHidden_check",
+			"isReadOnly_check",
+			"isNonNull_check",
+			"isHistorical_check",
+			"isLocked_check",
+			"isLockedByCurrentThread_check",
+			"isLockedByCurrentThread_unlocked_check"
+		])
+		.execute();
+	}());
+	</script>
+</body>
+</html>

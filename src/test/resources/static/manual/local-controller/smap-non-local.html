@@ -1,0 +1,54 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/local-controller-controller"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = localControllerController;
+
+		c.field.on( "value", function(){
+			// DO NOTHING
+		});
+
+		var SIZE = 2000;
+		c.lock();
+		try {
+			for( var i=0; i<SIZE; ++i ) {
+				var key = ""+i;
+				c.field.put( key, i );
+			}
+		} finally {
+			c.unlock();
+		}
+
+		var updater = function(){
+			c.lock();
+			try {
+				for( var i=SIZE-1; 0<=i; --i ) {
+					var key = ""+i;
+					c.field.put( key, c.field.get( key ) + 1 );
+				}
+			} finally {
+				c.unlock();
+			}
+
+			setTimeout(updater, 1000);
+		};
+		updater();
+	}());
+	</script>
+</body>
+</html>

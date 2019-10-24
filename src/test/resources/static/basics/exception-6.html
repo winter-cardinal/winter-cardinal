@@ -1,0 +1,43 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-exception6-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsException6Controller;
+
+		puppeteer
+		.test("Exception handler 1", function( cb ){
+			cb.within( 5000, function(){
+				if( c.handle1_result.get() === 1 ) cb.done();
+			});
+		})
+		.test("Exception handler 2", function( cb ){
+			cb.within( 5000, function(){
+				if( c.handle2_result.get() === 0 ) cb.done();
+			});
+		})
+		.test("Exception handler 3", function( cb ){
+			cb.within( 5000, function(){
+				if( c.handle3_result.get() === 0 ) cb.done();
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

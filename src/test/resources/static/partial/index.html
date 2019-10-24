@@ -1,0 +1,68 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/partial-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = partialController;
+
+		puppeteer
+		.test("Callable method check 1", function( cb ){
+			c.generate( 10 ).then(function( result ){
+				cb
+				.assertEquals( util.isArray(result), true )
+				.assertEquals( result.length, 10 );
+				util.each( result, function( element ){
+					cb.assertEquals( util.isNumber( element ), true );
+				});
+				cb.done();
+			}, function(reason){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable method check 2", function( cb ){
+			var count = 0;
+			var total = 100;
+			var size = 20;
+			c.lock();
+			try {
+				for( var i=0; i<total; ++i ) {
+					c.generate( size ).then(function( result ){
+						cb
+						.assertEquals( util.isArray(result), true )
+						.assertEquals( result.length, size );
+						util.each( result, function( element ){
+							cb.assertEquals( util.isNumber( element ), true );
+						});
+						count += 1;
+					}, function(reason){
+						cb.fail( reason );
+					});
+				}
+			} finally {
+				c.unlock();
+			}
+			cb.within(10000, function(){
+				if( count === total ) cb.done();
+			})
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

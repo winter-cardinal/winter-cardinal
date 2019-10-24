@@ -1,0 +1,42 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/s-list-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = sListController;
+
+		puppeteer
+		.test( "SList browser check", function( cb ){
+			var interevalId = setInterval(function(){
+				if( c.field_list.size() === c.SIZE ) {
+					clearInterval( interevalId );
+					cb.within( 5000, function(){
+						c.check().then(function( result ){
+							if( result === true ) cb.done();
+						});
+					});
+				} else {
+					c.field_list.add( c.field_list.size() );
+				}
+			}, 10);
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

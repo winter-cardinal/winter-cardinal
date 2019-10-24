@@ -1,0 +1,33 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/s-list-shared-reload-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = sListSharedReloadController;
+
+		puppeteer
+		.test( "SList shared reload check", function( cb ){
+			c.shared.list.on( "value", function( e, added ){
+				cb.assertEquals( c.shared.list.toArray(), [ 0, 1, 2 ] ).done();
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

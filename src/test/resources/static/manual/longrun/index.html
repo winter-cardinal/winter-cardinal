@@ -1,0 +1,36 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/long-run-controller"></script>
+</head>
+<body>
+	<h1 id="a"></h1>
+	<h1 id="b"></h1>
+	<script>
+	(function(){
+		'use strict';
+
+		var a = document.getElementById( "a" );
+		var b = document.getElementById( "b" );
+		var c = longRunController;
+
+		c.field_string.on( "value", function( e, value ){
+			a.innerText = String( value );
+		});
+
+		c.field_list.on( "value", function( e ){
+			b.innerText = this.toString();
+		});
+	}());
+	</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-initialized-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsInitializedController;
+
+		puppeteer
+		.test("Initialized controller isInitialized", function( cb ){
+			cb.assertEquals( c.isInitialized(), false ).done();
+		})
+		.test("Initialized controller initialized", function( cb ){
+			cb.assertEquals( c.initialized.isInitialized(), true ).done();
+		})
+		.test("Initialized controller nonnull", function( cb ){
+			cb.assertEquals( c.nonnull.isInitialized(), false ).done();
+		})
+		.test("Initialized controller uninitialized", function( cb ){
+			cb.assertEquals( c.uninitialized.isInitialized(), false ).done();
+		})
+		.test("Initialized controller uninitialized initialize", function( cb ){
+			cb.assertEquals( c.nonnull.initialize(), c.nonnull ).done();
+		})
+		.test("Initialized controller uninitialized initialize", function( cb ){
+			cb.assertEquals( c.uninitialized.initialize(), c.uninitialized ).done();
+		})
+		.test("Initialized controller isInitialized after initialize", function( cb ){
+			cb.assertEquals( c.isInitialized(), true ).done();
+		})
+		.test("Initialized controller uninitialized uninitialize", function( cb ){
+			cb.assertEquals( c.nonnull.uninitialize(), c.nonnull ).done();
+		})
+		.test("Initialized controller uninitialized uninitialize", function( cb ){
+			cb.assertEquals( c.uninitialized.uninitialize(), c.uninitialized ).done();
+		})
+		.test("Initialized controller isInitialized after uninitialize", function( cb ){
+			cb.assertEquals( c.isInitialized(), true ).done();
+		})
+		.test("Initialized controller initialize", function( cb ){
+			cb.assertEquals( c.initialize(), c ).done();
+		})
+		.test("Initialized controller isInitialized after three initialize", function( cb ){
+			cb.assertEquals( c.isInitialized(), true ).done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="message-controller"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		"use strict";
+
+		var c = messageController;
+
+		c.getServer().on( "requests", function( e, requests, values ){
+			for( var i=0, imax=requests.length; i<imax; ++i ) {
+				var request = requests[ i ];
+				var offset = (2 < request.length ? 1 : 0);
+				if( request[ offset ] === "u" ) {
+					var arg = request[ offset + 1 ][ 0 ];
+					if( arg != null && arg.ctrlr != null && arg.ctrlr.component != null && arg.ctrlr.component.data != null ) {
+						if( arg.ctrlr.component.data.counter != null ) {
+							console.log( "counter", arg.ctrlr.component.data.counter[ 2 ] );
+						}
+						if( arg.ctrlr.component.data.tick != null ) {
+							console.log( "tick", arg.ctrlr.component.data.tick[ 2 ] );
+						}
+					}
+				}
+			}
+		});
+	}());
+	</script>
+</html>

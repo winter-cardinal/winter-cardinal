@@ -1,0 +1,72 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/s-queue-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = sQueueController;
+
+		puppeteer
+		.test( "SQueue random check", function( cb ){
+			var count = 0;
+
+			var start = function(){
+				var ocount = Math.floor( 10 * Math.random() ) + 1;
+
+				c.lock();
+				try {
+					for( var i=0; i<ocount; ++i ) {
+						var size = c.queue.size();
+						var capacity = Math.floor( 10 + Math.random() * 100 );
+						var value = Math.round( Math.random() * 100 );
+						var choice = Math.random();
+
+						if( size <= 0 || 0.5 <= choice ) {
+							c.queue.add( value );
+						} else if( 0.25 <= choice ) {
+							c.queue.remove();
+						} else {
+							c.queue.setCapacity( capacity );
+						}
+					}
+				} finally {
+					c.unlock();
+				}
+
+				if( (++count) < c.MAX_COUNT ) {
+					setTimeout( start, 10 );
+				}
+			};
+
+			start();
+			c.start();
+
+			cb.within( 60000, function(){
+				if( count !== c.MAX_COUNT ) return;
+
+				c.browser_side_result.set( util.clone( c.queue.toArray() ) );
+				if( c.check_result.get() ) {
+					cb.done();
+				}
+			});
+		}, 90000)
+		.execute();
+	}());
+	</script>
+</body>
+</html>

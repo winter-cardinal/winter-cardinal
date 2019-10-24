@@ -1,0 +1,77 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/s-movable-list-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = sMovableListController;
+
+		puppeteer
+		.test( "SMovableList random check", function( cb ){
+			var count = 0;
+
+			var start = function(){
+				var ocount = Math.floor( 10 * Math.random() ) + 1;
+
+				c.lock();
+				try {
+					for( var i=0; i<ocount; ++i ) {
+						var size = c.list.size();
+						var newIndex = Math.floor( size * Math.random() );
+						var oldIndex = Math.floor( size * Math.random() );
+						var value = Math.round(Math.random()*100);
+
+						var choice = Math.random();
+						if( size <= 0 ) {
+							c.list.add( value );
+						} else if( 0.75 <= choice ) {
+							c.list.add( newIndex, value );
+						} else if( 0.5 <= choice ){
+							c.list.remove( newIndex );
+						} else if( 0.25 <= choice ) {
+							c.list.set( newIndex, value );
+						} else {
+							c.list.move( newIndex, oldIndex );
+						}
+					}
+				} finally {
+					c.unlock();
+				}
+
+				if( (++count) < c.MAX_COUNT ) {
+					setTimeout( start, 10 );
+				}
+			};
+
+			start();
+			c.start();
+
+			cb.within( 60000, function(){
+				if( c.MAX_COUNT <= count ) {
+					c.browser_side_result.set( util.clone( c.list.toArray() ) );
+					if( c.check_result.get() ) {
+						cb.done();
+					}
+				}
+			});
+		}, 90000)
+		.execute();
+	}());
+	</script>
+</body>
+</html>

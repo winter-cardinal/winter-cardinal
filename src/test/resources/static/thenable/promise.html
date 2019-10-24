@@ -1,0 +1,63 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var Thenable = wcardinal.util.Thenable;
+
+		puppeteer
+		.test("Thenable existence check", function( cb ){
+			cb.assert( Thenable != null ).done();
+		})
+		.test("Thenable resolve check", function( cb ){
+			var expected = "done";
+
+			new Thenable(function( resolve, reject ){
+				cb
+				.assert( util.isFunction( resolve ) )
+				.assert( util.isFunction( reject ) );
+
+				resolve( expected );
+			})
+			.then(function( result ){
+				cb.assertEquals( result, expected ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Thenable reject check", function( cb ){
+			var expected = "done";
+
+			new Thenable(function( resolve, reject ){
+				cb
+				.assert( util.isFunction( resolve ) )
+				.assert( util.isFunction( reject ) );
+
+				reject( expected );
+			})
+			.then(function( result ){
+				cb.fail( result );
+			}, function( reason ){
+				cb.assertEquals( reason, expected ).done();
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

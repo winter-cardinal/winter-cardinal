@@ -1,0 +1,81 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = wcardinal.controller.Controllers.create({
+			factory: "ComponentFactory"
+		});
+
+		puppeteer
+		.test( "Local factory change event check 1", function( cb ){
+			var timeoutId = setTimeout(function(){
+				c.factory.off( "change" );
+				cb.fail();
+			}, 1000);
+			c.factory.one( "change", function(){
+				clearTimeout( timeoutId );
+				cb.done();
+			});
+			c.factory.create();
+		})
+		.test( "Local factory change event check 2", function( cb ){
+			var timeoutId = setTimeout(function(){
+				c.factory.off( "change" );
+				cb.fail();
+			}, 1000);
+			c.factory.one( "change", function(){
+				clearTimeout( timeoutId );
+				cb.done();
+			});
+			c.factory.clear();
+		})
+		.test( "Local factory value event check 1", function( cb ){
+			var timeoutId = setTimeout(function(){
+				c.factory.off( "value" );
+				cb.fail();
+			}, 1000);
+			var count = 0;
+			c.factory.on( "value", function(){
+				count += 1;
+				if( count === 2 ) {
+					clearTimeout( timeoutId );
+					cb.done();
+				}
+			});
+			c.factory.create();
+		})
+		.test( "Local factory value event check 2", function( cb ){
+			var timeoutId = setTimeout(function(){
+				c.factory.off( "value" );
+				cb.fail();
+			}, 1000);
+			var count = 0;
+			c.factory.on( "value", function(){
+				count += 1;
+				if( count === 2 ) {
+					clearTimeout( timeoutId );
+					cb.done();
+				}
+			});
+			c.factory.clear();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

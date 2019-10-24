@@ -1,0 +1,46 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-controller-scope-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsControllerScopeController;
+
+		puppeteer
+		.test("Controller scope", function( cb ){
+			c.set().then(function( value ){
+				cb.assertEquals( value, 0 );
+				c.component.get().then(function( value ){
+					cb.assertEquals( value, 1 );
+
+					c.factory.create().get().then(function( value ){
+						cb.assertEquals( value, 1 ).done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			}, function( reason ){
+				cb.fail( reason );
+			})
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

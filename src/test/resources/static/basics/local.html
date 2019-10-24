@@ -1,0 +1,2056 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-local-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var Thenable = wcardinal.util.Thenable;
+		var Controllers = wcardinal.controller.Controllers;
+		var dc = wcardinal.controller;
+		var dcd = dc.data;
+		var c = basicsLocalController;
+
+		var defaults = {
+			SArrayNode: [0, 1, 2],
+			SBoolean: true,
+			SDouble: 1.0,
+			SJsonNode: "string",
+			SFloat: 2.0,
+			SInteger: 5,
+			SLong: 6,
+			SObjectNode: {"foo":12},
+			SString: "string",
+			SList: [ "a", "b", "c" ],
+			SMap: {bar:"bar"},
+			SClass: 12,
+			SROQueue: [ {date:0}, {date:1}, {date:2} ],
+			SNavigableMap: {foo:"foo"},
+			SMovableList: [ {value:0}, {value:1}, {value:2} ]
+		};
+
+		var invalids = {
+			SArrayNode: "foo",
+			SBoolean: 123,
+			SDouble: [],
+			SJsonNode: function(){},
+			SFloat: "bar",
+			SInteger: {},
+			SLong: {},
+			SObjectNode: "foo",
+			SString: 123,
+			SList: {},
+			SMap: [],
+			SClass: function(){},
+			SROQueue: [ {date:0}, {date:1}, {date:2} ],
+			SNavigableMap: {foo:"foo"},
+			SMovableList: [ {value:0}, {value:1}, {value:2} ]
+		};
+
+		var nullabilities = {
+			SArrayNode: true,
+			SBoolean: true,
+			SDouble: true,
+			SJsonNode: true,
+			SFloat: true,
+			SInteger: true,
+			SLong: true,
+			SObjectNode: true,
+			SString: true,
+			SList: false,
+			SMap: false,
+			SClass: false,
+			SROQueue: false,
+			SNavigableMap: false,
+			SMovableList: false
+		};
+
+		puppeteer
+		.test("Local controller", function( cb ){
+			var controller = Controllers.create({});
+			cb.assertEquals( controller.constructor, dc.Controller ).done();
+		})
+		.test("Local controller fields", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: "sarraynode",
+				SBoolean: "sboolean",
+				SDouble: "sdouble",
+				SJsonNode: "sjsonnode",
+				SFloat: "sfloat",
+				SInteger: "sinteger",
+				SLong: "slong",
+				SObjectNode: "sobjectnode",
+				SString: "sstring",
+				SList: "slist",
+				SMap: "smap",
+				SClass: "sclass",
+				SROQueue: "sroqueue",
+				SNavigableMap: "snavigablemap",
+				SMovableList: "smovablelist"
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dcd[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 15 ).done();
+		})
+		.test("Local controller fields with defaults", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: "sarraynode:"+JSON.stringify(defaults.SArrayNode),
+				SBoolean: "sboolean:"+JSON.stringify(defaults.SBoolean),
+				SDouble: "sdouble:"+JSON.stringify(defaults.SDouble),
+				SJsonNode: "sjsonnode:"+JSON.stringify(defaults.SJsonNode),
+				SFloat: "sfloat:"+JSON.stringify(defaults.SFloat),
+				SInteger: "sinteger:"+JSON.stringify(defaults.SInteger),
+				SLong: "slong:"+JSON.stringify(defaults.SLong),
+				SObjectNode: "sobjectnode:"+JSON.stringify(defaults.SObjectNode),
+				SString: "sstring:"+JSON.stringify(defaults.SString),
+				SList: "slist:"+JSON.stringify(defaults.SList),
+				SMap: "smap:"+JSON.stringify(defaults.SMap),
+				SClass: "sclass:"+JSON.stringify(defaults.SClass),
+				SROQueue: "sroqueue:"+JSON.stringify(defaults.SROQueue),
+				SNavigableMap: "snavigablemap:"+JSON.stringify(defaults.SNavigableMap),
+				SMovableList: "smovablelist:"+JSON.stringify(defaults.SMovableList)
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dcd[ name ] )
+				.assertEquals( field.toJson(), defaults[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 15 ).done();
+		})
+		.test("Local controller fields with malformed defaults", function( cb ){
+
+			try {
+				Controllers.create({
+					SArrayNode: "sarraynode::"
+				});
+				cb.fail();
+			} catch( e ) {
+
+			}
+
+			try {
+				Controllers.create({
+					SArrayNode: "sarraynode:"
+				});
+				cb.fail();
+			} catch( e ) {
+
+			}
+
+			try {
+				Controllers.create({
+					SArrayNode: "sarraynode: ['']"
+				});
+				cb.fail();
+			} catch( e ) {
+
+			}
+
+			cb.done();
+		})
+		.test("Local controller fields object", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: {
+					type: "sarraynode"
+				},
+				SBoolean: {
+					type: "sboolean"
+				},
+				SDouble: {
+					type:"sdouble"
+				},
+				SJsonNode: {
+					type: "sjsonnode"
+				},
+				SFloat: {
+					type:"sfloat"
+				},
+				SInteger: {
+					type:"sinteger"
+				},
+				SLong: {
+					type: "slong"
+				},
+				SObjectNode: {
+					type: "sobjectnode"
+				},
+				SString: {
+					type: "sstring"
+				},
+				SList: {
+					type: "slist"
+				},
+				SMap: {
+					type: "smap"
+				},
+				SClass: {
+					type: "sclass"
+				},
+				SROQueue: {
+					type: "sroqueue"
+				},
+				SNavigableMap: {
+					type: "snavigablemap"
+				},
+				SMovableList: {
+					type: "smovablelist"
+				}
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dcd[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 15 ).done();
+		})
+		.test("Local controller fields object with defaults", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: {
+					type: "sarraynode",
+					value: defaults.SArrayNode
+				},
+				SBoolean: {
+					type: "sboolean",
+					value: defaults.SBoolean
+				},
+				SDouble: {
+					type:"sdouble",
+					value: defaults.SDouble
+				},
+				SJsonNode: {
+					type: "sjsonnode",
+					value: defaults.SJsonNode
+				},
+				SFloat: {
+					type:"sfloat",
+					value: defaults.SFloat
+				},
+				SInteger: {
+					type:"sinteger",
+					value: defaults.SInteger
+				},
+				SLong: {
+					type: "slong",
+					value: defaults.SLong
+				},
+				SObjectNode: {
+					type: "sobjectnode",
+					value: defaults.SObjectNode
+				},
+				SString: {
+					type: "sstring",
+					value: defaults.SString
+				},
+				SList: {
+					type: "slist",
+					value: defaults.SList
+				},
+				SMap: {
+					type: "smap",
+					value: defaults.SMap
+				},
+				SClass: {
+					type: "sclass",
+					value: defaults.SClass
+				},
+				SROQueue: {
+					type: "sroqueue",
+					value: defaults.SROQueue
+				},
+				SNavigableMap: {
+					type: "snavigablemap",
+					value: defaults.SNavigableMap
+				},
+				SMovableList: {
+					type: "smovablelist",
+					value: defaults.SMovableList
+				}
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dcd[ name ] )
+				.assertEquals( field.toJson(), defaults[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 15 ).done();
+		})
+		.test("Local controller fields object with invalid defaults", function( cb ){
+			var total = 0;
+			var count = 0;
+			for( var name in invalids ) {
+				if( invalids.hasOwnProperty(name) !== true ) continue;
+				total += 1;
+				try {
+					var structure = {};
+					structure[ name ] = {
+						type: name,
+						value: invalids[ name ]
+					};
+					Controllers.create( structure );
+				} catch( e ) {
+					count += 1;
+				}
+			}
+
+			cb.assertNotEquals( total, count ).done();
+		})
+		.test("Local controller fields object with null defaults", function( cb ){
+			var total = 0;
+			var count = 0;
+			for( var name in invalids ) {
+				if( invalids.hasOwnProperty(name) !== true ) continue;
+				total += 1;
+				try {
+					var structure = {};
+					structure[ name ] = {
+						type: name,
+						value: null
+					};
+					Controllers.create( structure );
+					if( nullabilities[ name ] ) {
+						count += 1;
+					}
+				} catch( e ) {
+					if( ! nullabilities[ name ] ) {
+						count += 1;
+					}
+				}
+			}
+
+			cb.assertNotEquals( total, count ).done();
+		})
+		.test("Local controller fields object with undefined defaults", function( cb ){
+			var total = 0;
+			var count = 0;
+			for( var name in invalids ) {
+				if( invalids.hasOwnProperty(name) !== true ) continue;
+				total += 1;
+				try {
+					var structure = {};
+					structure[ name ] = {
+						type: name,
+						value: undefined
+					};
+					Controllers.create( structure );
+					if( nullabilities[ name ] ) {
+						count += 1;
+					}
+				} catch( e ) {
+					if( ! nullabilities[ name ] ) {
+						count += 1;
+					}
+				}
+			}
+
+			cb.assertNotEquals( total, count ).done();
+		})
+		.test("Local controller fields upper case", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: "SArrayNode",
+				SBoolean: "SBoolean",
+				SDouble: "SDouble",
+				SJsonNode: "SJsonNode",
+				SFloat: "SFloat",
+				SInteger: "SInteger",
+				SLong: "SLong",
+				SObjectNode: "SObjectNode",
+				SString: "SString",
+				SList: "SList",
+				SMap: "SMap",
+				SClass: "SClass",
+				SROQueue: "SROQueue",
+				SNavigableMap: "SNavigableMap",
+				SMovableList: "SMovableList"
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dcd[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 15 ).done();
+		})
+		.test("Local controller fields class", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: dcd.SArrayNode,
+				SBoolean: dcd.SBoolean,
+				SDouble: dcd.SDouble,
+				SJsonNode: dcd.SJsonNode,
+				SFloat: dcd.SFloat,
+				SInteger: dcd.SInteger,
+				SLong: dcd.SLong,
+				SObjectNode: dcd.SObjectNode,
+				SString: dcd.SString,
+				SList: dcd.SList,
+				SMap: dcd.SMap,
+				SClass: dcd.SClass,
+				SROQueue: dcd.SROQueue,
+				SNavigableMap: dcd.SNavigableMap,
+				SMovableList: dcd.SMovableList
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dcd[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 15 ).done();
+		})
+		.test("Local controller fields object class", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: {
+					type: dcd.SArrayNode
+				},
+				SBoolean: {
+					type: dcd.SBoolean
+				},
+				SDouble: {
+					type: dcd.SDouble
+				},
+				SJsonNode: {
+					type: dcd.SJsonNode
+				},
+				SFloat: {
+					type: dcd.SFloat
+				},
+				SInteger: {
+					type: dcd.SInteger
+				},
+				SLong: {
+					type: dcd.SLong
+				},
+				SObjectNode: {
+					type: dcd.SObjectNode
+				},
+				SString: {
+					type: dcd.SString
+				},
+				SList: {
+					type: dcd.SList
+				},
+				SMap: {
+					type: dcd.SMap
+				},
+				SClass: {
+					type: dcd.SClass
+				},
+				SROQueue: {
+					type: dcd.SROQueue
+				},
+				SNavigableMap: {
+					type: dcd.SNavigableMap
+				},
+				SMovableList: {
+					type: dcd.SMovableList
+				}
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dcd[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 15 ).done();
+		})
+		.test("Local controller controllers", function( cb ){
+			var controller = Controllers.create({
+				Page: "page",
+				Popup: "popup",
+				Component: "component",
+				PageFactory: "pagefactory",
+				PopupFactory: "popupfactory",
+				ComponentFactory: "componentfactory"
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dc[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 6 ).done();
+		})
+		.test("Local controller controllers object", function( cb ){
+			var controller = Controllers.create({
+				Page:{
+					type: "page"
+				},
+				Popup: {
+					type: "popup",
+				},
+				Component: {
+					type: "component"
+				},
+				PageFactory: {
+					type : "pagefactory"
+				},
+				PopupFactory: {
+					type : "popupfactory"
+				},
+				ComponentFactory: {
+					type : "componentfactory"
+				}
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor === dc[ name ], true );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 6 ).done();
+		})
+		.test("Local controller controllers upper case", function( cb ){
+			var controller = Controllers.create({
+				Page: "Page",
+				Popup: "Popup",
+				Component: "Component",
+				PageFactory: "PageFactory",
+				PopupFactory: "PopupFactory",
+				ComponentFactory: "ComponentFactory"
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dc[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 6 ).done();
+		})
+		.test("Local controller controllers class", function( cb ){
+			var controller = Controllers.create({
+				Page: dc.Page,
+				Popup: dc.Popup,
+				Component: dc.Component,
+				PageFactory: dc.PageFactory,
+				PopupFactory: dc.PopupFactory,
+				ComponentFactory: dc.ComponentFactory
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dc[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 6 ).done();
+		})
+		.test("Local controller controllers object class", function( cb ){
+			var controller = Controllers.create({
+				Page:{
+					type: dc.Page
+				},
+				Popup: {
+					type: dc.Popup,
+				},
+				Component: {
+					type: dc.Component
+				},
+				PageFactory: {
+					type: dc.PageFactory
+				},
+				PopupFactory: {
+					type: dc.PopupFactory
+				},
+				ComponentFactory: {
+					type: dc.ComponentFactory
+				}
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( field.constructor, dc[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 6 ).done();
+		})
+		.test("Local controller nest", function( cb ){
+			var controller = Controllers.create({
+				Page:{
+					type: dc.Page,
+					SString: dcd.SString
+				},
+				Popup: {
+					type: dc.Popup,
+					SString: dcd.SString
+				},
+				Component: {
+					type: dc.Component,
+					SString: dcd.SString
+				}
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				var subcount = 0;
+				field.each(function( sub, name ){
+					cb.assertEquals( sub.constructor, dcd[ name ] );
+					subcount += 1;
+				});
+
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( subcount, 1 )
+				.assertEquals( field.constructor, dc[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 3 ).done();
+		})
+		.test("Local controller nest deep", function( cb ){
+			var controller = Controllers.create({
+				Page:{
+					type: dc.Page,
+					SString: {
+						type: dcd.SString
+					},
+					Component: {}
+				},
+				Popup: {
+					type: dc.Popup,
+					SString: {
+						type: dcd.SString
+					},
+					Component: {}
+				},
+				Component: {
+					type: dc.Component,
+					SString: {
+						type: dcd.SString
+					},
+					Component: {}
+				}
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				var subcount = 0;
+				field.each(function( sub, name ){
+					cb.assertEquals( sub.constructor, (dcd[ name ] || dc[ name ]) );
+					subcount += 1;
+				});
+
+				cb
+				.assertNotEquals( field, null )
+				.assertNotEquals( field, undefined )
+				.assertEquals( subcount, 2 )
+				.assertEquals( field.constructor, dc[ name ] );
+				count += 1;
+			});
+
+			cb.assertEquals( count, 3 ).done();
+		})
+		.test("Local controller event 1", function( cb ){
+			var controller = Controllers.create({
+				component: {
+					foo: "SString"
+				}
+			});
+
+			var results = [];
+			controller.component.foo.on( "value", function( e, value ){
+				results.push( value );
+			});
+
+			controller.component.foo.set( "john" );
+
+			cb.assertEquals( results, [ null, "john" ] ).done();
+		})
+		.test("Local controller event 2", function( cb ){
+			var controller = Controllers.create({
+				component: {
+					foo: "SString"
+				}
+			});
+
+			var results = [];
+			controller.component.on( "value", function( e, value ){
+				results.push( this.foo.get() );
+			});
+
+			controller.component.foo.set( "john" );
+
+			cb.assertEquals( results, [ null, "john" ] ).done();
+		})
+		.test("Local controller event 3", function( cb ){
+			var controller = Controllers.create({
+				component: {
+					foo: "SString"
+				}
+			});
+
+			var results = [];
+			controller.on( "value", function( e, value ){
+				results.push( this.component.foo.get() );
+			});
+
+			controller.component.foo.set( "john" );
+
+			cb.assertEquals( results, [ null, "john" ] ).done();
+		})
+		.test("Local controller event 4", function( cb ){
+			var controller = Controllers.create({
+				component: {
+					foo: "@Uninitialized SString",
+				}
+			});
+
+			var results = [];
+			controller.component.foo.on( "value", function( e, value ){
+				results.push( value );
+			});
+
+			controller.component.foo.set( "john" );
+
+			cb.assertEquals( results, [ "john" ] ).done();
+		})
+		.test("Local controller event 5", function( cb ){
+			var controller = Controllers.create({
+				component: {
+					foo: "@NonNull SString"
+				}
+			});
+
+			var results = [];
+			controller.component.foo.on( "value", function( e, value ){
+				results.push( value );
+			});
+
+			controller.component.foo.set( "john" );
+
+			cb.assertEquals( results, [ "", "john" ] ).done();
+		})
+		.test("Local controller isInitialized/isNonNull 1", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: "SArrayNode",
+				SBoolean: "SBoolean",
+				SDouble: "SDouble",
+				SJsonNode: "SJsonNode",
+				SFloat: "SFloat",
+				SInteger: "SInteger",
+				SLong: "SLong",
+				SObjectNode: "SObjectNode",
+				SString: "SString",
+				SList: "SList",
+				SMap: "SMap",
+				SClass: "SClass",
+				SROQueue: "SROQueue",
+				SNavigableMap: "SNavigableMap",
+				SAscendingMap: "SAscendingMap",
+				SDescendingMap: "SDescendingMap",
+				SMovableList: "SMovableList",
+				Page: "Page",
+				Popup: "Popup",
+				Component: "Component"
+			});
+
+			var count = 0;
+			controller.each(function( field, name ){
+				if( field.isInitialized() ){
+					count += 1;
+				}
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), true )
+			.assertEquals( count, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 2-1", function( cb ){
+			var controller = Controllers.create({
+				un_SArrayNode: "@Uninitialized SArrayNode",
+				un_SBoolean: "@Uninitialized SBoolean",
+				un_SDouble: "@Uninitialized SDouble",
+				un_SJsonNode: "@Uninitialized SJsonNode",
+				un_SFloat: "@Uninitialized SFloat",
+				un_SInteger: "@Uninitialized SInteger",
+				un_SLong: "@Uninitialized SLong",
+				un_SObjectNode: "@Uninitialized SObjectNode",
+				un_SString: "@Uninitialized SString",
+				un_SList: "@Uninitialized SList",
+				un_SMap: "@Uninitialized SMap",
+				un_SClass: "@Uninitialized SClass",
+				un_SROQueue: "@Uninitialized SROQueue",
+				un_SNavigableMap: "@Uninitialized SNavigableMap",
+				un_SAscendingMap: "@Uninitialized SAscendingMap",
+				un_SDescendingMap: "@Uninitialized SDescendingMap",
+				un_SMovableList: "@Uninitialized SMovableList",
+				in_Page: "@Uninitialized Page",
+				in_Popup: "@Uninitialized Popup",
+				in_Component: "@Uninitialized Component"
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), false );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 2-1 with defaults", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: "@Uninitialized SArrayNode : " + JSON.stringify(defaults.SArrayNode),
+				SBoolean: "@Uninitialized SBoolean : " + JSON.stringify(defaults.SBoolean),
+				SDouble: "@Uninitialized SDouble : " + JSON.stringify(defaults.SDouble),
+				SJsonNode: "@Uninitialized SJsonNode : " + JSON.stringify(defaults.SJsonNode),
+				SFloat: "@Uninitialized SFloat : " + JSON.stringify(defaults.SFloat),
+				SInteger: "@Uninitialized SInteger : " + JSON.stringify(defaults.SInteger),
+				SLong: "@Uninitialized SLong : " + JSON.stringify(defaults.SLong),
+				SObjectNode: "@Uninitialized SObjectNode : " + JSON.stringify(defaults.SObjectNode),
+				SString: "@Uninitialized SString : " + JSON.stringify(defaults.SString),
+				SList: "@Uninitialized SList : " + JSON.stringify(defaults.SList),
+				SMap: "@Uninitialized SMap : " + JSON.stringify(defaults.SMap),
+				SClass: "@Uninitialized SClass : " + JSON.stringify(defaults.SClass),
+				SROQueue: "@Uninitialized SROQueue : " + JSON.stringify(defaults.SROQueue),
+				SNavigableMap: "@Uninitialized SNavigableMap : " + JSON.stringify(defaults.SNavigableMap),
+				SAscendingMap: "@Uninitialized SAscendingMap : " + JSON.stringify(defaults.SNavigableMap),
+				SDescendingMap: "@Uninitialized SDescendingMap : " + JSON.stringify(defaults.SNavigableMap),
+				SMovableList: "@Uninitialized SMovableList : " + JSON.stringify(defaults.SMovableList),
+				Page: "@Uninitialized Page",
+				Popup: "@Uninitialized Popup",
+				Component: "@Uninitialized Component"
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), true );
+				cb.assertEquals( field.isNonNull(), false );
+				if( name in defaults ) {
+					cb.assertEquals( field.toJson(), defaults[ name ] );
+				}
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), true )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 2-2", function( cb ){
+			var controller = Controllers.create({
+				un_SArrayNode: {
+					type: "@Uninitialized SArrayNode"
+				},
+				un_SBoolean: {
+					type: "@Uninitialized SBoolean"
+				},
+				un_SDouble: {
+					type: "@Uninitialized SDouble"
+				},
+				un_SJsonNode: {
+					type: "@Uninitialized SJsonNode"
+				},
+				un_SFloat: {
+					type: "@Uninitialized SFloat"
+				},
+				un_SInteger: {
+					type: "@Uninitialized SInteger"
+				},
+				un_SLong: {
+					type: "@Uninitialized SLong"
+				},
+				un_SObjectNode: {
+					type: "@Uninitialized SObjectNode"
+				},
+				un_SString: {
+					type: "@Uninitialized SString"
+				},
+				un_SList: {
+					type: "@Uninitialized SList"
+				},
+				un_SMap: {
+					type: "@Uninitialized SMap"
+				},
+				un_SClass: {
+					type: "@Uninitialized SClass"
+				},
+				un_SROQueue: {
+					type: "@Uninitialized SROQueue"
+				},
+				un_SNavigableMap: {
+					type: "@Uninitialized SNavigableMap"
+				},
+				un_SAscendingMap: {
+					type: "@Uninitialized SAscendingMap"
+				},
+				un_SDescendingMap: {
+					type: "@Uninitialized SDescendingMap"
+				},
+				un_SMovableList: {
+					type: "@Uninitialized SMovableList"
+				},
+				in_Page: {
+					type: "@Uninitialized Page"
+				},
+				in_Popup: {
+					type: "@Uninitialized Popup"
+				},
+				in_Component: {
+					type: "@Uninitialized Component"
+				}
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), false );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 2-3", function( cb ){
+			var controller = Controllers.create({
+				un_SArrayNode: {
+					type: "SArrayNode",
+					uninitialized: true
+				},
+				un_SBoolean: {
+					type: "SBoolean",
+					uninitialized: true
+				},
+				un_SDouble: {
+					type: "SDouble",
+					uninitialized: true
+				},
+				un_SJsonNode: {
+					type: "SJsonNode",
+					uninitialized: true
+				},
+				un_SFloat: {
+					type: "SFloat",
+					uninitialized: true
+				},
+				un_SInteger: {
+					type: "SInteger",
+					uninitialized: true
+				},
+				un_SLong: {
+					type: "SLong",
+					uninitialized: true
+				},
+				un_SObjectNode: {
+					type: "SObjectNode",
+					uninitialized: true
+				},
+				un_SString: {
+					type: "SString",
+					uninitialized: true
+				},
+				un_SList: {
+					type: "SList",
+					uninitialized: true
+				},
+				un_SMap: {
+					type: "SMap",
+					uninitialized: true
+				},
+				un_SClass: {
+					type: "SClass",
+					uninitialized: true
+				},
+				un_SROQueue: {
+					type: "SROQueue",
+					uninitialized: true
+				},
+				un_SNavigableMap: {
+					type: "SNavigableMap",
+					uninitialized: true
+				},
+				un_SAscendingMap: {
+					type: "SAscendingMap",
+					uninitialized: true
+				},
+				un_SDescendingMap: {
+					type: "SDescendingMap",
+					uninitialized: true
+				},
+				un_SMovableList: {
+					type: "SMovableList",
+					uninitialized: true
+				},
+				in_Page: {
+					type: "Page",
+					uninitialized: true
+				},
+				in_Popup: {
+					type: "Popup",
+					uninitialized: true
+				},
+				in_Component: {
+					type: "Component",
+					uninitialized: true
+				}
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), false );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 3-1", function( cb ){
+			var controller = Controllers.create({
+				in_SArrayNode: "@NonNull SArrayNode",
+				in_SBoolean: "@NonNull SBoolean",
+				in_SDouble: "@NonNull SDouble",
+				un_SJsonNode: "@NonNull SJsonNode",
+				in_SFloat: "@NonNull SFloat",
+				in_SInteger: "@NonNull SInteger",
+				in_SLong: "@NonNull SLong",
+				in_SObjectNode: "@NonNull SObjectNode",
+				in_SString: "@NonNull SString",
+				in_SList: "@NonNull SList",
+				in_SMap: "@NonNull SMap",
+				un_SClass: "@NonNull SClass",
+				in_SROQueue: "@NonNull SROQueue",
+				in_SNavigableMap: "@NonNull SNavigableMap",
+				in_SAscendingMap: "@NonNull SAscendingMap",
+				in_SDescendingMap: "@NonNull SDescendingMap",
+				in_SMovableList: "@NonNull SMovableList",
+				in_Page: "@NonNull Page",
+				in_Popup: "@NonNull Popup",
+				in_Component: "@NonNull Component"
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), name[ 1 ] === "n" );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 3-2", function( cb ){
+			var controller = Controllers.create({
+				in_SArrayNode: {
+					type: "@NonNull SArrayNode"
+				},
+				in_SBoolean: {
+					type: "@NonNull SBoolean"
+				},
+				in_SDouble: {
+					type: "@NonNull SDouble"
+				},
+				un_SJsonNode: {
+					type: "@NonNull SJsonNode"
+				},
+				in_SFloat: {
+					type: "@NonNull SFloat"
+				},
+				in_SInteger: {
+					type: "@NonNull SInteger"
+				},
+				in_SLong: {
+					type: "@NonNull SLong"
+				},
+				in_SObjectNode: {
+					type: "@NonNull SObjectNode"
+				},
+				in_SString: {
+					type: "@NonNull SString"
+				},
+				in_SList: {
+					type: "@NonNull SList"
+				},
+				in_SMap: {
+					type: "@NonNull SMap"
+				},
+				un_SClass: {
+					type: "@NonNull SClass"
+				},
+				in_SROQueue: {
+					type: "@NonNull SROQueue"
+				},
+				in_SNavigableMap: {
+					type: "@NonNull SNavigableMap"
+				},
+				in_SAscendingMap: {
+					type: "@NonNull SAscendingMap"
+				},
+				in_SDescendingMap: {
+					type: "@NonNull SDescendingMap"
+				},
+				in_SMovableList: {
+					type: "@NonNull SMovableList"
+				},
+				in_Page: {
+					type: "@NonNull Page"
+				},
+				in_Popup: {
+					type: "@NonNull Popup"
+				},
+				in_Component: {
+					type: "@NonNull Component"
+				}
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), name[ 1 ] === "n" );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 3-3", function( cb ){
+			var controller = Controllers.create({
+				in_SArrayNode: {
+					type: "SArrayNode",
+					nonnull: true
+				},
+				in_SBoolean: {
+					type: "SBoolean",
+					nonnull: true
+				},
+				in_SDouble: {
+					type: "SDouble",
+					nonnull: true
+				},
+				un_SJsonNode: {
+					type: "SJsonNode",
+					nonnull: true
+				},
+				in_SFloat: {
+					type: "SFloat",
+					nonnull: true
+				},
+				in_SInteger: {
+					type: "SInteger",
+					nonnull: true
+				},
+				in_SLong: {
+					type: "SLong",
+					nonnull: true
+				},
+				in_SObjectNode: {
+					type: "SObjectNode",
+					nonnull: true
+				},
+				in_SString: {
+					type: "SString",
+					nonnull: true
+				},
+				in_SList: {
+					type: "SList",
+					nonnull: true
+				},
+				in_SMap: {
+					type: "SMap",
+					nonnull: true
+				},
+				un_SClass: {
+					type: "SClass",
+					nonnull: true
+				},
+				in_SROQueue: {
+					type: "SROQueue",
+					nonnull: true
+				},
+				in_SNavigableMap: {
+					type: "SNavigableMap",
+					nonnull: true
+				},
+				in_SAscendingMap: {
+					type: "SAscendingMap",
+					nonnull: true
+				},
+				in_SDescendingMap: {
+					type: "SDescendingMap",
+					nonnull: true
+				},
+				in_SMovableList: {
+					type: "SMovableList",
+					nonnull: true
+				},
+				in_Page: {
+					type: "Page",
+					nonnull: true
+				},
+				in_Popup: {
+					type: "Popup",
+					nonnull: true
+				},
+				in_Component: {
+					type: "Component",
+					nonnull: true
+				}
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), name[ 1 ] === "n" );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 4-1", function( cb ){
+			var controller = Controllers.create({
+				un_SArrayNode: "@Uninitialized @NonNull SArrayNode",
+				un_SBoolean: "@Uninitialized @NonNull SBoolean",
+				un_SDouble: "@Uninitialized @NonNull SDouble",
+				un_SJsonNode: "@Uninitialized @NonNull SJsonNode",
+				un_SFloat: "@Uninitialized @NonNull SFloat",
+				un_SInteger: "@Uninitialized @NonNull SInteger",
+				un_SLong: "@Uninitialized @NonNull SLong",
+				un_SObjectNode: "@Uninitialized @NonNull SObjectNode",
+				un_SString: "@Uninitialized @NonNull SString",
+				un_SList: "@Uninitialized @NonNull SList",
+				un_SMap: "@Uninitialized @NonNull SMap",
+				un_SClass: "@Uninitialized @NonNull SClass",
+				un_SROQueue: "@Uninitialized @NonNull SROQueue",
+				un_SNavigableMap: "@Uninitialized @NonNull SNavigableMap",
+				un_SAscendingMap: "@Uninitialized @NonNull SAscendingMap",
+				un_SDescendingMap: "@Uninitialized @NonNull SDescendingMap",
+				un_SMovableList: "@Uninitialized @NonNull SMovableList",
+				in_Page: "@Uninitialized @NonNull Page",
+				in_Popup: "@Uninitialized @NonNull Popup",
+				in_Component: "@Uninitialized @NonNull Component"
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), name[ 1 ] === "n" );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 4-2", function( cb ){
+			var controller = Controllers.create({
+				un_SArrayNode: {
+					type: "@Uninitialized @NonNull SArrayNode"
+				},
+				un_SBoolean: {
+					type: "@Uninitialized @NonNull SBoolean"
+				},
+				un_SDouble: {
+					type: "@Uninitialized @NonNull SDouble"
+				},
+				un_SJsonNode: {
+					type: "@Uninitialized @NonNull SJsonNode"
+				},
+				un_SFloat: {
+					type: "@Uninitialized @NonNull SFloat"
+				},
+				un_SInteger: {
+					type: "@Uninitialized @NonNull SInteger"
+				},
+				un_SLong: {
+					type: "@Uninitialized @NonNull SLong"
+				},
+				un_SObjectNode: {
+					type: "@Uninitialized @NonNull SObjectNode"
+				},
+				un_SString: {
+					type: "@Uninitialized @NonNull SString"
+				},
+				un_SList: {
+					type: "@Uninitialized @NonNull SList"
+				},
+				un_SMap: {
+					type: "@Uninitialized @NonNull SMap"
+				},
+				un_SClass: {
+					type: "@Uninitialized @NonNull SClass"
+				},
+				un_SROQueue: {
+					type: "@Uninitialized @NonNull SROQueue"
+				},
+				un_SNavigableMap: {
+					type: "@Uninitialized @NonNull SNavigableMap"
+				},
+				un_SAscendingMap: {
+					type: "@Uninitialized @NonNull SAscendingMap"
+				},
+				un_SDescendingMap: {
+					type: "@Uninitialized @NonNull SDescendingMap"
+				},
+				un_SMovableList: {
+					type: "@Uninitialized @NonNull SMovableList"
+				},
+				in_Page: {
+					type: "@Uninitialized @NonNull Page"
+				},
+				in_Popup: {
+					type: "@Uninitialized @NonNull Popup"
+				},
+				in_Component: {
+					type: "@Uninitialized @NonNull Component"
+				}
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), name[ 1 ] === "n" );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 4-3", function( cb ){
+			var controller = Controllers.create({
+				un_SArrayNode: {
+					type: "@Uninitialized SArrayNode",
+					nonnull: true
+				},
+				un_SBoolean: {
+					type: "@Uninitialized SBoolean",
+					nonnull: true
+				},
+				un_SDouble: {
+					type: "@Uninitialized SDouble",
+					nonnull: true
+				},
+				un_SJsonNode: {
+					type: "@Uninitialized SJsonNode",
+					nonnull: true
+				},
+				un_SFloat: {
+					type: "@Uninitialized SFloat",
+					nonnull: true
+				},
+				un_SInteger: {
+					type: "@Uninitialized SInteger",
+					nonnull: true
+				},
+				un_SLong: {
+					type: "@Uninitialized SLong",
+					nonnull: true
+				},
+				un_SObjectNode: {
+					type: "@Uninitialized SObjectNode",
+					nonnull: true
+				},
+				un_SString: {
+					type: "@Uninitialized SString",
+					nonnull: true
+				},
+				un_SList: {
+					type: "@Uninitialized SList",
+					nonnull: true
+				},
+				un_SMap: {
+					type: "@Uninitialized SMap",
+					nonnull: true
+				},
+				un_SClass: {
+					type: "@Uninitialized SClass",
+					nonnull: true
+				},
+				un_SROQueue: {
+					type: "@Uninitialized SROQueue",
+					nonnull: true
+				},
+				un_SNavigableMap: {
+					type: "@Uninitialized SNavigableMap",
+					nonnull: true
+				},
+				un_SAscendingMap: {
+					type: "@Uninitialized SAscendingMap",
+					nonnull: true
+				},
+				un_SDescendingMap: {
+					type: "@Uninitialized SDescendingMap",
+					nonnull: true
+				},
+				un_SMovableList: {
+					type: "@Uninitialized SMovableList",
+					nonnull: true
+				},
+				in_Page: {
+					type: "@Uninitialized Page",
+					nonnull: true
+				},
+				in_Popup: {
+					type: "@Uninitialized Popup",
+					nonnull: true
+				},
+				in_Component: {
+					type: "@Uninitialized Component",
+					nonnull: true
+				}
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), name[ 1 ] === "n" );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller isInitialized/isNonNull 4-3", function( cb ){
+			var controller = Controllers.create({
+				un_SArrayNode: {
+					type: "SArrayNode",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SBoolean: {
+					type: "SBoolean",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SDouble: {
+					type: "SDouble",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SJsonNode: {
+					type: "SJsonNode",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SFloat: {
+					type: "SFloat",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SInteger: {
+					type: "SInteger",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SLong: {
+					type: "SLong",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SObjectNode: {
+					type: "SObjectNode",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SString: {
+					type: "SString",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SList: {
+					type: "SList",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SMap: {
+					type: "SMap",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SClass: {
+					type: "SClass",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SROQueue: {
+					type: "SROQueue",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SNavigableMap: {
+					type: "SNavigableMap",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SAscendingMap: {
+					type: "SAscendingMap",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SDescendingMap: {
+					type: "SDescendingMap",
+					uninitialized: true,
+					nonnull: true
+				},
+				un_SMovableList: {
+					type: "SMovableList",
+					uninitialized: true,
+					nonnull: true
+				},
+				in_Page: {
+					type: "Page",
+					uninitialized: true,
+					nonnull: true
+				},
+				in_Popup: {
+					type: "Popup",
+					uninitialized: true,
+					nonnull: true
+				},
+				in_Component: {
+					type: "Component",
+					uninitialized: true,
+					nonnull: true
+				}
+			});
+
+			var total = 0;
+			controller.each(function( field, name ){
+				cb.assertEquals( field.isInitialized(), name[ 0 ] === "i" );
+				cb.assertEquals( field.isNonNull(), name[ 1 ] === "n" );
+
+				total += 1;
+			});
+
+			cb
+			.assertEquals( controller.isInitialized(), false )
+			.assertEquals( total, 20 )
+			.done();
+		})
+		.test("Local controller initial value 1", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: "SArrayNode",
+				SBoolean: "SBoolean",
+				SDouble: "SDouble",
+				SJsonNode: "SJsonNode",
+				SFloat: "SFloat",
+				SInteger: "SInteger",
+				SLong: "SLong",
+				SObjectNode: "SObjectNode",
+				SString: "SString",
+				SList: "SList",
+				SMap: "SMap",
+				SClass: "SClass",
+				SROQueue: "SROQueue",
+				SNavigableMap: "SNavigableMap",
+				SAscendingMap: "SAscendingMap",
+				SDescendingMap: "SDescendingMap",
+				SMovableList: "SMovableList"
+			});
+
+			var initialValues = {
+				SArrayNode: null,
+				SBoolean: null,
+				SDouble: null,
+				SJsonNode: null,
+				SFloat: null,
+				SInteger: null,
+				SLong: null,
+				SObjectNode: null,
+				SString: null,
+				SList: [],
+				SMap: {},
+				SClass: null,
+				SROQueue: [],
+				SNavigableMap: {},
+				SAscendingMap: {},
+				SDescendingMap: {},
+				SMovableList: []
+			};
+
+			controller.each(function( field, name ){
+				cb.assertEquals( field.toJson(), initialValues[ name ] );
+			});
+
+			cb.done();
+		})
+		.test("Local controller initial value 2", function( cb ){
+			var controller = Controllers.create({
+				SArrayNode: "@NonNull SArrayNode",
+				SBoolean: "@NonNull SBoolean",
+				SDouble: "@NonNull SDouble",
+				SJsonNode: "@NonNull SJsonNode",
+				SFloat: "@NonNull SFloat",
+				SInteger: "@NonNull SInteger",
+				SLong: "@NonNull SLong",
+				SObjectNode: "@NonNull SObjectNode",
+				SString: "@NonNull SString",
+				SList: "@NonNull SList",
+				SMap: "@NonNull SMap",
+				SClass: "@NonNull SClass",
+				SROQueue: "@NonNull SROQueue",
+				SNavigableMap: "@NonNull SNavigableMap",
+				SAscendingMap: "@NonNull SAscendingMap",
+				SDescendingMap: "@NonNull SDescendingMap",
+				SMovableList: "@NonNull SMovableList"
+			});
+
+			var initialValues = {
+				SArrayNode: [],
+				SBoolean: false,
+				SDouble: 0.0,
+				SJsonNode: null,
+				SFloat: 0.0,
+				SInteger: 0,
+				SLong: 0,
+				SObjectNode: {},
+				SString: "",
+				SList: [],
+				SMap: {},
+				SClass: null,
+				SROQueue: [],
+				SNavigableMap: {},
+				SAscendingMap: {},
+				SDescendingMap: {},
+				SMovableList: []
+			};
+
+			controller.each(function( field, name ){
+				cb.assertEquals( field.toJson(), initialValues[ name ] );
+			});
+
+			cb.done();
+		})
+		.test("Local controller unsupported type 1", function( cb ){
+			var result = Controllers.create({
+				Unknown: "Unknown"
+			});
+			cb.assertEquals( result.Unknown, "Unknown" ).done();
+		})
+		.test("Local controller unsupported type 2", function( cb ){
+			var result = Controllers.create({
+				Unknown: {
+					value: "foo"
+				}
+			});
+			cb
+			.assertEquals( result.Unknown.constructor, dc.Component )
+			.assertEquals( result.Unknown.value, "foo" )
+			.done();
+		})
+		.test("Local controller ascending map", function( cb ){
+			var controller = Controllers.create({
+				map: "SAscendingMap"
+			});
+			controller.map.putAll({b:"b", a:"a", c:"c"});
+			cb.assertEquals(controller.map.values(), ["a", "b", "c"]).done();
+		})
+		.test("Local controller descending map", function( cb ){
+			var controller = Controllers.create({
+				map: "SDescendingMap"
+			});
+			controller.map.putAll({b:"b", a:"a", c:"c"});
+			cb.assertEquals(controller.map.values(), ["c", "b", "a"]).done();
+		})
+		.test("Local controller page factory create 1", function( cb ){
+			var controller = Controllers.create({
+				factory: {
+					type: dc.PageFactory,
+					id: dcd.SString
+				}
+			});
+			cb.assertEquals(controller.factory.size(), 0);
+			var page = controller.factory.create();
+			cb
+			.assertEquals(controller.factory.size(), 1)
+			.assertEquals(controller.factory.get( 0 ), page)
+			.assertEquals(page instanceof dc.Page, true)
+			.assertEquals(page.id instanceof dcd.SString, true)
+			.done();
+		})
+		.test("Local controller page factory create 2", function( cb ){
+			var controller = Controllers.create({
+				factory: {
+					"@type": dc.PageFactory,
+					type: dcd.SString
+				}
+			});
+			cb.assertEquals(controller.factory.size(), 0);
+			var page = controller.factory.create();
+			cb
+			.assertEquals(controller.factory.size(), 1)
+			.assertEquals(controller.factory.get( 0 ), page)
+			.assertEquals(page instanceof dc.Page, true)
+			.assertEquals(page[ "@type" ] == null, true)
+			.assertEquals(page.type instanceof dcd.SString, true)
+			.done();
+		})
+		.test("Local controller popup factory create 1", function( cb ){
+			var controller = Controllers.create({
+				factory: {
+					type: "popupfactory",
+					id: dcd.SString
+				}
+			});
+			cb.assertEquals(controller.factory.size(), 0);
+			var popup = controller.factory.create();
+			cb
+			.assertEquals(controller.factory.size(), 1)
+			.assertEquals(controller.factory.get( 0 ), popup)
+			.assertEquals(popup instanceof dc.Popup, true)
+			.assertEquals(popup.id instanceof dcd.SString, true)
+			.done();
+		})
+		.test("Local controller popup factory create 2", function( cb ){
+			var controller = Controllers.create({
+				factory: {
+					"@type": "popupfactory",
+					type: dcd.SString
+				}
+			});
+			cb.assertEquals(controller.factory.size(), 0);
+			var popup = controller.factory.create();
+			cb
+			.assertEquals(controller.factory.size(), 1)
+			.assertEquals(controller.factory.get( 0 ), popup)
+			.assertEquals(popup instanceof dc.Popup, true)
+			.assertEquals(popup[ "@type" ] == null, true)
+			.assertEquals(popup.type instanceof dcd.SString, true)
+			.done();
+		})
+		.test("Local controller component factory create 1", function( cb ){
+			var controller = Controllers.create({
+				factory: {
+					type: "ComponentFactory",
+					id: "SString"
+				}
+			});
+			cb.assertEquals(controller.factory.size(), 0);
+			var component = controller.factory.create();
+			cb
+			.assertEquals(controller.factory.size(), 1)
+			.assertEquals(controller.factory.get( 0 ), component)
+			.assertEquals(component instanceof dc.Component, true)
+			.assertEquals(component.id instanceof dcd.SString, true)
+			.done();
+		})
+		.test("Local controller component factory create 2", function( cb ){
+			var controller = Controllers.create({
+				factory: {
+					"@type": "ComponentFactory",
+					type: "SString"
+				}
+			});
+			cb.assertEquals(controller.factory.size(), 0);
+			var component = controller.factory.create();
+			cb
+			.assertEquals(controller.factory.size(), 1)
+			.assertEquals(controller.factory.get( 0 ), component)
+			.assertEquals(component instanceof dc.Component, true)
+			.assertEquals(component[ "@type" ] == null, true)
+			.assertEquals(component.type instanceof dcd.SString, true)
+			.done();
+		})
+		.test("Local controller factory nest", function( cb ){
+			var controller = Controllers.create({
+				factory: {
+					type: "ComponentFactory",
+					component: {
+						id: "SString"
+					}
+				}
+			});
+			cb.assertEquals(controller.factory.size(), 0);
+			var component = controller.factory.create();
+			cb
+			.assertEquals(controller.factory.size(), 1)
+			.assertEquals(controller.factory.get( 0 ), component)
+			.assertEquals(component instanceof dc.Component, true)
+			.assertEquals(component.type == null, true)
+			.assertEquals(component.component instanceof dc.Component, true)
+			.assertEquals(component.component.id instanceof dcd.SString, true)
+			.done();
+		})
+		.test("Local controller factory fields", function( cb ){
+			var controller = Controllers.create({
+				factory: {
+					type: "ComponentFactory"
+				}
+			});
+
+			for( var key in controller.factory ) {
+				if( controller.factory.hasOwnProperty( key ) !== true ) continue;
+				if( key.length < 2 || key[ 0 ] !== "_" || key[ 1 ] !== "_" ) {
+					cb.fail( "Unexpected field: " + key );
+				}
+			}
+			cb.done();
+		})
+		.test("Local controller task 1", function( cb ){
+			var controller = Controllers.create({
+				task: "@Task"
+			});
+
+			cb
+			.assertEquals(controller.task != null, true)
+			.assertEquals(controller.task.isDone(), true);
+
+			controller.task.on( "call", function( e, value ){
+				return value * 2;
+			});
+
+			controller.task( 1 );
+
+			cb
+			.assertEquals(controller.task.isDone(), true)
+			.assertEquals(controller.task.isCanceled(), false)
+			.assertEquals(controller.task.getResult(), 2)
+			.assertEquals(controller.task.getArguments(), [1])
+			.done();
+		})
+		.test("Local controller task 2", function( cb ){
+			var controller = Controllers.create({
+				task: "@task"
+			});
+			cb.assertEquals(controller.task != null, true).done();
+		})
+		.test("Local controller task 3", function( cb ){
+			var controller = Controllers.create({
+				task: dc.Callable
+			});
+			cb.assertEquals(controller.task != null, true).done();
+		})
+		.test("Local controller task async", function( cb ){
+			var controller = Controllers.create({
+				task: "@Task"
+			});
+
+			cb
+			.assertEquals(controller.task != null, true)
+			.assertEquals(controller.task.isDone(), true);
+
+			controller.task.on( "call", function( e, value ){
+				return new Thenable(function( resolve, reject ){
+					resolve( value * 2 );
+				});
+			});
+
+			controller.task( 1 );
+
+			cb
+			.assertEquals(controller.task.isDone(), false)
+			.assertEquals(controller.task.getArguments(), [1]);
+
+			cb.within( 1000, function(){
+				if( controller.task.isDone() ) {
+					cb
+					.assertEquals(controller.task.isDone(), true)
+					.assertEquals(controller.task.isSucceeded(), true)
+					.assertEquals(controller.task.isFailed(), false)
+					.assertEquals(controller.task.isCanceled(), false)
+					.assertEquals(controller.task.getResult(), 2)
+					.assertEquals(controller.task.getArguments(), [1])
+					.done();
+				}
+			});
+		})
+		.test("Local controller task fail", function( cb ){
+			var controller = Controllers.create({
+				task: "@Task"
+			});
+
+			var reason = "foo";
+
+			controller.task.on( "call", function( e, value ){
+				return Thenable.reject( reason );
+			});
+
+			controller.task( 1 );
+
+			cb.within( 1000, function(){
+				if( controller.task.isDone() ) {
+					cb
+					.assertEquals(controller.task.isDone(), true)
+					.assertEquals(controller.task.isSucceeded(), false)
+					.assertEquals(controller.task.isFailed(), true)
+					.assertEquals(controller.task.isCanceled(), false)
+					.assertEquals(controller.task.getReason(), reason)
+					.done();
+				}
+			});
+		})
+		.test("Local controller task cancel", function( cb ){
+			var controller = Controllers.create({
+				task: "@Task"
+			});
+
+			controller.task.on( "call", function( e, value ){
+				controller.task.cancel();
+			});
+
+			controller.task( 1 );
+
+			cb
+			.assertEquals(controller.task.isDone(), true)
+			.assertEquals(controller.task.isSucceeded(), false)
+			.assertEquals(controller.task.isFailed(), true)
+			.assertEquals(controller.task.isCanceled(), true)
+			.done();
+		})
+		.test("Local controller callable 1", function( cb ){
+			var controller = Controllers.create({
+				callable: "@Callable"
+			});
+
+			cb.assertEquals(controller.callable != null, true);
+
+			controller.callable.on( "call", function( e, value ){
+				return value * 2;
+			});
+
+			controller.callable( 1 ).then(function( result ){
+				cb.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Local controller callable 2", function( cb ){
+			var controller = Controllers.create({
+				callable: "@callable"
+			});
+			cb.assertEquals(controller.callable != null, true).done();
+		})
+		.test("Local controller callable 3", function( cb ){
+			var controller = Controllers.create({
+				callable: dc.Callable
+			});
+			cb.assertEquals(controller.callable != null, true).done();
+		})
+		.test("Local controller callable async", function( cb ){
+			var controller = Controllers.create({
+				callable: "@Callable"
+			});
+
+			cb.assertEquals(controller.callable != null, true);
+
+			controller.callable.on( "call", function( e, value ){
+				return Thenable.resolve( value * 2 );
+			});
+
+			controller.callable( 1 ).then(function( result ){
+				cb.assertEquals( result, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Local controller callable fail", function( cb ){
+			var controller = Controllers.create({
+				callable: "@Callable"
+			});
+
+			cb.assertEquals(controller.callable != null, true);
+
+			var reason = "foo";
+			controller.callable.on( "call", function( e, value ){
+				return new Thenable(function( resolve, reject ){
+					reject( reason );
+				});
+			});
+
+			controller.callable( 1 ).then(function( result ){
+				cb.fail( result );
+			}, function( r ){
+				cb.assertEquals( r, reason ).done();
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

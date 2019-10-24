@@ -1,0 +1,355 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-map-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsMapController;
+
+		puppeteer
+		.test("Map size check", function( cb ) {
+			cb.assertEquals( c.field_map.size(), 3 ).done();
+		})
+		.test("Map each check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			c.field_map.each(function( value, key, field ){
+				cb.assertNotEquals( expected.indexOf( value ), -1 )
+				.assertNotEquals( expected.indexOf( key ), -1 )
+				.assertEquals( field, c.field_map );
+				count += 1;
+			});
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Map each default thisArg check", function( cb ) {
+			c.field_map.each(function(){
+				cb.assertEquals( this, c.field_map ).done();
+				return false;
+			});
+		})
+		.test("Map each thisArg check", function( cb ) {
+			c.field_map.each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Map find check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			var order = [];
+			var result0 = c.field_map.find(function( value, key, field ){
+				cb
+				.assertNotEquals( expected.indexOf( value ), -1 )
+				.assertNotEquals( expected.indexOf( key ), -1 )
+				.assertEquals( field, c.field_map );
+				order.push([ value, key, field ]);
+				count += 1;
+				return false;
+			});
+
+			var result1 = c.field_map.find(function(){
+				return true;
+			});
+
+			cb
+			.assertEquals( count, 3 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, order[ 0 ][ 0 ] )
+			.done();
+		})
+		.test("Map find default thisArg check", function( cb ) {
+			c.field_map.find(function(){
+				cb.assertEquals( this, c.field_map );
+				return false;
+			});
+
+			cb.done();
+		})
+		.test("Map find thisArg check", function( cb ) {
+			c.field_map.find(function(){
+				cb.assertEquals( this, c );
+				return false;
+			}, c);
+
+			cb.done();
+		})
+		.test("Map values check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			cb.assertEquals( c.field_map.values().sort(), expected ).done();
+		})
+		.test("Map toObject check", function( cb ) {
+			var expected = { a:"a", b:"b", c:"c" };
+			cb.assertEquals( c.field_map.toObject(), expected ).done();
+		})
+		.test("Map toJson check", function( cb ) {
+			var expected = { a:"a", b:"b", c:"c" };
+			cb.assertEquals( c.field_map.toJson(), expected ).done();
+		})
+		.test("Map toString check", function( cb ) {
+			var expected = { a:"a", b:"b", c:"c" };
+			cb.assertEquals( JSON.parse(c.field_map.toString()), expected ).done();
+		})
+		.test("Map get check", function( cb ) {
+			cb.assertEquals( c.field_map.get( "a" ), "a" )
+			.assertEquals( c.field_map.get( "b" ), "b" )
+			.assertEquals( c.field_map.get( "c" ), "c" )
+			.assertEquals( c.field_map.get( "d" ), null )
+			.done();
+		})
+		.test("Map isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_map.isEmpty(), false )
+			.done();
+		})
+		.test("Map containsKey check", function( cb ) {
+			cb.assertEquals( c.field_map.containsKey( "a" ), true )
+			.assertEquals( c.field_map.containsKey( "b" ), true )
+			.assertEquals( c.field_map.containsKey( "c" ), true )
+			.assertEquals( c.field_map.containsKey( "d" ), false )
+			.done();
+		})
+		.test("Map containsValue check", function( cb ) {
+			cb.assertEquals( c.field_map.containsValue( "a" ), true )
+			.assertEquals( c.field_map.containsValue( "b" ), true )
+			.assertEquals( c.field_map.containsValue( "c" ), true )
+			.assertEquals( c.field_map.containsValue( "d" ), false )
+			.done();
+		})
+		.test("Map filter check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			c.field_map.filter(function( value, key, field ){
+				cb.assertNotEquals( expected.indexOf( value ), -1 )
+				.assertNotEquals( expected.indexOf( key ), -1 )
+				.assertEquals( field, c.field_map );
+				count += 1;
+				return (value !== "b");
+			});
+			cb.assertEquals( c.field_map.size(), 2 )
+				.assertEquals( c.field_map.values().sort(), ["a", "c"] )
+				.done();
+		})
+		.test("Map put check", function( cb ) {
+			cb.assertEquals( c.field_map.put( "b", "b" ), null )
+			.assertEquals( c.field_map.size(), 3 )
+			.assertEquals( c.field_map.values().sort(), ["a", "b", "c"] )
+			.done();
+		})
+		.test("Map put null value check", function( cb ) {
+			cb.assertEquals( c.field_map.put( "b", null ), "b" )
+			.assertEquals( c.field_map.size(), 3 )
+			.assertEquals( c.field_map.values().sort(), ["a", "c", null] )
+			.done();
+		})
+		.test("Map put case-sensitivity check", function( cb ) {
+			cb.assertEquals( c.field_map.put( "A", "A" ), null )
+			.assertEquals( c.field_map.size(), 4 )
+			.assertEquals( c.field_map.values().sort(), ["A", "a", "c", null] )
+			.done();
+		})
+		.test("Map remove check", function( cb ) {
+			cb.assertEquals( c.field_map.remove( "A" ), "A" )
+			.assertEquals( c.field_map.size(), 3 )
+			.assertEquals( c.field_map.values().sort(), ["a", "c", null] )
+			.done();
+		})
+		.test("Map clear check", function( cb ) {
+			cb.assertEquals( c.field_map.clear(), c.field_map )
+			.assertEquals( c.field_map.size(), 0 )
+			.assertEquals( c.field_map.values(), [] )
+			.done();
+		})
+		.test("Map putAll check", function( cb ) {
+			cb.assertEquals( c.field_map.putAll({x:"x", y:"y", z:"z"}), c.field_map )
+			.assertEquals( c.field_map.size(), 3 )
+			.assertEquals( c.field_map.values().sort(), ["x", "y", "z"] )
+			.done();
+		})
+		.test("Map clearAndPut check", function( cb ) {
+			cb.assertEquals( c.field_map.clearAndPut( "x", "x" ), null )
+			.assertEquals( c.field_map.size(), 1 )
+			.assertEquals( c.field_map.values().sort(), ["x"] )
+			.done();
+		})
+		.test("Map clearAndPutAll check", function( cb ) {
+			cb.assertEquals( c.field_map.clearAndPutAll({x:"x", y:"y", z:"z"}), c.field_map )
+			.assertEquals( c.field_map.size(), 3 )
+			.assertEquals( c.field_map.values().sort(), ["x", "y", "z"] )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// SERVER-SIDE METHODS
+		//----------------------------------------------------------------------
+		.test( c, c.test_methods.get() )
+
+		//----------------------------------------------------------------------
+		// DATA SYNC
+		//----------------------------------------------------------------------
+		.test("Map sync server to client", function( cb ){
+			c.start_sync();
+
+			var a = c.sync_map;
+			cb.within( 3000, function(){
+				var av = a.values().sort();
+				if( util.isEqual( av, ["a", "b", "c"] ) ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Map sync client to server", function( cb ){
+			c.sync_map_result.one( "change", function( e, value ){
+				if( value ) {
+					cb.done();
+				} else {
+					cb.fail( value );
+				}
+			});
+
+			c.sync_map.clear();
+		})
+
+		//----------------------------------------------------------------------
+		// NON-NULL
+		//----------------------------------------------------------------------
+		.test("Non-null map putAll check", function( cb ) {
+			cb.assertEquals( c.field_map_nonnull.putAll({a: "a", b:"b", c:"c"}), c.field_map_nonnull )
+				.assertEquals( c.field_map_nonnull.size(), 3 )
+				.assertEquals( c.field_map_nonnull.values(), ["a", "b", "c"] )
+				.done();
+		})
+		.test("Non-null map putAll null check", function( cb ) {
+			var result = true;
+			try {
+				c.field_map_nonnull.putAll({d:null});
+				result = false;
+			} catch( e ){
+
+			}
+
+			cb
+			.assertEquals( result, true )
+			.assertEquals( c.field_map_nonnull.size(), 3 )
+			.assertEquals( c.field_map_nonnull.values(), ["a", "b", "c"] )
+			.done();
+		})
+		.test("Non-null map put check", function( cb ) {
+			cb.assertEquals( c.field_map_nonnull.put( "d", "d" ), null )
+				.assertEquals( c.field_map_nonnull.size(), 4 )
+				.assertEquals( c.field_map_nonnull.values(), ["a", "b", "c", "d"] )
+				.done();
+		})
+		.test("Non-null map put null value check", function( cb ) {
+			var result = true;
+			try {
+				c.field_map_nonnull.put( "e", null );
+				result = false;
+			} catch( e ){
+
+			}
+
+			cb
+			.assertEquals( result, true )
+			.assertEquals( c.field_map_nonnull.size(), 4 )
+			.assertEquals( c.field_map_nonnull.values(), ["a", "b", "c", "d"] )
+			.done();
+		})
+		.test("Non-null map get check", function( cb ) {
+			cb.assertEquals( c.field_map_nonnull.get( "a" ), "a" )
+				.assertEquals( c.field_map_nonnull.get( "b" ), "b" )
+				.assertEquals( c.field_map_nonnull.get( "c" ), "c" )
+				.assertEquals( c.field_map_nonnull.get( "d" ), "d" )
+				.assertEquals( c.field_map_nonnull.get( "e" ) == null, true )
+				.done();
+		})
+
+		.test( c, [
+			"nonnull_map_putAll_check",
+			"nonnull_map_putAll_null_check",
+			"nonnull_map_put_check",
+			"nonnull_map_put_null_value_check",
+			"nonnull_map_get_check"
+		])
+
+		//----------------------------------------------------------------------
+		// UNINITIALIZED
+		//----------------------------------------------------------------------
+		.test("Uninitialized map event check case 1", function( cb ) {
+			var count = { init: 0, change: 0, value: 0 };
+
+			var value0 = "a";
+
+			c.field_map_uninitialized.one( "init", function( e, added ){
+				cb.assertEquals( added, {a:value0} );
+				count.init += 1;
+			});
+
+			c.field_map_uninitialized.one( "change", function( e, added, removed ){
+				cb.assertEquals( added, {a:value0} )
+					.assertEquals( removed, {} );
+				count.change += 1;
+			});
+
+			c.field_map_uninitialized.one( "value", function( e, added, removed ){
+				cb.assertEquals( added, {a:value0} )
+					.assertEquals( removed, {} );
+				count.value += 1;
+			});
+
+			c.initialize( value0, value0 );
+
+			cb.within(3000, function(){
+				if( count.init === 1 && count.change === 1 && count.value === 1 ) cb.done();
+			});
+		})
+		.test("Uninitialized map event check case 2", function( cb ) {
+			var count = { init: 0, change: 0, value: 0 };
+
+			var value0 = "a";
+
+			c.field_map_uninitialized2.one( "init", function( e, added ){
+				cb.assertEquals( added, {} );
+				count.init += 1;
+			});
+
+			c.field_map_uninitialized2.one( "change", function( e, added, removed ){
+				cb.assertEquals( added, {} )
+					.assertEquals( removed, {} );
+				count.change += 1;
+			});
+
+			c.field_map_uninitialized2.one( "value", function( e, added, removed ){
+				cb.assertEquals( added, {} )
+					.assertEquals( removed, {} );
+				count.value += 1;
+			});
+
+			c.initialize();
+
+			cb.within(3000, function(){
+				if( count.init === 1 && count.change === 0 && count.value === 1 ) cb.done();
+			});
+		})
+		.test( c, ["initialize_twice_check"])
+		.execute();
+	}());
+	</script>
+</body>
+</html>

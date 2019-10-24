@@ -1,0 +1,123 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/controller-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = controllerController;
+
+		puppeteer
+		.test( "Controller getComponents check", function( cb ){
+			cb.assertEquals( c.getComponents(), [ c.component ] ).done();
+		})
+		.test( "Controller getPages check", function( cb ){
+			cb.assertEquals( c.getPages(), [ c.page ] ).done();
+		})
+		.test( "Controller getPopups check", function( cb ){
+			cb.assertEquals( c.getPopups(), [ c.popup ] ).done();
+		})
+		.test( "Controller getComponentFactories check", function( cb ){
+			cb.assertEquals( c.getComponentFactories(), [ c.componentFactory ] ).done();
+		})
+		.test( "Controller getPageFactories check", function( cb ){
+			cb.assertEquals( c.getPageFactories(), [ c.pageFactory ] ).done();
+		})
+		.test( "Controller getPopupFactories check", function( cb ){
+			cb.assertEquals( c.getPopupFactories(), [ c.popupFactory ] ).done();
+		})
+		.test( "Controller getComponent check", function( cb ){
+			cb
+			.assertEquals( c.getComponent( "component" ), c.component )
+			.assertEquals( c.getComponent( "" ), null )
+			.done();
+		})
+		.test( "Controller getPage check", function( cb ){
+			cb
+			.assertEquals( c.getPage( "page" ), c.page )
+			.assertEquals( c.getPage( "" ), null )
+			.done();
+		})
+		.test( "Controller getPopup check", function( cb ){
+			cb
+			.assertEquals( c.getPopup( "popup" ), c.popup )
+			.assertEquals( c.getPopup( "" ), null )
+			.done();
+		})
+		.test( "Controller getComponentFactory check", function( cb ){
+			cb
+			.assertEquals( c.getComponentFactory( "componentFactory" ), c.componentFactory )
+			.assertEquals( c.getComponentFactory( "" ), null )
+			.done();
+		})
+		.test( "Controller getPageFactories check", function( cb ){
+			cb
+			.assertEquals( c.getPageFactory( "pageFactory" ), c.pageFactory )
+			.assertEquals( c.getPageFactory( "" ), null )
+			.done();
+		})
+		.test( "Controller getPopupFactory check", function( cb ){
+			cb
+			.assertEquals( c.getPopupFactory( "popupFactory" ), c.popupFactory )
+			.assertEquals( c.getPopupFactory( "" ), null )
+			.done();
+		})
+		.test( "Controller getName check", function( cb ){
+			cb.assertEquals( c.getName(), "ControllerController" ).done();
+		})
+		.test( "Controller getServer check", function( cb ){
+			cb.assertEquals( c.getServer() != null, true ).done();
+		})
+		.test( "Controller getActivePage check", function( cb ){
+			c.page.hide();
+			cb.assertEquals( c.getActivePage(), null );
+			c.page.show();
+			cb.assertEquals( c.getActivePage(), c.page );
+			c.page.hide();
+			cb.assertEquals( c.getActivePage(), null );
+			c.page.show();
+			cb.assertEquals( c.getActivePage(), c.page ).done();
+		})
+		.test( "Controller getParent check", function( cb ){
+			cb
+			.assertEquals( c.getParent(), null )
+			.assertEquals( c.component.getParent(), c )
+			.assertEquals( c.page.getParent(), c )
+			.assertEquals( c.popup.getParent(), c )
+			.assertEquals( c.componentFactory.getParent(), c )
+			.assertEquals( c.pageFactory.getParent(), c )
+			.assertEquals( c.popupFactory.getParent(), c )
+			.done();
+		})
+		.test(c, [
+			"getActivePage_check"
+		])
+		.test( "Server-side controller getActivePage null check", function( cb ){
+			c.page.hide();
+			c.getActivePage_null_check()
+			.then(function(){
+				c.page.show();
+				cb.done();
+			}, function( reason ){
+				c.page.show();
+				cb.fail( reason );
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

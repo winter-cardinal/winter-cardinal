@@ -1,0 +1,1260 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsController;
+		var IllegalArgumentException = wcardinal.exception.IllegalArgumentException;
+		var NullPointerException = wcardinal.exception.NullPointerException;
+		var IndexOutOfBoundsException = wcardinal.exception.IndexOutOfBoundsException;
+
+		var makeTest =function( tests, type, fieldPrefix, methodPrefix, setValue0, setValue1, dirty, compare0, compareDirty ){
+			var field = c[ fieldPrefix ];
+			var field_nonnull = c[ fieldPrefix + "_nonnull" ];
+			var field_uninitialized = c[ fieldPrefix + "_uninitialized" ];
+			var field_dirty = c[ fieldPrefix + "_dirty" ];
+
+			tests = tests
+			.test(type + " field existence", function( cb ) {
+				cb.assertNotEquals( field, null )
+					.done();
+			})
+			.test(type + " field init event", function( cb ){
+				field.one("init", function( e, value ){
+					cb.assertEquals( value, null );
+				});
+				field.set(setValue0);
+				field.on("init.field-init-event", function( e, value ){
+					cb.assertEquals( value, setValue0 );
+				});
+				field.off("init.field-init-event");
+				field.set(setValue1);
+				field.one("init", function( e, value ){
+					cb.assertEquals( value, setValue1 )
+						.done();
+				});
+			})
+			.test(type + " field change event 1", function( cb ){
+				field.one("change", function( e, newValue, oldValue ){
+					cb.assertEquals( arguments.length, 3 )
+						.assertEquals( newValue, setValue0 )
+						.assertEquals( oldValue, setValue1 )
+						.assertEquals( this, field )
+						.assertEquals( this.get(), newValue )
+						.done();
+				});
+
+				field.set(setValue0);
+			})
+			.test(type + " field change event 2", function( cb ){
+				field.one("change", function( e, newValue, oldValue ){
+					cb.assertEquals( arguments.length, 3 )
+						.assertEquals( newValue, setValue0 )
+						.assertEquals( oldValue, setValue0 )
+						.assertEquals( this, field )
+						.assertEquals( this.get(), newValue )
+						.done();
+				});
+
+				field.reset();
+			})
+			.test(type + " field value event", function( cb ){
+				field.one("value", function( e, newValue, oldValue ){
+					cb.assertEquals( arguments.length, 3 )
+						.assertEquals( newValue, setValue0 )
+						.assertEquals( oldValue, setValue0 )
+						.assertEquals( this, field )
+						.assertEquals( this.get(), newValue )
+						.done();
+				});
+			})
+			.test(type + " field get", function( cb ) {
+				cb.assertEquals( field.get(), setValue0 )
+					.done();
+			})
+			.test(type + " field size", function( cb ){
+				var value = field.get();
+				if( util.isArray( value ) || util.isPlainObject( value ) ) {
+					cb.assertEquals( field.size(), util.size( value ) ).done();
+				} else if( value != null ) {
+					cb.assertEquals( field.size(), 1 ).done();
+				} else {
+					cb.assertEquals( field.size(), -1 ).done();
+				}
+			})
+			.test(type + " field isEmpty", function( cb ){
+				if( field instanceof wcardinal.controller.data.SString ) {
+					cb.assertEquals( field.isEmpty(), field.length() <= 0 ).done();
+				} else {
+					cb.assertEquals( field.isEmpty(), field.size() <= 0 ).done();
+				}
+			})
+			.test(type + " field isNull", function( cb ){
+				cb.assertEquals( field.isNull(), field.get() == null ).done();
+			})
+			.test(type + " field isNotNull", function( cb ){
+				cb.assertEquals( field.isNotNull(), field.get() != null ).done();
+			})
+			.test(type + " field each", function( cb ){
+				var value = field.get();
+				if( util.isArray( value ) || util.isPlainObject( value ) ) {
+					var expected = [];
+					util.each(value, function( value, key ){
+						expected.push([ value, key, field ]);
+					});
+					var result = [];
+					field.each(function( value, key, instance ){
+						result.push([ value, key, instance ]);
+					});
+					cb.assertEquals( result, expected ).done();
+				} else if( value != null ) {
+					var result = [];
+					field.each(function( value, key, instance ){
+						result.push([ value, key, instance ]);
+					});
+					cb.assertEquals( result, [[ value, null, field ]] ).done();
+				} else {
+					var result = [];
+					field.each(function( value, key, instance ){
+						result.push([ value, key, instance ]);
+					});
+					cb.assertEquals( result, [] ).done();
+				}
+			})
+			.test(type + " field each reverse", function( cb ){
+				var value = field.get();
+				if( util.isArray( value ) || util.isPlainObject( value ) ) {
+					var expected = [];
+					util.eachRight(value, function( value, key ){
+						expected.push([ value, key, field ]);
+					});
+					var result = [];
+					field.each(function( value, key, instance ){
+						result.push([ value, key, instance ]);
+					}, null, true );
+					cb.assertEquals( result, expected ).done();
+				} else if( value != null ) {
+					var result = [];
+					field.each(function( value, key, instance ){
+						result.push([ value, key, instance ]);
+					});
+					cb.assertEquals( result, [[ value, null, field ]] ).done();
+				} else {
+					var result = [];
+					field.each(function( value, key, instance ){
+						result.push([ value, key, instance ]);
+					});
+					cb.assertEquals( result, [] ).done();
+				}
+			})
+			.test(type + " field each thisArg", function( cb ){
+				var value = field.get();
+				if( value != null ) {
+					field.each(function(){
+						cb.assertEquals( this, cb );
+					}, cb);
+				}
+				cb.done();
+			})
+			.test(type + " field find", function( cb ){
+				var value = field.get();
+				if( util.isArray( value ) || util.isPlainObject( value ) ) {
+					util.each(value, function( value, key ){
+						cb.assertEquals( field.find(function( target ){ return target === value }), value );
+					});
+					util.each(setValue1, function( value, key ){
+						cb.assertEquals( field.find(function( target ){ return target === value }), null );
+					});
+					cb.done();
+				} else if( value != null ) {
+					cb
+					.assertEquals( field.find(function( target ){ return target === value }), value )
+					.assertEquals( field.find(function( target ){ return target === setValue1 }), null )
+					.done();
+				} else {
+					cb.assertEquals( field.find(function( target ){ return target === value }), null ).done();
+				}
+			})
+			.test(type + " field find reverse", function( cb ){
+				var value = field.get();
+				if( util.isArray( value ) || util.isPlainObject( value ) ) {
+					util.each(value, function( value, key ){
+						cb.assertEquals( field.find(function( target ){ return target === value }, null, true ), value );
+					});
+					util.each(setValue1, function( value, key ){
+						cb.assertEquals( field.find(function( target ){ return target === value }, null, true ), null );
+					});
+					cb.done();
+				} else if( value != null ) {
+					cb
+					.assertEquals( field.find(function( target ){ return target === value }, null, true ), value )
+					.assertEquals( field.find(function( target ){ return target === setValue1 }, null, true ), null )
+					.done();
+				} else {
+					cb.assertEquals( field.find(function( target ){ return target === value }, null, true ), null ).done();
+				}
+			})
+			.test(type + " field find thisArg", function( cb ){
+				var value = field.get();
+				if( value != null ) {
+					field.find(function(){
+						cb.assertEquals( this, cb );
+					}, cb);
+				}
+				cb.done();
+			})
+			.test(type + " field find args", function( cb ){
+				var value = field.get();
+				if( util.isArray( value ) || util.isPlainObject( value ) ) {
+					var expected = [];
+					util.each(value, function( value, key ){
+						expected.push([ value, key, field ]);
+					});
+					var result = [];
+					field.find(function( value, key, instance ){
+						result.push([ value, key, instance ]);
+						return false;
+					});
+					cb.assertEquals( result, expected ).done();
+				} else if( value != null ) {
+					var result = [];
+					field.find(function( value, key, instance ){
+						result.push([ value, key, instance ]);
+						return false;
+					});
+					cb.assertEquals( result, [[ value, null, field ]] ).done();
+				} else {
+					var result = [];
+					field.find(function( value, key, instance ){
+						result.push([ value, key, instance ]);
+						return false;
+					});
+					cb.assertEquals( result, [] ).done();
+				}
+			})
+			.test(type + " field indexOf", function( cb ){
+				if( field instanceof wcardinal.controller.data.SString ) {
+					cb
+					.assertEquals( field.indexOf( setValue0 ), 0 )
+					.assertEquals( field.indexOf( setValue1 ), -1 )
+					.done();
+				} else {
+					var value = field.get();
+					if( util.isArray( value ) ){
+						util.each(value, function( value, index ){
+							cb.assertEquals( field.indexOf( value ), index );
+						});
+						util.each(setValue1, function( value, index ){
+							cb.assertEquals( field.indexOf( value ), -1 );
+						});
+						cb.done();
+					} else if( util.isPlainObject( value ) ) {
+						util.each(value, function( value, key ){
+							cb.assertEquals( field.indexOf( value ), -1 );
+						});
+						util.each(setValue1, function( value, key ){
+							cb.assertEquals( field.indexOf( value ), -1 );
+						});
+						cb.done();
+					} else if( value != null ) {
+						cb
+						.assertEquals( field.indexOf( value ), -1 )
+						.assertEquals( field.indexOf( setValue1 ), -1 )
+						.done();
+					} else {
+						cb.assertEquals( field.indexOf( value ), -1 ).done();
+					}
+				}
+			})
+			.test(type + " field lastIndexOf", function( cb ){
+				if( field instanceof wcardinal.controller.data.SString ) {
+					cb
+					.assertEquals( field.lastIndexOf( setValue0 ), 0 )
+					.assertEquals( field.lastIndexOf( setValue1 ), -1 )
+					.done();
+				} else {
+					var value = field.get();
+					if( util.isArray( value ) ){
+						util.each(value, function( value, index ){
+							cb.assertEquals( field.lastIndexOf( value ), index );
+						});
+						util.each(setValue1, function( value, index ){
+							cb.assertEquals( field.lastIndexOf( value ), -1 );
+						});
+						cb.done();
+					} else if( util.isPlainObject( value ) ) {
+						util.each(value, function( value, key ){
+							cb.assertEquals( field.lastIndexOf( value ), -1 );
+						});
+						util.each(setValue1, function( value, key ){
+							cb.assertEquals( field.lastIndexOf( value ), -1 );
+						});
+						cb.done();
+					} else if( value != null ) {
+						cb
+						.assertEquals( field.lastIndexOf( value ), -1 )
+						.assertEquals( field.lastIndexOf( setValue1 ), -1 )
+						.done();
+					} else {
+						cb.assertEquals( field.lastIndexOf( value ), -1 ).done();
+					}
+				}
+			})
+			.test(type + " field contains", function( cb ){
+				var value = field.get();
+				if( util.isArray( value ) ){
+					util.each(value, function( value, index ){
+						cb.assertEquals( field.contains( value ), true );
+					});
+					util.each(setValue1, function( value, index ){
+						cb.assertEquals( field.contains( value ), false );
+					});
+					cb.done();
+				} else if( util.isPlainObject( value ) ) {
+					util.each(value, function( value, key ){
+						cb.assertEquals( field.contains( value ), true );
+					});
+					util.each(setValue1, function( value, key ){
+						cb.assertEquals( field.contains( value ), false );
+					});
+					cb.done();
+				} else if( value != null ) {
+					cb
+					.assertEquals( field.contains( value ), true )
+					.assertEquals( field.contains( setValue1 ), false )
+					.done();
+				} else {
+					cb.assertEquals( field.contains( value ), false ).done();
+				}
+			})
+			.test(type + " field containsAll", function( cb ){
+				var value = field.get();
+				if( util.isArray( value ) ){
+					cb.assertEquals( field.containsAll( value ), true );
+					cb.assertEquals( field.containsAll( setValue1 ), false );
+					cb.done();
+				} else if( util.isPlainObject( value ) ) {
+					var expected = [];
+					util.each( value, function( value ){
+						expected.push( value );
+					});
+					var unexpected = [];
+					util.each( setValue1, function( value ){
+						unexpected.push( value );
+					});
+					cb.assertEquals( field.containsAll( expected ), true );
+					cb.assertEquals( field.containsAll( unexpected ), false );
+					cb.done();
+				} else if( value != null ) {
+					cb
+					.assertEquals( field.containsAll([ value ]), true )
+					.assertEquals( field.containsAll([ setValue1 ]), false )
+					.done();
+				} else {
+					cb.assertEquals( field.containsAll([ value ]), false ).done();
+				}
+			})
+			.test(type + " field set", function( cb ) {
+				cb.assertEquals( field.set( setValue1 ), field )
+					.assertEquals( field.get(), setValue1 )
+					.assertEquals( field.set( null ), field )
+					.assertEquals( field.get(), null )
+					.done();
+			})
+			.test(type + " field reset", function( cb ) {
+				cb.assertEquals( field.set( setValue1 ), field )
+					.assertEquals( field.get(), setValue1 )
+					.assertEquals( field.reset(), setValue1 )
+					.assertEquals( field.get(), setValue1 )
+					.assertEquals( field.set( null ), field )
+					.assertEquals( field.get(), null )
+					.assertEquals( field.reset(), null )
+					.assertEquals( field.get(), null )
+					.done();
+			})
+			.test(type + " field compareAndSet", function( cb ){
+				field.compareAndSet( null, setValue0 );
+				cb.assertEquals( field.get(), setValue0 );
+				field.compareAndSet( setValue1, setValue1 );
+				cb.assertEquals( field.get(), setValue0 )
+					.done();
+			})
+			.test(type + " field getAndSet", function( cb ){
+				var value = field.getAndSet( setValue1 );
+				cb.assertEquals( value, setValue0 )
+					.assertEquals( field.get(), setValue1 )
+					.done();
+			})
+			.test(type + " field toDirty", function( cb ){
+				if( dirty != null ) {
+					var value = field_dirty.get();
+					if( util.isArray(value) ) {
+						value.push( 2 );
+					} else {
+						value[ "2" ] = 2;
+					}
+					field_dirty.toDirty();
+					cb.within(3000, function(){
+						if( util.isEqual( field_dirty.get(), dirty ) ) cb.done();
+					});
+				} else {
+					cb.done();
+				}
+			})
+			.test(type + " field equals", function( cb ){
+				cb.assertEquals( field.equals( field ), true )
+					.assertEquals( field.equals( setValue0 ), false )
+					.assertEquals( field.equals( setValue1 ), true )
+					.assertEquals( field.equals( field_dirty ), false )
+					.done();
+			})
+			.test(type + " field compareTo", function( cb ){
+				var result0 = field.compareTo( field );
+				var result1 = field.compareTo( setValue0 );
+				var result2 = field.compareTo( setValue1 );
+				var result3 = field.compareTo( field_dirty );
+				if( compare0 == null ){
+					cb.assertEquals( result0 === 0 || result0 === -1 || result0 === +1, true )
+						.assertEquals( result1 === 0 || result1 === -1 || result1 === +1, true )
+						.assertEquals( result2 === 0 || result2 === -1 || result2 === +1, true )
+						.assertEquals( result3 === 0 || result3 === -1 || result3 === +1, true )
+						.done();
+				} else {
+					cb.assertEquals( result0, 0 )
+						.assertEquals( result1, compare0 )
+						.assertEquals( result2, 0 )
+						.assertEquals( result3, compareDirty )
+						.done();
+				}
+			})
+			.test(type + " field toJson", function( cb ){
+				cb.assertEquals( field.toJson(), setValue1 )
+					.done();
+			})
+			.test(type + " field fromJson", function( cb ){
+				cb.assertEquals( field.fromJson( setValue0 ), field )
+					.assertEquals( field.get(), setValue0 )
+					.done();
+			})
+			.test(type + " field toString", function( cb ){
+				if( type === "String" ) {
+					cb.assertEquals( field.toString(), ""+setValue0 )
+						.done();
+				} else {
+					cb.assertEquals( field.toString(), JSON.stringify( setValue0 ) )
+						.done();
+				}
+			})
+			.test("Server-side " + type + " field get", function( cb ){
+				c[ methodPrefix+"Get" ]()
+				.then(function( result ){
+					cb.assertEquals( result, setValue0 ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			})
+			.test("Server-side " + type + " field set", function( cb ){
+				c[ methodPrefix+"Set" ]()
+				.then(function( result ){
+					cb.assertEquals( result, setValue1 ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			})
+			.test("Server-side " + type + " field compareAndSet", function( cb ){
+				c[ methodPrefix+"CompareAndSet" ]( setValue0 )
+				.then(function( result ){
+					cb.assertEquals( result, setValue0 ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			})
+			.test("Server-side " + type + " field compareAndSet fail", function( cb ){
+				c[ methodPrefix+"CompareAndSetFail" ]( setValue1 )
+				.then(function( result ){
+					cb.assertEquals( result, setValue0 ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			})
+			.test("Server-side " + type + " field getAndSet", function( cb ){
+				c[ methodPrefix+"GetAndSet" ]( setValue1 )
+				.then(function( result ){
+					cb.assertEquals( result, setValue0 ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			})
+			.test("Server-side " + type + " field equals", function( cb ){
+				c[ methodPrefix+"Equals" ]( setValue1 )
+				.then(function( result ){
+					cb.assertEquals( result, true ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			})
+			.test("Server-side " + type + " field compareTo", function( cb ){
+				c[ methodPrefix+"CompareTo" ]()
+				.then(function( result ){
+					cb.assertEquals( result, true ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			})
+			.test("Server-side " + type + " field toString", function( cb ){
+				c[ methodPrefix+"ToString" ]( setValue1 )
+				.then(function( result ){
+					cb.assertEquals( result, true ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			})
+			.test("Server-side " + type + " field tryLock", function( cb ){
+				c[ methodPrefix+"TryLock" ]()
+				.then(function( result ){
+					cb.assertEquals( result, true ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			})
+			.test("Server-side " + type + " field tryLock timeout", function( cb ){
+				c[ methodPrefix+"TryLockTimeout" ]()
+				.then(function( result ){
+					cb.assertEquals( result, true ).done();
+				}, function( reason ){
+					cb.fail( reason );
+				});
+			});
+
+			// Non-null field tests
+			if( field_nonnull != null ) {
+				tests = tests
+				.test("Non-null " + type + " field init", function( cb ){
+					field_nonnull.set(setValue1);
+					cb.done();
+				})
+				.test("Non-null " + type + " field get", function( cb ) {
+					cb.assertEquals( field_nonnull.get(), setValue1 )
+						.done();
+				})
+				.test("Non-null " + type + " field set", function( cb ) {
+					cb.assertEquals( field_nonnull.set( setValue0 ), field_nonnull )
+						.assertEquals( field_nonnull.get(), setValue0 )
+						.done();
+				})
+				.test("Non-null " + type + " field set null", function( cb ) {
+					var result = true;
+					var exception = null;
+					try {
+						field_nonnull.set( null );
+						result = false;
+					} catch( e ){
+						exception = e;
+					}
+
+					cb
+					.assertEquals( result, true )
+					.assertEquals( field_nonnull.get(), setValue0 )
+					.assertEquals( NullPointerException.isInstance( exception ), true )
+					.done();
+				})
+				.test("Non-null " + type + " field compareAndSet", function( cb ){
+					cb
+					.assertEquals( field_nonnull.compareAndSet( setValue0, setValue1 ), true )
+					.assertEquals( field_nonnull.get(), setValue1 )
+					.assertEquals( field_nonnull.compareAndSet( setValue0, setValue0 ), false )
+					.assertEquals( field_nonnull.get(), setValue1 )
+					.done();
+				})
+				.test("Non-null " + type + " field compareAndSet null", function( cb ){
+					var result = true;
+					var exception = null;
+					try{
+						field_nonnull.compareAndSet( setValue1, null );
+						result = false;
+					} catch( e ) {
+						exception = e;
+					}
+
+					cb
+					.assertEquals( result, true )
+					.assertEquals( field_nonnull.get(), setValue1 )
+					.assertEquals( NullPointerException.isInstance( exception ), true )
+					.done();
+				})
+				.test("Non-null " + type + " field getAndSet", function( cb ){
+					var value = field_nonnull.getAndSet( setValue0 );
+					cb.assertEquals( value, setValue1 )
+						.assertEquals( field_nonnull.get(), setValue0 )
+						.done();
+				})
+				.test("Non-null " + type + " field getAndSet null", function( cb ){
+					var result = true;
+					var exception = null;
+					try{
+						field_nonnull.getAndSet( null );
+						result = false;
+					} catch( e ){
+						exception = e;
+					}
+
+					cb
+					.assertEquals( result, true )
+					.assertEquals( field_nonnull.get(), setValue0 )
+					.assertEquals( NullPointerException.isInstance( exception ), true )
+					.done();
+				})
+				.test("Server-side non-null " + type + " field set", function( cb ){
+					c[ methodPrefix + "NonnullSet" ]( setValue1 )
+					.then(function( result ){
+						cb.assertEquals( result, setValue0 )
+							.done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Server-side non-null " + type + " field set null", function( cb ){
+					c[ methodPrefix + "NonnullSetNull" ]()
+					.then(function( result ){
+						if( result ) {
+							cb.done();
+						} else {
+							cb.fail( result );
+						}
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Server-side non-null " + type + " field compareAndSet", function( cb ){
+					c[ methodPrefix + "NonnullCompareAndSet" ]( setValue1, setValue0 )
+					.then(function( result ){
+						cb.assertEquals( result, true )
+							.done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Server-side non-null " + type + " field compareAndSet null expected", function( cb ){
+					c[ methodPrefix + "NonnullCompareAndSetNullExpected" ]( setValue0 )
+					.then(function( result ){
+						if( result ) {
+							cb.done();
+						} else {
+							cb.fail( result );
+						}
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Server-side non-null " + type + " field compareAndSet null unexpected", function( cb ){
+					c[ methodPrefix + "NonnullCompareAndSetNullUnexpected" ]( setValue1 )
+					.then(function( result ){
+						if( result ) {
+							cb.done();
+						} else {
+							cb.fail( result );
+						}
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Server-side non-null " + type + " field getAndSet", function( cb ){
+					c[ methodPrefix + "NonnullGetAndSet" ]( setValue1 )
+					.then(function( result ){
+						cb.assertEquals( result, setValue0 )
+							.done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Server-side non-null " + type + " field getAndSet null", function( cb ){
+					c[ methodPrefix + "NonnullGetAndSetNull" ]()
+					.then(function( result ){
+						if( result ) {
+							cb.done();
+						} else {
+							cb.fail( result );
+						}
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				});
+			}
+
+			// Uninitialized field tests
+			if( field_uninitialized != null ) {
+				tests = tests
+				.test("Uninitialized " + type + " field isInitialized before", function( cb ){
+					cb.assertEquals( field_uninitialized.isInitialized(), false )
+						.done();
+				})
+				.test("Server-side uninitialized " + type + " field isInitialized before", function( cb ){
+					c[ methodPrefix + "UninitializedIsInitializedBefore" ]()
+					.then(function( result ){
+						cb.assertEquals( result, true ).done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Uninitialized " + type + " field get", function( cb ){
+					cb.assertEquals( field_uninitialized.get(), null )
+						.assertEquals( field_uninitialized.isInitialized(), false )
+						.done();
+				})
+				.test("Uninitialized " + type + " field getValue", function( cb ){
+					cb.assertEquals( field_uninitialized.getValue(), null )
+						.assertEquals( field_uninitialized.isInitialized(), false )
+						.done();
+				})
+				.test("Uninitialized " + type + " field lock", function( cb ){
+					var isLocked = false;
+					field_uninitialized.lock();
+					try {
+						isLocked = field_uninitialized.isLocked();
+					} finally {
+						field_uninitialized.unlock();
+					}
+
+					cb.assertEquals( isLocked, true )
+						.assertEquals( field_uninitialized.isInitialized(), false )
+						.done();
+				})
+				.test("Server-side uninitialized " + type + " field get", function( cb ){
+					c[ methodPrefix + "UninitializedGet" ]()
+					.then(function( result ){
+						cb.assertEquals( result, true ).done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Server-side uninitialized " + type + " field getValue", function( cb ){
+					c[ methodPrefix + "UninitializedGetValue" ]()
+					.then(function( result ){
+						cb.assertEquals( result, true ).done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Server-side uninitialized " + type + " field lock", function( cb ){
+					c[ methodPrefix + "UninitializedLock" ]()
+					.then(function( result ){
+						cb.assertEquals( result, true ).done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Uninitialized " + type + " field", function( cb ){
+					var count = { init: 0, change: 0, value: 0 };
+					field_uninitialized.one( "init", function( e, value ){
+						cb.assertEquals( value, setValue0 );
+						count.init += 1;
+					});
+					field_uninitialized.one( "change", function( e, newValue, oldValue ){
+						cb.assertEquals( newValue, setValue0 )
+							.assertEquals( oldValue, null );
+						count.change += 1;
+					});
+					field_uninitialized.one( "value", function( e, newValue, oldValue ){
+						cb.assertEquals( newValue, setValue0 )
+							.assertEquals( oldValue, null );
+						count.value += 1;
+					});
+					c[ methodPrefix + "UninitializedInitialize" ]( setValue0 );
+					cb.within(3000, function(){
+						if( count.init === 1 && count.change === 1 && count.value === 1 ) {
+							cb.done();
+						}
+					});
+				})
+				.test("Uninitialized " + type + " field isInitialized after", function( cb ){
+					cb.assertEquals( field_uninitialized.isInitialized(), true )
+						.done();
+				})
+				.test("Server-side uninitialized " + type + " field isInitialized after", function( cb ){
+					c[ methodPrefix + "UninitializedIsInitializedAfter" ]()
+					.then(function( result ){
+						cb.assertEquals( result, true ).done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test("Server-side uninitialized " + type + " field initialize after", function( cb ){
+					c[ methodPrefix + "UninitializedInitializeAfter" ]()
+					.then(function( result ){
+						cb.assertEquals( result, true ).done();
+					}, function( reason ){
+						cb.fail( reason );
+					});
+				})
+				.test( c, [methodPrefix +"Uninitialized2Initialize"]);
+			}
+
+			return tests;
+		};
+
+		// Array node
+		var tests = puppeteer;
+		tests = makeTest( tests, "Array node",  "field_array_node",  "arrayNode",  [ 256 ], [ 128 ], [ 1, 2, 3 ], null, null );
+		tests = makeTest( tests, "Boolean",     "field_boolean",     "boolean",    true, false, null, -1, +1 );
+		tests = makeTest( tests, "Class",       "field_class",       "class",      "a", "b", null, +1, +1 );
+		tests = makeTest( tests, "Double",      "field_double",      "double",     0.1, 0.2, null, +1, +1 );
+		tests = makeTest( tests, "Float",       "field_float",       "float",      0.1, 0.2, null, +1, +1 );
+		tests = makeTest( tests, "Integer",     "field_int",         "int",        1, 2, null, +1, +1 );
+		tests = makeTest( tests, "Long",        "field_long",        "long",       1, 2, null, +1, +1 );
+		tests = makeTest( tests, "Json node",   "field_json_node",   "jsonNode",   [ 256 ], [ 128 ], { "1":1, "2":2, "3":3 }, null, null );
+		tests = makeTest( tests, "Object node", "field_object_node", "objectNode", { "1":1 }, { "2":2 }, { "1":1, "2":2, "3":3 }, null, null );
+		tests = makeTest( tests, "String",      "field_string",      "string",     "a", "b", null, +1, +1 );
+
+		// Update tests
+		tests
+		.test("Field synchronization", function( cb ){
+			c.field_for_update.set( "A" );
+			cb.within(3000, function(){
+				if( c.field_for_update.get() === "AA" ) cb.done();
+			});
+		})
+		.test("Server-side field synchronization", function( cb ){
+			c.field_for_update.one( "change", function( e, value ){
+				c.field_for_update.set( value + value );
+			});
+			cb.within(3000, function(){
+				if( c.field_for_update.get() === "AAAA" ) cb.done();
+			});
+			c.startUpdate();
+		});
+
+		// Combined tests
+		tests
+		.test("Field read-only check", function( cb ){
+			c.combinedReadOnlyCheck()
+			.then(function( result ){
+				cb.assertEquals( result, true ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Field uninitialized check", function( cb ){
+			c.combinedUninitializedCheck()
+			.then(function( result ){
+				cb.assertEquals( result, true ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Field non-null check", function( cb ){
+			c.combinedNonNullCheck()
+			.then(function( result ){
+				cb.assertEquals( result, true ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		});
+
+		// String tests
+		tests.test(c, [
+			"string_substring_1_check",
+			"string_substring_1_null_check",
+			"string_substring_2_check",
+			"string_substring_2_null_check",
+			"string_trim_check",
+			"string_trim_null_check",
+			"string_toUpperCase_check",
+			"string_toUpperCase_null_check",
+			"string_toLowerCase_check",
+			"string_toLowerCase_null_check",
+			"string_length_check",
+			"string_length_null_check",
+			"string_isEmpty_check",
+			"string_isEmpty_null_check",
+			"string_compareTo_check",
+			"string_compareTo_null_check",
+			"string_compareToIgnoreCase_check",
+			"string_compareToIgnoreCase_null_check",
+			"string_toUpperCase_locale_check",
+			"string_toUpperCase_locale_null_check",
+			"string_toLowerCase_locale_check",
+			"string_toLowerCase_locale_null_check",
+			"string_startsWith_1_check",
+			"string_startsWith_1_null_check",
+			"string_startsWith_2_check",
+			"string_startsWith_2_null_check",
+			"string_matches_check",
+			"string_matches_null_check",
+			"string_lastIndexOf_1_check",
+			"string_lastIndexOf_1_null_check",
+			"string_lastIndexOf_2_check",
+			"string_lastIndexOf_2_null_check",
+			"string_lastIndexOf_3_check",
+			"string_lastIndexOf_3_null_check",
+			"string_lastIndexOf_4_check",
+			"string_lastIndexOf_4_null_check",
+			"string_indexOf_1_check",
+			"string_indexOf_1_null_check",
+			"string_indexOf_2_check",
+			"string_indexOf_2_null_check",
+			"string_indexOf_3_check",
+			"string_indexOf_3_null_check",
+			"string_indexOf_4_check",
+			"string_indexOf_4_null_check",
+			"string_equalsIgnoreCase_check",
+			"string_equalsIgnoreCase_null_check",
+			"string_endsWith_check",
+			"string_endsWith_null_check",
+			"string_contains_check",
+			"string_contains_null_check",
+			"string_concat_check",
+			"string_concat_null_check"
+		]);
+
+		tests
+		.test( "Client-side string substring 1 check", function( cb ){
+			c.field_string_client_side_methods.set( "abc" );
+			cb.assertEquals( c.field_string_client_side_methods.substring( 1 ), "bc" ).done();
+		})
+		.test( "Client-side string substring 1 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			var result = true;
+			var exception = null;
+			try {
+				c.field_string_client_side_methods.substring( 1 );
+				result = false;
+			} catch( e ){
+				exception = e;
+			}
+
+			cb
+			.assertEquals( result, true )
+			.assertEquals( IndexOutOfBoundsException.isInstance(exception), true )
+			.done();
+		})
+		.test( "Client-side string substring 2 check", function( cb ){
+			c.field_string_client_side_methods.set( "abc" );
+			cb.assertEquals( c.field_string_client_side_methods.substring( 1, 2 ), "b" ).done();
+		})
+		.test( "Client-side string substring 2 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			var result = true;
+			var exception = null;
+			try {
+				c.field_string_client_side_methods.substring( 1, 2 );
+				result = false;
+			} catch( e ){
+				exception = e;
+			}
+
+			cb
+			.assertEquals( result, true )
+			.assertEquals( IndexOutOfBoundsException.isInstance(exception), true )
+			.done();
+		})
+		.test( "Client-side string trim check", function( cb ){
+			c.field_string_client_side_methods.set( " abc " );
+			cb.assertEquals( c.field_string_client_side_methods.trim(), "abc" ).done();
+		})
+		.test( "Client-side string trim null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb.assertEquals( c.field_string_client_side_methods.trim(), null ).done();
+		})
+		.test( "Client-side string toUpperCase check", function( cb ){
+			c.field_string_client_side_methods.set( "abc" );
+			cb.assertEquals( c.field_string_client_side_methods.toUpperCase(), "ABC" ).done();
+		})
+		.test( "Client-side string toUpperCase null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb.assertEquals( c.field_string_client_side_methods.toUpperCase(), null ).done();
+		})
+		.test( "Client-side string toLowerCase check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb.assertEquals( c.field_string_client_side_methods.toLowerCase(), "abc" ).done();
+		})
+		.test( "Client-side string toLowerCase null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb.assertEquals( c.field_string_client_side_methods.toLowerCase(), null ).done();
+		})
+		.test( "Client-side string length check", function( cb ){
+			c.field_string_client_side_methods.set( "abc" );
+			cb.assertEquals( c.field_string_client_side_methods.length(), 3 ).done();
+		})
+		.test( "Client-side string length null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb.assertEquals( c.field_string_client_side_methods.length() < 0, true ).done();
+		})
+		.test( "Client-side string isEmpty check", function( cb ){
+			c.field_string_client_side_methods.set( "abc" );
+			cb.assertEquals( c.field_string_client_side_methods.isEmpty(), false ).done();
+		})
+		.test( "Client-side string isEmpty null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb.assertEquals( c.field_string_client_side_methods.isEmpty(), true ).done();
+		})
+		.test( "Client-side string compareTo check", function( cb ){
+			c.field_string_client_side_methods.set( "abc" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.compareTo( "abc" ), 0 )
+			.assertEquals( c.field_string_client_side_methods.compareTo( null ) > 0, true )
+			.assertEquals( c.field_string_client_side_methods.compareTo( "abcd" ) < 0, true )
+			.assertEquals( c.field_string_client_side_methods.compareTo( "ab" ) > 0, true )
+			.done();
+		})
+		.test( "Client-side string compareTo null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.compareTo( "abc" ) < 0, true )
+			.assertEquals( c.field_string_client_side_methods.compareTo( null ), 0 )
+			.done();
+		})
+		.test( "Client-side string compareToIgnoreCase check", function( cb ){
+			c.field_string_client_side_methods.set( "abc" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.compareToIgnoreCase( "aBc" ), 0 )
+			.assertEquals( c.field_string_client_side_methods.compareToIgnoreCase( null ) > 0, true )
+			.assertEquals( c.field_string_client_side_methods.compareToIgnoreCase( "aBcd" ) < 0, true )
+			.assertEquals( c.field_string_client_side_methods.compareToIgnoreCase( "aB" ) > 0, true )
+			.done();
+		})
+		.test( "Client-side string compareToIgnoreCase null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.compareToIgnoreCase( "abc" ) < 0, true )
+			.assertEquals( c.field_string_client_side_methods.compareToIgnoreCase( null ), 0 )
+			.done();
+		})
+		.test( "Client-side string startsWith 1 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.startsWith( "A" ), true )
+			.assertEquals( c.field_string_client_side_methods.startsWith( "B" ), false )
+			.done();
+		})
+		.test( "Client-side string startsWith 1 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb.assertEquals( c.field_string_client_side_methods.startsWith( "A" ), false ).done();
+		})
+		.test( "Client-side string startsWith 2 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.startsWith( "A", 1 ), false )
+			.assertEquals( c.field_string_client_side_methods.startsWith( "B", 1 ), true )
+			.done();
+		})
+		.test( "Client-side string startsWith 2 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb.assertEquals( c.field_string_client_side_methods.startsWith( "A", 1 ), false ).done();
+		})
+		.test( "Client-side string matches check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.matches("[a-z]+"), false )
+			.assertEquals( c.field_string_client_side_methods.matches("[A-Z]+"), true )
+			.done();
+		})
+		.test( "Client-side string matches null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.matches("[a-z]+"), false )
+			.assertEquals( c.field_string_client_side_methods.matches("[A-Z]+"), false )
+			.done();
+		})
+		.test( "Client-side string lastIndexOf 1 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf('B'), 1 )
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf('Z') < 0, true )
+			.done();
+		})
+		.test( "Client-side string lastIndexOf 1 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf('B') < 0, true )
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf('Z') < 0, true )
+			.done();
+		})
+		.test( "Client-side string lastIndexOf 2 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf("B"), 1 )
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf("Z") < 0, true )
+			.done();
+		})
+		.test( "Client-side string lastIndexOf 2 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf("B") < 0, true )
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf("Z") < 0, true )
+			.done();
+		})
+		.test( "Client-side string lastIndexOf 3 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf('B', 1), 1 )
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf('Z', 1) < 0, true )
+			.done();
+		})
+		.test( "Client-side string lastIndexOf 3 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf('B', 1) < 0, true )
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf('Z', 1) < 0, true )
+			.done();
+		})
+		.test( "Client-side string lastIndexOf 4 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf("B", 1), 1 )
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf("Z", 1) < 0, true )
+			.done();
+		})
+		.test( "Client-side string lastIndexOf 4 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf("B", 1) < 0, true )
+			.assertEquals( c.field_string_client_side_methods.lastIndexOf("Z", 1) < 0, true )
+			.done();
+		})
+		.test( "Client-side string indexOf_1 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.indexOf('B'), 1 )
+			.assertEquals( c.field_string_client_side_methods.indexOf('Z') < 0, true )
+			.done();
+		})
+		.test( "Client-side string indexOf 1 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.indexOf('B') < 0, true )
+			.assertEquals( c.field_string_client_side_methods.indexOf('Z') < 0, true )
+			.done();
+		})
+		.test( "Client-side string indexOf 2 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.indexOf("B"), 1 )
+			.assertEquals( c.field_string_client_side_methods.indexOf("Z") < 0, true )
+			.done();
+		})
+		.test( "Client-side string indexOf 2 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.indexOf("B") < 0, true )
+			.assertEquals( c.field_string_client_side_methods.indexOf("Z") < 0, true )
+			.done();
+		})
+		.test( "Client-side string indexOf 3 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.indexOf('B',1), 1 )
+			.assertEquals( c.field_string_client_side_methods.indexOf('Z',1) < 0, true )
+			.done();
+		})
+		.test( "Client-side string indexOf 3 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.indexOf('B',1) < 0, true )
+			.assertEquals( c.field_string_client_side_methods.indexOf('Z',1) < 0, true )
+			.done();
+		})
+		.test( "Client-side string indexOf 4 check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.indexOf("B",1), 1 )
+			.assertEquals( c.field_string_client_side_methods.indexOf("Z",1) < 0, true )
+			.done();
+		})
+		.test( "Client-side string indexOf 4 null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.indexOf("B",1) < 0, true )
+			.assertEquals( c.field_string_client_side_methods.indexOf("Z",1) < 0, true )
+			.done();
+		})
+		.test( "Client-side string equalsIgnoreCase check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.equalsIgnoreCase("aBc"), true )
+			.assertEquals( c.field_string_client_side_methods.equalsIgnoreCase("z"), false )
+			.done();
+		})
+		.test( "Client-side string equalsIgnoreCase null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.equalsIgnoreCase("B"), false )
+			.assertEquals( c.field_string_client_side_methods.equalsIgnoreCase(null), true )
+			.done();
+		})
+		.test( "Client-side string endsWith check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.endsWith("C"), true )
+			.assertEquals( c.field_string_client_side_methods.endsWith("D"), false )
+			.done();
+		})
+		.test( "Client-side string endsWith null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.endsWith("B"), false )
+			.assertEquals( c.field_string_client_side_methods.endsWith(null), false )
+			.done();
+		})
+		.test( "Client-side string contains check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.contains("C"), true )
+			.assertEquals( c.field_string_client_side_methods.contains("D"), false )
+			.done();
+		})
+		.test( "Client-side string contains null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.contains("B"), false )
+			.assertEquals( c.field_string_client_side_methods.contains(null), false )
+			.done();
+		})
+		.test( "Client-side string concat check", function( cb ){
+			c.field_string_client_side_methods.set( "ABC" );
+			cb
+			.assertEquals( c.field_string_client_side_methods.concat("D"), "ABCD" )
+			.assertEquals( c.field_string_client_side_methods.concat(null), "ABC" )
+			.done();
+		})
+		.test( "Client-side string concat null check", function( cb ){
+			c.field_string_client_side_methods.set( null );
+			cb
+			.assertEquals( c.field_string_client_side_methods.concat("B"), null )
+			.assertEquals( c.field_string_client_side_methods.concat(null), null )
+			.done();
+		});
+
+		// Server-side Scalar methods
+		tests.test(c, [
+			"scalarSize",
+			"scalarIsEmpty",
+			"scalarIsNull",
+			"scalarIsNotNull",
+			"scalarIndexOf",
+			"scalarLastIndexOf",
+			"scalarContains",
+			"scalarContainsAll"
+		]);
+
+		// Execute tests
+		tests.execute();
+	}());
+	</script>
+</body>
+</html>

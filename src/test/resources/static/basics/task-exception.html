@@ -1,0 +1,433 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-task-exception-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsTaskExceptionController;
+
+		puppeteer
+		.test("Task exception", function( cb ){
+			var reason = null;
+			c.task0
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.task0();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 2 &&
+					c.null_pointer_exception_count.get() === 0 &&
+					reason === "a"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception overload 1", function( cb ){
+			var reason = null;
+			c.task1
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.task1();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 4 &&
+					c.null_pointer_exception_count.get() === 0 &&
+					reason === "a"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception overload 2", function( cb ){
+			var reason = null;
+			c.task2
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.task2();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 4 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					reason === "b"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception component", function( cb ){
+			var reason = null;
+			c.component.task0
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.component.task0();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 6 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.component.null_pointer_exception_count.get() === 0 &&
+					reason === "a"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception component overload 1", function( cb ){
+			var reason = null;
+			c.component.task1
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.component.task1();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.component.null_pointer_exception_count.get() === 0 &&
+					reason === "a"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception component overload 2", function( cb ){
+			var reason = null;
+			c.component.task2
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.component.task2();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.component.null_pointer_exception_count.get() === 2 &&
+					reason === "c"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception priority", function( cb ){
+			var reason = null;
+			c.priority.task0
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.priority.task0();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.priority.count.get() === 2 &&
+					c.priority.null_pointer_exception_count.get() === 0 &&
+					reason === "d"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception priority overload 1", function( cb ){
+			var reason = null;
+			c.priority.task1
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.priority.task1();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.priority.count.get() === 4 &&
+					c.priority.null_pointer_exception_count.get() === 0 &&
+					reason === "d"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception priority overload 2", function( cb ){
+			var reason = null;
+			c.priority.task2
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.priority.task2();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.priority.count.get() === 4 &&
+					c.priority.null_pointer_exception_count.get() === 2 &&
+					reason === "e"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception no-reason", function( cb ){
+			var reason = null;
+			c.no_reason.task0
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.no_reason.task0();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.no_reason.count.get() === 2 &&
+					c.no_reason.null_pointer_exception_count.get() === 0 &&
+					reason === "exception"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception no-reason overload 1", function( cb ){
+			var reason = null;
+			c.no_reason.task1
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.no_reason.task1();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.no_reason.count.get() === 4 &&
+					c.no_reason.null_pointer_exception_count.get() === 0 &&
+					reason === "exception"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception no-reason overload 2", function( cb ){
+			var reason = null;
+			c.no_reason.task2
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.no_reason.task2();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.no_reason.count.get() === 4 &&
+					c.no_reason.null_pointer_exception_count.get() === 2 &&
+					reason === "exception"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception locked", function( cb ){
+			var reason = null;
+			c.locked.task0
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.locked.task0();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.locked.count.get() === 2 &&
+					c.locked.null_pointer_exception_count.get() === 0 &&
+					reason === "d"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception locked overload 1", function( cb ){
+			var reason = null;
+			c.locked.task1
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.locked.task1();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.locked.count.get() === 4 &&
+					c.locked.null_pointer_exception_count.get() === 0 &&
+					reason === "d"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception locked overload 2", function( cb ){
+			var reason = null;
+			c.locked.task2
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.locked.task2();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.locked.count.get() === 4 &&
+					c.locked.null_pointer_exception_count.get() === 2 &&
+					reason === "e"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception unlocked", function( cb ){
+			var reason = null;
+			c.unlocked.task0
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.unlocked.task0();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.unlocked.count.get() === 2 &&
+					c.unlocked.null_pointer_exception_count.get() === 0 &&
+					reason === "d"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception unlocked overload 1", function( cb ){
+			var reason = null;
+			c.unlocked.task1
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.unlocked.task1();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.unlocked.count.get() === 4 &&
+					c.unlocked.null_pointer_exception_count.get() === 0 &&
+					reason === "d"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task exception unlocked overload 2", function( cb ){
+			var reason = null;
+			c.unlocked.task2
+			.on( "success", function(){
+				cb.fail();
+			})
+			.on( "fail", function( e, r ){
+				reason = r;
+			});
+			c.unlocked.task2();
+
+			cb.within( 5000, function(){
+				if( c.count.get() === 0 &&
+					c.exception_count.get() === 8 &&
+					c.null_pointer_exception_count.get() === 2 &&
+					c.unlocked.count.get() === 4 &&
+					c.unlocked.null_pointer_exception_count.get() === 2 &&
+					reason === "e"
+				) {
+					cb.done();
+				}
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

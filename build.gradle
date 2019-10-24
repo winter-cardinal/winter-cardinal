@@ -1,0 +1,182 @@
+plugins {
+	id 'com.jfrog.artifactory' version '4.7.5'
+	id 'net.minecrell.licenser' version '0.4.1'
+}
+
+apply plugin: 'jacoco'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = 'org.wcardinal'
+archivesBaseName = 'wcardinal'
+version = new groovy.json.JsonSlurper().parseText(file('package.json').text).version
+
+sourceCompatibility = 8
+targetCompatibility = 8
+
+// REPOSITORY
+repositories {
+	maven {
+		url 'http://repo1.maven.org/maven2'
+	}
+}
+
+// JAR
+jar {
+    manifest {
+		attributes( 'Implementation-Title': archivesBaseName )
+		attributes( 'Automatic-Module-Name': 'wcardinal' )
+		attributes( 'Implementation-Version': version )
+	}
+}
+
+task copyLicense(type: Copy) {
+	from file('./LICENSE')
+	into file('./src/main/resources/META-INF/')
+}
+compileJava.dependsOn copyLicense
+
+// JAR SOURCE
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+	exclude 'META-INF/**'
+}
+
+artifacts {
+	archives sourcesJar
+}
+
+// JAR JAVADOC
+javadoc {
+	options.locale = 'en_US'
+	options.charSet = 'UTF-8'
+	options.encoding = 'UTF-8'
+	options.jFlags '-Dfile.encoding=UTF-8'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives javadocJar
+}
+
+// SIGNING
+signing {
+	sign configurations.archives
+}
+
+// DEPENDENCIES
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter-websocket:2.0.5.RELEASE'
+	compile 'org.jdeferred:jdeferred-core:1.2.6'
+	compile 'com.google.guava:guava:27.0.1-jre'
+	compile 'org.webjars:webjars-locator:0.34'
+
+	testCompile 'org.springframework.boot:spring-boot-starter-security:2.0.5.RELEASE'
+	testCompile 'org.springframework.boot:spring-boot-starter-thymeleaf:2.0.5.RELEASE'
+	testCompile 'junit:junit:4.12'
+}
+
+// TEST
+jacoco {
+	toolVersion = '0.8.2'
+}
+
+test {
+	exclude 'manual/**'
+}
+
+// TYPESCRIPT
+boolean isWindows(){
+	return System.getProperty( 'os.name' )
+		.toLowerCase( Locale.ROOT )
+		.contains( 'windows' );
+}
+String COMPILE_JAVASCRIPT_OUTDIR = "src/main/resources/META-INF/resources/webjars/${archivesBaseName}/"
+task compileJavaScript( type: Exec ){
+	inputs.files( 'package.json' )
+	inputs.files( 'rollup.config.js' )
+	inputs.files( 'tsconfig.json' )
+	inputs.files( 'tslintrc.json' )
+	inputs.files( fileTree(
+		dir: 'src/main/typescript',
+		exclude: '*.js*'
+	))
+
+	outputs.dir( COMPILE_JAVASCRIPT_OUTDIR )
+
+	commandLine(
+		(isWindows() ? [ 'cmd', '/c' ] : []) +
+		[ 'npm', 'run', 'build' ]
+	)
+}
+compileJava.dependsOn compileJavaScript
+task cleanJavaScript {
+	doLast {
+		delete COMPILE_JAVASCRIPT_OUTDIR
+	}
+}
+clean.dependsOn cleanJavaScript
+
+// TYPEDOC
+String TYPE_DOC_DIR = 'src/test/resources/static/doc';
+task generateTypeDoc( type: Exec ){
+	inputs.files( 'package.json' )
+	inputs.files( 'typedoc.json' )
+	inputs.files( 'tsconfig.json' )
+	inputs.files( 'README.md' )
+	inputs.files( fileTree(
+		dir: 'src/main/typescript',
+		exclude: '*.js*'
+	))
+
+	outputs.dir( TYPE_DOC_DIR )
+
+	commandLine(
+		(isWindows() ? [ 'cmd', '/c' ] : []) +
+		[
+			'npx', 'typedoc',
+			'--options', 'typedoc.json',
+			'--out', TYPE_DOC_DIR,
+			'--disableOutputCheck'
+		]
+	)
+}
+task cleanTypeDoc {
+	doLast {
+		delete TYPE_DOC_DIR
+	}
+}
+generateTypeDoc.dependsOn cleanTypeDoc
+clean.dependsOn cleanTypeDoc
+
+// License
+license {
+	tasks {
+		directory {
+			files = project.files( 'src/' )
+		}
+	}
+
+	style {
+		put( 'ts', 'BLOCK_COMMENT' )
+		put( 'html', new net.minecrell.gradle.licenser.header.CommentHeaderFormat( 'HTML', ~/^\s*<!--/, ~/-->\s*(.*?)$/, null, '<!--', '', '-->' ) )
+	}
+
+	header = file( 'LICENSE_HEADER' )
+
+	include '**/*.java'
+	include '**/*.ts'
+	include '**/*.js'
+	include '**/*.html'
+
+	exclude '**/META-INF/**'
+	exclude '**/javascript/**'
+	exclude '**/pixi.js'
+	exclude '**/pixi.min.js'
+}

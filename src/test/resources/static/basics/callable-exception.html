@@ -1,0 +1,349 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-callable-exception-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = basicsCallableExceptionController;
+
+		puppeteer
+		.test("Callable exception", function( cb ){
+			c.callable0()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 2 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "a" )
+				.done();
+			});
+		})
+		.test("Callable exception overload 1", function( cb ){
+			c.callable1()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 2 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "a" )
+				.done();
+			});
+		})
+		.test("Callable exception overload 2", function( cb ){
+			c.callable2()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 2 )
+				.assertEquals( reason, "b" )
+				.done();
+			});
+		})
+		.test("Callable exception component", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.component.callable0()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 2 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.component.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "a" )
+				.done();
+			});
+		})
+		.test("Callable exception component overload 1", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.component.callable1()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 2 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.component.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "a" )
+				.done();
+			});
+		})
+		.test("Callable exception component overload 2", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.component.callable2()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.component.null_pointer_exception_count.get(), 2 )
+				.assertEquals( reason, "c" )
+				.done();
+			});
+		})
+		.test("Callable exception priority", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.priority.callable0()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.priority.count.get(), 2 )
+				.assertEquals( c.priority.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "d" )
+				.done();
+			});
+		})
+		.test("Callable exception priority overload 1", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.priority.callable1()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.priority.count.get(), 2 )
+				.assertEquals( c.priority.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "d" )
+				.done();
+			});
+		})
+		.test("Callable exception priority overload 2", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.priority.callable2()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.priority.count.get(), 0 )
+				.assertEquals( c.priority.null_pointer_exception_count.get(), 2 )
+				.assertEquals( reason, "e" )
+				.done();
+			});
+		})
+		.test("Callable exception no-reason", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.no_reason.callable0()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.no_reason.count.get(), 2 )
+				.assertEquals( c.no_reason.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "exception" )
+				.done();
+			});
+		})
+		.test("Callable exception no-reason overload 1", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.no_reason.callable1()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.no_reason.count.get(), 2 )
+				.assertEquals( c.no_reason.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "exception" )
+				.done();
+			});
+		})
+		.test("Callable exception no-reason overload 2", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.no_reason.callable2()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.no_reason.count.get(), 0 )
+				.assertEquals( c.no_reason.null_pointer_exception_count.get(), 2 )
+				.assertEquals( reason, "exception" )
+				.done();
+			});
+		})
+		.test("Callable exception locked", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.locked.callable0()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.locked.count.get(), 2 )
+				.assertEquals( c.locked.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "d" )
+				.done();
+			});
+		})
+		.test("Callable exception locked overload 1", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.locked.callable1()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.locked.count.get(), 2 )
+				.assertEquals( c.locked.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "d" )
+				.done();
+			});
+		})
+		.test("Callable exception locked overload 2", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.locked.callable2()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.locked.count.get(), 0 )
+				.assertEquals( c.locked.null_pointer_exception_count.get(), 2 )
+				.assertEquals( reason, "e" )
+				.done();
+			});
+		})
+		.test("Callable exception unlocked", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.unlocked.callable0()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.unlocked.count.get(), 2 )
+				.assertEquals( c.unlocked.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "d" )
+				.done();
+			});
+		})
+		.test("Callable exception unlocked overload 1", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.unlocked.callable1()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.unlocked.count.get(), 2 )
+				.assertEquals( c.unlocked.null_pointer_exception_count.get(), 0 )
+				.assertEquals( reason, "d" )
+				.done();
+			});
+		})
+		.test("Callable exception unlocked overload 2", function( cb ){
+			c.count.set( 0 );
+			c.exception_count.set( 0 );
+			c.null_pointer_exception_count.set( 0 );
+
+			c.unlocked.callable2()
+			.then(function(){
+				cb.fail();
+			}, function( reason ){
+				cb
+				.assertEquals( c.count.get(), 0 )
+				.assertEquals( c.exception_count.get(), 0 )
+				.assertEquals( c.null_pointer_exception_count.get(), 0 )
+				.assertEquals( c.unlocked.count.get(), 0 )
+				.assertEquals( c.unlocked.null_pointer_exception_count.get(), 2 )
+				.assertEquals( reason, "e" )
+				.done();
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

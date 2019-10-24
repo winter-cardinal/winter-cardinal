@@ -1,0 +1,92 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var ajax = wcardinal.util.ajax;
+
+		puppeteer
+		.test("Ajax 200", function( cb ){
+			var at = 0;
+			ajax.get({
+				url: "/200",
+				success: function( response, xhr ){
+					cb.assertEquals( at, 0 ).assertEquals( response, "200" );
+					at += 1;
+				},
+				error: function(){
+					cb.fail();
+				},
+				complete: function(){
+					cb.assertEquals( at, 1 ).done();
+				}
+			});
+		})
+		.test("Ajax 204", function( cb ){
+			var at = 0;
+			ajax.get({
+				url: "/204",
+				success: function( response, xhr ){
+					cb.assertEquals( at, 0 ).assertEquals( xhr != null, true );
+					at += 1;
+				},
+				error: function(){
+					cb.fail();
+				},
+				complete: function(){
+					cb.assertEquals( at, 1 ).done();
+				}
+			});
+		})
+		.test("Ajax 304", function( cb ){
+			var at = 0;
+			ajax.get({
+				url: "/304",
+				success: function( response, xhr ){
+					cb.assertEquals( at, 0 ).assertEquals( xhr != null, true );
+					at += 1;
+				},
+				error: function(){
+					cb.fail();
+				},
+				complete: function(){
+					cb.assertEquals( at, 1 ).done();
+				}
+			});
+		})
+		.test("Ajax 400", function( cb ){
+			var at = 0;
+			ajax.get({
+				url: "/400",
+				success: function(){
+					cb.fail();
+				},
+				error: function( reason, xhr ){
+					cb.assertEquals( at, 0 ).assertEquals( xhr != null, true );
+					at += 1;
+				},
+				complete: function(){
+					cb.assertEquals( at, 1 ).done();
+				}
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

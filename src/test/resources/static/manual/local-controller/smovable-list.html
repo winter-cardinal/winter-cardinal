@@ -1,0 +1,48 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var controller = wcardinal.controller.Controllers.create({
+			field: "SMovableList"
+		});
+
+		controller.field.on( "value", function(){
+			// DO NOTHING
+		});
+
+		var SIZE = 10000;
+		for( var i=0; i<SIZE; ++i ) {
+			controller.field.add( i );
+		}
+
+		var updater = function(){
+			controller.lock();
+			try {
+				for( var i=SIZE-1; 0<=i; --i ) {
+					controller.field.set( i, controller.field.get( i ) + 1 );
+				}
+			} finally {
+				controller.unlock();
+			}
+
+			setTimeout(updater, 1000);
+		};
+		updater();
+	}());
+	</script>
+</body>
+</html>

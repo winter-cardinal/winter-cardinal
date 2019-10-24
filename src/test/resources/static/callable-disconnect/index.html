@@ -1,0 +1,54 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/callable-disconnect-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = callableDisconnectController;
+
+		puppeteer
+		.test("Callable disconnect check", function( cb ){
+			console.log( "call 1" );
+			c.test().then(function(){
+				console.log( "done 1" );
+				c.getServer().disconnect();
+
+				setTimeout(function(){
+					c.getServer().connect();
+
+					setTimeout(function(){
+						console.log( "call 2" );
+						c.test().then(function(){
+							console.log( "done 2" );
+							cb.done();
+						}, function( reason ){
+							console.log( "fail 2" );
+							cb.fail( reason );
+						});
+					}, 10000);
+				}, 40000)
+			}, function( reason ){
+				console.log( "fail 1" );
+				cb.fail( reason );
+			});
+		}, 120000)
+		.execute();
+	}());
+	</script>
+</body>
+</html>

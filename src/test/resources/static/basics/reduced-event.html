@@ -1,0 +1,801 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-reduced-event-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsReducedEventController;
+
+		var checkList = function( initialState, finalState, added, removed, updated, newMoved, oldMoved ){
+			var result = util.clone( initialState );
+
+			var removedLastIndex = -1;
+			for( var i=removed.length-1; 0<=i; --i ) {
+				var r = removed[ i ];
+				if( r.index < 0 || result.length <= r.index ) return false;
+				if( result[ r.index ] !== r.value ) return false;
+				if( 0 <= removedLastIndex && removedLastIndex <= r.index ) return false;
+				result.splice( removed[ i ].index, 1 );
+				removedLastIndex = r.index;
+			}
+
+			var addedLastIndex = -1;
+			for( var i=0, imax=added.length; i<imax; ++i ) {
+				var a = added[ i ];
+				if( a.index <= addedLastIndex ) return false;
+				if( a.index < 0 || result.length < a.index ) return false;
+				result.splice( a.index, 0, a.value );
+				addedLastIndex = a.index;
+			}
+
+			var newMovedLastIndex = -1;
+			for( var i=0, imax=newMoved.length; i<imax; ++i ) {
+				var m = newMoved[ i ];
+				if( m.newIndex <= newMovedLastIndex ) return false;
+				if( m.newIndex < 0 || result.length <= m.newIndex ) return false;
+				if( m.oldIndex < 0 || result.length <= m.oldIndex ) return false;
+				if( result[ m.oldIndex ] !== m.value ) return false;
+			}
+
+			var oldMovedLastIndex = -1;
+			for( var i=0, imax=oldMoved.length; i<imax; ++i ) {
+				var m = oldMoved[ i ];
+				if( m.oldIndex <= oldMovedLastIndex ) return false;
+				if( m.newIndex < 0 || result.length <= m.newIndex ) return false;
+				if( m.oldIndex < 0 || result.length <= m.oldIndex ) return false;
+				if( result[ m.oldIndex ] !== m.value ) return false;
+			}
+
+			if( newMoved.length !== oldMoved.length ) return false;
+
+			for( var i=oldMoved.length-1; 0<=i; --i ) {
+				var m = oldMoved[ i ];
+				result.splice( m.oldIndex, 1 );
+			}
+
+			for( var i=0, imax=newMoved.length; i<imax; ++i ) {
+				var m = newMoved[ i ];
+				result.splice( m.newIndex, 0, m.value );
+			}
+
+			var updatedLastIndex = -1;
+			for( var i=0, imax=updated.length; i<imax; ++i ) {
+				var u = updated[ i ];
+				if( u.index < 0 || result.length <= u.index ) return false;
+				if( u.index <= updatedLastIndex ) return false;
+				if( result[ u.index ] !== u.oldValue ) return false;
+				result[ u.index ] = u.newValue;
+				updatedLastIndex = u.index;
+			}
+
+			return util.isEqual( result, finalState );
+		};
+
+		var tests = puppeteer
+		.test("SScalar reduced value event case 1", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_sstring.on( "value", function( e, newValue, oldValue ){
+				if( newValue == null && oldValue == null ) {
+					succeeded += 1;
+				} else if( newValue == "b" && oldValue == null ) {
+					succeeded += 1;
+				} else {
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_sstring.set( "a" );
+				c.field_sstring.set( "b" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_sstring.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SScalar reduced value event case 2", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_sstring.set( null );
+			c.field_sstring.on( "value", function( e, newValue, oldValue ){
+				if( newValue == null && oldValue == null ) {
+					succeeded += 1;
+				} else if( newValue == "c" && oldValue == null ) {
+					succeeded += 1;
+				} else {
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_sstring.set( "a" );
+				c.field_sstring.set( "b" );
+				c.field_sstring.set( null );
+				c.field_sstring.set( "c" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_sstring.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SROQueue reduced value event", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_sroqueue.on( "value", function( e, added, removed ){
+				if( added.length === 0 && removed.length === 0 ) {
+					succeeded += 1;
+				} else if(
+					added.length === 5 &&
+					added[ 0 ] === "a" &&
+					added[ 1 ] === "b" &&
+					added[ 2 ] === "c" &&
+					added[ 3 ] === "d" &&
+					added[ 4 ] === "e" &&
+					removed.length == 3 &
+					removed[ 0 ] === "a" &&
+					removed[ 1 ] === "b" &&
+					removed[ 2 ] === "c"
+				) {
+					succeeded += 1;
+				} else if(
+					added.length === 2 &&
+					added[ 0 ] === "d" &&
+					added[ 1 ] === "e" &&
+					removed.length == 0
+				) {
+					succeeded += 1;
+				} else {
+					console.log( added, removed );
+					failed += 1;
+				}
+			});
+
+			c.sroqueue_populate();
+
+			cb.within( 15000, function(){
+				if( succeeded === 2 && failed === 0 ) cb.done();
+			});
+		})
+		.test("SList reduced value event case 1", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_slist.on( "value", function( e, added, removed, updated ){
+				if( checkList( [], this.toArray(), added, removed, updated, [], [] ) ) {
+					succeeded += 1;
+				} else {
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_slist.add( "a" );
+				c.field_slist.add( "b" );
+				c.field_slist.remove( 0 );
+				c.field_slist.add( "c" );
+				c.field_slist.add( 0, "d" );
+				c.field_slist.set( 1, "e" );
+				c.field_slist.add( "f" );
+				c.field_slist.remove( 2 );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_slist.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SList reduced value event case 2", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_slist.clear();
+			c.field_slist.on( "value", function( e, added, removed ){
+				if( checkList( [], this.toArray(), added, removed, [], [], [] ) ) {
+					succeeded += 1;
+				} else {
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_slist.add( "a" );
+				c.field_slist.add( "b" );
+				c.field_slist.set( 0, "t" );
+				c.field_slist.remove( 0 );
+				c.field_slist.add( "c" );
+				c.field_slist.add( 0, "d" );
+				c.field_slist.set( 1, "e" );
+				c.field_slist.add( "f" );
+				c.field_slist.remove( 2 );
+				c.field_slist.clear();
+				c.field_slist.add( "a" );
+				c.field_slist.add( "b" );
+				c.field_slist.set( 0, "t" );
+				c.field_slist.remove( 0 );
+				c.field_slist.add( "c" );
+				c.field_slist.add( "a" );
+				c.field_slist.add( "b" );
+				c.field_slist.set( 0, "t" );
+				c.field_slist.remove( 0 );
+				c.field_slist.add( "c" );
+				c.field_slist.clear();
+			} finally {
+				c.unlock();
+			}
+
+			c.field_slist.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SList reduced value event random", function( cb ){
+			var listRandomTester = function( maxOperation ) {
+				var succeeded = 0;
+				var failed = 0;
+				var initialState = [ "a", "b", "c", "d" ];
+				var operations = [];
+
+				c.field_slist.clearAndAddAll( initialState );
+
+				c.field_slist.on( "change", function( e, added, removed, updated ){
+					if( checkList( initialState, this.toArray(), added, removed, updated, [], [] ) ) {
+						succeeded += 1;
+					} else {
+						console.log( "OPERATION", JSON.stringify( operations ) );
+						console.log( "RESULT", JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ) );
+						console.log( "EXPECTED", this.toString() );
+						failed += 1;
+					}
+				});
+
+				c.lock();
+				try {
+					for( var i=0; true; ++i ) {
+						var random = Math.random();
+						if( random <= 0.33 ) {
+							if( c.field_slist.size() < 3 ) {
+								var value = initialState[ Math.floor( initialState.length * Math.random() ) ];
+								var index = Math.floor( (c.field_slist.size()+1) * Math.random() );
+								c.field_slist.add( index, value );
+								operations.push( [ "add", index, value ] );
+							}
+						} else if( random <= 0.66 ) {
+							if( 1 <= c.field_slist.size() ) {
+								var index = Math.floor( c.field_slist.size() * Math.random() );
+								c.field_slist.remove( index );
+								operations.push( [ "remove", index ] );
+							}
+						} else {
+							if( 1 <= c.field_slist.size() ) {
+								var value = initialState[ Math.floor( initialState.length * Math.random() ) ];
+								var index = Math.floor( c.field_slist.size() * Math.random() );
+								c.field_slist.set( index, value );
+								operations.push( [ "set", index, value ] );
+							}
+						}
+
+						if( maxOperation <= operations.length ) break;
+					}
+				} finally {
+					c.unlock();
+				}
+
+				c.field_slist.off( "change" );
+
+				return succeeded === 1 && failed === 0;
+			};
+
+			for( var iop=1; iop<=10; ++iop ) {
+				for( var i=0; i<1000; ++i ) {
+					if( listRandomTester( iop ) !== true ){
+						cb.fail( false );
+					}
+				}
+			}
+
+			cb.done();
+		})
+		.test("SMap reduced value event", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smap.on( "value", function( e, added, removed, updated ){
+				if( util.size( added ) === 0 && util.size( removed ) === 0 && util.size( updated ) === 0 ) {
+					succeeded += 1;
+				} else if(
+					util.size( added ) === 3 &&
+					added[ "0" ] === "d" &&
+					added[ "1" ] === "b" &&
+					added[ "3" ] === "f" &&
+					util.size( removed ) == 0 &&
+					util.size( updated ) === 1 &&
+					updated[ "1" ] != null &&
+					updated[ "1" ].newValue === "e" &&
+					updated[ "1" ].oldValue === "b"
+				) {
+					succeeded += 1;
+				} else {
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smap.put( "0", "a" );
+				c.field_smap.put( "1", "b" );
+				c.field_smap.remove( "0" );
+				c.field_smap.put( "2", "c" );
+				c.field_smap.put( "0", "d" );
+				c.field_smap.put( "1", "e" );
+				c.field_smap.put( "3", "f" );
+				c.field_smap.remove( "2" );
+			} finally {
+				c.unlock();
+			}
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SNavigableMap reduced value event", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_snavigablemap.on( "value", function( e, added, removed, updated ){
+				if( util.size( added ) === 0 && util.size( removed ) === 0 && util.size( updated ) === 0 ) {
+					succeeded += 1;
+				} else if(
+					util.size( added ) === 3 &&
+					added[ "0" ] === "d" &&
+					added[ "1" ] === "b" &&
+					added[ "3" ] === "f" &&
+					util.size( removed ) == 0 &&
+					util.size( updated ) === 1 &&
+					updated[ "1" ] != null &&
+					updated[ "1" ].newValue === "e" &&
+					updated[ "1" ].oldValue === "b"
+				) {
+					succeeded += 1;
+				} else {
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_snavigablemap.put( "0", "a" );
+				c.field_snavigablemap.put( "1", "b" );
+				c.field_snavigablemap.remove( "0" );
+				c.field_snavigablemap.put( "2", "c" );
+				c.field_snavigablemap.put( "0", "d" );
+				c.field_snavigablemap.put( "1", "e" );
+				c.field_snavigablemap.put( "3", "f" );
+				c.field_snavigablemap.remove( "2" );
+			} finally {
+				c.unlock();
+			}
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 0", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.on( "value", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( [], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				// a x c d h a
+				c.field_smovablelist.add( "a" );
+				c.field_smovablelist.add( "b" );
+				c.field_smovablelist.move( 0, 1 );
+				c.field_smovablelist.add( 1, "h" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 1", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.on( "value", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( [], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smovablelist.add( "a" );
+				c.field_smovablelist.add( "b" );
+				c.field_smovablelist.move( 0, 1 );
+				c.field_smovablelist.add( 1, "h" );
+				c.field_smovablelist.add( 1, "i" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 2", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.on( "value", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( [], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smovablelist.add( "a" );
+				c.field_smovablelist.add( "b" );
+				c.field_smovablelist.move( 0, 1 );
+				c.field_smovablelist.add( 1, "h" );
+				c.field_smovablelist.add( 0, "i" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 3", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.on( "value", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( [], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smovablelist.add( "a" );
+				c.field_smovablelist.add( "b" );
+				c.field_smovablelist.remove( 0 );
+				c.field_smovablelist.add( "c" );
+				c.field_smovablelist.add( 0, "d" );
+				c.field_smovablelist.set( 1, "e" );
+				c.field_smovablelist.add( "f" );
+				c.field_smovablelist.remove( 2 );
+				c.field_smovablelist.add( "g" );
+				c.field_smovablelist.move( 0, 3 );
+				c.field_smovablelist.add( 3, "h" );
+				c.field_smovablelist.add( 1, "i" );
+				c.field_smovablelist.move( 1, 0 );
+				c.field_smovablelist.set( 0, "a" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 4", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.on( "value", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( [], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smovablelist.add( "a" );
+				c.field_smovablelist.add( "b" );
+				c.field_smovablelist.remove( 0 );
+				c.field_smovablelist.add( "c" );
+				c.field_smovablelist.add( 0, "d" );
+				c.field_smovablelist.set( 1, "e" );
+				c.field_smovablelist.add( "f" );
+				c.field_smovablelist.remove( 2 );
+				c.field_smovablelist.add( "g" );
+				c.field_smovablelist.move( 0, 3 );
+				c.field_smovablelist.add( 3, "h" );
+				c.field_smovablelist.add( 1, "i" );
+				c.field_smovablelist.move( 1, 0 );
+				c.field_smovablelist.set( 0, "a" );
+				c.field_smovablelist.clear();
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 5", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.on( "value", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( [], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smovablelist.add( "a" );
+				c.field_smovablelist.add( "b" );
+				c.field_smovablelist.add( "c" );
+				c.field_smovablelist.move( 0, 2 );
+				c.field_smovablelist.move( 0, 2 );
+				c.field_smovablelist.move( 0, 2 );
+				c.field_smovablelist.add( "d" );
+				c.field_smovablelist.add( "e" );
+				c.field_smovablelist.add( "f" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "value" );
+
+			cb.assertEquals( succeeded, 2 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 6", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.add( "a" );
+			c.field_smovablelist.add( "b" );
+			c.field_smovablelist.add( "c" );
+
+			c.field_smovablelist.on( "change", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( ["a", "b", "c"], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smovablelist.move( 0, 1 );
+				c.field_smovablelist.move( 1, 2 );
+				c.field_smovablelist.set( 2, "c" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "change" );
+
+			cb.assertEquals( succeeded, 1 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 7", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.add( "a" );
+			c.field_smovablelist.add( "b" );
+			c.field_smovablelist.add( "c" );
+
+			c.field_smovablelist.on( "change", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( ["a", "b", "c"], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smovablelist.remove( 2 );
+				c.field_smovablelist.set( 1, "a" );
+				c.field_smovablelist.set( 1, "c" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "change" );
+
+			cb.assertEquals( succeeded, 1 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 8", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.add( "a" );
+			c.field_smovablelist.add( "b" );
+			c.field_smovablelist.add( "c" );
+
+			c.field_smovablelist.on( "change", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( ["a", "b", "c"], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smovablelist.move( 2, 0 );
+				c.field_smovablelist.set( 0, null );
+				c.field_smovablelist.move( 2, 1 );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "change" );
+
+			cb.assertEquals( succeeded, 1 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case 9", function( cb ){
+			var succeeded = 0;
+			var failed = 0;
+			c.field_smovablelist.clear();
+			c.field_smovablelist.add( "a" );
+			c.field_smovablelist.add( "b" );
+			c.field_smovablelist.add( "c" );
+
+			c.field_smovablelist.on( "change", function( e, added, removed, updated, newMoved, oldMoved ){
+				if( checkList( ["a", "b", "c"], this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+					succeeded += 1;
+				} else {
+					console.log( JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+					console.log( JSON.stringify( this.toArray() ) );
+					failed += 1;
+				}
+			});
+
+			c.lock();
+			try {
+				c.field_smovablelist.remove( 1 );
+				c.field_smovablelist.remove( 1 );
+				c.field_smovablelist.set( 0, "a" );
+				c.field_smovablelist.set( 0, "a" );
+				c.field_smovablelist.add( 0, "c" );
+				c.field_smovablelist.add( 0, "c" );
+			} finally {
+				c.unlock();
+			}
+
+			c.field_smovablelist.off( "change" );
+
+			cb.assertEquals( succeeded, 1 ).assertEquals( failed, 0 ).done();
+		})
+		.test("SMovableList reduced value event case random", function( cb ) {
+			var movableListRandomTester = function( maxOperation ){
+				var succeeded = 0;
+				var failed = 0;
+				var initialState = ["a", "b", "c", "d"];
+				var operations = [];
+
+				c.field_smovablelist.clearAndAddAll( initialState );
+				c.field_smovablelist.on( "change", function( e, added, removed, updated, newMoved, oldMoved ){
+					if( checkList( initialState, this.toArray(), added, removed, updated, newMoved, oldMoved ) ) {
+						succeeded += 1;
+					} else {
+						console.log( "OPERATION", JSON.stringify( operations ) );
+						console.log( "RESULT", JSON.stringify( added ), JSON.stringify( removed ), JSON.stringify( updated ), JSON.stringify( newMoved ), JSON.stringify( oldMoved ) );
+						console.log( "EXPECTED", JSON.stringify( this.toArray() ) );
+						failed += 1;
+					}
+				});
+
+				c.lock();
+				try {
+					for( var i=0; true; ++i ) {
+						var random = Math.random();
+						if( random <= 0.25 ) {
+							if( c.field_smovablelist.size() < 3 ) {
+								var value = initialState[ Math.floor( initialState.length * Math.random() ) ];
+								var index = Math.floor( (c.field_smovablelist.size()+1) * Math.random() );
+								c.field_smovablelist.add( index, value );
+								operations.push( [ "add", index, value ] );
+							}
+						} else if( random <= 0.50 ) {
+							if( 1 <= c.field_smovablelist.size() ) {
+								var index = Math.floor( c.field_smovablelist.size() * Math.random() );
+								c.field_smovablelist.remove( index );
+								operations.push( [ "remove", index ] );
+							}
+						} else if( random <= 0.75 ) {
+							if( 2 <= c.field_smovablelist.size() ) {
+								var from = Math.floor( c.field_smovablelist.size() * Math.random() );
+								var to = Math.floor( c.field_smovablelist.size() * Math.random() );
+								if( from !== to ) {
+									c.field_smovablelist.move( from, to );
+									operations.push( [ "move", from, to ] );
+								}
+							}
+						} else {
+							if( 1 <= c.field_smovablelist.size() ) {
+								var value = initialState[ Math.floor( initialState.length * Math.random() ) ];
+								var index = Math.floor( c.field_smovablelist.size() * Math.random() );
+								c.field_smovablelist.set( index, value );
+								operations.push( [ "set", index, value ] );
+							}
+						}
+
+						if( maxOperation <= operations.length ) break;
+					}
+				} finally {
+					c.unlock();
+				}
+
+				c.field_smovablelist.off( "change" );
+
+				return succeeded === 1 && failed === 0;
+			};
+
+			for( var iop=1; iop<=10; ++iop ) {
+				for( var i=0; i<1000; ++i ) {
+					if( movableListRandomTester( iop ) !== true ){
+						cb.fail( false );
+					}
+				}
+			}
+
+			cb.done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+/*
+ * Copyright (C) 2019 Toshiba Corporation
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+package org.wcardinal.controller.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.wcardinal.util.reflection.AbstractTypedMethods;
+
+/**
+ * Annotated methods are called when controllers, pages, popups and components of the specified names get hidden.
+ * If the {@link #value()} contains ".", annotated methods are called when controllers, pages, popups or components owing the methods get hidden.
+ * If the {@link #value()} contains "*", annotated methods are called regardless of the target name.
+ *
+ * When a method is called, a controller owing the method is locked.
+ * Accessing fields of the controller owing the method, thus, is thread safe.
+ */
+@Documented
+@Decoratable
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface OnHide {
+	/**
+	 * Names of controllers, pages, popups or components.
+	 *
+	 * @return Names of controllers, pages, popups or components.
+	 */
+	String[] value() default { AbstractTypedMethods.TYPE_SELF };
+}

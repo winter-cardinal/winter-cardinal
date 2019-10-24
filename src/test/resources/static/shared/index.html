@@ -1,0 +1,85 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/shared-controller1"></script>
+	<script src="/shared-controller2"></script>
+	<script src="/shared-controller3"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c1 = sharedController1;
+		var c2 = sharedController2;
+		var c3 = sharedController3;
+
+		puppeteer
+		.test("Controller existence check", function( cb ){
+			cb.assert( "sharedController1" in window ).
+			   assert( "sharedController2" in window ).
+			   assert( "sharedController3" in window ).done();
+		})
+		.test("Content path check", function( cb ){
+			cb.assertEquals( c1.getServer().getSettings().path.content, "/shared-controller1" ).
+			   assertEquals( c2.getServer().getSettings().path.content, "/shared-controller2" ).
+			   assertEquals( c3.getServer().getSettings().path.content, "/shared-controller3" ).done();
+		})
+		.test("Controller method check", function( cb ){
+			util.each( wcardinal.controller.RootController.prototype, function( func, name ){
+				cb.assert( name in c1, name );
+			});
+			cb.done();
+		})
+		.test("Controller name check", function( cb ){
+			cb.assertEquals( c1.getName(), "SharedController1" ).
+			   assertEquals( c2.getName(), "SharedController2" ).
+			   assertEquals( c3.getName(), "SharedController3" ).done();
+		})
+		.test("Field value check", function( cb ){
+			cb.assertEquals( c1.field_integer.get(), 1 ).
+			   assertEquals( c2.field_integer.get(), 2 ).
+			   assertEquals( c3.field_integer.get(), 3 ).done();
+		})
+		.test("Callable method check", function( cb ){
+			var count = 0;
+			function done(){
+				count++;
+				if(count == 3) cb.done();
+			}
+
+			c1.add(1).then(function(result){
+				cb.assertEquals( result, 2 );
+				done();
+			}, function(reason){
+				cb.fail( reason );
+			});
+			c2.add(2).then(function(result){
+				cb.assertEquals( result, 4 );
+				done();
+			}, function(reason){
+				cb.fail( reason );
+			});
+			c3.add(3).then(function(result){
+				cb.assertEquals( result, 6 );
+				done();
+			}, function(reason){
+				cb.fail( reason );
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

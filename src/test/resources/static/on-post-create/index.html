@@ -1,0 +1,92 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="./on-post-create-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = onPostCreateController;
+
+		puppeteer
+		.test("OnPostCreate state", function( cb ){
+			cb.assertEquals( c.state.get(), 1 ).done();
+		})
+		.test("OnPostCreate state on server", function( cb ){
+			c.getState()
+			.then(function( state ){
+				cb.assertEquals( state, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("OnPostCreate component state", function( cb ){
+			cb.assertEquals( c.component.state.get(), 1 ).done();
+		})
+		.test("OnPostCreate component state on server", function( cb ){
+			c.component.getState()
+			.then(function( state ){
+				cb.assertEquals( state, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("OnPostCreate shared state", function( cb ){
+			cb.assertEquals( c.shared.state.get(), 1 ).done();
+		})
+		.test("OnPostCreate shared state on server", function( cb ){
+			c.shared.getState()
+			.then(function( state ){
+				cb.assertEquals( state, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("OnPostCreate factory size", function( cb ){
+			cb.assertEquals( c.factory.size(), 1 ).done();
+		})
+		.test("OnPostCreate factory size on server", function( cb ){
+			c.getFactorySize()
+			.then(function( size ){
+				cb.assertEquals( size, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("OnPostCreate factory state", function( cb ){
+			cb.assertEquals( c.factory.get( 0 ).state.get(), 1 ).done();
+		})
+		.test("OnPostCreate factory state on server", function( cb ){
+			c.factory.get( 0 ).getState()
+			.then(function( state ){
+				cb.assertEquals( state, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("OnPostCreate factory second state on server", function( cb ){
+			c.getFactoryState()
+			.then(function( state ){
+				cb.assertEquals( state, 2 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

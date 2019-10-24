@@ -1,0 +1,333 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-queue-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsQueueController;
+
+		puppeteer
+		.test("Queue isReadOnly check", function( cb ) {
+			cb.assertEquals( c.field_ro_queue.isReadOnly(), true ).done();
+		})
+		.test("Queue size check", function( cb ) {
+			cb.assertEquals( c.field_ro_queue.size(), 3 ).done();
+		})
+		.test("Queue each check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			c.field_ro_queue.each(function( value, index, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( index, count )
+				.assertEquals( field, c.field_ro_queue );
+				count += 1;
+			});
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Queue each reverse check", function( cb ) {
+			var expected = [ "c", "b", "a" ];
+			var count = 0;
+			c.field_ro_queue.each(function( value, index, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( index, expected.length-count-1 )
+				.assertEquals( field, c.field_ro_queue );
+				count += 1;
+			}, null, true);
+			if( count === 3 ) {
+				cb.done();
+			} else {
+				cb.fail();
+			}
+		})
+		.test("Queue each default thisArg check", function( cb ) {
+			c.field_ro_queue.each(function(){
+				cb.assertEquals( this, c.field_ro_queue ).done();
+				return false;
+			});
+		})
+		.test("Queue each thisArg check", function( cb ) {
+			c.field_ro_queue.each(function(){
+				cb.assertEquals( this, c ).done();
+			}, c);
+		})
+		.test("Queue find check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var count = 0;
+			var result0 = c.field_ro_queue.find(function( value, index, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( index, count )
+				.assertEquals( field, c.field_ro_queue );
+				count += 1;
+				return false;
+			});
+
+			var result1 = c.field_ro_queue.find(function(){
+				return true;
+			});
+
+			cb
+			.assertEquals( count, 3 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, expected[ 0 ] )
+			.done();
+		})
+		.test("Queue find reverse check", function( cb ) {
+			var expected = [ "c", "b", "a" ];
+			var count = 0;
+			var result0 = c.field_ro_queue.find(function( value, index, field ){
+				cb.assertEquals( value, expected[ count ] )
+				.assertEquals( index, expected.length-count-1 )
+				.assertEquals( field, c.field_ro_queue );
+				count += 1;
+			}, null, true);
+
+			var result1 = c.field_ro_queue.find(function(){
+				return true;
+			}, null, true);
+
+			cb
+			.assertEquals( count, 3 )
+			.assertEquals( result0, null )
+			.assertEquals( result1, expected[ 0 ] )
+			.done();
+		})
+		.test("Queue find default thisArg check", function( cb ) {
+			c.field_ro_queue.find(function(){
+				cb.assertEquals( this, c.field_ro_queue ).done();
+				return true;
+			});
+		})
+		.test("Queue find thisArg check", function( cb ) {
+			c.field_ro_queue.find(function(){
+				cb.assertEquals( this, c ).done();
+				return true;
+			}, c);
+		})
+		.test("Queue indexOf check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			for( var i=0, imax=expected.length; i<imax; ++i ){
+				cb.assertEquals( c.field_ro_queue.indexOf(expected[ i ]), i );
+			}
+			cb.assertEquals( c.field_ro_queue.indexOf( "d" ), -1 ).done();
+		})
+		.test("Queue lastIndexOf check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			for( var i=0, imax=expected.length; i<imax; ++i ){
+				cb.assertEquals( c.field_ro_queue.lastIndexOf(expected[ i ]), i );
+			}
+			cb.assertEquals( c.field_ro_queue.lastIndexOf( "d" ), -1 ).done();
+		})
+		.test("Queue contains check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			for( var i=0, imax=expected.length; i<imax; ++i ){
+				cb.assertEquals( c.field_ro_queue.contains(expected[ i ]), true );
+			}
+			cb.assertEquals( c.field_ro_queue.contains( "d" ), false ).done();
+		})
+		.test("Queue containsAll check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			var unexpected = [ "a", "b", "c", "d" ];
+			cb.assertEquals( c.field_ro_queue.containsAll(expected), true )
+				.assertEquals( c.field_ro_queue.containsAll(unexpected), false )
+				.done();
+		})
+		.test("Queue toArray check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			cb.assertEquals( c.field_ro_queue.toArray(), expected ).done();
+		})
+		.test("Queue toJson check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			cb.assertEquals( c.field_ro_queue.toJson(), expected ).done();
+		})
+		.test("Queue toString check", function( cb ) {
+			var expected = [ "a", "b", "c" ];
+			cb.assertEquals( JSON.parse(c.field_ro_queue.toString()), expected ).done();
+		})
+		.test("Queue get check", function( cb ) {
+			try {
+				c.field_ro_queue.get( -1 );
+				cb.fail();
+			} catch( e ) {
+				cb.assertEquals( wcardinal.exception.IndexOutOfBoundsException.isInstance( e ), true );
+			}
+
+			cb.assertEquals( c.field_ro_queue.get( 0 ), "a" );
+			cb.assertEquals( c.field_ro_queue.get( 1 ), "b" );
+			cb.assertEquals( c.field_ro_queue.get( 2 ), "c" );
+
+			try {
+				c.field_ro_queue.get( 3 );
+				cb.fail();
+			} catch( e ) {
+				cb.assertEquals( wcardinal.exception.IndexOutOfBoundsException.isInstance( e ), true );
+			}
+
+			cb.done();
+		})
+		.test("Queue element check", function( cb ) {
+			cb.assertEquals( c.field_ro_queue.element(), "a" ).done();
+		})
+		.test("Queue peek check", function( cb ) {
+			cb.assertEquals( c.field_ro_queue.peek(), "a" ).done();
+		})
+		.test("Queue isEmpty check", function( cb ) {
+			cb.assertEquals( c.field_ro_queue.isEmpty(), false )
+			.done();
+		})
+
+		//----------------------------------------------------------------------
+		// SERVER-SIDE METHODS
+		//----------------------------------------------------------------------
+		.test( c, c.test_methods.get() )
+
+		//----------------------------------------------------------------------
+		// DATA SYNC
+		//----------------------------------------------------------------------
+		.test("Queue sync server to client", function( cb ){
+			c.start_sync();
+
+			var a = c.sync_ro_queue;
+			cb.within( 3000, function(){
+				var av = a.toArray();
+				if( util.isEqual( av, ["a", "b", "c"] ) ) {
+					cb.done();
+				}
+			});
+		})
+
+		//----------------------------------------------------------------------
+		// NON-NULL
+		//----------------------------------------------------------------------
+		.test( c, [
+			"nonnull_queue_isNonNull_check",
+			"nonnull_queue_isReadOnly_check",
+			"nonnull_queue_addAll_check",
+			"nonnull_queue_addAll_null_check",
+			"nonnull_queue_add_check",
+			"nonnull_queue_add_null_value_check",
+			"nonnull_queue_offer_value_check",
+			"nonnull_queue_offer_null_value_check",
+			"nonnull_queue_clearAndOffer_check",
+			"nonnull_queue_clearAndOfferAll_check"
+		])
+
+		//----------------------------------------------------------------------
+		// UNINITIALIZED
+		//----------------------------------------------------------------------
+		.test("Uninitialized queue event check case 1", function( cb ) {
+			var count = { init: 0, change: 0, value: 0 };
+
+			var value0 = "a";
+
+			c.field_ro_queue_uninitialized.one( "init", function( e, added ){
+				cb.assertEquals( added, [value0] );
+				count.init += 1;
+			});
+
+			c.field_ro_queue_uninitialized.one( "change", function( e, added, removed ){
+				cb.assertEquals( added, [value0] )
+					.assertEquals( removed, [] );
+				count.change += 1;
+			});
+
+			c.field_ro_queue_uninitialized.one( "value", function( e, added, removed ){
+				cb.assertEquals( added, [value0] )
+					.assertEquals( removed, [] );
+				count.value += 1;
+			});
+
+			c.initialize( value0 );
+
+			cb.within(3000, function(){
+				if( count.init === 1 && count.change === 1 && count.value === 1 ) cb.done();
+			});
+		})
+		.test("Uninitialized queue event check case 2", function( cb ) {
+			var count = { init: 0, change: 0, value: 0 };
+
+			c.field_ro_queue_uninitialized2.one( "init", function( e, added ){
+				cb.assertEquals( added, [] );
+				count.init += 1;
+			});
+
+			c.field_ro_queue_uninitialized2.one( "change", function( e, added, removed ){
+				cb.assertEquals( added, [] )
+					.assertEquals( removed, [] );
+				count.change += 1;
+			});
+
+			c.field_ro_queue_uninitialized2.one( "value", function( e, added, removed ){
+				cb.assertEquals( added, [] )
+					.assertEquals( removed, [] );
+				count.value += 1;
+			});
+
+			c.initialize();
+
+			cb.within(3000, function(){
+				if( count.init === 1 && count.change === 0 && count.value === 1 ) cb.done();
+			});
+		})
+		.test("Uninitialized queue initialize", function( cb ) {
+			var count = { init: 0, change: 0, value: 0 };
+
+			c.field_ro_queue_uninitialized2.one( "init", function( e, added ){
+				cb.assertEquals( added, [] );
+				count.init += 1;
+			});
+
+			c.field_ro_queue_uninitialized2.one( "change", function( e, added, removed ){
+				cb.assertEquals( added, [] )
+					.assertEquals( removed, [] );
+				count.change += 1;
+			});
+
+			c.field_ro_queue_uninitialized2.one( "value", function( e, added, removed ){
+				cb.assertEquals( added, [] )
+					.assertEquals( removed, [] );
+				count.value += 1;
+			});
+
+			c.initialize();
+
+			cb.within(3000, function(){
+				if( count.init === 1 && count.change === 0 && count.value === 1 ) cb.done();
+			});
+		})
+		.test( c, [ "initialize_twice_check" ])
+
+		//----------------------------------------------------------------------
+		// CAPACITY
+		//----------------------------------------------------------------------
+		.test( c, [
+			"capacity_add_fail",
+			"capacity_addAll_fail",
+			"capacity_addAll_zero",
+			"capacity_addAll_overflow",
+			"capacity_offer_fail",
+			"capacity_remove_fail"
+		])
+		.execute();
+	}());
+	</script>
+</body>
+</html>

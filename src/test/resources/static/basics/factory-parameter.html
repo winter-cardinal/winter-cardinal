@@ -1,0 +1,113 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-factory-parameter-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsFactoryParameterController;
+
+		puppeteer
+		.test("Factory parameter check round 1", function( cb ){
+			var parameter = util.now();
+
+			c.factory.one( "create", function( e, instance, parameters ){
+				cb
+				.assertEquals( util.isArray( parameters ), true )
+				.assertEquals( parameters.length, 1 )
+				.assertEquals( parameters[ 0 ], parameter );
+
+				instance.parameter0.on( "value", function(){
+					var p0 = instance.parameter0.get();
+					var p1 = instance.parameter1.get();
+					var p2 = instance.parameter2.get();
+					if( p0 === parameter && p1 === parameter && p2 === null ) {
+						cb.done();
+					} else {
+						cb.fail();
+					}
+				});
+			});
+
+			c.factory.create( parameter );
+		})
+		.test("Factory parameter check round 2", function( cb ){
+			var parameter = util.now();
+
+			c.factory.one( "create", function( e, instance, parameters ){
+				cb
+				.assertEquals( util.isArray( parameters ), true )
+				.assertEquals( parameters.length, 1 )
+				.assertEquals( parameters[ 0 ], parameter );
+
+				instance.parameter0.on( "value", function(){
+					var p0 = instance.parameter0.get();
+					var p1 = instance.parameter1.get();
+					var p2 = instance.parameter2.get();
+					if( p0 === parameter && p1 === parameter && p2 === null ) {
+						cb.done();
+					} else {
+						cb.fail();
+					}
+				});
+			});
+
+			c.factory.create( parameter );
+		})
+		.test("Server-side factory parameter check round 1", function( cb ){
+			c.factory.one( "create", function( e, instance, parameters ){
+				cb
+				.assertEquals( util.isArray( parameters ), true )
+				.assertEquals( parameters.length, 1 )
+				.assertEquals( util.isNumber( parameters[ 0 ] ), true );
+
+				var p0 = instance.parameter0.get();
+				var p1 = instance.parameter1.get();
+				var p2 = instance.parameter2.get();
+				if( p0 === p1 && p2 === null ) {
+					cb.done();
+				} else {
+					cb.fail();
+				}
+			});
+
+			c.create();
+		})
+		.test("Server-side factory parameter check round 2", function( cb ){
+			c.factory.one( "create", function( e, instance, parameters ){
+				cb
+				.assertEquals( util.isArray( parameters ), true )
+				.assertEquals( parameters.length, 1 )
+				.assertEquals( util.isNumber( parameters[ 0 ] ), true );
+
+				var p0 = instance.parameter0.get();
+				var p1 = instance.parameter1.get();
+				var p2 = instance.parameter2.get();
+				if( p0 === p1 && p2 === null ) {
+					cb.done();
+				} else {
+					cb.fail();
+				}
+			});
+
+			c.create();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

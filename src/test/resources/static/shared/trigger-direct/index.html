@@ -1,0 +1,52 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="shared-trigger-controller-a"></script>
+	<script src="shared-trigger-controller-b"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		"use strict";
+
+		var util = wcardinal.util.util;
+		var a = sharedTriggerControllerA;
+		var b = sharedTriggerControllerB;
+
+		puppeteer
+		.test("Shared trigger direct check", function( cb ){
+			var comparator = function( a, b ){ return a - b; };
+
+			var counts = { a: [], b:[] };
+			a.component.on( "event", function( e, count ){
+				counts.a.push( count );
+				counts.a.sort( comparator );
+			});
+
+			b.component.on( "event", function( e, count ){
+				counts.b.push( count );
+				counts.b.sort( comparator );
+			});
+
+			var maxCount = 109;
+			var expected = [];
+			for( var i=0; i<maxCount; ++i ) expected.push( i );
+			a.component.start( maxCount );
+
+			cb.within( 30000, function(){
+				if( util.isEqual( counts.a, expected ) && util.isEqual( counts.b, expected ) ) {
+					cb.done();
+				}
+			});
+		}, 45000 )
+		.execute();
+	}());
+	</script>
+</html>

@@ -1,0 +1,97 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/sync-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = syncController;
+		var s = c.getServer();
+
+		var add = function(){
+			var item = "" + util.now();
+			c.field_list.add( item );
+			c.field_movable_list.add( item );
+			c.field_map.put( item, item );
+			c.field_navigable_map.put( item, item );
+		};
+
+		// WAIT OPERATION
+		var wait = function( cb ){
+			var startTime = util.now();
+			cb.within( 20000, function(){
+				if( 7500 < util.now() - startTime ) cb.done();
+			});
+		};
+
+		// DISCONNECT OPERATION
+		var disconnect = function( cb ){
+			cb.assertEquals( s.disconnect(), s );
+
+			cb.within( 10000, function(){
+				if( s.isConnected() === false ) cb.done();
+			});
+		};
+
+		// CONNECT OPERATION
+		var connect = function( cb ){
+			add();
+			cb.assertEquals( s.connect(), s );
+
+			cb.within( 10000, function(){
+				add();
+				if( s.isConnected() === true ) cb.done();
+			});
+		};
+
+		puppeteer
+		.test( "isConnected", function( cb ){
+			cb.within( 10000, function(){
+				add();
+				if( s.isConnected() === true ) cb.done();
+			});
+		})
+		.test( "wait", wait )
+		.test( "disconnect", disconnect )
+		.test( "wait", wait )
+		.test( "connect", connect )
+		.test( "wait", wait )
+		.test( "disconnect", disconnect )
+		.test( "wait", wait )
+		.test( "connect", connect )
+		.test( "wait", wait )
+		.test( "disconnect", disconnect )
+		.test( "wait", wait )
+		.test( "connect", connect)
+		.test( "wait", wait )
+		.test( "null check", function( cb ){
+			c.check()
+			.then(function( result ){
+				if( result ) {
+					cb.done();
+				} else {
+					cb.fail( result );
+				}
+			}, function( reason ){
+				cb.fail( reason );
+			})
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

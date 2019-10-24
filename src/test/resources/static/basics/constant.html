@@ -1,0 +1,115 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-constant-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsConstantController;
+
+		puppeteer
+		.test("Constant int check", function( cb ){
+			cb.assertEquals( c.INT_CONSTANT, 1 ).done();
+		})
+		.test("Constant class int check", function( cb ){
+			cb.assertEquals( c.CLASS_CONSTANT.int_value, 1 ).done();
+		})
+		.test("Constant class double check", function( cb ){
+			cb.assertEquals( c.CLASS_CONSTANT.double_value, 1 ).done();
+		})
+		.test("Constant class string check", function( cb ){
+			cb.assertEquals( c.CLASS_CONSTANT.string_value, "1" ).done();
+		})
+		.test("Constant enum check", function( cb ){
+			cb.assertNotEquals( c.ENUM_CONSTANT, null ).done();
+		})
+		.test("Constant enum values check", function( cb ){
+			cb.assertEquals( c.ENUM_CONSTANT.ENUM_CONSTANT_1, "ENUM_CONSTANT_1" )
+				.assertEquals( c.ENUM_CONSTANT.ENUM_CONSTANT_2, "ENUM_CONSTANT_2" )
+				.assertEquals( util.size( c.ENUM_CONSTANT ), 2 )
+				.done();
+		})
+		.test("Constant enum conversion check", function( cb ){
+			c.field_enum.set( c.ENUM_CONSTANT.ENUM_CONSTANT_2 );
+			cb.within( 3000, function(){
+				if( c.field_enum_result.get() ) cb.done();
+			});
+		})
+		.test("Instance constant int check", function( cb ){
+			cb.assertEquals( c.INT_CONSTANT_INSTANCE, 2 ).done();
+		})
+		.test("Instance constant class int check", function( cb ){
+			cb.assertEquals( c.CLASS_CONSTANT_INSTANCE.int_value, 2 ).done();
+		})
+		.test("Instance constant class double check", function( cb ){
+			cb.assertEquals( c.CLASS_CONSTANT_INSTANCE.double_value, 2 ).done();
+		})
+		.test("Instance constant class string check", function( cb ){
+			cb.assertEquals( c.CLASS_CONSTANT_INSTANCE.string_value, "2" ).done();
+		})
+		.test("Component constant check", function( cb ){
+			cb.assertEquals( c.component.INT_CONSTANT, 1 ).done();
+		})
+		.test("Component instance constant check", function( cb ){
+			cb.assertEquals( c.component.INT_CONSTANT_INSTANCE, 2 ).done();
+		})
+
+		.test("Constant toJson check", function( cb ){
+			var json = c.toJson();
+
+			cb
+			.assertEquals( json.INT_CONSTANT, 1 )
+			.assertEquals( json.CLASS_CONSTANT.int_value, 1 )
+			.assertEquals( json.CLASS_CONSTANT.double_value, 1 )
+			.assertEquals( json.CLASS_CONSTANT.string_value, "1" )
+			.assertNotEquals( json.ENUM_CONSTANT, null )
+			.assertEquals( json.ENUM_CONSTANT.ENUM_CONSTANT_1, "ENUM_CONSTANT_1" )
+			.assertEquals( json.ENUM_CONSTANT.ENUM_CONSTANT_2, "ENUM_CONSTANT_2" )
+			.assertEquals( util.size( json.ENUM_CONSTANT ), 2 )
+			.assertEquals( json.INT_CONSTANT_INSTANCE, 2 )
+			.assertEquals( json.CLASS_CONSTANT_INSTANCE.int_value, 2 )
+			.assertEquals( json.CLASS_CONSTANT_INSTANCE.double_value, 2 )
+			.assertEquals( json.CLASS_CONSTANT_INSTANCE.string_value, "2" )
+			.assertEquals( json.component.INT_CONSTANT, 1 )
+			.assertEquals( json.component.INT_CONSTANT_INSTANCE, 2 )
+			.done();
+		})
+		.test("Constant toString check", function( cb ){
+			var json = JSON.parse( c.toString() );
+
+			cb
+			.assertEquals( json.INT_CONSTANT, 1 )
+			.assertEquals( json.CLASS_CONSTANT.int_value, 1 )
+			.assertEquals( json.CLASS_CONSTANT.double_value, 1 )
+			.assertEquals( json.CLASS_CONSTANT.string_value, "1" )
+			.assertNotEquals( json.ENUM_CONSTANT, null )
+			.assertEquals( json.ENUM_CONSTANT.ENUM_CONSTANT_1, "ENUM_CONSTANT_1" )
+			.assertEquals( json.ENUM_CONSTANT.ENUM_CONSTANT_2, "ENUM_CONSTANT_2" )
+			.assertEquals( util.size( json.ENUM_CONSTANT ), 2 )
+			.assertEquals( json.INT_CONSTANT_INSTANCE, 2 )
+			.assertEquals( json.CLASS_CONSTANT_INSTANCE.int_value, 2 )
+			.assertEquals( json.CLASS_CONSTANT_INSTANCE.double_value, 2 )
+			.assertEquals( json.CLASS_CONSTANT_INSTANCE.string_value, "2" )
+			.assertEquals( json.component.INT_CONSTANT, 1 )
+			.assertEquals( json.component.INT_CONSTANT_INSTANCE, 2 )
+			.done();
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

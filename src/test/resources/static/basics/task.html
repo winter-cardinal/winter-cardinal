@@ -1,0 +1,558 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/basics-task-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var util = wcardinal.util.util;
+		var c = basicsTaskController;
+
+		puppeteer
+		.test("Task getArguments", function( cb ){
+			cb.assertEquals( c.task.getArguments(), null ).done();
+		})
+		.test("Task getArgument( 0 )", function( cb ){
+			cb.assertEquals( c.task.getArgument( 0 ), null ).done();
+		})
+		.test("Task getArgument( 1 )", function( cb ){
+			cb.assertEquals( c.task.getArgument( 1 ), null ).done();
+		})
+		.test("Task getResult", function( cb ){
+			cb.assertEquals( c.task.getResult(), null ).done();
+		})
+		.test("Task getReason", function( cb ){
+			cb.assertEquals( c.task.getReason(), null ).done();
+		})
+		.test("Task isCanceled", function( cb ){
+			cb.assertEquals( c.task.isCanceled(), false ).done();
+		})
+		.test("Task isSucceeded", function( cb ){
+			cb.assertEquals( c.task.isSucceeded(), false ).done();
+		})
+		.test("Task isFailed", function( cb ){
+			cb.assertEquals( c.task.isFailed(), false ).done();
+		})
+		.test("Task isDone", function( cb ){
+			cb.assertEquals( c.task.isDone(), true ).done();
+		})
+		.test("Task isReadOnly", function( cb ){
+			cb.assertEquals( c.task.isReadOnly(), false ).done();
+		})
+		.test("Task isNonNull", function( cb ){
+			cb.assertEquals( c.task.isNonNull(), false ).done();
+		})
+		.test("Task lock/unlock/isLocked", function( cb ){
+			cb
+			.assertEquals( c.task.isLocked(), false )
+			.assertEquals( c.task.lock(), c.task )
+			.assertEquals( c.task.isLocked(), true )
+			.assertEquals( c.task.unlock(), c.task )
+			.assertEquals( c.task.isLocked(), false )
+			.done();
+		})
+		.test("Task toJson", function( cb ){
+			cb
+			.assertEquals( c.task.toJson(), {
+				arguments: c.task.getArguments(),
+				result: c.task.getResult(),
+				isDone: c.task.isDone(),
+				isSucceeded: c.task.isSucceeded(),
+				reason: c.task.getReason()
+			})
+			.done();
+		})
+		.test("Task toString", function( cb ){
+			cb
+			.assertEquals( JSON.parse(c.task.toString()), {
+				arguments: c.task.getArguments(),
+				result: c.task.getResult(),
+				isDone: c.task.isDone(),
+				isSucceeded: c.task.isSucceeded(),
+				reason: c.task.getReason()
+			})
+			.done();
+		})
+		.test("Task cancel", function( cb ){
+			cb.assertEquals( c.task.cancel(), c.task ).done();
+		})
+		.test("Task isCanceled after cancel", function( cb ){
+			cb.assertEquals( c.task.isCanceled(), false ).done();
+		})
+		.test("Task create", function( cb ){
+			cb.assertEquals( c.task( "foo" ), c )
+			.assertEquals( c.task.isDone(), false ).done();
+		})
+		.test("Task getResult after create", function( cb ){
+			cb.within( 10000, function(){
+				if( c.task.getResult() === 3 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task getArguments after create", function( cb ){
+			cb.assertEquals( c.task.getArguments(), ["foo"] ).done();
+		})
+		.test("Task getArgument( 0 ) after create", function( cb ){
+			cb.assertEquals( c.task.getArgument( 0 ), "foo" ).done();
+		})
+		.test("Task getArgument( 1 ) after create", function( cb ){
+			cb.assertEquals( c.task.getArgument( 1 ), null ).done();
+		})
+		.test("Task getReason after create", function( cb ){
+			cb.assertEquals( c.task.getReason(), null ).done();
+		})
+		.test("Task isCanceled after create", function( cb ){
+			cb.assertEquals( c.task.isCanceled(), false ).done();
+		})
+		.test("Task isSucceeded after create", function( cb ){
+			cb.assertEquals( c.task.isSucceeded(), true ).done();
+		})
+		.test("Task isFailed after create", function( cb ){
+			cb.assertEquals( c.task.isFailed(), false ).done();
+		})
+		.test("Task isDone after create", function( cb ){
+			cb.assertEquals( c.task.isDone(), true ).done();
+		})
+		.test("Task cancel after create", function( cb ){
+			cb.assertEquals( c.task.cancel(), c.task ).done();
+		})
+		.test("Task create after create", function( cb ){
+			cb.assertEquals( c.task( "john" ), c )
+			.assertEquals( c.task.isDone(), false ).done();
+		})
+		.test("Task getResult after two 'create' calls", function( cb ){
+			cb.within( 2000, function(){
+				if( c.task.getResult() === 4 ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Task getArguments after two 'create' calls", function( cb ){
+			cb.assertEquals( c.task.getArguments(), ["john"] ).done();
+		})
+		.test("Task getArgument( 0 ) after two 'create' calls", function( cb ){
+			cb.assertEquals( c.task.getArgument( 0 ), "john" ).done();
+		})
+		.test("Task getArgument( 1 ) after two 'create' calls", function( cb ){
+			cb.assertEquals( c.task.getArgument( 1 ), null ).done();
+		})
+		.test("Task getReason after two 'create' calls", function( cb ){
+			cb.assertEquals( c.task.getReason(), null ).done();
+		})
+		.test("Task isCanceled after two 'create' calls", function( cb ){
+			cb.assertEquals( c.task.isCanceled(), false ).done();
+		})
+		.test("Task isDone after two 'create' calls", function( cb ){
+			cb.assertEquals( c.task.isDone(), true ).done();
+		})
+		.test("Task cancel after two 'create' calls", function( cb ){
+			cb.assertEquals( c.task.cancel(), c.task ).done();
+		})
+		.test("Long task create and cancel", function( cb ){
+			cb
+			.assertEquals( c.long_task.isDone(), true )
+			.assertEquals( c.long_task( "foo" ), c )
+			.assertEquals( c.long_task.isDone(), false );
+
+			setTimeout(function(){
+				cb.assertEquals( c.long_task.cancel(), c.long_task ).done();
+			}, 300);
+		})
+		.test("Long task isCanceled after create", function( cb ){
+			cb.within( 4000, function(){
+				if( c.long_task.isCanceled() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Long task getResult after create", function( cb ){
+			cb.assertEquals( c.long_task.getResult(), null ).done();
+		})
+		.test("Long task getReason after create", function( cb ){
+			cb.assertEquals( c.long_task.getReason(), "canceled" ).done();
+		})
+		.test("Long task getArguments after create", function( cb ){
+			cb.assertEquals( c.long_task.getArguments(), ["foo"] ).done();
+		})
+		.test("Long task isDone after create", function( cb ){
+			cb.assertEquals( c.long_task.isDone(), true ).done();
+		})
+		.test("Long task cancel after create", function( cb ){
+			cb.assertEquals( c.long_task.cancel(), c.long_task ).done();
+		})
+		.test("Long task 2 three 'create's", function( cb ){
+			cb.assertEquals( c.long_task_2.isDone(), true )
+			.assertEquals( c.long_task_2( "foo" ), c )
+			.assertEquals( c.long_task_2.getArguments(), ["foo"] )
+			.assertEquals( c.long_task_2.getResult(), null )
+			.assertEquals( c.long_task_2.isDone(), false )
+			.assertEquals( c.long_task_2( "bar" ), c )
+			.assertEquals( c.long_task_2.getArguments(), ["bar"] )
+			.assertEquals( c.long_task_2.getResult(), null )
+			.assertEquals( c.long_task_2( "bar bar" ), c )
+			.assertEquals( c.long_task_2.getArguments(), ["bar bar"] )
+			.assertEquals( c.long_task_2.getResult(), null )
+			.done();
+		})
+		.test("Long task 2 isDone after three 'create's", function( cb ){
+			cb.within( 4000, function(){
+				if( c.long_task_2.isDone() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Long task 2 getResult after three 'create's", function( cb ){
+			cb.assertEquals( c.long_task_2.getResult(), 7 ).done();
+		})
+		.test("Long task 2 getReason after three 'create's", function( cb ){
+			cb.assertEquals( c.long_task_2.getReason(), null ).done();
+		})
+		.test("Long task 2 getArguments after three 'create's", function( cb ){
+			cb.assertEquals( c.long_task_2.getArguments(), ["bar bar"] ).done();
+		})
+		.test("Long task 3 three 'create's", function( cb ){
+			cb.assertEquals( c.long_task_3.isDone(), true )
+			.assertEquals( c.long_task_3( "foo" ), c )
+			.assertEquals( c.long_task_3.getArguments(), ["foo"] )
+			.assertEquals( c.long_task_3.getResult(), null )
+			.assertEquals( c.long_task_3.isDone(), false )
+			.assertEquals( c.long_task_3( "bar" ), c )
+			.assertEquals( c.long_task_3.getArguments(), ["bar"] )
+			.assertEquals( c.long_task_3.getResult(), null )
+			.assertEquals( c.long_task_3( "bar bar" ), c )
+			.assertEquals( c.long_task_3.getArguments(), ["bar bar"] )
+			.assertEquals( c.long_task_3.getResult(), null )
+			.done();
+		})
+		.test("Long task 3 isDone after three 'create's", function( cb ){
+			cb.within( 4000, function(){
+				if( c.long_task_3.isDone() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Long task 3 getResult after three 'create's", function( cb ){
+			cb.assertEquals( c.long_task_3.getResult(), 7 ).done();
+		})
+		.test("Long task 3 getReason after three 'create's", function( cb ){
+			cb.assertEquals( c.long_task_3.getReason(), null ).done();
+		})
+		.test("Long task 3 getArguments after three 'create's", function( cb ){
+			cb.assertEquals( c.long_task_3.getArguments(), ["bar bar"] ).done();
+		})
+		.test("Long task 3 result after three 'create's", function( cb ){
+			cb.assertEquals( c.field_long_task_3_result.get(), 7 ).done();
+		})
+		.test("Long task 3 count after three 'create's", function( cb ){
+			cb.assertEquals( c.field_long_task_3_count.get(), 1 ).done();
+		})
+		.test("Non-null task create", function( cb ){
+			var result = true;
+			try {
+				c.non_null_task( null );
+				result = false;
+			} catch( e ){
+
+			}
+
+			cb.assertEquals( result, true ).done();
+		})
+		.test("Non-null task complete", function( cb ){
+			c.non_null_task( "foo" );
+
+			cb.within( 4000, function(){
+				if( c.non_null_task.isDone() === true &&
+					c.non_null_task.isSucceeded() === false &&
+					c.non_null_task.isFailed() === true &&
+					c.non_null_task.isCanceled() === false &&
+					c.non_null_task.getReason() === "null-result" &&
+					c.non_null_task.getResult() === null ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Non-null task with runnable complete", function( cb ){
+			c.non_null_task_with_runnable( "foo" );
+
+			cb.within( 4000, function(){
+				if( c.non_null_task_with_runnable.isDone() === true &&
+					c.non_null_task_with_runnable.isSucceeded() === false &&
+					c.non_null_task_with_runnable.isFailed() === true &&
+					c.non_null_task_with_runnable.isCanceled() === false &&
+					c.non_null_task_with_runnable.getReason() === "null-result" &&
+					c.non_null_task_with_runnable.getResult() === null ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Exception task", function( cb ){
+			c.exception_task();
+
+			cb.within( 4000, function(){
+				if( c.exception_task.isDone() === true &&
+					c.exception_task.isSucceeded() === false &&
+					c.exception_task.isFailed() === true &&
+					c.exception_task.isCanceled() === false &&
+					c.exception_task.getReason() === "exception" ) {
+					cb.done();
+				}
+			});
+		})
+		.test("No such task", function( cb ){
+			c.no_such_task( "foo" );
+
+			cb.within( 4000, function(){
+				if( c.no_such_task.isDone() === true &&
+					c.no_such_task.isSucceeded() === false &&
+					c.no_such_task.isFailed() === true &&
+					c.no_such_task.isCanceled() === false &&
+					c.no_such_task.getReason() === "no-such-task" ) {
+					cb.done();
+				}
+			});
+		})
+		.test("No such task locked", function( cb ){
+			c.no_such_task_locked( "foo" );
+
+			cb.within( 4000, function(){
+				if( c.no_such_task_locked.isDone() === true &&
+					c.no_such_task_locked.isSucceeded() === false &&
+					c.no_such_task_locked.isFailed() === true &&
+					c.no_such_task_locked.isCanceled() === false &&
+					c.no_such_task_locked.getReason() === "no-such-task" ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Fail task", function( cb ){
+			c.fail_task();
+
+			cb.within( 4000, function(){
+				if( c.fail_task.isDone() === true &&
+					c.fail_task.isSucceeded() === false &&
+					c.fail_task.isFailed() === true &&
+					c.fail_task.isCanceled() === false &&
+					c.fail_task.getReason() === "none" ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Fail task with reason", function( cb ){
+			c.fail_task_with_reason();
+
+			cb.within( 4000, function(){
+				if( c.fail_task_with_reason.isDone() === true &&
+					c.fail_task_with_reason.isSucceeded() === false &&
+					c.fail_task_with_reason.isFailed() === true &&
+					c.fail_task_with_reason.isCanceled() === false &&
+					c.fail_task_with_reason.getReason() === "john" ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Abort task", function( cb ){
+			c.abort_task();
+
+			cb.within( 4000, function(){
+				if( c.abort_task.isDone() === true &&
+					c.abort_task.isSucceeded() === false &&
+					c.abort_task.isFailed() === true &&
+					c.abort_task.isCanceled() === false &&
+					c.abort_task.getReason() === "a" ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Read-only task create", function( cb ){
+			var result = true;
+			try {
+				c.readonly_task( "foo" );
+				result = false;
+			} catch( e ){
+
+			}
+
+			cb.assertEquals( result, true ).done();
+		})
+		.test("Historical task", function( cb ){
+			cb.assertEquals( 0 <= window.location.toString().indexOf( "#!/"+encodeURIComponent( JSON.stringify( c.historical_task.getArguments() ) ) ), true )
+				.done();
+		})
+		.test("Historical task create", function( cb ){
+			c.historical_task( "foo" );
+			cb.assertEquals( 0 <= window.location.toString().indexOf( "#!/"+encodeURIComponent( JSON.stringify( c.historical_task.getArguments() ) ) ), true )
+				.done();
+		})
+		.test("Lock task prepare", function( cb ){
+			c.lock_task();
+
+			cb.within( 4000, function(){
+				if( c.lock_task.isDone() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Lock task result", function( cb ){
+			cb.assertEquals( c.lock_task_result.get(), true ).done();
+		})
+		.test("Lock task result done", function( cb ){
+			cb.assertEquals( c.lock_task_result_done.get(), true ).done();
+		})
+		.test("Lock task unlocked prepare", function( cb ){
+			c.unlocked_task();
+
+			cb.within( 4000, function(){
+				if( c.unlocked_task.isDone() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Lock task unlocked result", function( cb ){
+			cb.assertEquals( c.lock_task_unlocked_result.get(), true ).done();
+		})
+		.test("Lock task unlocked result done", function( cb ){
+			cb.assertEquals( c.lock_task_unlocked_result_done.get(), true ).done();
+		})
+		.test("Lock task locked prepare", function( cb ){
+			c.locked_task();
+
+			cb.within( 4000, function(){
+				if( c.locked_task.isDone() === true ) {
+					cb.done();
+				}
+			});
+		})
+		.test("Lock task locked result", function( cb ){
+			cb.assertEquals( c.lock_task_locked_result.get(), true ).done();
+		})
+		.test("Lock task locked result done", function( cb ){
+			cb.assertEquals( c.lock_task_locked_result_done.get(), true ).done();
+		})
+		.test("Task order", function( cb ){
+			c.two_task_a( "foo" );
+			setTimeout(function(){
+				c.two_task_b( "bar" );
+
+				setTimeout(function(){
+					cb
+					.assertEquals( c.field_two_order.get(), 2 )
+					.assertEquals( c.two_task_a.getResult(), 1 )
+					.assertEquals( c.two_task_b.getResult(), 2 )
+					.done();
+				}, 1000);
+			}, 500);
+		})
+		.test("Task event", function( cb ){
+			var events = {
+				create: false,
+				success: false,
+				fail: false
+			};
+
+			c.event_task.on( "create", function( e, args, task ){
+				events.create = (e != null && util.isEqual( args, ["abcde"] ) && task === c.event_task && task === this);
+			});
+
+			c.event_task.on( "success", function( e, result, task ){
+				events.success = (e != null && result === 5 && task === c.event_task && task === this);
+			});
+
+			c.event_task.on( "fail", function( e, reason, task ){
+				events.fail = true;
+			});
+
+			cb.within( 4000, function(){
+				if( events.create === true && events.success === true && events.fail === false ) {
+					cb.done();
+				}
+			});
+
+			c.event_task( "abcde" );
+		})
+		.test("Task event fail", function( cb ){
+			var events = {
+				create: false,
+				success: false,
+				fail: false
+			};
+
+			c.event_task_fail.on( "create", function( e, args, task ){
+				events.create = (e != null && util.isEqual( args, ["abcde"] ) && task === c.event_task_fail && task === this);
+			});
+
+			c.event_task_fail.on( "success", function( e, result, task ){
+				events.success = true;
+			});
+
+			c.event_task_fail.on( "fail", function( e, reason, task ){
+				events.fail = (e != null && reason === "exception" && task === c.event_task_fail && task === this);
+			});
+
+			cb.within( 4000, function(){
+				if( events.create === true && events.success === false && events.fail === true ) {
+					cb.done();
+				}
+			});
+
+			c.event_task_fail( "abcde" );
+		})
+		.test("Cancel task", function( cb ){
+			c.cancel_task();
+
+			setTimeout(function(){
+				c.cancel_task.cancel();
+			}, 500);
+
+			setTimeout(function(){
+				if( c.cancel_task.isDone() && c.cancel_task.isCanceled() === true && c.cancel_task.isSucceeded() === false && c.cancel_task.isFailed() === true ) cb.done();
+			}, 1500);
+		})
+		.test("Cancel task before", function( cb ){
+			cb.assertEquals( c.cancel_task_before.get(), true ).done();
+		})
+		.test("Cancel task after", function( cb ){
+			cb.assertEquals( c.cancel_task_before.get(), true ).done();
+		})
+		.test("Cancel task 2", function( cb ){
+			c.cancel_task_2();
+
+			cb.within(2000, function(){
+				if( c.cancel_task_2.isDone() && c.cancel_task_2.isCanceled() === true && c.cancel_task_2.isSucceeded() === false && c.cancel_task_2.isFailed() === true ) cb.done();
+			});
+		})
+		.test("Cancel task 2 cancel", function( cb ){
+			cb.assertEquals( c.cancel_task_2_1.get(), true ).done();
+		})
+		.test("Cancel task 2 cancel after cancel", function( cb ){
+			cb.assertEquals( c.cancel_task_2_2.get(), true ).done();
+		})
+		.test("Cancel task 2 isCanceled after two cancel", function( cb ){
+			cb.assertEquals( c.cancel_task_2_3.get(), true ).done();
+		})
+		.test("Cancel task from outside", function( cb ){
+			c.cancel_task_from_outside()
+			.then(function( result ){
+				cb.assertEquals( result, true ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

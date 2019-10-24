@@ -1,0 +1,72 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/s-list-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = sListController;
+
+		puppeteer
+		.test( "SList both check", function( cb ){
+			var count = 0;
+
+			var start = function(){
+				var size = c.field_list.size();
+				if( size <= 0 ) {
+					c.field_list.add( 0 );
+				} else if( 0.5 <= Math.random() ){
+					c.field_list.add( c.field_list.get( size - 1 ) + Math.round(Math.random()*10) + 1 );
+				} else {
+					c.field_list.remove( Math.floor( size * Math.random() ) );
+				}
+
+				if( (++count) < c.MAX_COUNT ) {
+					setTimeout( start, 10 );
+				}
+			};
+
+			start();
+			c.start();
+
+			cb.within( 30000, function(){
+				if( count !== c.MAX_COUNT ) return;
+
+				c.check.set( c.field_list.toArray(), true );
+				if( c.check_result.get() ) {
+					var browserResult = true;
+					var previous = null;
+					var size = c.field_list.size();
+					for( var i=0, imax=size; i<size; ++i ) {
+						var next = c.field_list.get( i );
+						if( previous != null && next <= previous ) {
+							console.log( i, previous, next );
+							browserResult = false;
+							break;
+						}
+						previous = next;
+					}
+					if( browserResult ) {
+						cb.done();
+					}
+				}
+			});
+		}, 60000)
+		.execute();
+	}());
+	</script>
+</body>
+</html>

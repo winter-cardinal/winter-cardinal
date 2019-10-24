@@ -1,0 +1,37 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/large-controller"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = largeController;
+		c.getServer().on( "requests", function( e, requests, values ){
+			for( var i=0, imax=requests.length; i<imax; ++i ){
+				var request = requests[ i ];
+				console.log( JSON.stringify(request) );
+				var value = values[ i ];
+				if( request[1] === "u" ) {
+					var arg = request[2][0];
+					if( arg != null && arg.data != null && arg.data.id != null ) {
+						console.log( value[ arg.data.id[2] ] );
+					}
+				}
+			}
+		});
+	}());
+	</script>
+</body>
+</html>
