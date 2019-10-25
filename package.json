@@ -1,15 +1,15 @@
 {
 	"name": "@wcardinal/wcardinal",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"license": "Apache-2.0",
 	"description": "Winter Cardinal client-side libraries",
+	"keywords": ["Spring framework"],
 	"main": "dist/wcardinal.cjs.js",
 	"types": "dist/types/wcardinal.d.ts",
 	"module": "dist/wcardinal.esm.js",
 	"files": [
 		"dist/*"
 	],
-	"private": true,
 	"scripts": {
 		"lint": "tslint -p .",
 		"lint:fix": "tslint -p . --fix",

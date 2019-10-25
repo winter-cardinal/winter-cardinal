@@ -42,7 +42,7 @@ myController.hello( 'John' ).then(( result ) => {
 
 ```groovy
 dependencies {
-	compile 'org.wcardinal:wcardinal:latest.release'
+	compile 'com.github.winter-cardinal:winter-cardinal:latest.release'
 }
 ```
 

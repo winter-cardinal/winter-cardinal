@@ -1,15 +1,17 @@
 plugins {
-	id 'com.jfrog.artifactory' version '4.7.5'
+	id 'jacoco'
+	id 'java'
+	id 'maven-publish'
+	id 'signing'
+    id 'org.ajoberstar.git-publish' version '2.0.0'
+    id 'net.researchgate.release' version '2.6.0'
+    id 'de.marcphilipp.nexus-publish' version '0.3.0'
+    id 'io.codearte.nexus-staging' version '0.21.0'
 	id 'net.minecrell.licenser' version '0.4.1'
 }
 
-apply plugin: 'jacoco'
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'signing'
-
-group = 'org.wcardinal'
-archivesBaseName = 'wcardinal'
+group = 'com.github.winter-cardinal'
+archivesBaseName = 'winter-cardinal'
 version = new groovy.json.JsonSlurper().parseText(file('package.json').text).version
 
 sourceCompatibility = 8
@@ -17,9 +19,7 @@ targetCompatibility = 8
 
 // REPOSITORY
 repositories {
-	maven {
-		url 'http://repo1.maven.org/maven2'
-	}
+	jcenter()
 }
 
 // JAR
@@ -37,18 +37,12 @@ task copyLicense(type: Copy) {
 }
 compileJava.dependsOn copyLicense
 
-// JAR SOURCE
 task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier = 'sources'
 	from sourceSets.main.allSource
 	exclude 'META-INF/**'
 }
 
-artifacts {
-	archives sourcesJar
-}
-
-// JAR JAVADOC
 javadoc {
 	options.locale = 'en_US'
 	options.charSet = 'UTF-8'
@@ -62,12 +56,78 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
+	archives sourcesJar
 	archives javadocJar
 }
 
-// SIGNING
+// PUBLISHING
+publishing {
+    publications {
+        mavenJava( MavenPublication ) {
+            pom {
+                name = 'Winter Cardinal'
+                description = 'A library for real-time web applications build on top of the Spring framework'
+                packaging = 'jar'
+				url = 'https://github.com/winter-cardinal/winter-cardinal'
+
+				scm {
+					url = 'https://github.com/winter-cardinal/winter-cardinal'
+					connection = 'scm:git@github.com:winter-cardinal/winter-cardinal.git'
+					developerConnection = 'scm:git@github.com:winter-cardinal/winter-cardinal.git'
+				}
+
+				licenses {
+					license {
+						name = 'The Apache License, Version 2.0'
+						url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
+
+				developers {
+					developer {
+						id = project.findProperty('ossrhUsername') ?: ''
+						name = project.findProperty('ossrhName') ?: ''
+						email = project.findProperty('ossrhUsername') ?: ''
+					}
+				}
+            }
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+}
+
 signing {
-	sign configurations.archives
+	sign( publishing.publications )
+}
+
+nexusPublishing {
+	repositories {
+		sonatype {
+			packageGroup = group
+			username = project.findProperty('ossrhUsername') ?: ''
+			password = project.findProperty('ossrhPassword') ?: ''
+		}
+	}
+}
+
+nexusStaging {
+	packageGroup = group
+	username = project.findProperty('ossrhUsername') ?: ''
+	password = project.findProperty('ossrhPassword') ?: ''
+}
+
+//
+gitPublish {
+    repoUri = 'git@github.com:winter-cardinal/winter-cardinal.git'
+    branch = 'gh-pages'
+
+    contents {
+        from "${file('build/docs/html5')}"
+    }
+
+    commitMessage = "Update GitHub pages"
 }
 
 // DEPENDENCIES
@@ -97,7 +157,7 @@ boolean isWindows(){
 		.toLowerCase( Locale.ROOT )
 		.contains( 'windows' );
 }
-String COMPILE_JAVASCRIPT_OUTDIR = "src/main/resources/META-INF/resources/webjars/${archivesBaseName}/"
+String COMPILE_JAVASCRIPT_OUTDIR = 'src/main/resources/META-INF/resources/webjars/wcardinal/'
 task compileJavaScript( type: Exec ){
 	inputs.files( 'package.json' )
 	inputs.files( 'rollup.config.js' )

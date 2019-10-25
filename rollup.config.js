@@ -186,8 +186,15 @@ export default ( !process.env.ROLLUP_WATCH ?
 			terser( TERSER_OPTIONS ),
 			copy({
 				targets: [
-					{ src: 'dist/*.js', dest: META_INF_OUTPUT },
-					{ src: 'dist/*.js.map', dest: META_INF_OUTPUT }
+					{ src: 'dist/wcardinal.in-worker.js', dest: META_INF_OUTPUT },
+					{ src: 'dist/wcardinal.in-worker.min.js', dest: META_INF_OUTPUT },
+					{ src: 'dist/wcardinal.in-worker.min.js.map', dest: META_INF_OUTPUT },
+					{ src: 'dist/wcardinal.js', dest: META_INF_OUTPUT },
+					{ src: 'dist/wcardinal.min.js', dest: META_INF_OUTPUT },
+					{ src: 'dist/wcardinal.min.js.map', dest: META_INF_OUTPUT },
+					{ src: 'dist/wcardinal.worker.js', dest: META_INF_OUTPUT },
+					{ src: 'dist/wcardinal.worker.min.js', dest: META_INF_OUTPUT },
+					{ src: 'dist/wcardinal.worker.min.js.map', dest: META_INF_OUTPUT }
 				],
 				hook: 'writeBundle'
 			})
