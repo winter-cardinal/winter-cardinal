@@ -3,6 +3,8 @@
 	"version": "0.1.1",
 	"license": "Apache-2.0",
 	"description": "Winter Cardinal client-side libraries",
+	"homepage": "https://github.com/winter-cardinal/winter-cardinal",
+	"repository": "github:winter-cardinal/winter-cardinal",
 	"keywords": ["Spring framework"],
 	"main": "dist/wcardinal.cjs.js",
 	"types": "dist/types/wcardinal.d.ts",
