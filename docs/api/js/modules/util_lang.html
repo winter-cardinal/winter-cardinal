@@ -53,7 +53,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../index.html">Globals</a>
 				</li>
 				<li>
 					<a href="util_lang.html">util/lang</a>
@@ -146,7 +146,7 @@
 					<div class="tsd-signature tsd-kind-icon">Iteratee&lt;K, V, T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/each.ts#L10">util/lang/each.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/each.ts#L10">util/lang/each.ts:10</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -201,7 +201,7 @@
 					<div class="tsd-signature tsd-kind-icon">inherit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> =&nbsp;( Object.create !&#x3D; null ?( target: any, superClass: Function ): void &#x3D;&gt; {target.superClass &#x3D; superClass;target.prototype &#x3D; Object.create(superClass.prototype, {constructor: {value: target,enumerable: false,writable: true,configurable: true}});} :( target: any, superClass: Function ): void &#x3D;&gt; {target.superClass &#x3D; superClass;const TempClass: any &#x3D; () &#x3D;&gt; { /* DO NOTHING */ };TempClass.prototype &#x3D; superClass.prototype;target.prototype &#x3D; new TempClass();target.prototype.constructor &#x3D; target;})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/inherit.ts#L6">util/lang/inherit.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/inherit.ts#L6">util/lang/inherit.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -211,7 +211,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Array<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">isArray</span><span class="tsd-signature-symbol"> =&nbsp;Array.isArray || (( target: any ): target is unknown[] &#x3D;&gt; {return checkTag( target, &quot;[object Array]&quot; );})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-array.ts#L8">util/lang/is-array.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-array.ts#L8">util/lang/is-array.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +221,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Equal<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> =&nbsp;( Object.keys !&#x3D; null ? ( a: any, b: any ): boolean &#x3D;&gt; {const keys &#x3D; Object.keys( a );const length &#x3D; keys.length;if( length !&#x3D;&#x3D; sizeObject( b ) ) {return false;}for( let i &#x3D; 0; i &lt; length; ++i ) {const key &#x3D; keys[ i ];if( ! hasOwn( b, key ) || ! isEqual( a[ key ], b[ key ] ) ) {return false;}}return true;} : ( a: any, b: any ): boolean &#x3D;&gt; {// For afor( const key in a ) {if( hasOwn( a, key ) ) {if( ! hasOwn( b, key ) || ! isEqual( a[ key ], b[ key ] ) ) {return false;}}}// For bfor( const key in b ) {if( hasOwn( b, key ) &amp;&amp; ! hasOwn( a, key ) ) {return false;}}return true;})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-equal.ts#L28">util/lang/is-equal.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-equal.ts#L28">util/lang/is-equal.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -231,7 +231,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>NaN<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">isNaN</span><span class="tsd-signature-symbol"> =&nbsp;( typeof Number.isNaN !&#x3D;&#x3D; &quot;undefined&quot; ? Number.isNaN : ( target: any ): boolean &#x3D;&gt; {return isNumber( target ) &amp;&amp; target !&#x3D;&#x3D; target;})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-nan.ts#L8">util/lang/is-nan.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-nan.ts#L8">util/lang/is-nan.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -241,7 +241,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Plain<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> =&nbsp;(Object.getPrototypeOf !&#x3D; null ? ( target: any ): target is PlainObject &#x3D;&gt; {if( target !&#x3D; null &amp;&amp; checkType(target, &quot;object&quot;) &amp;&amp; checkTag(target, &quot;[object Object]&quot;) ) {const prototype &#x3D; Object.getPrototypeOf( target );return prototype &#x3D;&#x3D; null || prototype &#x3D;&#x3D;&#x3D; Object.prototype;}return false;} : ( target: any ): target is PlainObject&lt;any&gt; &#x3D;&gt; {return ( target !&#x3D; null &amp;&amp; checkType(target, &quot;object&quot;) &amp;&amp; checkTag(target, &quot;[object Object]&quot;) );})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-plain-object.ts#L10">util/lang/is-plain-object.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-plain-object.ts#L10">util/lang/is-plain-object.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -251,7 +251,7 @@
 					<div class="tsd-signature tsd-kind-icon">now<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">now</span><span class="tsd-signature-symbol"> =&nbsp;Date.now || (() &#x3D;&gt; new Date().getTime())</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/now.ts#L6">util/lang/now.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/now.ts#L6">util/lang/now.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -261,7 +261,7 @@
 					<div class="tsd-signature tsd-kind-icon">size<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> =&nbsp;( Object.keys !&#x3D; null ? ( target: any ): number &#x3D;&gt; {return Object.keys( target ).length;} : ( target: any ): number &#x3D;&gt; {let result &#x3D; 0;for( const key in target ) {if( hasOwn( target, key ) ) {result +&#x3D; 1;}}return result;})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/size.ts#L9">util/lang/size.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/size.ts#L9">util/lang/size.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -278,7 +278,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/base64.ts#L10">util/lang/base64.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/base64.ts#L10">util/lang/base64.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -301,7 +301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/bind.ts#L8">util/lang/bind.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/bind.ts#L8">util/lang/bind.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -327,7 +327,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/clone.ts#L29">util/lang/clone.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/clone.ts#L29">util/lang/clone.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -356,7 +356,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/clone.ts#L11">util/lang/clone.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/clone.ts#L11">util/lang/clone.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -385,7 +385,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/clone-deep.ts#L8">util/lang/clone-deep.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/clone-deep.ts#L8">util/lang/clone-deep.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -414,7 +414,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/clone.ts#L19">util/lang/clone.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/clone.ts#L19">util/lang/clone.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -444,7 +444,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/each.ts#L36">util/lang/each.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/each.ts#L36">util/lang/each.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -473,7 +473,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/each.ts#L37">util/lang/each.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/each.ts#L37">util/lang/each.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -511,7 +511,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/each.ts#L25">util/lang/each.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/each.ts#L25">util/lang/each.ts:25</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -549,7 +549,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/each.ts#L12">util/lang/each.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/each.ts#L12">util/lang/each.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -588,7 +588,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/each-right.ts#L21">util/lang/each-right.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/each-right.ts#L21">util/lang/each-right.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -617,7 +617,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/each-right.ts#L22">util/lang/each-right.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/each-right.ts#L22">util/lang/each-right.ts:22</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -655,7 +655,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/each-right.ts#L10">util/lang/each-right.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/each-right.ts#L10">util/lang/each-right.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -693,7 +693,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/escape.ts#L8">util/lang/escape.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/escape.ts#L8">util/lang/escape.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -716,7 +716,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/format.ts#L6">util/lang/format.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/format.ts#L6">util/lang/format.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -742,7 +742,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/get-global.ts#L9">util/lang/get-global.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/get-global.ts#L9">util/lang/get-global.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -759,7 +759,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/has-own.ts#L6">util/lang/has-own.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/has-own.ts#L6">util/lang/has-own.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -785,7 +785,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-array-like.ts#L9">util/lang/is-array-like.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-array-like.ts#L9">util/lang/is-array-like.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -808,7 +808,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-boolean.ts#L8">util/lang/is-boolean.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-boolean.ts#L8">util/lang/is-boolean.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -831,7 +831,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-empty.ts#L26">util/lang/is-empty.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-empty.ts#L26">util/lang/is-empty.ts:26</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -854,7 +854,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-empty.ts#L18">util/lang/is-empty.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-empty.ts#L18">util/lang/is-empty.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -877,7 +877,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-empty.ts#L9">util/lang/is-empty.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-empty.ts#L9">util/lang/is-empty.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -900,7 +900,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-equal.ts#L62">util/lang/is-equal.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-equal.ts#L62">util/lang/is-equal.ts:62</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -926,7 +926,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-equal.ts#L15">util/lang/is-equal.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-equal.ts#L15">util/lang/is-equal.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -952,7 +952,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-equal.ts#L11">util/lang/is-equal.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-equal.ts#L11">util/lang/is-equal.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -978,7 +978,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-function.ts#L6">util/lang/is-function.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-function.ts#L6">util/lang/is-function.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1001,7 +1001,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-empty.ts#L22">util/lang/is-empty.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-empty.ts#L22">util/lang/is-empty.ts:22</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1024,7 +1024,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-number.ts#L9">util/lang/is-number.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-number.ts#L9">util/lang/is-number.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1047,7 +1047,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-string.ts#L9">util/lang/is-string.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-string.ts#L9">util/lang/is-string.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1070,7 +1070,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/is-thenable.ts#L8">util/lang/is-thenable.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/is-thenable.ts#L8">util/lang/is-thenable.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1093,7 +1093,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/merge.ts#L82">util/lang/merge.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/merge.ts#L82">util/lang/merge.ts:82</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1122,7 +1122,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/merge.ts#L19">util/lang/merge.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/merge.ts#L19">util/lang/merge.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1157,7 +1157,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/merge.ts#L10">util/lang/merge.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/merge.ts#L10">util/lang/merge.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1186,7 +1186,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/merge.ts#L50">util/lang/merge.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/merge.ts#L50">util/lang/merge.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1221,7 +1221,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/register.ts#L8">util/lang/register.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/register.ts#L8">util/lang/register.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1259,7 +1259,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/size.ts#L21">util/lang/size.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/size.ts#L21">util/lang/size.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1282,7 +1282,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/sorted-index.ts#L6">util/lang/sorted-index.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/sorted-index.ts#L6">util/lang/sorted-index.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1314,7 +1314,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/8f72061/src/main/typescript/wcardinal/util/lang/base64.ts#L6">util/lang/base64.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/9717827/src/main/typescript/wcardinal/util/lang/base64.ts#L6">util/lang/base64.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1333,7 +1333,7 @@
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+						<a href="../index.html"><em>Globals</em></a>
 					</li>
 					<li class="label tsd-is-external">
 						<span>Internals</span>

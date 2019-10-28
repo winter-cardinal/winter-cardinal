@@ -53,7 +53,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="globals.html">Globals</a>
+					<a href="index.html">Globals</a>
 				</li>
 			</ul>
 			<h1> Winter Cardinal</h1>
@@ -63,106 +63,41 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#about" id="about" style="color: inherit; text-decoration: none;">
-					<h3>About</h3>
-				</a>
-				<p>Winter Cardinal is a library for real-time web applications build on top of the Spring framework.
-					It is designed for making single-page applications stable against unintended network/server failures.
-					The controller class and its fields defined on a server will be synchronized with clones on browsers in real time.
-				Also enables us to call methods defined on the controller class from browsers.</p>
-				<pre><code class="language-java"><span class="hljs-comment">// Java</span>
-<span class="hljs-keyword">import</span> org.wcardinal.controller.annotation.Controller;
-<span class="hljs-keyword">import</span> org.wcardinal.controller.annotation.Callable;
-
-<span class="hljs-meta">@Controller</span>
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyController</span> </span>{
-    <span class="hljs-meta">@Autowired</span>
-    SLong field;
-
-    <span class="hljs-meta">@Callable</span>
-    <span class="hljs-function">String <span class="hljs-title">hello</span><span class="hljs-params">( String name )</span></span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-string">"Hello, "</span>+name;
-    }
-}</code></pre>
-				<pre><code class="language-html"><span class="hljs-comment">&lt;!-- HTML --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./my-controller"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-myController.field.get();      <span class="hljs-comment">// Gets a field value</span>
-myController.field.set( <span class="hljs-number">128</span> ); <span class="hljs-comment">// Changes a field value</span>
-
-<span class="hljs-comment">// Calls `hello( String )` method</span>
-myController.hello( <span class="hljs-string">'John'</span> ).then(<span class="hljs-function">(<span class="hljs-params"> result </span>) =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log( result ); <span class="hljs-comment">// Prints 'Hello, John'</span>
-});
-</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
-				<a href="#installing" id="installing" style="color: inherit; text-decoration: none;">
-					<h3>Installing</h3>
-				</a>
-				<a href="#gradle" id="gradle" style="color: inherit; text-decoration: none;">
-					<h4>Gradle</h4>
-				</a>
-				<pre><code class="language-groovy">dependencies {
-    compile <span class="hljs-string">'com.github.winter-cardinal:winter-cardinal:latest.release'</span>
-}</code></pre>
-				<p>Client-side libraries are packed in this JAR as a WebJars.
-					Please find the <code>wcardinal.min.js</code> in the directory <code>META-INF/resources/webjars/wcardinal/${version}/</code>.
-				WebJars can be loaded from browsers as follows:</p>
-				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"webjars/wcardinal/wcardinal.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
-				<p>Please note that the <code>${version}</code> part is omitted.</p>
-				<a href="#npm" id="npm" style="color: inherit; text-decoration: none;">
-					<h4>NPM</h4>
-				</a>
-				<p>The client-side libraries are also available as a NPM package.</p>
-				<pre><code class="language-shell">npm i @wcardinal/wcardinal</code></pre>
-				<p>Please note that the NPM package has no default exports.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> wcardinal <span class="hljs-keyword">from</span> <span class="hljs-string">'@wcardinal/wcardinal'</span>;</code></pre>
-				<a href="#cdn-or-prebuild-files" id="cdn-or-prebuild-files" style="color: inherit; text-decoration: none;">
-					<h4>CDN or prebuild files</h4>
-				</a>
-				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://cdn.jsdelivr.net/npm/@wcardinal/wcardinal/dist/wcardinal.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./my-controller"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
-				<p>All the classes are in <code>window.wcardinal</code> in this case.
-				Note that the <code>wcardinal.min.js</code> must be loaded before loading your controller as shown above.</p>
-				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
-					<h3>Documentation</h3>
-				</a>
-				<ul>
-					<li><a href="https://winter-cardinal.github.io/winter-cardinal/api/">API document</a></li>
-					<li>[]</li>
-				</ul>
-				<a href="#browser-support" id="browser-support" style="color: inherit; text-decoration: none;">
-					<h3>Browser support</h3>
-				</a>
-				<p>Supports the latest version of Chrome, Firefox, Edge and Safari. IE9 and later are supported on Windows.</p>
-				<a href="#how-to-build" id="how-to-build" style="color: inherit; text-decoration: none;">
-					<h3>How to build</h3>
-				</a>
-				<a href="#js-for-release" id="js-for-release" style="color: inherit; text-decoration: none;">
-					<h4>JS for release</h4>
-				</a>
-				<pre><code class="language-shell">npm run build</code></pre>
-				<a href="#js-for-development" id="js-for-development" style="color: inherit; text-decoration: none;">
-					<h4>JS for development</h4>
-				</a>
-				<pre><code class="language-shell">npm run watch:ts</code></pre>
-				<p>and then in an another terminal</p>
-				<pre><code class="language-shell">npm run watch:rollup</code></pre>
-				<a href="#js-api-document" id="js-api-document" style="color: inherit; text-decoration: none;">
-					<h4>JS API document</h4>
-				</a>
-				<pre><code class="language-shell">npm run build:api</code></pre>
-				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
-					<h3>License</h3>
-				</a>
-				<p>Apache License Version 2.0</p>
-			</div>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>External modules</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-external-module"><a href="modules/controller.html" class="tsd-kind-icon">controller</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/controller_data.html" class="tsd-kind-icon">controller/data</a></li>
+								<li class="tsd-kind-external-module tsd-is-external"><a href="modules/controller_data_internal.html" class="tsd-kind-icon">controller/data/internal</a></li>
+								<li class="tsd-kind-external-module tsd-is-external"><a href="modules/controller_internal.html" class="tsd-kind-icon">controller/internal</a></li>
+								<li class="tsd-kind-external-module tsd-is-external"><a href="modules/controller_internal_info.html" class="tsd-kind-icon">controller/internal/info</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/event.html" class="tsd-kind-icon">event</a></li>
+								<li class="tsd-kind-external-module tsd-is-external"><a href="modules/event_internal.html" class="tsd-kind-icon">event/internal</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/exception.html" class="tsd-kind-icon">exception</a></li>
+								<li class="tsd-kind-external-module tsd-is-external"><a href="modules/exception_internal.html" class="tsd-kind-icon">exception/internal</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/io.html" class="tsd-kind-icon">io</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/server.html" class="tsd-kind-icon">server</a></li>
+								<li class="tsd-kind-external-module tsd-is-external"><a href="modules/server_internal.html" class="tsd-kind-icon">server/internal</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/util.html" class="tsd-kind-icon">util</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/util_dom.html" class="tsd-kind-icon">util/dom</a></li>
+								<li class="tsd-kind-external-module tsd-is-external"><a href="modules/util_internal.html" class="tsd-kind-icon">util/internal</a></li>
+								<li class="tsd-kind-external-module"><a href="modules/util_lang.html" class="tsd-kind-icon">util/lang</a></li>
+								<li class="tsd-kind-external-module tsd-is-external"><a href="modules/util_lang_internal.html" class="tsd-kind-icon">util/lang/internal</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class="globals current ">
+						<a href="index.html"><em>Globals</em></a>
 					</li>
 					<li class="label tsd-is-external">
 						<span>Internals</span>
