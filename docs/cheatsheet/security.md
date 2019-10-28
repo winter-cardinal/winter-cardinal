@@ -14,7 +14,7 @@ class MyControllerForOthers {
 }
 ```
 
-```xml
+```html
 <script src="my-controller"></script>
 ```
 
@@ -46,7 +46,7 @@ class MyControllerForOthers {
 }
 ```
 
-```xml
+```html
 <script src="my-controller"></script>
 ```
 

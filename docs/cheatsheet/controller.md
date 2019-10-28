@@ -55,7 +55,7 @@ class MyController {
 }
 ```
 
-```xml
+```html
 <script src="my-controller-url"></script>
 ```
 
@@ -70,7 +70,7 @@ class MyController {
 }
 ```
 
-```xml
+```html
 <script src="my-controller-name"></script>
 ```
 
@@ -139,7 +139,7 @@ class MyController {
 
 ### Controller parameters
 
-```xml
+```html
 <script src="my-controller?name=John"></script>
 ```
 

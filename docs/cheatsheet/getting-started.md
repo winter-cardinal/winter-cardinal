@@ -40,20 +40,20 @@ Detecting Spring your controller class, working wcardinal successfully, in a log
 
 ### Step 3: Load scripts
 
-```xml
+```html
 <script src="webjars/wcardinal/wcardinal.min.js"></script>
 ```
 
 If the WebWorker version is required, load `wcardinal.worker.min.js` instead.
 The `wcardinal.worker.min.js` utilizes the WebWorker if available while the `wcardinal.min.js` does not.
 
-```xml
+```html
 <script src="webjars/wcardinal/wcardinal.worker.min.js"></script>
 ```
 
 ### Step 4: Load a controller script
 
-```xml
+```html
 <script src="my-controller"></script>
 ```
 
