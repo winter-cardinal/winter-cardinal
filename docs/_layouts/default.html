@@ -10,15 +10,8 @@
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
-	  {% if site.title and site.title != page.title %}
-	  <h3><a href="{{ "/" | absolute_url }}">{{ site.title }}</a></h3>
-	  {% endif %}
 
-	  <nav>
-	    <ul></ul>
-	  </nav>
-
-      {{ content }}
+	  {{ content }}
 
       {% if site.github.private != true and site.github.license %}
       <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
@@ -27,7 +20,21 @@
       {% endif %}
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
-    <script>anchors.add();</script>
+	<script>anchors.add();</script>
+	<script>
+	(function(){
+		var nav = document.querySelector( 'nav' );
+		if( nav ) {
+			var elements = document.querySelectorAll('h3 > a');
+			var links = [];
+			for( var i = 0, imax = elements.length; i < imax; ++i ) {
+				var element = elements[ i ];
+				links.push( '<ul><a href="'+element.hash+'">'+element.parentNode.innerText.trim()+'</a></ul>' );
+			}
+			nav.innerHTML = links.join('\n');
+		}
+	}());
+	</script>
     {% if site.google_analytics %}
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
