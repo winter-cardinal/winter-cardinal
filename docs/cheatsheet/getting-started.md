@@ -6,7 +6,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.winter-cardinal:winter-cardinal:latest.release'
+	compile 'com.github.winter-cardinal:winter-cardinal:latest.release'
 }
 ```
 
@@ -73,6 +73,6 @@ Please find a `MyController` clone at `window.myController`.
 console.log( myController.field.get() ); // Prints 64
 
 myController.hello( 'John' ).then(( result ) => {
-    console.log( result ); // Prints 'Hello, John'
+	console.log( result ); // Prints 'Hello, John'
 });
 ```
