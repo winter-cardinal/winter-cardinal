@@ -3,10 +3,10 @@ plugins {
 	id 'java'
 	id 'maven-publish'
 	id 'signing'
-    id 'org.ajoberstar.git-publish' version '2.0.0'
-    id 'net.researchgate.release' version '2.6.0'
-    id 'de.marcphilipp.nexus-publish' version '0.3.0'
-    id 'io.codearte.nexus-staging' version '0.21.0'
+	id 'org.ajoberstar.git-publish' version '2.0.0'
+	id 'net.researchgate.release' version '2.6.0'
+	id 'de.marcphilipp.nexus-publish' version '0.3.0'
+	id 'io.codearte.nexus-staging' version '0.21.0'
 	id 'net.minecrell.licenser' version '0.4.1'
 }
 
@@ -24,7 +24,7 @@ repositories {
 
 // JAR
 jar {
-    manifest {
+	manifest {
 		attributes( 'Implementation-Title': archivesBaseName )
 		attributes( 'Automatic-Module-Name': 'wcardinal' )
 		attributes( 'Implementation-Version': version )
@@ -62,12 +62,12 @@ artifacts {
 
 // PUBLISHING
 publishing {
-    publications {
-        mavenJava( MavenPublication ) {
-            pom {
-                name = 'Winter Cardinal'
-                description = 'A library for real-time web applications build on top of the Spring framework'
-                packaging = 'jar'
+	publications {
+		mavenJava( MavenPublication ) {
+			pom {
+				name = 'Winter Cardinal'
+				description = 'A library for real-time web applications build on top of the Spring framework'
+				packaging = 'jar'
 				url = 'https://github.com/winter-cardinal/winter-cardinal'
 
 				scm {
@@ -90,12 +90,12 @@ publishing {
 						email = project.findProperty('ossrhUsername') ?: ''
 					}
 				}
-            }
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-        }
-    }
+			}
+			from components.java
+			artifact sourcesJar
+			artifact javadocJar
+		}
+	}
 }
 
 signing {
@@ -120,14 +120,14 @@ nexusStaging {
 
 //
 gitPublish {
-    repoUri = 'git@github.com:winter-cardinal/winter-cardinal.git'
-    branch = 'gh-pages'
+	repoUri = 'git@github.com:winter-cardinal/winter-cardinal.git'
+	branch = 'gh-pages'
 
-    contents {
-        from "${file('build/docs/html5')}"
-    }
+	contents {
+		from "${file('build/docs/html5')}"
+	}
 
-    commitMessage = "Update GitHub pages"
+	commitMessage = "Update GitHub pages"
 }
 
 // DEPENDENCIES
