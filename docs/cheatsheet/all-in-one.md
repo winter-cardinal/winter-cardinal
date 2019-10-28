@@ -2,165 +2,165 @@
 
 # Table of contents
 
-* Getting started
-	* Step 1: Add compile dependency
-	* Step 2: Create a controller class
-	* Step 3: Load scripts
-	* Step 4: Load a controller script
-	* Step 5: Run and check with browsers
-* Controller
-	* Controller basics
-	* Controller inheritance
-	* Controller URL
-	* Controller name
-	* Controller-scoped service
-	* Controller locales
-	* Controller parameters
-	* Controller attributes
-	* Controller creation/destruction handling
-	* Controller post-creation handling
-	* Network protocols
-	* Network reconnection
-	* Keep alive
-	* Title separators
-	* Title separators (I18N)
-* Field
-	* Accessing fields from JavaScript
-	* Detecting field changes (JavaScript)
-	* Detecting field changes (Java)
-	* Read-only fields
-	* Non-null fields
-	* Uninitialized fields
-	* Freeing fields when a synchronization is finished
-	* Constants
-	* Controlling field synchronization timing (JavaScript)
-	* Controlling field synchronization timing (Java)
-* Method
-	* Calling methods from JavaScript
-	* Adjusting method timeout (JavaScript)
-	* Adjusting method timeout (Java)
-	* Method exception handling
-* Task
-	* Introduction
-	* Task basics
-	* Aborting a task
-	* Failing a task
-	* Retrieving task arguments
-	* Retrieving a task result
-	* Retrieving a reason why failed
-	* Check whether a task is finished
-	* Check whether a task is finished successfully
-	* Check whether a task is finished unsuccessfully
-	* Task exception handling
-* Event
-	* Trigger events (server to browser)
-	* Trigger events (server to server)
-	* Retrieving returned values of event handlers (server to browser)
-* Component
-	* Introduction
-	* Component basics
-	* Retrieving parent (JavaScript)
-	* Retrieving parent (Java)
-	* Component lifecycle handling
-	* Creating components dynamically (JavaScript)
-	* Creating components dynamically (Java)
-	* Creating components dynamically with parameters (JavaScript)
-	* Creating components dynamically with parameters (Java)
-	* Destroying dynamic components (JavaScript)
-	* Destroying dynamic components (Java)
-	* Sharing components among browsers
-	* Shared component lifecycle handling
-* Page
-	* Introduction
-	* Page basics
-	* Showing/hiding pages (JavaScript)
-	* Showing/hiding pages (Java)
-	* Retrieving active page (JavaScript)
-	* Retrieving active page (Java)
-	* Checking whether a page is shown/hidden (JavaScript)
-	* Checking whether a page is shown/hidden (Java)
-	* Retrieving parent (JavaScript)
-	* Retrieving parent (Java)
-	* Primary page
-	* No primary page
-	* Detecting page change (JavaScript)
-	* Detecting page change (Java)
-	* Page lifecycle handling
-	* Page name in title
-	* Page name in title (I18N)
-	* Creating pages dynamically (JavaScript)
-	* Creating pages dynamically (Java)
-	* Creating pages dynamically with parameters (JavaScript)
-	* Creating pages dynamically with parameters (Java)
-	* Destroying dynamic pages (JavaScript)
-	* Destroying dynamic pages (Java)
-* Popup
-	* Introduction
-	* Popup basics
-	* Showing/hiding popups (JavaScript)
-	* Showing/hiding popups (Java)
-	* Checking whether a popup is shown/hidden (JavaScript)
-	* Checking whether a popup is shown/hidden (Java)
-	* Retrieving parent (JavaScript)
-	* Retrieving parent (Java)
-	* Primary popup
-	* Detecting popup visibility change (JavaScript)
-	* Detecting popup visibility change (Java)
-	* Popup lifecycle handling
-	* Popup name in title
-	* Popup name in title (I18N)
-	* Creating popups dynamically (JavaScript)
-	* Creating popups dynamically (Java)
-	* Creating popups dynamically with parameters (JavaScript)
-	* Creating popups dynamically with parameters (Java)
-	* Destroying dynamic popups (JavaScript)
-	* Destroying dynamic popups (Java)
-* Local controller
-	* Introduction
-	* Local controller basics
-	* Non-null local controller field
-	* Uninitialized local controller field
-	* Local controller fields with default values
-	* @Callable methods
-	* Asynchronous @Callable methods
-	* Failing @Callable methods
-	* @Task methods
-	* Asynchronous @Task methods
-	* Failing @Task methods
-* Threading
-	* Introduction
-	* Locking controller
-	* Periodic method calls
-	* Periodic method calls with parameters
-	* Periodic executions of runnables
-	* Canceling periodic calls from the outside
-	* Canceling periodic calls from the inside
-	* One-time method calls with a delay
-	* One-time method calls with a delay and parameters
-	* One-time execution of runnables with a delay
-	* One-time execution of callables with a delay
-	* Canceling one-time method calls
-	* One-time method calls without a delay
-	* One-time method calls without a delay and parameters
-	* Canceling all concurrent requests
-	* Enabling WebWorker
-* Logging
-	* Logging (JavaScript)
-	* Logging (Java)
-	* Log level (JavaScript)
-	* Log level (Java)
-* I18N
-	* I18N (JavaScript)
-	* I18N (Java)
-* Security
-	* Switching controllers based on roles
-	* Switching controllers by custom logics
-	* Retrieving user principal
-	* Retrieving remote address
-	* Retrieving HttpServletRequest
-	* Retrieving HttpServletRequest and customizing controller attributes
-* Configuration
-	* Boot-time configuration
+* [Getting started](#getting-started)
+	* [Step 1: Add compile dependency](#step-1-add-compile-dependency)
+	* [Step 2: Create a controller class](#step-2-create-a-controller-class)
+	* [Step 3: Load scripts](#step-3-load-scripts)
+	* [Step 4: Load a controller script](#step-4-load-a-controller-script)
+	* [Step 5: Run and check with browsers](#step-5-run-and-check-with-browsers)
+* [Controller](#controller)
+	* [Controller basics](#controller-basics)
+	* [Controller inheritance](#controller-inheritance)
+	* [Controller URL](#controller-url)
+	* [Controller name](#controller-name)
+	* [Controller-scoped service](#controllerscoped-service)
+	* [Controller locales](#controller-locales)
+	* [Controller parameters](#controller-parameters)
+	* [Controller attributes](#controller-attributes)
+	* [Controller creation/destruction handling](#controller-creationdestruction-handling)
+	* [Controller post-creation handling](#controller-postcreation-handling)
+	* [Network protocols](#network-protocols)
+	* [Network reconnection](#network-reconnection)
+	* [Keep alive](#keep-alive)
+	* [Title separators](#title-separators)
+	* [Title separators (I18N)](#title-separators-i18n)
+* [Field](#field)
+	* [Accessing fields from JavaScript](#accessing-fields-from-javascript)
+	* [Detecting field changes (JavaScript)](#detecting-field-changes-javascript)
+	* [Detecting field changes (Java)](#detecting-field-changes-java)
+	* [Read-only fields](#readonly-fields)
+	* [Non-null fields](#nonnull-fields)
+	* [Uninitialized fields](#uninitialized-fields)
+	* [Freeing fields when a synchronization is finished](#freeing-fields-when-a-synchronization-is-finished)
+	* [Constants](#constants)
+	* [Controlling field synchronization timing (JavaScript)](#controlling-field-synchronization-timing-javascript)
+	* [Controlling field synchronization timing (Java)](#controlling-field-synchronization-timing-java)
+* [Method](#method)
+	* [Calling methods from JavaScript](#calling-methods-from-javascript)
+	* [Adjusting method timeout (JavaScript)](#adjusting-method-timeout-javascript)
+	* [Adjusting method timeout (Java)](#adjusting-method-timeout-java)
+	* [Method exception handling](#method-exception-handling)
+* [Task](#task)
+	* [Introduction](#introduction)
+	* [Task basics](#task-basics)
+	* [Aborting a task](#aborting-a-task)
+	* [Failing a task](#failing-a-task)
+	* [Retrieving task arguments](#retrieving-task-arguments)
+	* [Retrieving a task result](#retrieving-a-task-result)
+	* [Retrieving a reason why failed](#retrieving-a-reason-why-failed)
+	* [Check whether a task is finished](#check-whether-a-task-is-finished)
+	* [Check whether a task is finished successfully](#check-whether-a-task-is-finished-successfully)
+	* [Check whether a task is finished unsuccessfully](#check-whether-a-task-is-finished-unsuccessfully)
+	* [Task exception handling](#task-exception-handling)
+* [Event](#event)
+	* [Trigger events (server to browser)](#trigger-events-server-to-browser)
+	* [Trigger events (server to server)](#trigger-events-server-to-server)
+	* [Retrieving returned values of event handlers (server to browser)](#retrieving-returned-values-of-event-handlers-server-to-browser)
+* [Component](#component)
+	* [Introduction](#introduction)
+	* [Component basics](#component-basics)
+	* [Retrieving parent (JavaScript)](#retrieving-parent-javascript)
+	* [Retrieving parent (Java)](#retrieving-parent-java)
+	* [Component lifecycle handling](#component-lifecycle-handling)
+	* [Creating components dynamically (JavaScript)](#creating-components-dynamically-javascript)
+	* [Creating components dynamically (Java)](#creating-components-dynamically-java)
+	* [Creating components dynamically with parameters (JavaScript)](#creating-components-dynamically-with-parameters-javascript)
+	* [Creating components dynamically with parameters (Java)](#creating-components-dynamically-with-parameters-java)
+	* [Destroying dynamic components (JavaScript)](#destroying-dynamic-components-javascript)
+	* [Destroying dynamic components (Java)](#destroying-dynamic-components-java)
+	* [Sharing components among browsers](#sharing-components-among-browsers)
+	* [Shared component lifecycle handling](#shared-component-lifecycle-handling)
+* [Page](#page)
+	* [Introduction](#introduction)
+	* [Page basics](#page-basics)
+	* [Showing/hiding pages (JavaScript)](#showinghiding-pages-javascript)
+	* [Showing/hiding pages (Java)](#showinghiding-pages-java)
+	* [Retrieving active page (JavaScript)](#retrieving-active-page-javascript)
+	* [Retrieving active page (Java)](#retrieving-active-page-java)
+	* [Checking whether a page is shown/hidden (JavaScript)](#checking-whether-a-page-is-shownhidden-javascript)
+	* [Checking whether a page is shown/hidden (Java)](#checking-whether-a-page-is-shownhidden-java)
+	* [Retrieving parent (JavaScript)](#retrieving-parent-javascript)
+	* [Retrieving parent (Java)](#retrieving-parent-java)
+	* [Primary page](#primary-page)
+	* [No primary page](#no-primary-page)
+	* [Detecting page change (JavaScript)](#detecting-page-change-javascript)
+	* [Detecting page change (Java)](#detecting-page-change-java)
+	* [Page lifecycle handling](#page-lifecycle-handling)
+	* [Page name in title](#page-name-in-title)
+	* [Page name in title (I18N)](#page-name-in-title-i18n)
+	* [Creating pages dynamically (JavaScript)](#creating-pages-dynamically-javascript)
+	* [Creating pages dynamically (Java)](#creating-pages-dynamically-java)
+	* [Creating pages dynamically with parameters (JavaScript)](#creating-pages-dynamically-with-parameters-javascript)
+	* [Creating pages dynamically with parameters (Java)](#creating-pages-dynamically-with-parameters-java)
+	* [Destroying dynamic pages (JavaScript)](#destroying-dynamic-pages-javascript)
+	* [Destroying dynamic pages (Java)](#destroying-dynamic-pages-java)
+* [Popup](#popup)
+	* [Introduction](#introduction)
+	* [Popup basics](#popup-basics)
+	* [Showing/hiding popups (JavaScript)](#showinghiding-popups-javascript)
+	* [Showing/hiding popups (Java)](#showinghiding-popups-java)
+	* [Checking whether a popup is shown/hidden (JavaScript)](#checking-whether-a-popup-is-shownhidden-javascript)
+	* [Checking whether a popup is shown/hidden (Java)](#checking-whether-a-popup-is-shownhidden-java)
+	* [Retrieving parent (JavaScript)](#retrieving-parent-javascript)
+	* [Retrieving parent (Java)](#retrieving-parent-java)
+	* [Primary popup](#primary-popup)
+	* [Detecting popup visibility change (JavaScript)](#detecting-popup-visibility-change-javascript)
+	* [Detecting popup visibility change (Java)](#detecting-popup-visibility-change-java)
+	* [Popup lifecycle handling](#popup-lifecycle-handling)
+	* [Popup name in title](#popup-name-in-title)
+	* [Popup name in title (I18N)](#popup-name-in-title-i18n)
+	* [Creating popups dynamically (JavaScript)](#creating-popups-dynamically-javascript)
+	* [Creating popups dynamically (Java)](#creating-popups-dynamically-java)
+	* [Creating popups dynamically with parameters (JavaScript)](#creating-popups-dynamically-with-parameters-javascript)
+	* [Creating popups dynamically with parameters (Java)](#creating-popups-dynamically-with-parameters-java)
+	* [Destroying dynamic popups (JavaScript)](#destroying-dynamic-popups-javascript)
+	* [Destroying dynamic popups (Java)](#destroying-dynamic-popups-java)
+* [Local controller](#local-controller)
+	* [Introduction](#introduction)
+	* [Local controller basics](#local-controller-basics)
+	* [Non-null local controller field](#nonnull-local-controller-field)
+	* [Uninitialized local controller field](#uninitialized-local-controller-field)
+	* [Local controller fields with default values](#local-controller-fields-with-default-values)
+	* [@Callable methods](#callable-methods)
+	* [Asynchronous @Callable methods](#asynchronous-callable-methods)
+	* [Failing @Callable methods](#failing-callable-methods)
+	* [@Task methods](#task-methods)
+	* [Asynchronous @Task methods](#asynchronous-task-methods)
+	* [Failing @Task methods](#failing-task-methods)
+* [Threading](#threading)
+	* [Introduction](#introduction)
+	* [Locking controller](#locking-controller)
+	* [Periodic method calls](#periodic-method-calls)
+	* [Periodic method calls with parameters](#periodic-method-calls-with-parameters)
+	* [Periodic executions of runnables](#periodic-executions-of-runnables)
+	* [Canceling periodic calls from the outside](#canceling-periodic-calls-from-the-outside)
+	* [Canceling periodic calls from the inside](#canceling-periodic-calls-from-the-inside)
+	* [One-time method calls with a delay](#onetime-method-calls-with-a-delay)
+	* [One-time method calls with a delay and parameters](#onetime-method-calls-with-a-delay-and-parameters)
+	* [One-time execution of runnables with a delay](#onetime-execution-of-runnables-with-a-delay)
+	* [One-time execution of callables with a delay](#onetime-execution-of-callables-with-a-delay)
+	* [Canceling one-time method calls](#canceling-onetime-method-calls)
+	* [One-time method calls without a delay](#onetime-method-calls-without-a-delay)
+	* [One-time method calls without a delay and parameters](#onetime-method-calls-without-a-delay-and-parameters)
+	* [Canceling all concurrent requests](#canceling-all-concurrent-requests)
+	* [Enabling WebWorker](#enabling-webworker)
+* [Logging](#logging)
+	* [Logging (JavaScript)](#logging-javascript)
+	* [Logging (Java)](#logging-java)
+	* [Log level (JavaScript)](#log-level-javascript)
+	* [Log level (Java)](#log-level-java)
+* [I18N](#i18n)
+	* [I18N (JavaScript)](#i18n-javascript)
+	* [I18N (Java)](#i18n-java)
+* [Security](#security)
+	* [Switching controllers based on roles](#switching-controllers-based-on-roles)
+	* [Switching controllers by custom logics](#switching-controllers-by-custom-logics)
+	* [Retrieving user principal](#retrieving-user-principal)
+	* [Retrieving remote address](#retrieving-remote-address)
+	* [Retrieving HttpServletRequest](#retrieving-httpservletrequest)
+	* [Retrieving HttpServletRequest and customizing controller attributes](#retrieving-httpservletrequest-and-customizing-controller-attributes)
+* [Configuration](#configuration)
+	* [Boot-time configuration](#boottime-configuration)
 
 ## Getting started
 

@@ -237,12 +237,10 @@ task compileCheatsheet {
 			it.trim().startsWith( "##" )
 		}
 		.collect{
-			println it;
-			if( it.startsWith( "###" ) ) {
-				return "\t*" + it.substring( 3 );
-			} else {
-				return "*" + it.substring( 2 );
-			}
+			boolean isSubSection = it.startsWith( "###" );
+			String trimmed = it.substring( isSubSection ? 3 : 2 ).trim();
+			String anchor = trimmed.toLowerCase().replaceAll( "[^a-zA-Z0-9 ]", "" ).replaceAll( " +", "-" );
+			return (isSubSection ? "\t" : "") + "* [" + trimmed + "](#" + anchor + ")";
 		}
 		.join( '\n' ) + '\n\n';
 		(new File( destination )).text = header + toc + contents;
