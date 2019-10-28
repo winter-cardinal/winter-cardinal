@@ -3,7 +3,6 @@ plugins {
 	id 'java'
 	id 'maven-publish'
 	id 'signing'
-	id 'org.ajoberstar.git-publish' version '2.0.0'
 	id 'net.researchgate.release' version '2.6.0'
 	id 'de.marcphilipp.nexus-publish' version '0.3.0'
 	id 'io.codearte.nexus-staging' version '0.21.0'
@@ -118,18 +117,6 @@ nexusStaging {
 	password = project.findProperty('ossrhPassword') ?: ''
 }
 
-//
-gitPublish {
-	repoUri = 'git@github.com:winter-cardinal/winter-cardinal.git'
-	branch = 'gh-pages'
-
-	contents {
-		from "${file('build/docs/html5')}"
-	}
-
-	commitMessage = "Update GitHub pages"
-}
-
 // DEPENDENCIES
 dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-websocket:2.0.5.RELEASE'
@@ -183,38 +170,6 @@ task cleanJavaScript {
 }
 clean.dependsOn cleanJavaScript
 
-// TYPEDOC
-String TYPE_DOC_DIR = 'src/test/resources/static/doc';
-task generateTypeDoc( type: Exec ){
-	inputs.files( 'package.json' )
-	inputs.files( 'typedoc.json' )
-	inputs.files( 'tsconfig.json' )
-	inputs.files( 'README.md' )
-	inputs.files( fileTree(
-		dir: 'src/main/typescript',
-		exclude: '*.js*'
-	))
-
-	outputs.dir( TYPE_DOC_DIR )
-
-	commandLine(
-		(isWindows() ? [ 'cmd', '/c' ] : []) +
-		[
-			'npx', 'typedoc',
-			'--options', 'typedoc.json',
-			'--out', TYPE_DOC_DIR,
-			'--disableOutputCheck'
-		]
-	)
-}
-task cleanTypeDoc {
-	doLast {
-		delete TYPE_DOC_DIR
-	}
-}
-generateTypeDoc.dependsOn cleanTypeDoc
-clean.dependsOn cleanTypeDoc
-
 // License
 license {
 	tasks {
@@ -239,4 +194,14 @@ license {
 	exclude '**/javascript/**'
 	exclude '**/pixi.js'
 	exclude '**/pixi.min.js'
+}
+
+// Java API document
+task compileJavaApiDocument( type: Copy, dependsOn: javadoc ) {
+	doFirst {
+		delete './docs/api/java'
+	}
+
+	from "$buildDir/docs/javadoc"
+	into './docs/api/java'
 }

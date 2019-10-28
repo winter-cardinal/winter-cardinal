@@ -18,6 +18,7 @@
 		"build": "rm dist -rf && rm src/main/javascript -rf && rm src/main/resources/META-INF/resources/webjars -rf && tsc && rollup -c",
 		"build:ts": "tsc",
 		"build:rollup": "rollup -c",
+		"build:api": "typedoc --options typedoc.json --out docs/api/js --disableOutputCheck",
 		"watch:ts": "tsc -w",
 		"watch:rollup": "rollup -c -w"
 	},

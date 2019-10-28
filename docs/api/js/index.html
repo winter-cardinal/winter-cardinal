@@ -1,0 +1,300 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Winter Cardinal</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Winter Cardinal</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> Winter Cardinal</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#about" id="about" style="color: inherit; text-decoration: none;">
+					<h3>About</h3>
+				</a>
+				<p>Winter Cardinal is a library for real-time web applications build on top of the Spring framework.
+					It is designed for making single-page applications stable against unintended network/server failures.
+					The controller class and its fields defined on a server will be synchronized with clones on browsers in real time.
+				Also enables us to call methods defined on the controller class from browsers.</p>
+				<pre><code class="language-java"><span class="hljs-comment">// Java</span>
+<span class="hljs-keyword">import</span> org.wcardinal.controller.annotation.Controller;
+<span class="hljs-keyword">import</span> org.wcardinal.controller.annotation.Callable;
+
+<span class="hljs-meta">@Controller</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyController</span> </span>{
+    <span class="hljs-meta">@Autowired</span>
+    SLong field;
+
+    <span class="hljs-meta">@Callable</span>
+    <span class="hljs-function">String <span class="hljs-title">hello</span><span class="hljs-params">( String name )</span></span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Hello, "</span>+name;
+    }
+}</code></pre>
+				<pre><code class="language-html"><span class="hljs-comment">&lt;!-- HTML --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./my-controller"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+myController.field.get();      <span class="hljs-comment">// Gets a field value</span>
+myController.field.set( <span class="hljs-number">128</span> ); <span class="hljs-comment">// Changes a field value</span>
+
+<span class="hljs-comment">// Calls `hello( String )` method</span>
+myController.hello( <span class="hljs-string">'John'</span> ).then(<span class="hljs-function">(<span class="hljs-params"> result </span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log( result ); <span class="hljs-comment">// Prints 'Hello, John'</span>
+});
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+				<a href="#installing" id="installing" style="color: inherit; text-decoration: none;">
+					<h3>Installing</h3>
+				</a>
+				<a href="#gradle" id="gradle" style="color: inherit; text-decoration: none;">
+					<h4>Gradle</h4>
+				</a>
+				<pre><code class="language-groovy">dependencies {
+    compile <span class="hljs-string">'com.github.winter-cardinal:winter-cardinal:latest.release'</span>
+}</code></pre>
+				<p>Client-side libraries are packed in this JAR as a WebJars.
+					Please find the <code>wcardinal.min.js</code> in the directory <code>META-INF/resources/webjars/wcardinal/${version}/</code>.
+				WebJars can be loaded from browsers as follows:</p>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"webjars/wcardinal/wcardinal.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+				<p>Please note that the <code>${version}</code> part is omitted.</p>
+				<a href="#npm" id="npm" style="color: inherit; text-decoration: none;">
+					<h4>NPM</h4>
+				</a>
+				<p>The client-side libraries are also available as a NPM package.</p>
+				<pre><code class="language-shell">npm i @wcardinal/wcardinal</code></pre>
+				<p>Please note that the NPM package has no default exports.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> wcardinal <span class="hljs-keyword">from</span> <span class="hljs-string">'@wcardinal/wcardinal'</span>;</code></pre>
+				<a href="#cdn-or-prebuild-files" id="cdn-or-prebuild-files" style="color: inherit; text-decoration: none;">
+					<h4>CDN or prebuild files</h4>
+				</a>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://cdn.jsdelivr.net/npm/@wcardinal/wcardinal/dist/wcardinal.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./my-controller"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+				<p>All the classes are in <code>window.wcardinal</code> in this case.
+				Note that the <code>wcardinal.min.js</code> must be loaded before loading your controller as shown above.</p>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h3>Documentation</h3>
+				</a>
+				<ul>
+					<li><a href="https://winter-cardinal.github.io/winter-cardinal/api/">API document</a></li>
+					<li>[]</li>
+				</ul>
+				<a href="#browser-support" id="browser-support" style="color: inherit; text-decoration: none;">
+					<h3>Browser support</h3>
+				</a>
+				<p>Supports the latest version of Chrome, Firefox, Edge and Safari. IE9 and later are supported on Windows.</p>
+				<a href="#how-to-build" id="how-to-build" style="color: inherit; text-decoration: none;">
+					<h3>How to build</h3>
+				</a>
+				<a href="#js-for-release" id="js-for-release" style="color: inherit; text-decoration: none;">
+					<h4>JS for release</h4>
+				</a>
+				<pre><code class="language-shell">npm run build</code></pre>
+				<a href="#js-for-development" id="js-for-development" style="color: inherit; text-decoration: none;">
+					<h4>JS for development</h4>
+				</a>
+				<pre><code class="language-shell">npm run watch:ts</code></pre>
+				<p>and then in an another terminal</p>
+				<pre><code class="language-shell">npm run watch:rollup</code></pre>
+				<a href="#js-api-document" id="js-api-document" style="color: inherit; text-decoration: none;">
+					<h4>JS API document</h4>
+				</a>
+				<pre><code class="language-shell">npm run build:api</code></pre>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h3>License</h3>
+				</a>
+				<p>Apache License Version 2.0</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/controller.html">controller</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/controller_data.html">controller/data</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/event.html">event</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/exception.html">exception</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/io.html">io</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/server.html">server</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/util.html">util</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/util_dom.html">util/dom</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/util_lang.html">util/lang</a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/controller_data_internal.html">controller/data/internal</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/controller_internal.html">controller/internal</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/controller_internal_info.html">controller/internal/info</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/event_internal.html">event/internal</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/exception_internal.html">exception/internal</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/server_internal.html">server/internal</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/util_internal.html">util/internal</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/util_lang_internal.html">util/lang/internal</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

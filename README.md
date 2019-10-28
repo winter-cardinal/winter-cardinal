@@ -70,9 +70,61 @@ Please note that the NPM package has no default exports.
 import * as wcardinal from '@wcardinal/wcardinal';
 ```
 
+#### CDN
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@wcardinal/wcardinal/dist/wcardinal.min.js"></script>
+<script src="./my-controller"></script>
+```
+
+All the classes are in `window.wcardinal` in this case.
+Note that the `wcardinal.min.js` must be loaded before loading your controller as shown above.
+
+### Documentation
+
+* API document
+	* [Java](https://winter-cardinal.github.io/winter-cardinal/api/java/)
+	* [JS](https://winter-cardinal.github.io/winter-cardinal/api/js/)
+
 ### Browser support
 
-Supports the latest version of Chrome, Firefox, Edge and Safari. IE9 and later are supported on Windows.
+Supports the latest version of Chrome, Firefox, Edge and Safari.
+IE9 and later are supported on Windows.
+
+### How to build
+
+The following commands are for building Winter Cardinal itself.
+For most users, you do not need to do this.
+
+#### JS for release
+
+```shell
+npm run build
+```
+
+#### JS for development
+
+```shell
+npm run watch:ts
+```
+
+and then in an another terminal
+
+```shell
+npm run watch:rollup
+```
+
+#### Java API document
+
+```shell
+./gradlew compileJavaApiDocument
+```
+
+#### JS API document
+
+```shell
+npm run build:api
+```
 
 ### License
 
