@@ -6,7 +6,7 @@
 wcardinal.util.logger.info( "Information" );
 ```
 
-See [wcardinal.util.Logger](../api/js/classes/util.logger.html).
+Please refer to [wcardinal.util.Logger](../api/js/classes/util.logger.html).
 
 ### Logging (Java)
 
@@ -26,7 +26,7 @@ class MyController {
 }
 ```
 
-See [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html).
+Please refer to [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html) for details.
 
 ### Log level (JavaScript)
 
@@ -34,7 +34,7 @@ See [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/curren
 wcardinal.util.logger.setLevel( 'DEBUG' );
 ```
 
-See [wcardinal.util.Logger](../api/js/classes/util.logger.html).
+Please refer to [wcardinal.util.Logger](../api/js/classes/util.logger.html).
 
 ### Log level (Java)
 
@@ -46,4 +46,4 @@ logging.level.package.path=DEBUG
 
 Replace the `package.path` part in the above example with the path of the package that you want to change.
 
-See [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html).
+Please refer to [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html) for details.

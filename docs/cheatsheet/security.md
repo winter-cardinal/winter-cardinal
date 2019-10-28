@@ -96,7 +96,7 @@ class MyController {
 }
 ```
 
-See [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
+Please refer to [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
 
 ### Retrieving remote address
 
@@ -142,7 +142,7 @@ class MyController {
 }
 ```
 
-See [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
+Please refer to [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
 
 ### Retrieving HttpServletRequest
 
@@ -161,8 +161,8 @@ class MyController {
 }
 ```
 
-Please note that the `onRequest(HttpServletRequest)` is a static method.
-See [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).
+Note that the `onRequest(HttpServletRequest)` is a static method.
+Please refer to [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).
 
 ### Retrieving HttpServletRequest and customizing controller attributes
 
@@ -180,5 +180,5 @@ class MyController extends AbstractController {
 }
 ```
 
-Please note that the `onRequest(HttpServletRequest)` is a static method.
-See [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).
+Note that the `onRequest(HttpServletRequest)` is a static method.
+Please refer to [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).

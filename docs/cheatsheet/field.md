@@ -26,9 +26,9 @@ Please note that browsers can see the fields of types in the package `controller
 ```java
 class MyController{
 	@Autowired
-	SLong visible;　// Visible from JavaScript
+	SLong visible;	// Visible from JavaScript
 
-	Long invisible; // Invisible from JavaScript
+	Long invisible;	// Invisible from JavaScript
 }
 ```
 
@@ -82,7 +82,7 @@ class Series {
 }
 ```
 
-See [Jackson document](http://wiki.fasterxml.com/JacksonHome) for details.
+Please refer to [Jackson document](http://wiki.fasterxml.com/JacksonHome) for details.
 
 The key type of `SMap<T>`、`SNavigableMap<T>`, `SObjectNode` is `String`.
 This limitation comes from the JavaScript's `Object` and the JSON specifications.
@@ -438,10 +438,10 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.MyEnum.ENUM0 );		// Prints "ENUM0"
-console.log( myController.STATIC_CONSTANT );	// Prints 1
-console.log( myController.CONSTANT );			// Prints 2
-console.log( myController.NON_FINAL_CONSTANT );	// Prints 3
+console.log( myController.MyEnum.ENUM0 );       // Prints "ENUM0"
+console.log( myController.STATIC_CONSTANT );    // Prints 1
+console.log( myController.CONSTANT );           // Prints 2
+console.log( myController.NON_FINAL_CONSTANT ); // Prints 3
 ```
 
 For non-static constants, values at the time all the locked `@OnCreate` method invocations are finished are sent to browsers.

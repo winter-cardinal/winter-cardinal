@@ -306,7 +306,7 @@ class MyController {
 <script src="my-controller-url"></script>
 ```
 
-See the [org.wcardinal.controller.annotation.Controller](../api/java/org/wcardinal/controller/annotation/Controller.html) of the JavaDoc.
+Please refer to [org.wcardinal.controller.annotation.Controller](../api/java/org/wcardinal/controller/annotation/Controller.html).
 
 ### Controller name
 
@@ -423,7 +423,7 @@ class MyController {
 }
 ```
 
-See the [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html) of the JavaDoc.
+Please refer to [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
 
 ### Controller attributes
 
@@ -607,9 +607,9 @@ Please note that browsers can see the fields of types in the package `controller
 ```java
 class MyController{
 	@Autowired
-	SLong visible;　// Visible from JavaScript
+	SLong visible;	// Visible from JavaScript
 
-	Long invisible; // Invisible from JavaScript
+	Long invisible;	// Invisible from JavaScript
 }
 ```
 
@@ -663,7 +663,7 @@ class Series {
 }
 ```
 
-See [Jackson document](http://wiki.fasterxml.com/JacksonHome) for details.
+Please refer to [Jackson document](http://wiki.fasterxml.com/JacksonHome) for details.
 
 The key type of `SMap<T>`、`SNavigableMap<T>`, `SObjectNode` is `String`.
 This limitation comes from the JavaScript's `Object` and the JSON specifications.
@@ -1019,10 +1019,10 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.MyEnum.ENUM0 );		// Prints "ENUM0"
-console.log( myController.STATIC_CONSTANT );	// Prints 1
-console.log( myController.CONSTANT );			// Prints 2
-console.log( myController.NON_FINAL_CONSTANT );	// Prints 3
+console.log( myController.MyEnum.ENUM0 );       // Prints "ENUM0"
+console.log( myController.STATIC_CONSTANT );    // Prints 1
+console.log( myController.CONSTANT );           // Prints 2
+console.log( myController.NON_FINAL_CONSTANT ); // Prints 3
 ```
 
 For non-static constants, values at the time all the locked `@OnCreate` method invocations are finished are sent to browsers.
@@ -4425,7 +4425,7 @@ The `wcardinal.worker.min.js` utilizes the WebWorker if available while the `wca
 wcardinal.util.logger.info( "Information" );
 ```
 
-See [wcardinal.util.Logger](../api/js/classes/util.logger.html).
+Please refer to [wcardinal.util.Logger](../api/js/classes/util.logger.html).
 
 ### Logging (Java)
 
@@ -4445,7 +4445,7 @@ class MyController {
 }
 ```
 
-See [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html).
+Please refer to [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html) for details.
 
 ### Log level (JavaScript)
 
@@ -4453,7 +4453,7 @@ See [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/curren
 wcardinal.util.logger.setLevel( 'DEBUG' );
 ```
 
-See [wcardinal.util.Logger](../api/js/classes/util.logger.html).
+Please refer to [wcardinal.util.Logger](../api/js/classes/util.logger.html).
 
 ### Log level (Java)
 
@@ -4465,7 +4465,7 @@ logging.level.package.path=DEBUG
 
 Replace the `package.path` part in the above example with the path of the package that you want to change.
 
-See [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html).
+Please refer to [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html) for details.
 
 ## I18N
 
@@ -4678,7 +4678,7 @@ class MyController {
 }
 ```
 
-See [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
+Please refer to [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
 
 ### Retrieving remote address
 
@@ -4724,7 +4724,7 @@ class MyController {
 }
 ```
 
-See [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
+Please refer to [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
 
 ### Retrieving HttpServletRequest
 
@@ -4743,8 +4743,8 @@ class MyController {
 }
 ```
 
-Please note that the `onRequest(HttpServletRequest)` is a static method.
-See [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).
+Note that the `onRequest(HttpServletRequest)` is a static method.
+Please refer to [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).
 
 ### Retrieving HttpServletRequest and customizing controller attributes
 
@@ -4762,8 +4762,8 @@ class MyController extends AbstractController {
 }
 ```
 
-Please note that the `onRequest(HttpServletRequest)` is a static method.
-See [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).
+Note that the `onRequest(HttpServletRequest)` is a static method.
+Please refer to [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).
 
 ## Configuration
 
@@ -4771,7 +4771,7 @@ See [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/co
 
 The following configurations are configurable in the same way as Spring Boot.
 For instance, `wcardinal.message.binary.size.max=1000000` in your `application.properties` sets the maximum size of binary messages to 1MB.
-See [Spring Boot: External config](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config) for details.
+Please refer to [Spring Boot: External config](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config) for details.
 
 * `wcardinal.message.binary.size.max=500000`
 
@@ -4816,7 +4816,7 @@ See [Spring Boot: External config](http://docs.spring.io/spring-boot/docs/curren
 * `wcardinal.controller.variable.embedding.encoding=REPLACE`
 
   Encoding of embedding controller fields.
-  See the `wcardinal.configuration.ControllerVariableEncoding` of the JavaDoc.
+  Please refer to [org.wcardinal.configuration.ControllerVariableEncoding](../api/java/org/wcardinal/configuration/ControllerVariableEncoding.html).
 
 * `wcardinal.io.shared=false`
 
@@ -4874,4 +4874,4 @@ public class MyConfigurer implements WCardinalConfigurer {
 }
 ```
 
-See the `wcardinal.configuration.WCardinalConfiguration` of the JavaDoc.
+Please refer to [org.wcardinal.configuration.WCardinalConfiguration](../api/java/org/wcardinal/configuration/WCardinalConfiguration.html).

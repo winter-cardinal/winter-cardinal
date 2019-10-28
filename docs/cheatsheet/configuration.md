@@ -4,7 +4,7 @@
 
 The following configurations are configurable in the same way as Spring Boot.
 For instance, `wcardinal.message.binary.size.max=1000000` in your `application.properties` sets the maximum size of binary messages to 1MB.
-See [Spring Boot: External config](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config) for details.
+Please refer to [Spring Boot: External config](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config) for details.
 
 * `wcardinal.message.binary.size.max=500000`
 
@@ -49,7 +49,7 @@ See [Spring Boot: External config](http://docs.spring.io/spring-boot/docs/curren
 * `wcardinal.controller.variable.embedding.encoding=REPLACE`
 
   Encoding of embedding controller fields.
-  See the `wcardinal.configuration.ControllerVariableEncoding` of the JavaDoc.
+  Please refer to [org.wcardinal.configuration.ControllerVariableEncoding](../api/java/org/wcardinal/configuration/ControllerVariableEncoding.html).
 
 * `wcardinal.io.shared=false`
 
@@ -107,4 +107,4 @@ public class MyConfigurer implements WCardinalConfigurer {
 }
 ```
 
-See the `wcardinal.configuration.WCardinalConfiguration` of the JavaDoc.
+Please refer to [org.wcardinal.configuration.WCardinalConfiguration](../api/java/org/wcardinal/configuration/WCardinalConfiguration.html).

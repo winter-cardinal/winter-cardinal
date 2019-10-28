@@ -61,7 +61,7 @@ class MyController {
 <script src="my-controller-url"></script>
 ```
 
-See the [org.wcardinal.controller.annotation.Controller](../api/java/org/wcardinal/controller/annotation/Controller.html) of the JavaDoc.
+Please refer to [org.wcardinal.controller.annotation.Controller](../api/java/org/wcardinal/controller/annotation/Controller.html).
 
 ### Controller name
 
@@ -178,7 +178,7 @@ class MyController {
 }
 ```
 
-See the [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html) of the JavaDoc.
+Please refer to [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
 
 ### Controller attributes
 
