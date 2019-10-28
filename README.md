@@ -85,6 +85,22 @@ Note that the `wcardinal.min.js` must be loaded before loading your controller a
 * API document
 	* [Java](https://winter-cardinal.github.io/winter-cardinal/api/java/)
 	* [JS](https://winter-cardinal.github.io/winter-cardinal/api/js/)
+* Cheatsheet
+	* [Getting Started](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/getting-started.html)
+	* [Controller](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/controller.html)
+	* [Field](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/field.html)
+	* [Method](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/method.html)
+	* [Task](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/task.html)
+	* [Event](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/event.html)
+	* [Component](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/component.html)
+	* [Page](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/page.html)
+	* [Popup](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/popup.html)
+	* [Local controller](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/local-controller.html)
+	* [Threading](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/threading.html)
+	* [Logging](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/logging.html)
+	* [I18N](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/i18n.html)
+	* [Security](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/security.html)
+	* [Configuration](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/configuration.html)
 
 ### Browser support
 
