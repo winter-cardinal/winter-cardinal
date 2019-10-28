@@ -1,6 +1,6 @@
 # Cheatsheet
 
-# Table of contents
+## Table of contents
 
 * [Getting started](#getting-started)
 	* [Step 1: Add compile dependency](#step-1-add-compile-dependency)
@@ -13,12 +13,12 @@
 	* [Controller inheritance](#controller-inheritance)
 	* [Controller URL](#controller-url)
 	* [Controller name](#controller-name)
-	* [Controller-scoped service](#controllerscoped-service)
+	* [Controller-scoped service](#controller-scoped-service)
 	* [Controller locales](#controller-locales)
 	* [Controller parameters](#controller-parameters)
 	* [Controller attributes](#controller-attributes)
 	* [Controller creation/destruction handling](#controller-creationdestruction-handling)
-	* [Controller post-creation handling](#controller-postcreation-handling)
+	* [Controller post-creation handling](#controller-post-creation-handling)
 	* [Network protocols](#network-protocols)
 	* [Network reconnection](#network-reconnection)
 	* [Keep alive](#keep-alive)
@@ -28,8 +28,8 @@
 	* [Accessing fields from JavaScript](#accessing-fields-from-javascript)
 	* [Detecting field changes (JavaScript)](#detecting-field-changes-javascript)
 	* [Detecting field changes (Java)](#detecting-field-changes-java)
-	* [Read-only fields](#readonly-fields)
-	* [Non-null fields](#nonnull-fields)
+	* [Read-only fields](#read-only-fields)
+	* [Non-null fields](#non-null-fields)
 	* [Uninitialized fields](#uninitialized-fields)
 	* [Freeing fields when a synchronization is finished](#freeing-fields-when-a-synchronization-is-finished)
 	* [Constants](#constants)
@@ -118,7 +118,7 @@
 * [Local controller](#local-controller)
 	* [Introduction](#introduction)
 	* [Local controller basics](#local-controller-basics)
-	* [Non-null local controller field](#nonnull-local-controller-field)
+	* [Non-null local controller field](#non-null-local-controller-field)
 	* [Uninitialized local controller field](#uninitialized-local-controller-field)
 	* [Local controller fields with default values](#local-controller-fields-with-default-values)
 	* [@Callable methods](#callable-methods)
@@ -135,13 +135,13 @@
 	* [Periodic executions of runnables](#periodic-executions-of-runnables)
 	* [Canceling periodic calls from the outside](#canceling-periodic-calls-from-the-outside)
 	* [Canceling periodic calls from the inside](#canceling-periodic-calls-from-the-inside)
-	* [One-time method calls with a delay](#onetime-method-calls-with-a-delay)
-	* [One-time method calls with a delay and parameters](#onetime-method-calls-with-a-delay-and-parameters)
-	* [One-time execution of runnables with a delay](#onetime-execution-of-runnables-with-a-delay)
-	* [One-time execution of callables with a delay](#onetime-execution-of-callables-with-a-delay)
-	* [Canceling one-time method calls](#canceling-onetime-method-calls)
-	* [One-time method calls without a delay](#onetime-method-calls-without-a-delay)
-	* [One-time method calls without a delay and parameters](#onetime-method-calls-without-a-delay-and-parameters)
+	* [One-time method calls with a delay](#one-time-method-calls-with-a-delay)
+	* [One-time method calls with a delay and parameters](#one-time-method-calls-with-a-delay-and-parameters)
+	* [One-time execution of runnables with a delay](#one-time-execution-of-runnables-with-a-delay)
+	* [One-time execution of callables with a delay](#one-time-execution-of-callables-with-a-delay)
+	* [Canceling one-time method calls](#canceling-one-time-method-calls)
+	* [One-time method calls without a delay](#one-time-method-calls-without-a-delay)
+	* [One-time method calls without a delay and parameters](#one-time-method-calls-without-a-delay-and-parameters)
 	* [Canceling all concurrent requests](#canceling-all-concurrent-requests)
 	* [Enabling WebWorker](#enabling-webworker)
 * [Logging](#logging)
@@ -160,7 +160,7 @@
 	* [Retrieving HttpServletRequest](#retrieving-httpservletrequest)
 	* [Retrieving HttpServletRequest and customizing controller attributes](#retrieving-httpservletrequest-and-customizing-controller-attributes)
 * [Configuration](#configuration)
-	* [Boot-time configuration](#boottime-configuration)
+	* [Boot-time configuration](#boot-time-configuration)
 
 ## Getting started
 
