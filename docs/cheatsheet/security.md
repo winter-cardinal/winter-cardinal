@@ -1,3 +1,5 @@
+## Security
+
 ### Switching controllers based on roles
 
 ```java
@@ -30,19 +32,19 @@ import org.wcardinal.controller.annotation.OnCheck;
 // For users with an "ADMIN" role
 @Controller( name="MyController" )
 class MyControllerForAdmin {
-    @OnCheck
-    static boolean check( HttpServletRequest request ){
-        return request.isUserInRole( "ADMIN" );
-    }
+	@OnCheck
+	static boolean check( HttpServletRequest request ){
+		return request.isUserInRole( "ADMIN" );
+	}
 }
 
 // For others
 @Controller( name="MyController" )
 class MyControllerForOthers {
-    @OnCheck
-    static boolean check( HttpServletRequest request ){
-        return true;
-    }
+	@OnCheck
+	static boolean check( HttpServletRequest request ){
+		return true;
+	}
 }
 ```
 
@@ -61,12 +63,12 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 class MyController extends AbstractController {
-    final Logger logger = LoggerFactory.getLogger(MyController.class);
+	final Logger logger = LoggerFactory.getLogger(MyController.class);
 
-    @OnCreate
-    void init(){
-        logger.info( getPrincipal() );
-    }
+	@OnCreate
+	void init(){
+		logger.info( getPrincipal() );
+	}
 }
 ```
 
@@ -82,15 +84,15 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 class MyController {
-    final Logger logger = LoggerFactory.getLogger(MyController.class);
+	final Logger logger = LoggerFactory.getLogger(MyController.class);
 
-    @Autowired
-    ControllerFacade facade;
+	@Autowired
+	ControllerFacade facade;
 
-    @OnCreate
-    void init(){
-        logger.info( facade.getPrincipal() );
-    }
+	@OnCreate
+	void init(){
+		logger.info( facade.getPrincipal() );
+	}
 }
 ```
 
@@ -107,12 +109,12 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 class MyController extends AbstractController {
-    final Logger logger = LoggerFactory.getLogger(MyController.class);
+	final Logger logger = LoggerFactory.getLogger(MyController.class);
 
-    @OnCreate
-    void init(){
-        logger.info( getRemoteAddress() );
-    }
+	@OnCreate
+	void init(){
+		logger.info( getRemoteAddress() );
+	}
 }
 ```
 
@@ -128,15 +130,15 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 class MyController {
-    final Logger logger = LoggerFactory.getLogger(MyController.class);
+	final Logger logger = LoggerFactory.getLogger(MyController.class);
 
-    @Autowired
-    ControllerFacade facade;
+	@Autowired
+	ControllerFacade facade;
 
-    @OnCreate
-    void init(){
-        logger.info( facade.getRemoteAddress() );
-    }
+	@OnCreate
+	void init(){
+		logger.info( facade.getRemoteAddress() );
+	}
 }
 ```
 
@@ -152,10 +154,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 class MyController {
-    @OnRequest
-    static void onRequest( HttpServletRequest request ){
-        // DO SOMETHING
-    }
+	@OnRequest
+	static void onRequest( HttpServletRequest request ){
+		// DO SOMETHING
+	}
 }
 ```
 
@@ -167,14 +169,14 @@ See [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/co
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnRequest
-    static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
-        attributes.put( "name", "John" );
-    }
+	@OnRequest
+	static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
+		attributes.put( "name", "John" );
+	}
 
-    void something(){
-        System.out.println( getAttributes().get( "name" ) ); // Prints "John"
-    }
+	void something(){
+		System.out.println( getAttributes().get( "name" ) ); // Prints "John"
+	}
 }
 ```
 

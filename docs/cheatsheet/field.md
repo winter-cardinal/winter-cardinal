@@ -1,10 +1,12 @@
+## Field
+
 ### Accessing fields from JavaScript
 
 ```java
 @Controller
 class MyController{
-    @Autowired
-    SLong time;
+	@Autowired
+	SLong time;
 }
 ```
 
@@ -23,10 +25,10 @@ Please note that browsers can see the fields of types in the package `controller
 
 ```java
 class MyController{
-    @Autowired
-    SLong visible;　// Visible from JavaScript
+	@Autowired
+	SLong visible;　// Visible from JavaScript
 
-    Long invisible; // Invisible from JavaScript
+	Long invisible; // Invisible from JavaScript
 }
 ```
 
@@ -34,8 +36,8 @@ class MyController{
 
 ```java
 class MyController{
-    @Autowired
-    SList<Long> times;
+	@Autowired
+	SList<Long> times;
 }
 ```
 
@@ -53,12 +55,12 @@ Any classes can be used as a generic parameter:
 
 ```java
 class Series {
-    ...
+	...
 }
 
 class MyController{
-    @Autowired
-    SList<Series> series;
+	@Autowired
+	SList<Series> series;
 }
 ```
 However, the `Series` class must be serializable to/deserializable from JSON by Jackson.
@@ -66,17 +68,17 @@ Namely, all fields in the `Series` class must have getter/setter methods:
 
 ```java
 class Series {
-    private long time;
+	private long time;
 
-    long getTime(){ return time; }
-    void setTime( long time ) { this.time = time; }
+	long getTime(){ return time; }
+	void setTime( long time ) { this.time = time; }
 }
 ```
 or be public:
 
 ```java
 class Series {
-    public long time;
+	public long time;
 }
 ```
 
@@ -90,15 +92,15 @@ This limitation comes from the JavaScript's `Object` and the JSON specifications
 ```java
 @Controller
 class MyController{
-    @Autowired
-    SLong time;
+	@Autowired
+	SLong time;
 }
 ```
 
 ```javascript
 myController.time.on('value', ( e, newValue, oldValue ) => {
-    // Variables `newValue` and `oldValue` are
-    // a new value and an old value of the `time`, respectively.
+	// Variables `newValue` and `oldValue` are
+	// a new value and an old value of the `time`, respectively.
 });
 
 // Or use `value` event on the controller to detect the change of the `time` field.
@@ -176,15 +178,15 @@ The arguments of the `value` event varies by types:
 ```java
 @Controller
 class MyController {
-    @Autowired
-    SLong time;
+	@Autowired
+	SLong time;
 
-    @OnChange( "time" )
-    void handler( Long newValue, Long oldValue ){
-        // Called immediately after the `time` field changes.
-        // Arguments `newValue` and `oldValue` are a new value and
-        // an old value of the `time` field, respectively.
-    }
+	@OnChange( "time" )
+	void handler( Long newValue, Long oldValue ){
+		// Called immediately after the `time` field changes.
+		// Arguments `newValue` and `oldValue` are a new value and
+		// an old value of the `time` field, respectively.
+	}
 }
 ```
 
@@ -254,19 +256,19 @@ import org.wcardinal.controller.data.SLong;
 
 @Component
 class MyComponent {
-    @Autowired
-    SLong time;
+	@Autowired
+	SLong time;
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyComponent component;
+	@Autowired
+	MyComponent component;
 
-    @OnChange( "component.time" )
-    void handler( Long newValue, Long oldValue ){
-        // Called immediately after the `component.time` field changes.
-    }
+	@OnChange( "component.time" )
+	void handler( Long newValue, Long oldValue ){
+		// Called immediately after the `component.time` field changes.
+	}
 }
 ```
 
@@ -282,11 +284,11 @@ import org.wcardinal.controller.data.SLong;
 
 @Controller
 class MyController {
-    // This read-only field `time` is not modifiable for browsers
-    // while servers can change this field.
-    @Autowired
-    @ReadOnly
-    SLong time;
+	// This read-only field `time` is not modifiable for browsers
+	// while servers can change this field.
+	@Autowired
+	@ReadOnly
+	SLong time;
 }
 ```
 
@@ -306,11 +308,11 @@ import org.wcardinal.controller.data.SLong;
 
 @Controller
 class MyController {
-    // This `time` field is initialized to 0 because it is a non-null field.
-    // Setting this `time` to null raises `wcardinal.exception.NullArgumentException`.
-    @Autowired
-    @NonNull
-    SLong time;
+	// This `time` field is initialized to 0 because it is a non-null field.
+	// Setting this `time` to null raises `wcardinal.exception.NullArgumentException`.
+	@Autowired
+	@NonNull
+	SLong time;
 }
 ```
 
@@ -355,29 +357,29 @@ import org.wcardinal.controller.data.SLong;
 
 @Controller
 class MyController extends AbstractController {
-    // This `time` field will *not* be initialized to null
-    // because it is annotated with @Uninitialized.
-    @Autowired
-    @Uninitialized
-    SLong time;
+	// This `time` field will *not* be initialized to null
+	// because it is annotated with @Uninitialized.
+	@Autowired
+	@Uninitialized
+	SLong time;
 
-    @OnCreate
-    void onCreate(){
-        timeout( "init", 1000 );
-    }
+	@OnCreate
+	void onCreate(){
+		timeout( "init", 1000 );
 
-    @OnTime
-    void init(){
-        // Time-consuming tasks
 
-        time.set( 42 );
-    }
+	@OnTime
+	void init(){
+		// Time-consuming tasks
+
+		time.set( 42 );
+	}
 }
 ```
 
 ```javascript
 myController.time.on( 'value', ( e, time ) => {
-    console.log( time ); // Prints 42 after 1 second.
+	console.log( time ); // Prints 42 after 1 second.
 });
 ```
 
@@ -396,14 +398,14 @@ import org.wcardinal.controller.data.SLong;
 
 @Controller
 class MyController {
-    // This `time` field on a server side will be automatically set to null
-    // when the synchronization between a server and a browser is finished
-    // event if annotated with `@NonNull`.
-    //
-    // Please note that the `time` field on a browser side will *not* be set to null.
-    @Autowired
-    @Soft
-    SLong time;
+	// This `time` field on a server side will be automatically set to null
+	// when the synchronization between a server and a browser is finished
+	// event if annotated with `@NonNull`.
+	//
+	// Please note that the `time` field on a browser side will *not* be set to null.
+	@Autowired
+	@Soft
+	SLong time;
 }
 ```
 
@@ -411,27 +413,27 @@ class MyController {
 
 ```java
 enum MyEnum {
-    ENUM0,
-    ENUM1,
-    ENUM2
+	ENUM0,
+	ENUM1,
+	ENUM2
 }
 
 @Controller
 @Constant(MyEnum.class)
 class MyController {
-    @Constant
-    static final int STATIC_CONSTANT = 1;
+	@Constant
+	static final int STATIC_CONSTANT = 1;
 
-    @Constant
-    final int CONSTANT = 2;
+	@Constant
+	final int CONSTANT = 2;
 
-    @Constant
-    int NON_FINAL_CONSTANT = 0;
+	@Constant
+	int NON_FINAL_CONSTANT = 0;
 
-    @OnCreate
-    void init(){
-        NON_FINAL_CONSTANT = 3;
-    }
+	@OnCreate
+	void init(){
+		NON_FINAL_CONSTANT = 3;
+	}
 }
 ```
 
@@ -448,18 +450,18 @@ Values after `@OnCreate` methods will not be sent to browsers:
 ```java
 @Controller
 class MyController extends AbstractController {
-    @Constant
-    int CONSTANT; // Initialized to 0.
+	@Constant
+	int CONSTANT; // Initialized to 0.
 
-    @OnCreate
-    void init(){
-        timeout( "init", 1000 );
-    }
+	@OnCreate
+	void init(){
+		timeout( "init", 1000 );
+	}
 
-    @OnTime
-    void init(){
-        CONSTANT = 1; // Browsers never see this value.
-    }
+	@OnTime
+	void init(){
+		CONSTANT = 1; // Browsers never see this value.
+	}
 }
 ```
 
@@ -476,26 +478,26 @@ import org.wcardinal.controller.data.SLong;
 
 @Controller
 class MyController {
-    @Autowired
-    SLong field0;
+	@Autowired
+	SLong field0;
 
-    @Autowired
-    SLong field1;
+	@Autowired
+	SLong field1;
 
-    @OnChange( "field0" )
-    void foo(){
-        System.out.println( field1.get() == 2 ); // Always prints true
-    }
+	@OnChange( "field0" )
+	void foo(){
+		System.out.println( field1.get() == 2 ); // Always prints true
+	}
 }
 ```
 
 ```javascript
 myController.lock();
 try {
-    myController.field0.set( 1 );
-    myController.field1.set( 2 );
+	myController.field0.set( 1 );
+	myController.field1.set( 2 );
 } finally {
-    myController.unlock();
+	myController.unlock();
 }
 ```
 
@@ -511,26 +513,26 @@ import org.wcardinal.controller.data.SLong;
 
 @Controller
 class MyController extends AbstractController {
-    @Autowired
-    SLong field0;
+	@Autowired
+	SLong field0;
 
-    @Autowired
-    SLong field1;
+	@Autowired
+	SLong field1;
 
-    void foo(){
-        try( Unlocker unlocker = lock() ) {
-            field0.set( 1 );
-            field1.set( 2 );
-        }
-    }
+	void foo(){
+		try( Unlocker unlocker = lock() ) {
+			field0.set( 1 );
+			field1.set( 2 );
+		}
+	}
 }
 ```
 
 ```javascript
 myController.field0.on( 'value', ( e, value ) => {
-    if( value === 1 ) {
-        console.log( myController.field1.get() === 2 ); // Always prints true
-    }
+	if( value === 1 ) {
+		console.log( myController.field1.get() === 2 ); // Always prints true
+	}
 });
 ```
 

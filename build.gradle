@@ -205,3 +205,46 @@ task compileJavaApiDocument( type: Copy, dependsOn: javadoc ) {
 	from "$buildDir/docs/javadoc"
 	into './docs/api/java'
 }
+
+// Cheatsheet
+task compileCheatsheet {
+	def sources = [
+		'docs/cheatsheet/getting-started.md',
+		'docs/cheatsheet/controller.md',
+		'docs/cheatsheet/field.md',
+		'docs/cheatsheet/method.md',
+		'docs/cheatsheet/task.md',
+		'docs/cheatsheet/event.md',
+		'docs/cheatsheet/component.md',
+		'docs/cheatsheet/page.md',
+		'docs/cheatsheet/popup.md',
+		'docs/cheatsheet/local-controller.md',
+		'docs/cheatsheet/threading.md',
+		'docs/cheatsheet/logging.md',
+		'docs/cheatsheet/i18n.md',
+		'docs/cheatsheet/security.md',
+		'docs/cheatsheet/configuration.md'
+	];
+	def destination = 'docs/cheatsheet/all-in-one.md';
+	inputs.files( sources )
+	outputs.file( description )
+
+	doLast {
+		String header = "# Cheatsheet\n\n";
+		String contents = files( sources ).collect{ it.getText() }.join( "\n" );
+		String toc = "# Table of contents\n\n" + contents.split( '\n' )
+		.findAll{
+			it.trim().startsWith( "##" )
+		}
+		.collect{
+			println it;
+			if( it.startsWith( "###" ) ) {
+				return "\t*" + it.substring( 3 );
+			} else {
+				return "*" + it.substring( 2 );
+			}
+		}
+		.join( '\n' ) + '\n\n';
+		(new File( destination )).text = header + toc + contents;
+	}
+}

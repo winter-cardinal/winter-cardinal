@@ -1,3 +1,5 @@
+## Page
+
 ### Introduction
 
 A page is a component with visibility control and browser history binding methods.
@@ -7,25 +9,25 @@ For instance, let's consider the case:
 ```java
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Component
 class MyComponent {
-    @Autowired
-    MyPage myPage3;
+	@Autowired
+	MyPage myPage3;
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage1;
+	@Autowired
+	MyPage myPage1;
 
-    @Autowired
-    MyPage myPage2;
+	@Autowired
+	MyPage myPage2;
 
-    @Autowired
-    MyComponent component;
+	@Autowired
+	MyComponent component;
 }
 ```
 
@@ -41,21 +43,21 @@ import org.wcardinal.controller.annotation.Page;
 
 @Page
 class MyPage1 {
-    ...
+	...
 }
 
 @Page
 class MyPage2 {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage1 myPage1;
+	@Autowired
+	MyPage1 myPage1;
 
-    @Autowired
-    MyPage2 myPage2;
+	@Autowired
+	MyPage2 myPage2;
 }
 ```
 
@@ -64,13 +66,13 @@ class MyController {
 ```java
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 }
 ```
 
@@ -86,21 +88,21 @@ import org.wcardinal.controller.AbstractPage;
 
 @Page
 class MyPage extends AbstractPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 
-    void showMyPage(){
-        myPage.show();
-    }
+	void showMyPage(){
+		myPage.show();
+	}
 
-    void hideMyPage(){
-        myPage.hide();
-    }
+	void hideMyPage(){
+		myPage.hide();
+	}
 }
 ```
 
@@ -111,30 +113,30 @@ import org.wcardinal.controller.PageFacade;
 
 @Page
 class MyPage {
-    @Autowired
-    PageFacade facade;
+	@Autowired
+	PageFacade facade;
 
-    public void show(){
-        return facade.show();
-    }
+	public void show(){
+		return facade.show();
+	}
 
-    public void hide(){
-        return facade.hide();
-    }
+	public void hide(){
+		return facade.hide();
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 
-    void showMyPage(){
-        myPage.show();
-    }
+	void showMyPage(){
+		myPage.show();
+	}
 
-    void hideMyPage(){
-        myPage.hide();
-    }
+	void hideMyPage(){
+		myPage.hide();
+	}
 }
 ```
 
@@ -145,13 +147,13 @@ import org.wcardinal.controller.AbstractController;
 
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController extends AbstractController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 }
 ```
 
@@ -166,17 +168,17 @@ import org.wcardinal.controller.AbstractController;
 
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController extends AbstractController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 
-    void foo(){
-        System.out.println( getActivePage() == myPage ); // Prints true
-    }
+	void foo(){
+		System.out.println( getActivePage() == myPage ); // Prints true
+	}
 }
 ```
 
@@ -185,13 +187,13 @@ class MyController extends AbstractController {
 ```java
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 }
 ```
 
@@ -207,18 +209,18 @@ import org.wcardinal.controller.AbstractPage;
 
 @Page
 class MyPage extends AbstractPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 
-    void foo(){
-        System.out.println( myPage.isShown() ); // Prints true
-        System.out.println( myPage.isHidden() ); // Prints false
-    }
+	void foo(){
+		System.out.println( myPage.isShown() ); // Prints true
+		System.out.println( myPage.isHidden() ); // Prints false
+	}
 }
 ```
 
@@ -227,13 +229,13 @@ class MyController {
 ```java
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 }
 ```
 
@@ -247,18 +249,18 @@ console.log( myController.myPage.getParent() === myController ); // Prints true
 ```java
 @Page
 class MyPage extends AbstractPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 
-    void foo(){
-        System.out.println( getParent() ); // Prints null
-        System.out.println( myPage.getParent() == this ); // Prints true
-    }
+	void foo(){
+		System.out.println( getParent() ); // Prints null
+		System.out.println( myPage.getParent() == this ); // Prints true
+	}
 }
 ```
 
@@ -267,23 +269,23 @@ or
 ```java
 @Page
 class MyPage {
-    @Autowired
-    PageFacade facade;
+	@Autowired
+	PageFacade facade;
 
-    Object getParent(){
-        return facade.getParent();
-    }
+	Object getParent(){
+		return facade.getParent();
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 
-    void foo(){
-        System.out.println( getParent() ); // Prints null
-        System.out.println( myPage.getParent() == this ); // Prints true
-    }
+	void foo(){
+		System.out.println( getParent() ); // Prints null
+		System.out.println( myPage.getParent() == this ); // Prints true
+	}
 }
 ```
 
@@ -292,17 +294,17 @@ class MyController {
 ```java
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage1; // Hidden by default
+	@Autowired
+	MyPage myPage1; // Hidden by default
 
-    @Autowired
-    @Primary
-    MyPage myPage2; // Shown by default
+	@Autowired
+	@Primary
+	MyPage myPage2; // Shown by default
 }
 ```
 
@@ -311,13 +313,13 @@ If the `@Primary` is missing, the first page in a class becomes a primary page.
 ```java
 @Controller
 class MyController {
-    // Shown by default because there is no `@Primary`
-    // and this is the first page in the `MyController`.
-    @Autowired
-    MyPage myPage1;
+	// Shown by default because there is no `@Primary`
+	// and this is the first page in the `MyController`.
+	@Autowired
+	MyPage myPage1;
 
-    @Autowired
-    MyPage myPage2; // Hidden by default
+	@Autowired
+	MyPage myPage2; // Hidden by default
 }
 ```
 
@@ -328,17 +330,17 @@ import org.wcardinal.controller.annotation.NoPrimaryPage;
 
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 @NoPrimaryPage
 class MyController {
-    @Autowired
-    MyPage myPage1; // Hidden by default
+	@Autowired
+	MyPage myPage1; // Hidden by default
 
-    @Autowired
-    MyPage myPage2; // Hidden by default
+	@Autowired
+	MyPage myPage2; // Hidden by default
 }
 ```
 
@@ -347,27 +349,27 @@ class MyController {
 ```java
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 }
 ```
 
 ```javascript
 myController.myPage.on( 'show', () => {
-    // Called when event handlers are set if `myPage` is shown or after `myPage` gets to be shown.
+	// Called when event handlers are set if `myPage` is shown or after `myPage` gets to be shown.
 });
 
 myController.myPage.on( 'hide', () => {
-    // Called when event handlers are set if `myPage` is hidden or after `myPage` gets to be hidden.
+	// Called when event handlers are set if `myPage` is hidden or after `myPage` gets to be hidden.
 });
 
 myController.on( 'page', ( e, newPageName, oldPageName ) => {
-    // Called when event handlers are set or when the active page of this controller is changed.
+	// Called when event handlers are set or when the active page of this controller is changed.
 });
 ```
 
@@ -376,44 +378,44 @@ myController.on( 'page', ( e, newPageName, oldPageName ) => {
 ```java
 @Page
 class MyPage {
-    @OnShow
-    void onShow(){
-        // Called after being shown.
-    }
+	@OnShow
+	void onShow(){
+		// Called after being shown.
+	}
 
-    @OnHide
-    void onHide(){
-        // Called after being hidden.
-    }
+	@OnHide
+	void onHide(){
+		// Called after being hidden.
+	}
 }
 ```
 
 or
 
-```
+```java
 @Page
 class MyPage {
-    ...
+	...
 }
 
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 
-    @OnShow( "myPage" )
-    void onShowMyPage(){
-        // Called after `myPage` gets to be shown.
-    }
+	@OnShow( "myPage" )
+	void onShowMyPage(){
+		// Called after `myPage` gets to be shown.
+	}
 
-    @OnHide( "equipmentPage" )
-    void onShowMyPage(){
-        // Called after `myPage` gets to be hidden.
-    }
+	@OnHide( "equipmentPage" )
+	void onShowMyPage(){
+		// Called after `myPage` gets to be hidden.
+	}
 
-    @OnChange( "page" )
-    void onChangePage( String newPageName, String oldPageName ){
-        // Called when the active page of this controller is changes.
-    }
+	@OnChange( "page" )
+	void onChangePage( String newPageName, String oldPageName ){
+		// Called when the active page of this controller is changes.
+	}
 }
 ```
 
@@ -426,15 +428,15 @@ import org.wcardinal.controller.annotation.OnDestroy;
 
 @Page
 class MyPage {
-    @OnCreate
-    void init(){
-        // Called after instantiated.
-    }
+	@OnCreate
+	void init(){
+		// Called after instantiated.
+	}
 
-    @OnDestroy
-    void destroy(){
-        // Called before getting destroyed.
-    }
+	@OnDestroy
+	void destroy(){
+		// Called before getting destroyed.
+	}
 }
 ```
 
@@ -446,13 +448,13 @@ import org.wcardinal.controller.annotation.DisplayName;
 @Page
 @DisplayName( "Page name in title" )
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 }
 ```
 
@@ -463,14 +465,14 @@ import org.wcardinal.controller.annotation.DisplayName;
 
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    @DisplayName( "Page name in title" )
-    MyPage myPage;
+	@Autowired
+	@DisplayName( "Page name in title" )
+	MyPage myPage;
 }
 ```
 
@@ -482,13 +484,13 @@ import org.wcardinal.controller.annotation.DisplayNameMessage;
 @Page
 @DisplayNameMessage( "my-page.name" )
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyPage myPage;
+	@Autowired
+	MyPage myPage;
 }
 ```
 
@@ -499,14 +501,14 @@ import org.wcardinal.controller.annotation.DisplayNameMessage;
 
 @Page
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    @DisplayNameMessage( "my-page.name" )
-    MyPage myPage;
+	@Autowired
+	@DisplayNameMessage( "my-page.name" )
+	MyPage myPage;
 }
 ```
 
@@ -523,26 +525,26 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.PageFactory;
 
 class MyPage {
-    @Autowired
-    SLong value;
+	@Autowired
+	SLong value;
 
-    @OnCreate
-    void onCreate() {
-        // Called when instantiated.
-        value.set( 128 );
-    }
+	@OnCreate
+	void onCreate() {
+		// Called when instantiated.
+		value.set( 128 );
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    PageFactory<MyPage> factory;
+	@Autowired
+	PageFactory<MyPage> factory;
 }
 ```
 
 ```javascript
 myController.factory.create().value.on( 'value', ( e, value ) => {
-    console.log( value ); // Prints 128
+	console.log( value ); // Prints 128
 });
 ```
 
@@ -553,35 +555,35 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.PageFactory;
 
 class MyPage {
-    @Autowired
-    SLong value;
+	@Autowired
+	SLong value;
 
-    @OnCreate
-    void onCreate() {
-        // Called when instantiated.
-        value.set( 128 );
-    }
+	@OnCreate
+	void onCreate() {
+		// Called when instantiated.
+		value.set( 128 );
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    PageFactory<MyPage> factory;
+	@Autowired
+	PageFactory<MyPage> factory;
 
-    @OnCreate
-    void onCreate() {
-        // Creates a `MyPage` instance.
-        factory.create();
-    }
+	@OnCreate
+	void onCreate() {
+		// Creates a `MyPage` instance.
+		factory.create();
+	}
 }
 ```
 
 ```javascript
 myController.factory.on( 'create', ( e, newInstance ) => {
-    // Called when a new instance is created.
-    newInstance.value.on( 'value', ( e, value ) => {
-        console.log( value ); // Prints 128
-    });
+	// Called when a new instance is created.
+	newInstance.value.on( 'value', ( e, value ) => {
+		console.log( value ); // Prints 128
+	});
 });
 ```
 
@@ -592,25 +594,25 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.PageFactory;
 
 class MyPage {
-    @Autowired
-    SLong value;
+	@Autowired
+	SLong value;
 
-    @OnCreate
-    void onCreate( int parameter ) {
-        value.set( parameter );
-    }
+	@OnCreate
+	void onCreate( int parameter ) {
+		value.set( parameter );
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    PageFactory<MyPage> factory;
+	@Autowired
+	PageFactory<MyPage> factory;
 }
 ```
 
 ```javascript
 myController.factory.create( 128 ).value.on( 'value', ( e, value ) => {
-    console.log( value ); // Prints 128
+	console.log( value ); // Prints 128
 });
 ```
 
@@ -621,25 +623,25 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.PageFactory;
 
 class MyPage {
-    @Autowired
-    SLong value;
+	@Autowired
+	SLong value;
 
-    @OnCreate
-    void onCreate( int parameter ) {
-        value.set( parameter );
-    }
+	@OnCreate
+	void onCreate( int parameter ) {
+		value.set( parameter );
+	}
 }
 
 @Controller
 class MyController extends AbstractController {
-    @Autowired
-    PageFactory<MyPage> factory;
+	@Autowired
+	PageFactory<MyPage> factory;
 
-    @OnCreate
-    void onCreate() {
-        // Creates a `MyPage` instance with an integer of 128.
-        factory.create( 128 );
-    }
+	@OnCreate
+	void onCreate() {
+		// Creates a `MyPage` instance with an integer of 128.
+		factory.create( 128 );
+	}
 }
 ```
 
@@ -650,13 +652,13 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.PageFactory;
 
 class MyPage {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    PageFactory<MyPage> factory;
+	@Autowired
+	PageFactory<MyPage> factory;
 }
 ```
 
@@ -672,34 +674,34 @@ import org.wcardinal.controller.PageFactory;
 import org.wcardinal.controller.AbstractPage;
 
 class MyPage extends AbstractPage {
-    @OnCreate
-    void onCreate() {
-        // Calls the `@OnTime` method after 10 seconds.
-        timeout( "destroy", 10000 );
-    }
+	@OnCreate
+	void onCreate() {
+		// Calls the `@OnTime` method after 10 seconds.
+		timeout( "destroy", 10000 );
+	}
 
-    @OnTime
-    void destroy() {
-        // Destroys itself.
-        getParentAsFactory().destroy( this );
-    }
+	@OnTime
+	void destroy() {
+		// Destroys itself.
+		getParentAsFactory().destroy( this );
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    PageFactory<MyPage> factory;
+	@Autowired
+	PageFactory<MyPage> factory;
 
-    @OnCreate
-    void onCreate() {
-        // Creates a `MyPage` instance.
-        factory.create();
-    }
+	@OnCreate
+	void onCreate() {
+		// Creates a `MyPage` instance.
+		factory.create();
+	}
 }
 ```
 
 ```javascript
 myController.factory.on( 'destroy', ( e, newInstance ) => {
-    // Called when instances are destroyed.
+	// Called when instances are destroyed.
 });
 ```

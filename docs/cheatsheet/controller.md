@@ -1,3 +1,5 @@
+## Controller
+
 ### Controller basics
 
 ```java
@@ -10,7 +12,7 @@ class MyController {
 ```html
 <script src="my-controller"></script>
 <script>
-    // `MyController` instance is available at `window.myController`.
+	// `MyController` instance is available at `window.myController`.
 	console.log( window.myController );
 </script>
 ```
@@ -21,10 +23,10 @@ Please note that the default URL is the kebab-case of the class name, `my-contro
 
 ```java
 class MySuperController {
-    @Callable
-    String hello( String name ) {
-        return "Hello, " + name;
-    }
+	@Callable
+	String hello( String name ) {
+		return "Hello, " + name;
+	}
 }
 
 @Controller
@@ -87,8 +89,8 @@ class MyControllerScopedService {
 
 @Controller
 class MyController {
-    @Autowired
-    MyControllerScopedService service;
+	@Autowired
+	MyControllerScopedService service;
 }
 ```
 
@@ -98,8 +100,8 @@ Thus, the `service` and `component.service` are the same instance of `MyControll
 ```java
 @Component
 class MyComponent {
-    @Autowired
-    MyControllerScopedService service;
+	@Autowired
+	MyControllerScopedService service;
 }
 
 @Controller
@@ -118,7 +120,7 @@ class MyController {
 @Controller
 class MyController extends AbstractController {
    void foo(){
-       System.out.println( getLocale() );
+	   System.out.println( getLocale() );
    }
 }
 ```
@@ -132,7 +134,7 @@ class MyController {
    ControllerFacade facade;
 
    void foo(){
-       System.out.println( facade.getLocale() );
+	   System.out.println( facade.getLocale() );
    }
 }
 ```
@@ -148,12 +150,12 @@ import org.wcardinal.controller.AbstractController;
 
 @Controller
 class MyController extends AbstractController {
-    final Log logger = LogFactory.getLog(MyController.class);
+	final Log logger = LogFactory.getLog(MyController.class);
 
-    @OnCreate
-    void init(){
-        logger.info( getParameter( "name" ) ); // Prints "John"
-    }
+	@OnCreate
+	void init(){
+		logger.info( getParameter( "name" ) ); // Prints "John"
+	}
 }
 ```
 
@@ -164,15 +166,15 @@ import org.wcardinal.controller.ControllerFacade;
 
 @Controller
 class MyController {
-    final Log logger = LogFactory.getLog(MyController.class);
+	final Log logger = LogFactory.getLog(MyController.class);
 
-    @Autowired
-    ControllerFacade facade;
+	@Autowired
+	ControllerFacade facade;
 
-    @OnCreate
-    void init(){
-        logger.info( facade.getParameter( "name" ) ); // Prints "John"
-    }
+	@OnCreate
+	void init(){
+		logger.info( facade.getParameter( "name" ) ); // Prints "John"
+	}
 }
 ```
 
@@ -183,14 +185,14 @@ See the [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/co
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnRequest
-    static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
-        attributes.put( "name", "John" );
-    }
+	@OnRequest
+	static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
+		attributes.put( "name", "John" );
+	}
 
-    void something(){
-        System.out.println( getAttributes().get( "name" ) ); // Prints "John"
-    }
+	void something(){
+		System.out.println( getAttributes().get( "name" ) ); // Prints "John"
+	}
 }
 ```
 
@@ -199,17 +201,17 @@ or
 ```java
 @Controller
 class MyController {
-    @Autowired
-    ControllerFacade facade;
+	@Autowired
+	ControllerFacade facade;
 
-    @OnRequest
-    static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
-        attributes.put( "name", "John" );
-    }
+	@OnRequest
+	static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
+		attributes.put( "name", "John" );
+	}
 
-    void something(){
-        System.out.println( facade.getAttributes().get( "name" ) ); // Prints "John"
-    }
+	void something(){
+		System.out.println( facade.getAttributes().get( "name" ) ); // Prints "John"
+	}
 }
 ```
 
@@ -222,15 +224,15 @@ import org.wcardinal.controller.annotation.OnDestroy;
 
 @Controller
 class MyController {
-    @OnCreate
-    void init(){
-        // Called after instantiated.
-    }
+	@OnCreate
+	void init(){
+		// Called after instantiated.
+	}
 
-    @OnDestroy
-    void destroy(){
-        // Called before getting destroyed.
-    }
+	@OnDestroy
+	void destroy(){
+		// Called before getting destroyed.
+	}
 }
 ```
 
@@ -248,10 +250,10 @@ import org.wcardinal.controller.annotation.OnPostCreate;
 
 @Controller
 class MyController {
-    @OnPostCreate
-    void init(){
-        // Called after @OnCreate methods.
-    }
+	@OnPostCreate
+	void init(){
+		// Called after @OnCreate methods.
+	}
 }
 ```
 
@@ -286,11 +288,11 @@ In the above settings, wcardinal trys to reconnect every 15 seconds, starting af
 
 ```java
 @Controller( keepAlive=@KeepAlive(
-    // Sets a HTTP session keep-alive interval to 240 seconds.
-    interval=240000,
+	// Sets a HTTP session keep-alive interval to 240 seconds.
+	interval=240000,
 
-    // Sets a ping interval to 15 seconds.
-    ping=15000
+	// Sets a ping interval to 15 seconds.
+	ping=15000
 ) )
 class MyController {
 

@@ -1,3 +1,5 @@
+## Component
+
 ### Introduction
 
 A component is for structurising a controller.
@@ -9,31 +11,31 @@ import org.wcardinal.controller.annotation.Controller;
 
 @Component
 class MyComponent {
-    @Autowired
-    SLong field;
+	@Autowired
+	SLong field;
 
-    @OnCreate
-    void init(){
-        field.set( 1 );
-    }
+	@OnCreate
+	void init(){
+		field.set( 1 );
+	}
 
-    @Callable
-    int callble(){
-        return 2;
-    }
+	@Callable
+	int callble(){
+		return 2;
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyComponent component;
+	@Autowired
+	MyComponent component;
 }
 ```
 
 ```javascript
 console.log( myController.component.field.get() ); // Prints 1
 myController.component.callable().then(( result ) => {
-    console.log( result ); // Prints 2
+	console.log( result ); // Prints 2
 });
 ```
 
@@ -45,22 +47,22 @@ import org.wcardinal.controller.annotation.Controller;
 
 @Component
 class MyComponent {
-    @Callable
-    String hello( String name ){
-        return "Hello, " + name;
-    }
+	@Callable
+	String hello( String name ){
+		return "Hello, " + name;
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyComponent component;
+	@Autowired
+	MyComponent component;
 }
 ```
 
 ```javascript
 myController.component.hello( 'John' ).then(( result ) => {
-    console.log( result ); // Prints "Hello, John"
+	console.log( result ); // Prints "Hello, John"
 });
 ```
 
@@ -69,13 +71,13 @@ myController.component.hello( 'John' ).then(( result ) => {
 ```java
 @Component
 class MyComponent {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyComponent myComponent;
+	@Autowired
+	MyComponent myComponent;
 }
 ```
 
@@ -89,18 +91,18 @@ console.log( myController.myComponent.getParent() === controller ); // Prints tr
 ```java
 @Component
 class MyComponent extends AbstractComponent {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyComponent myComponent;
+	@Autowired
+	MyComponent myComponent;
 
-    void foo(){
-        System.out.println( getParent() ); // Prints null
-        System.out.println( myComponent.getParent() == this ); // Prints true
-    }
+	void foo(){
+		System.out.println( getParent() ); // Prints null
+		System.out.println( myComponent.getParent() == this ); // Prints true
+	}
 }
 ```
 
@@ -109,23 +111,23 @@ or
 ```java
 @Component
 class MyComponent {
-    @Autowired
-    ComponentFacade facade;
+	@Autowired
+	ComponentFacade facade;
 
-    Object getParent(){
-        return facade.getParent();
-    }
+	Object getParent(){
+		return facade.getParent();
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyComponent myComponent;
+	@Autowired
+	MyComponent myComponent;
 
-    void foo(){
-        System.out.println( getParent() ); // Prints null
-        System.out.println( myComponent.getParent() == this ); // Prints true
-    }
+	void foo(){
+		System.out.println( getParent() ); // Prints null
+		System.out.println( myComponent.getParent() == this ); // Prints true
+	}
 }
 ```
 
@@ -138,15 +140,15 @@ import org.wcardinal.controller.annotation.OnDestroy;
 
 @Component
 class MyComponent {
-    @OnCreate
-    void init(){
-        // Called after instantiated.
-    }
+	@OnCreate
+	void init(){
+		// Called after instantiated.
+	}
 
-    @OnDestroy
-    void destroy(){
-        // Called before getting destroyed.
-    }
+	@OnDestroy
+	void destroy(){
+		// Called before getting destroyed.
+	}
 }
 ```
 
@@ -157,25 +159,25 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.ComponentFactory;
 
 class MyComponent {
-    @Autowired
-    SLong value;
+	@Autowired
+	SLong value;
 
-    @OnCreate
-    void onCreate() {
-        value.set( 128 );
-    }
+	@OnCreate
+	void onCreate() {
+		value.set( 128 );
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    ComponentFactory<MyComponent> factory;
+	@Autowired
+	ComponentFactory<MyComponent> factory;
 }
 ```
 
 ```javascript
 myController.factory.create().value.on( 'value', ( e, value ) => {
-    console.log( value ); // Prints 128
+	console.log( value ); // Prints 128
 });
 ```
 
@@ -186,34 +188,34 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.ComponentFactory;
 
 class MyComponent {
-    @Autowired
-    SLong value;
+	@Autowired
+	SLong value;
 
-    @OnCreate
-    void onCreate() {
-        value.set( 128 );
-    }
+	@OnCreate
+	void onCreate() {
+		value.set( 128 );
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    ComponentFactory<MyComponent> factory;
+	@Autowired
+	ComponentFactory<MyComponent> factory;
 
-    @OnCreate
-    void onCreate() {
-        // Creates a `MyComponent` instance.
-        factory.create();
-    }
+	@OnCreate
+	void onCreate() {
+		// Creates a `MyComponent` instance.
+		factory.create();
+	}
 }
 ```
 
 ```javascript
 myController.factory.on( 'create', ( e, newInstance ) => {
-    // Called when a new instance is created.
-    newInstance.value.on( 'value', ( e, value ) => {
-        console.log( value ); // Prints 128
-    });
+	// Called when a new instance is created.
+	newInstance.value.on( 'value', ( e, value ) => {
+		console.log( value ); // Prints 128
+	});
 });
 ```
 
@@ -224,25 +226,25 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.ComponentFactory;
 
 class MyComponent {
-    @Autowired
-    SLong value;
+	@Autowired
+	SLong value;
 
-    @OnCreate
-    void onCreate( int parameter ) {
-        value.set( parameter );
-    }
+	@OnCreate
+	void onCreate( int parameter ) {
+		value.set( parameter );
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    ComponentFactory<MyComponent> factory;
+	@Autowired
+	ComponentFactory<MyComponent> factory;
 }
 ```
 
 ```javascript
 myController.factory.create( 128 ).value.on( 'value', ( e, value ) => {
-    console.log( value ); // Prints 128
+	console.log( value ); // Prints 128
 });
 ```
 
@@ -253,25 +255,25 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.ComponentFactory;
 
 class MyComponent {
-    @Autowired
-    SLong value;
+	@Autowired
+	SLong value;
 
-    @OnCreate
-    void onCreate( int parameter ) {
-        value.set( parameter );
-    }
+	@OnCreate
+	void onCreate( int parameter ) {
+		value.set( parameter );
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    ComponentFactory<MyComponent> factory;
+	@Autowired
+	ComponentFactory<MyComponent> factory;
 
-    @OnCreate
-    void onCreate() {
-        // Creates a `MyComponent` instance with a integer of 128.
-        factory.create( 128 );
-    }
+	@OnCreate
+	void onCreate() {
+		// Creates a `MyComponent` instance with a integer of 128.
+		factory.create( 128 );
+	}
 }
 ```
 
@@ -282,13 +284,13 @@ import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.ComponentFactory;
 
 class MyComponent {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    ComponentFactory<MyComponent> factory;
+	@Autowired
+	ComponentFactory<MyComponent> factory;
 }
 ```
 
@@ -304,35 +306,35 @@ import org.wcardinal.controller.ComponentFactory;
 import org.wcardinal.controller.AbstractComponent;
 
 class MyComponent extends AbstractComponent {
-    @OnCreate
-    void onCreate() {
-        // Calls the `@OnTime` method after 10 seconds.
-        timeout( "done", 10000 );
-    }
+	@OnCreate
+	void onCreate() {
+		// Calls the `@OnTime` method after 10 seconds.
+		timeout( "done", 10000 );
+	}
 
-    @OnTime
-    void destroy() {
-        // Destroys itself.
-        getParentAsFactory().destroy( this );
-    }
+	@OnTime
+	void destroy() {
+		// Destroys itself.
+		getParentAsFactory().destroy( this );
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    ComponentFactory<MyComponent> factory;
+	@Autowired
+	ComponentFactory<MyComponent> factory;
 
-    @OnCreate
-    void onCreate() {
-        // Creates a `MyComponent` instance.
-        factory.create();
-    }
+	@OnCreate
+	void onCreate() {
+		// Creates a `MyComponent` instance.
+		factory.create();
+	}
 }
 ```
 
 ```javascript
 myController.factory.on( 'destroy', ( e, newInstance ) => {
-    // Called when instances are destroyed.
+	// Called when instances are destroyed.
 });
 ```
 
@@ -347,14 +349,14 @@ import org.wcardinal.controller.data.SLong;
 // because it's annotated with the `SharedComponent` annotation.
 @SharedComponent
 class MySharedComponent {
-    @Autowired
-    SLong time;
+	@Autowired
+	SLong time;
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MySharedComponent shared;
+	@Autowired
+	MySharedComponent shared;
 }
 ```
 
@@ -365,14 +367,14 @@ Please note that the `MySharedComponent` class is annotated with the `SharedComp
 ```java
 @SharedComponent
 class MySharedComponent {
-    @OnCreate
-    void init(){
-        // Called after instantiated.
-    }
+	@OnCreate
+	void init(){
+		// Called after instantiated.
+	}
 
-    @OnDestroy
-    void destroy(){
-        // Called before getting destroyed.
-    }
+	@OnDestroy
+	void destroy(){
+		// Called before getting destroyed.
+	}
 }
 ```

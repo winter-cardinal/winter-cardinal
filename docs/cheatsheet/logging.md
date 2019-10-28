@@ -1,3 +1,5 @@
+## Logging
+
 ### Logging (JavaScript)
 
 ```javascript
@@ -16,11 +18,11 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 class MyController {
-    final Logger logger = LoggerFactory.getLogger(MyController.class);
+	final Logger logger = LoggerFactory.getLogger(MyController.class);
 
-    public MyController(){
-        logger.info( "Information" );
-    }
+	public MyController(){
+		logger.info( "Information" );
+	}
 }
 ```
 

@@ -1,3 +1,5 @@
+## Task
+
 ### Introduction
 
 Let us think about an application which searches and displays alarms containing given words when a user pushes an search button.
@@ -10,16 +12,16 @@ class Alarm {
 
 @Controller
 class MyAlarmController {
-    @Callable
-    List<Alarm> find( String words ){
-        // Search and returns alarms containing `words`.
-    }
+	@Callable
+	List<Alarm> find( String words ){
+		// Search and returns alarms containing `words`.
+	}
 }
 ```
 
 ```javascript
 myAlarmController.find( ... ).then(( alarms ) => {
-    // Render the `alarms`.
+	// Render the `alarms`.
 });
 ```
 
@@ -32,11 +34,11 @@ This lock behavior of `@Callable` methods can be overridden by using `@Unlocked`
 ```java
 @Controller
 class MyAlarmController {
-    @Callable
-    @Unlocked
-    List<Alarm> find( String words ){
-        // Search and returns alarms containing `words`.
-    }
+	@Callable
+	@Unlocked
+	List<Alarm> find( String words ){
+		// Search and returns alarms containing `words`.
+	}
 }
 ```
 
@@ -57,15 +59,15 @@ To fix this issue, a version control on a browser side is required:
 let currentVersion = 0;
 
 const renderer = ( expectedVersion, alarms ) => {
-    if( expectedVersion == currentVersion ) {
-        // Render the `alarms`.
-    }
+	if( expectedVersion == currentVersion ) {
+		// Render the `alarms`.
+	}
 };
 
 const search = ( words ) => {
-    currentVersion += 1;
-    myAlarmController.find( words, currentVersion )
-    .then(renderer.bind( null, currntVersion ));
+	currentVersion += 1;
+	myAlarmController.find( words, currentVersion )
+	.then(renderer.bind( null, currntVersion ));
 };
 
 search( 'A' );
@@ -82,24 +84,24 @@ We may need to implement features:
 ```java
 @Controller
 class MyAlarmController{
-    long currentVersion;
+	long currentVersion;
 
-    synchronized void checkVersion( long expectedVersion ) throws IllegalStateException {
-        if( currentVersion != expectedVersion ) throw new IllegalStateException();
-    }
+	synchronized void checkVersion( long expectedVersion ) throws IllegalStateException {
+		if( currentVersion != expectedVersion ) throw new IllegalStateException();
+	}
 
-    synchronized void updateVersion( long version ) throws IllegalStateException {
-        if( version <= currentVersion ) throw new IllegalStateException();
-        currentVersion = version;
-    }
+	synchronized void updateVersion( long version ) throws IllegalStateException {
+		if( version <= currentVersion ) throw new IllegalStateException();
+		currentVersion = version;
+	}
 
-    @Callable
-    @Unlocked
-    List<Alarm> find( String words, long version ) throws IllegalStateException {
-        updateVersion( version );
-        // Searches and returns alarms
-        // if the `checkVersion( version )` does not throw an exception.
-    }
+	@Callable
+	@Unlocked
+	List<Alarm> find( String words, long version ) throws IllegalStateException {
+		updateVersion( version );
+		// Searches and returns alarms
+		// if the `checkVersion( version )` does not throw an exception.
+	}
 }
 ```
 
@@ -107,22 +109,22 @@ class MyAlarmController{
 let currentVersion = 0;
 
 const renderer = ( expectedVersion, alarms ) => {
-    if( expectedVersion == currentVersion ) {
-        // Render the `alarms`.
-    }
+	if( expectedVersion == currentVersion ) {
+		// Render the `alarms`.
+	}
 };
 
 const retry = ( expectedVersion, words, reason ) => {
-    if( expectedVersion == currentVersion && reason !== 'exception' ) {
-        search( words );
-    }
+	if( expectedVersion == currentVersion && reason !== 'exception' ) {
+		search( words );
+	}
 };
 
 const search = ( words ) => {
-    currentVersion += 1;
-    myAlarmController.find( words )
-    .then(renderer.bind( null, currntVersion ))
-    .catch(retry.bind( null, currentVersion, words ));
+	currentVersion += 1;
+	myAlarmController.find( words )
+	.then(renderer.bind( null, currntVersion ))
+	.catch(retry.bind( null, currentVersion, words ));
 };
 
 search( 'A' );
@@ -135,17 +137,17 @@ With `@Task`, the above codes can be simplified as follows:
 ```java
 @Controller
 class MyAlarmController extends AbstractController {
-    @Task
-    List<Alarm> find( String words ) {
-        // Searches and returns alarms
-        // if the `AbstractController#isCanceled()` returns false.
-    }
+	@Task
+	List<Alarm> find( String words ) {
+		// Searches and returns alarms
+		// if the `AbstractController#isCanceled()` returns false.
+	}
 }
 ```
 
 ```javascript
 myAlarmController.find.on( 'success', ( e, alarms ) => {
-    // Render the `alarms`.
+	// Render the `alarms`.
 };
 
 myAlarmController.find( 'A' );
@@ -158,11 +160,11 @@ This behavior can be changed by using `@Locked`:
 ```java
 @Controller
 class MyAlarmController extends AbstractController {
-    @Task
-    @Locked
-    List<Alarm> find( String words ) {
-        // Called with a lock.
-    }
+	@Task
+	@Locked
+	List<Alarm> find( String words ) {
+		// Called with a lock.
+	}
 }
 ```
 
@@ -174,21 +176,21 @@ import org.wcardinal.controller.annotation.Task;
 
 @Controller
 class MyController {
-    @Task
-    String hello( String name ) {
-    	return "Hello, " + name;
-    }
+	@Task
+	String hello( String name ) {
+		return "Hello, " + name;
+	}
 }
 ```
 
 ```javascript
 myController.hello
 .on( 'success', ( e, result ) => {
-    // Called when the task `hello` succeeds.
-    console.log( result ); // Prints 'Hello, John'
+	// Called when the task `hello` succeeds.
+	console.log( result ); // Prints 'Hello, John'
 })
 .on( 'fail', ( e, reason ) => {
-    // Called when the task `hello` fails.
+	// Called when the task `hello` fails.
 });
 
 controller.hello( 'John' );
@@ -206,17 +208,17 @@ import org.wcardinal.controller.annotation.Task;
 
 @Controller
 class MyController {
-    @Task
-    String hello( String name ) {
-    	throw new TaskAbortException( "fail-reason" );
-    }
+	@Task
+	String hello( String name ) {
+		throw new TaskAbortException( "fail-reason" );
+	}
 }
 ```
 
 ```javascript
 myController.hello
 .on( 'fail', ( e, reason ) => {
-    console.log( reason ); // Prints "fail-reason"
+	console.log( reason ); // Prints "fail-reason"
 });
 
 myController.hello( 'John' );
@@ -233,17 +235,17 @@ import org.wcardinal.controller.annotation.Task;
 
 @Controller
 class MyController {
-    @Task
-    TaskResult<String> hello( String name ) {
-    	return TaskResults.fail( "fail-reason" );
-    }
+	@Task
+	TaskResult<String> hello( String name ) {
+		return TaskResults.fail( "fail-reason" );
+	}
 }
 ```
 
 ```javascript
 myController.hello
 .on( 'fail', ( e, reason ) => {
-    console.log( reason ); // Prints "fail-reason"
+	console.log( reason ); // Prints "fail-reason"
 });
 
 myController.hello( 'John' );
@@ -265,17 +267,17 @@ import org.wcardinal.controller.annotation.Task;
 
 @Controller
 class MyController {
-    @Task
-    String hello( String name ) {
-    	return "Hello, " + name;
-    }
+	@Task
+	String hello( String name ) {
+		return "Hello, " + name;
+	}
 }
 ```
 
 ```javascript
 myController.hello
 .on( 'success', () => {
-    console.log( myController.hello.getResult() ); // Prints 'Hello, John'
+	console.log( myController.hello.getResult() ); // Prints 'Hello, John'
 });
 
 myController.hello( 'John' );
@@ -291,17 +293,17 @@ import org.wcardinal.controller.annotation.Task;
 
 @Controller
 class MyController {
-    @Task
-    TaskResult<String> hello( String name ) {
-    	return TaskResults.fail( "fail-reason" );
-    }
+	@Task
+	TaskResult<String> hello( String name ) {
+		return TaskResults.fail( "fail-reason" );
+	}
 }
 ```
 
 ```javascript
 myController.hello
 .on( 'fail', () => {
-    console.log( myController.hello.getReason() ); // Prints "fail-reason"
+	console.log( myController.hello.getReason() ); // Prints "fail-reason"
 });
 
 myController.hello( 'John' );
@@ -334,22 +336,22 @@ import org.wcardinal.controller.annotation.Task;
 
 @Controller
 class MyController {
-    @Task
-    String hello( String name ) {
-    	throw new RuntimeException();
-    }
+	@Task
+	String hello( String name ) {
+		throw new RuntimeException();
+	}
 
-    @TaskExceptionHandler
-    String handle( Exception e ) {
-    	return "fail-reason";
-    }
+	@TaskExceptionHandler
+	String handle( Exception e ) {
+		return "fail-reason";
+	}
 }
 ```
 
 ```javascript
 myController.hello
 .on( 'fail', ( e, reason ) => {
-    console.log( reason ); // Prints "fail-reason"
+	console.log( reason ); // Prints "fail-reason"
 });
 
 myController.hello( 'John' );
@@ -364,29 +366,29 @@ import org.wcardinal.controller.annotation.Task;
 
 @Controller
 class MyController {
-    @Task
-    String hello( String name ) {
-        throw new RuntimeException();
-    }
+	@Task
+	String hello( String name ) {
+		throw new RuntimeException();
+	}
 
-    @TaskExceptionHandler
-    String handle( Exception e ) {
-        // Never be called because the other one has the more specific signature.
-        return "fail-reason-a";
-    }
+	@TaskExceptionHandler
+	String handle( Exception e ) {
+		// Never be called because the other one has the more specific signature.
+		return "fail-reason-a";
+	}
 
-    @TaskExceptionHandler
-    String handle( RuntimeException e ) {
-        // Called because this is more specific.
-        return "fail-reason-b";
-    }
+	@TaskExceptionHandler
+	String handle( RuntimeException e ) {
+		// Called because this is more specific.
+		return "fail-reason-b";
+	}
 }
 ```
 
 ```javascript
 myController.hello
 .on( 'fail', ( e, reason ) => {
-    console.log( reason ); // Prints "fail-reason-b"
+	console.log( reason ); // Prints "fail-reason-b"
 });
 
 myController.hello( 'John' );
@@ -401,35 +403,35 @@ import org.wcardinal.controller.annotation.Task;
 
 @Component
 class MyComponent {
-    @Task
-    String hello( String name ) {
-        throw new RuntimeException();
-    }
+	@Task
+	String hello( String name ) {
+		throw new RuntimeException();
+	}
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MyComponent component;
+	@Autowired
+	MyComponent component;
 
-    @TaskExceptionHandler
-    String handle( Exception e ) {
-        // Never be called because the other one has the more specific signature.
-        return "fail-reason-a";
-    }
+	@TaskExceptionHandler
+	String handle( Exception e ) {
+		// Never be called because the other one has the more specific signature.
+		return "fail-reason-a";
+	}
 
-    @TaskExceptionHandler
-    String handle( RuntimeException e ) {
-        // Called because this is more specific.
-        return "fail-reason-b";
-    }
+	@TaskExceptionHandler
+	String handle( RuntimeException e ) {
+		// Called because this is more specific.
+		return "fail-reason-b";
+	}
 }
 ```
 
 ```javascript
 myController.component.hello
 .on( 'fail', ( e, reason ) => {
-    console.log( reason ); // Prints "fail-reason-b"
+	console.log( reason ); // Prints "fail-reason-b"
 });
 
 myController.hello( 'John' );

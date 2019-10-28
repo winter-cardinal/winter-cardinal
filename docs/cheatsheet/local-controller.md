@@ -1,3 +1,5 @@
+## Local controller
+
 ### Introduction
 
 Fields on controllers are synchronized between servers and browsers.
@@ -78,7 +80,7 @@ const controller = Controllers.create({
 });
 
 controller.field.on( "value", () => {
-    // *Not fired* because the `field` is not initialized yet.
+	// *Not fired* because the `field` is not initialized yet.
 });
 ```
 

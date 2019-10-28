@@ -1,4 +1,4 @@
-# Getting Started
+## Getting started
 
 ### Step 1: Add compile dependency
 

@@ -1,3 +1,5 @@
+## Configuration
+
 ### Boot-time configuration
 
 The following configurations are configurable in the same way as Spring Boot.
@@ -98,10 +100,10 @@ Java configuration is also supported:
 ```java
 @Configuration
 public class MyConfigurer implements WCardinalConfigurer {
-    @Override
-    public void configure( final WCardinalConfiguration configuration ) {
-        configuration.setMaximumBinaryMessageSize( 1000000 );
-    }
+	@Override
+	public void configure( final WCardinalConfiguration configuration ) {
+		configuration.setMaximumBinaryMessageSize( 1000000 );
+	}
 }
 ```
 

@@ -1,3 +1,5 @@
+## Threading
+
 ### Introduction
 
 Each instance of controllers has a lock and is locked automatically
@@ -7,30 +9,30 @@ Thus, basically, such methods and fields are thread safe.
 ```java
 @Controller
 class MyController {
-    @Callable
-    void foo(){
-       // When called by wcardinal, a lock this instance has is locked.
-       // Thus, in that case, this method is thread safe.
-    }
+	@Callable
+	void foo(){
+	   // When called by wcardinal, a lock this instance has is locked.
+	   // Thus, in that case, this method is thread safe.
+	}
 }
 ```
 
 ```java
 @Controller
 class MyController {
-    @Autowired
-    SLong field;
+	@Autowired
+	SLong field;
 
-    @OnCreate
-    void init(){
-        new Thread(new Runnable(){
-            @Override
-            public void run(){
-                // Thread safe because the `SLong#set( Long )` is thread safe.
-                field.set( 0 );
-            }
-        }).start();
-    }
+	@OnCreate
+	void init(){
+		new Thread(new Runnable(){
+			@Override
+			public void run(){
+				// Thread safe because the `SLong#set( Long )` is thread safe.
+				field.set( 0 );
+			}
+		}).start();
+	}
 }
 ```
 
@@ -39,21 +41,21 @@ However, calling the non-thread safe `MyController#foo()` from a thread which do
 ```java
 @Controller
 class MyController {
-    @OnCreate
-    void init(){
-        new Thread(new Runnable(){
-            @Override
-            public void run(){
-                // Not thread safe because the `foo` is not thread safe.
-                foo();
-            }
-        }).start();
-    }
+	@OnCreate
+	void init(){
+		new Thread(new Runnable(){
+			@Override
+			public void run(){
+				// Not thread safe because the `foo` is not thread safe.
+				foo();
+			}
+		}).start();
+	}
 
-    // Non-thread safe
-    void foo(){
-        ...
-    }
+	// Non-thread safe
+	void foo(){
+		...
+	}
 }
 ```
 
@@ -63,21 +65,21 @@ calling the `MyController#foo()` from such methods is not thread safe either.
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-       timeout( "bar", 0 );
-    }
+	@OnCreate
+	void init(){
+	   timeout( "bar", 0 );
+	}
 
-    @OnTime
-    void bar(){
-        // Not thread safe because the `foo` is not thread safe.
-        foo();
-    }
+	@OnTime
+	void bar(){
+		// Not thread safe because the `foo` is not thread safe.
+		foo();
+	}
 
-    // Non-thread safe
-    void foo(){
-        ...
-    }
+	// Non-thread safe
+	void foo(){
+		...
+	}
 }
 ```
 
@@ -86,23 +88,23 @@ There are two ways to fix this: making `MyController#foo()` thread safe
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-       timeout( "bar", 0 );
-    }
+	@OnCreate
+	void init(){
+	   timeout( "bar", 0 );
+	}
 
-    @OnTime
-    void bar(){
-        // Thread safe because the `foo` is thread safe.
-        foo();
-    }
+	@OnTime
+	void bar(){
+		// Thread safe because the `foo` is thread safe.
+		foo();
+	}
 
-    // Thread safe because the `foo` acquires a lock inside.
-    void foo(){
-        try( Unlocker unlocker = lock() ){
-            ...
-        }
-    }
+	// Thread safe because the `foo` acquires a lock inside.
+	void foo(){
+		try( Unlocker unlocker = lock() ){
+			...
+		}
+	}
 }
 ```
 
@@ -111,23 +113,23 @@ and acquiring a lock before calling the non-thread safe `MyController#foo()`.
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-       timeout( "bar", 0 );
-    }
+	@OnCreate
+	void init(){
+	   timeout( "bar", 0 );
+	}
 
-    @OnTime
-    @Locked
-    void bar(){
-        // Thread safe because the `bar` is annotated with a `@Locked` annotation.
-        // A thread that executes the `bar` acquires a lock before calling the `bar`.
-        foo();
-    }
+	@OnTime
+	@Locked
+	void bar(){
+		// Thread safe because the `bar` is annotated with a `@Locked` annotation.
+		// A thread that executes the `bar` acquires a lock before calling the `bar`.
+		foo();
+	}
 
-    // Non-thread safe
-    void foo(){
-        ...
-    }
+	// Non-thread safe
+	void foo(){
+		...
+	}
 }
 ```
 
@@ -138,35 +140,35 @@ Sometimes, it is useful to change this default behavior as shown above.
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    @Unlocked
-    void onCreate(){
-       // Called without a lock.
-    }
+	@OnCreate
+	@Unlocked
+	void onCreate(){
+	   // Called without a lock.
+	}
 
-    @OnTime
-    @Locked
-    void onTime(){
-       // Called with a lock.
-    }
+	@OnTime
+	@Locked
+	void onTime(){
+	   // Called with a lock.
+	}
 
-    @Callable
-    @Unlocked
-    void callable(){
-        // Called without a lock.
-    }
+	@Callable
+	@Unlocked
+	void callable(){
+		// Called without a lock.
+	}
 
-    @Task
-    @Locked
-    void task(){
-    	// Called with a lock.
-    }
+	@Task
+	@Locked
+	void task(){
+		// Called with a lock.
+	}
 
-    @OnChange
-    @Unlocked
-    void onChange(){
-        // Called without a lock
-    }
+	@OnChange
+	@Unlocked
+	void onChange(){
+		// Called without a lock
+	}
 }
 ```
 
@@ -178,89 +180,89 @@ Thus, the followings are equivalent:
 ```java
 @Controller
 class MyController extends AbstractController {
-    void foo(){
-        // Lock by `AbstractController#lock()`
-        try( Unlocker unlocker = lock() ){
-            ...
-        }
-    }
+	void foo(){
+		// Lock by `AbstractController#lock()`
+		try( Unlocker unlocker = lock() ){
+			...
+		}
+	}
 }
 ```
 
 ```java
 @Controller
 class MyController {
-    @Autowired
-    SLong field;
+	@Autowired
+	SLong field;
 
-    void foo(){
-        // Lock by `SLong#lock()` of `field`
-        try( Unlocker unlocker = field.lock() ){
-            ...
-        }
-    }
+	void foo(){
+		// Lock by `SLong#lock()` of `field`
+		try( Unlocker unlocker = field.lock() ){
+			...
+		}
+	}
 }
 ```
 
 ```java
 @Componnt
 class MyComponent extends AbstractComponent {
-    ...
+	...
 }
 
 @Controller
 class MyController extends AbstractController {
-    @Autowired
-    MyComponent component;
+	@Autowired
+	MyComponent component;
 
-    void foo(){
-        // Lock by `MyComponent#lock()`
-        try( Unlocker unlocker = component.lock() ){
-            ...
-        }
-    }
+	void foo(){
+		// Lock by `MyComponent#lock()`
+		try( Unlocker unlocker = component.lock() ){
+			...
+		}
+	}
 }
 ```
 
 ```java
 @Componnt
 class MyComponent extends AbstractComponent {
-    @Autowired
-    SLong field;
+	@Autowired
+	SLong field;
 }
 
 @Controller
 class MyController extends AbstractController {
-    @Autowired
-    MyComponent component;
+	@Autowired
+	MyComponent component;
 
-    void foo(){
-        // Lock by `SLong#lock()` of `MyComponent#field`
-        try( Unlocker unlocker = component.field.lock() ){
-            ...
-        }
-    }
+	void foo(){
+		// Lock by `SLong#lock()` of `MyComponent#field`
+		try( Unlocker unlocker = component.field.lock() ){
+			...
+		}
+	}
 }
 ```
 
 ```java
 @Componnt
 class MyComponent {
-    @Autowired
-    ComponentFacade facade;
+	@Autowired
+	ComponentFacade facade;
 }
 
 @Controller
 class MyController extends AbstractController {
-    @Autowired
-    MyComponent component;
+	@Autowired
+	MyComponent component;
 
-    void foo(){
-        // Lock by `ComponentFacade#lock()` of `MyComponent#facade`
-        try( Unlocker unlocker = component.facade.lock() ){
-            ...
-        }
-    }
+	void foo(){
+		// Lock by `ComponentFacade#lock()` of `MyComponent#facade`
+		try( Unlocker unlocker = component.facade.lock() ){
+			...
+		}
+	}
 }
 ```
 
@@ -271,20 +273,20 @@ Because `@SharedComponent` instances are shared among controllers,
 ```java
 @SharedComponent
 class MySharedComponent extends AbstractComponent {
-    ...
+	...
 }
 
 @Controller
 class MyController {
-    @Autowired
-    MySharedComponent component;
+	@Autowired
+	MySharedComponent component;
 
-    void foo(){
-        // `MySharedComponent#lock()` and `MyController#lock()` are not equivalent.
-        try( Unlocker unlocker = component.lock() ){
-            ...
-        }
-    }
+	void foo(){
+		// `MySharedComponent#lock()` and `MyController#lock()` are not equivalent.
+		try( Unlocker unlocker = component.lock() ){
+			...
+		}
+	}
 }
 ```
 
@@ -293,25 +295,25 @@ class MyController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    void foo(){
-        try( Unlocker unlocker = lock() ){
-            ...
-        }
-    }
+	void foo(){
+		try( Unlocker unlocker = lock() ){
+			...
+		}
+	}
 }
 ```
 
 ```java
 @Controller
 class MyController {
-    @Autowired
-    ControllerFacad facade;
+	@Autowired
+	ControllerFacad facade;
 
-    void foo(){
-        try( Unlocker unlocker = facade.lock() ){
-            ...
-        }
-    }
+	void foo(){
+		try( Unlocker unlocker = facade.lock() ){
+			...
+		}
+	}
 }
 ```
 
@@ -320,14 +322,14 @@ or
 ```java
 @Controller
 class MyController {
-    @Autowired
-    SLong field;
+	@Autowired
+	SLong field;
 
-    void foo(){
-        try( Unlocker unlocker = field.lock() ){
-            ...
-        }
-    }
+	void foo(){
+		try( Unlocker unlocker = field.lock() ){
+			...
+		}
+	}
 }
 ```
 
@@ -336,23 +338,23 @@ class MyController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init() {
-        // Requests to call @OnTime( "process" ) methods
-        // with a 1000 milliseconds interval.
-        interval( "process", 1000 );
-    }
+	@OnCreate
+	void init() {
+		// Requests to call @OnTime( "process" ) methods
+		// with a 1000 milliseconds interval.
+		interval( "process", 1000 );
+	}
 
-    @OnTime( "process" )
-    void processA(){
-        // Called with an interval of 1000 milliseconds *without a lock*
-    }
+	@OnTime( "process" )
+	void processA(){
+		// Called with an interval of 1000 milliseconds *without a lock*
+	}
 
-    @OnTime( "process" )
-    @Locked
-    void processB(){
-        // Called with an interval of 1000 milliseconds *with a lock*
-    }
+	@OnTime( "process" )
+	@Locked
+	void processB(){
+		// Called with an interval of 1000 milliseconds *with a lock*
+	}
 }
 ```
 
@@ -361,20 +363,20 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init() {
-        // Requests to call @OnTime methods
-        // with a 1000 milliseconds interval
-        // starting after 50 milliseconds
-        // with parameters "b" and 1
-        interval( "process", 50, 1000, "b", 1 );
-    }
+	@OnCreate
+	void init() {
+		// Requests to call @OnTime methods
+		// with a 1000 milliseconds interval
+		// starting after 50 milliseconds
+		// with parameters "b" and 1
+		interval( "process", 50, 1000, "b", 1 );
+	}
 
-    @OnTime
-    void process( String b, int one ){
-        System.out.println( b );        // Prints "b"
-        System.out.println( "" + one ); // Prints 1
-    }
+	@OnTime
+	void process( String b, int one ){
+		System.out.println( b );		// Prints "b"
+		System.out.println( "" + one ); // Prints 1
+	}
 }
 ```
 
@@ -383,17 +385,17 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init() {
-        // Requests to call the runnable
-        // with a 1000 milliseconds interval.
-        interval( new Runnable(){
-            @Override
-            void run(){
-                // Called with a 1000 milliseconds interval *without a lock*.
-            }
-        }, 1000 );
-    }
+	@OnCreate
+	void init() {
+		// Requests to call the runnable
+		// with a 1000 milliseconds interval.
+		interval( new Runnable(){
+			@Override
+			void run(){
+				// Called with a 1000 milliseconds interval *without a lock*.
+			}
+		}, 1000 );
+	}
 }
 ```
 
@@ -402,20 +404,20 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call @OnTime methods
-        // with a 1000 milliseconds interval.
-        long id = interval( "process", 1000 );
+	@OnCreate
+	void init(){
+		// Requests to call @OnTime methods
+		// with a 1000 milliseconds interval.
+		long id = interval( "process", 1000 );
 
-        // And cancels the request.
-        cancel( id );
-    }
+		// And cancels the request.
+		cancel( id );
+	}
 
-    @OnTime
-    void process(){
-        // Not called if canceled before being called.
-    }
+	@OnTime
+	void process(){
+		// Not called if canceled before being called.
+	}
 }
 ```
 
@@ -424,18 +426,18 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call @OnTime methods
-        // with a 1000 milliseconds interval.
-        interval( "process", 1000 );
-    }
+	@OnCreate
+	void init(){
+		// Requests to call @OnTime methods
+		// with a 1000 milliseconds interval.
+		interval( "process", 1000 );
+	}
 
-    @OnTime
-    void process(){
-        // Cancels by itself.
-        cancel();
-    }
+	@OnTime
+	void process(){
+		// Cancels by itself.
+		cancel();
+	}
 }
 ```
 
@@ -444,17 +446,17 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call @OnTime methods
-        // after 1000 milliseconds.
-        timeout( "process", 1000 );
-    }
+	@OnCreate
+	void init(){
+		// Requests to call @OnTime methods
+		// after 1000 milliseconds.
+		timeout( "process", 1000 );
+	}
 
-    @OnTime
-    void process(){
-        // Called once after 1000 milliseconds *without a lock*.
-    }
+	@OnTime
+	void process(){
+		// Called once after 1000 milliseconds *without a lock*.
+	}
 }
 ```
 
@@ -463,19 +465,19 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call @OnTime methods
-        // after 1000 milliseconds
-        // with parameters "b" and 1.
-        timeout( "process", 1000, "b", 1 );
-    }
+	@OnCreate
+	void init(){
+		// Requests to call @OnTime methods
+		// after 1000 milliseconds
+		// with parameters "b" and 1.
+		timeout( "process", 1000, "b", 1 );
+	}
 
-    @OnTime
-    void process( String b, int one ){
-        System.out.println( b );        // Prints "b"
-        System.out.println( "" + one ); // Prints 1
-    }
+	@OnTime
+	void process( String b, int one ){
+		System.out.println( b );		// Prints "b"
+		System.out.println( "" + one ); // Prints 1
+	}
 }
 ```
 
@@ -484,17 +486,17 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call the runnable
-        // after 1000 milliseconds.
-        timeout( new Runnable(){
-            @Overrid
-            void run(){
-                // Called once after 1000 milliseconds *without a lock*.
-            }
-        }, 1000 );
-    }
+	@OnCreate
+	void init(){
+		// Requests to call the runnable
+		// after 1000 milliseconds.
+		timeout( new Runnable(){
+			@Overrid
+			void run(){
+				// Called once after 1000 milliseconds *without a lock*.
+			}
+		}, 1000 );
+	}
 }
 ```
 
@@ -503,20 +505,20 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call the callable
-        // after 1000 milliseconds.
-        Future<String> future = timeout( new Callable<String>(){
-            @Overrid
-            String call(){
-                // Called once after 1000 milliseconds *without a lock*.
-                return "a";
-            }
-        }, 1000 );
+	@OnCreate
+	void init(){
+		// Requests to call the callable
+		// after 1000 milliseconds.
+		Future<String> future = timeout( new Callable<String>(){
+			@Overrid
+			String call(){
+				// Called once after 1000 milliseconds *without a lock*.
+				return "a";
+			}
+		}, 1000 );
 
-        System.out.println( future.get() ); // Prints "a"
-    }
+		System.out.println( future.get() ); // Prints "a"
+	}
 }
 ```
 
@@ -525,20 +527,20 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call @OnTime methods
-        // after 1000 milliseconds.
-        long id = timeout( "process", 1000);
+	@OnCreate
+	void init(){
+		// Requests to call @OnTime methods
+		// after 1000 milliseconds.
+		long id = timeout( "process", 1000);
 
-        // And cancels the request.
-        cancel( id );
-    }
+		// And cancels the request.
+		cancel( id );
+	}
 
-    @OnTime
-    void process(){
-        // Not called if canceled before being called.
-    }
+	@OnTime
+	void process(){
+		// Not called if canceled before being called.
+	}
 }
 ```
 
@@ -547,16 +549,16 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call @OnTime methods immediately.
-        execute( "process" );
-    }
+	@OnCreate
+	void init(){
+		// Requests to call @OnTime methods immediately.
+		execute( "process" );
+	}
 
-    @OnTime
-    void process(){
-    	// Called immediately *without a lock*
-    }
+	@OnTime
+	void process(){
+		// Called immediately *without a lock*
+	}
 }
 ```
 
@@ -565,18 +567,18 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call @OnTime methods immediately
-        // with parameters "b" and 1.
-        execute( "process", "b", 1 );
-    }
+	@OnCreate
+	void init(){
+		// Requests to call @OnTime methods immediately
+		// with parameters "b" and 1.
+		execute( "process", "b", 1 );
+	}
 
-    @OnTime
-    void process(){
-        System.out.println( b );        // Prints "b"
-        System.out.println( "" + one ); // Prints 1
-    }
+	@OnTime
+	void process(){
+		System.out.println( b );		// Prints "b"
+		System.out.println( "" + one ); // Prints 1
+	}
 }
 ```
 
@@ -585,19 +587,19 @@ class MyController extends AbstractController {
 ```java
 @Controller
 class MyController extends AbstractController {
-    @OnCreate
-    void init(){
-        // Requests to call @OnTime methods after 1000 milliseconds.
-        timeout( "process", 1000 );
+	@OnCreate
+	void init(){
+		// Requests to call @OnTime methods after 1000 milliseconds.
+		timeout( "process", 1000 );
 
-        // Cancels all concurrent requests issued by `execute`, `timeout`, or `interval`
-        cancelAll();
-    }
+		// Cancels all concurrent requests issued by `execute`, `timeout`, or `interval`
+		cancelAll();
+	}
 
-    @OnTime
-    void process(){
-        // Not called if canceled before being called.
-    }
+	@OnTime
+	void process(){
+		// Not called if canceled before being called.
+	}
 }
 ```
 
