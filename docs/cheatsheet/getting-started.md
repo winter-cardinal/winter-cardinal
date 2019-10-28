@@ -1,3 +1,5 @@
+# Getting Started
+
 ### Step 1: Add compile dependency
 
 ```gradle
