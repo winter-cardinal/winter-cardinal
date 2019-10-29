@@ -5,7 +5,9 @@
 	"description": "Winter Cardinal client-side libraries",
 	"homepage": "https://github.com/winter-cardinal/winter-cardinal",
 	"repository": "github:winter-cardinal/winter-cardinal",
-	"keywords": ["Spring framework"],
+	"keywords": [
+		"Spring framework", "WebSocket"
+	],
 	"main": "dist/wcardinal.cjs.js",
 	"types": "dist/types/wcardinal.d.ts",
 	"module": "dist/wcardinal.esm.js",
@@ -15,7 +17,7 @@
 	"scripts": {
 		"lint": "tslint -p .",
 		"lint:fix": "tslint -p . --fix",
-		"build": "rm dist -rf && rm src/main/javascript -rf && rm src/main/resources/META-INF/resources/webjars -rf && tsc && rollup -c",
+		"build": "rimraf dist && rimraf src/main/javascript && rimraf src/main/resources/META-INF/resources && tsc && rollup -c",
 		"build:ts": "tsc",
 		"build:rollup": "rollup -c",
 		"build:api": "typedoc --options typedoc.json --out docs/api/js --disableOutputCheck",
@@ -23,10 +25,11 @@
 		"watch:rollup": "rollup -c -w"
 	},
 	"devDependencies": {
-		"@wcardinal/typedoc-plugin-named-event": "^1.0.0",
 		"@types/promise-polyfill": "^6.0.0",
+		"@wcardinal/typedoc-plugin-named-event": "^1.0.0",
 		"promise-polyfill": "^8.1.0",
 		"puppeteer": "^1.18.1",
+		"rimraf": "^3.0.0",
 		"rollup": "^1.16.7",
 		"rollup-plugin-commonjs": "^10.0.1",
 		"rollup-plugin-copy": "^3.0.0",
