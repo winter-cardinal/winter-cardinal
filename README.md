@@ -36,7 +36,7 @@ myController.hello( 'John' ).then(( result ) => {
 </script>
 ```
 
-### Installing
+### Installation
 
 #### Gradle
 

@@ -18,7 +18,8 @@ const controller = Controllers.create({
 ```
 
 The fields of controllers created by [Controllers#create][1] have exactly the same APIs as fields of controllers defined by Java.
-Namely, `controller.field`, `controller.component` and `controller.component.field` are instances of [SInteger](../api/js/classes/controller_data.sinteger.html), [Component](../api/js/interfaces/controller.component.html) and [SList](../api/js/classes/controller_data.slist.html), respectively.
+Namely, `controller.field`, `controller.component` and `controller.component.field` are instances of [SInteger](../api/js/classes/controller_data.sinteger.html),
+[Component](../api/js/interfaces/controller.component.html) and [SList](../api/js/classes/controller_data.slist.html), respectively.
 
 ```javascript
 controller.field.set( 1 );

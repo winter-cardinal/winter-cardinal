@@ -92,7 +92,8 @@ myController.hello( 'John' )
 });
 ```
 
-If there is more than one exception handler, most specific one is chosen and executed based on types of raised exceptions and arguments of handlers:
+If there is more than one exception handler, most specific one is chosen
+and executed based on types of raised exceptions and arguments of handlers:
 
 ```java
 @Controller

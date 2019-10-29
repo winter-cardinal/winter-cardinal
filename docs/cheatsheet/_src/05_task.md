@@ -229,7 +229,6 @@ myController.hello( 'John' );
 ```java
 import org.wcardinal.controller.TaskResult;
 import org.wcardinal.controller.TaskResults;
-
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Task;
 
@@ -357,7 +356,8 @@ myController.hello
 myController.hello( 'John' );
 ```
 
-If there is more than one exception handler, most specific one is chosen and executed based on types of raised exceptions and arguments of handlers:
+If there is more than one exception handler, most specific one is chosen
+and executed based on types of raised exceptions and arguments of handlers:
 
 ```java
 import org.wcardinal.controller.TaskResults;

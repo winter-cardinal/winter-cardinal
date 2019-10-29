@@ -600,7 +600,7 @@ myController.time.set( 128 );
 ```
 
 See JavaScript API Reference for available methods on a browser side.
-For instance, for `SLong` class, refer to the `controller/data/SLong` of the JavaScript API Reference.
+For instance, for `SLong` class, refer to [controller/data/SLong](../api/js/classes/controller_data.slong.html).
 
 Please note that browsers can see the fields of types in the package `controller/data` only:
 
@@ -690,8 +690,8 @@ myController.on('value', () => {
 });
 ```
 
-Refer to the `controller/data/SLong#value`,
-and the `controller/Controller#event` of the JavaScript API document.
+Refer to [controller/data/SLong#value](../api/js/classes/controller_data.slong.html#value),
+and [controller/Controller#value](../api/js/interfaces/controller.controller-1.html#value).
 
 The arguments of the `value` event varies by types:
 
@@ -1214,7 +1214,8 @@ myController.hello( 'John' )
 });
 ```
 
-If there is more than one exception handler, most specific one is chosen and executed based on types of raised exceptions and arguments of handlers:
+If there is more than one exception handler, most specific one is chosen
+and executed based on types of raised exceptions and arguments of handlers:
 
 ```java
 @Controller
@@ -1511,7 +1512,6 @@ myController.hello( 'John' );
 ```java
 import org.wcardinal.controller.TaskResult;
 import org.wcardinal.controller.TaskResults;
-
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Task;
 
@@ -1639,7 +1639,8 @@ myController.hello
 myController.hello( 'John' );
 ```
 
-If there is more than one exception handler, most specific one is chosen and executed based on types of raised exceptions and arguments of handlers:
+If there is more than one exception handler, most specific one is chosen
+and executed based on types of raised exceptions and arguments of handlers:
 
 ```java
 import org.wcardinal.controller.TaskResults;
@@ -3573,7 +3574,8 @@ const controller = Controllers.create({
 ```
 
 The fields of controllers created by [Controllers#create][1] have exactly the same APIs as fields of controllers defined by Java.
-Namely, `controller.field`, `controller.component` and `controller.component.field` are instances of [SInteger](../api/js/classes/controller_data.sinteger.html), [Component](../api/js/interfaces/controller.component.html) and [SList](../api/js/classes/controller_data.slist.html), respectively.
+Namely, `controller.field`, `controller.component` and `controller.component.field` are instances of [SInteger](../api/js/classes/controller_data.sinteger.html),
+[Component](../api/js/interfaces/controller.component.html) and [SList](../api/js/classes/controller_data.slist.html), respectively.
 
 ```javascript
 controller.field.set( 1 );
