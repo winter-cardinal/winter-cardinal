@@ -1,5 +1,3 @@
-### About
-
 Winter Cardinal is a library for real-time web applications build on top of the Spring framework.
 It is designed for making single-page applications stable against unintended network/server failures.
 The controller class and its fields defined on a server will be synchronized with clones on browsers in real time.
@@ -131,6 +129,38 @@ npm run build:api
 
 ```shell
 ./gradlew compileCheatsheet
+```
+
+### Publishing
+
+#### JARs to Sonatype
+
+In `~/.gradle/gradle.properties`, add
+
+```shell
+signing.keyId=<SIGNING-KEYID>
+signing.password=<SIGNING-PASSWORD>
+signing.secretKeyRingFile=<SIGNING-SECRETRINGFILE>
+
+ossrhUsername=<OSSRH-USERNAME>
+ossrhPassword=<OSSRH-PASSWORD>
+ossrhName=<OSSRH-NAME>
+ossrhEMail=<OSSRH-EMAIL>
+```
+
+and then execute
+
+```shell
+./gradlew publishToSonatype
+./gradlew closeAndReleaseRepository
+```
+
+Or close and release via [Nexus repository manager](https://oss.sonatype.org/).
+
+#### NPM
+
+```shell
+npm publish
 ```
 
 ### License
