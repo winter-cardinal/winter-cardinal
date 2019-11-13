@@ -6,7 +6,7 @@
 	"homepage": "https://github.com/winter-cardinal/winter-cardinal",
 	"repository": "github:winter-cardinal/winter-cardinal",
 	"keywords": [
-		"Spring framework", "WebSocket"
+		"Spring framework", "WebSocket", "Realtime", "Sync"
 	],
 	"main": "dist/wcardinal.cjs.js",
 	"types": "dist/types/wcardinal.d.ts",
