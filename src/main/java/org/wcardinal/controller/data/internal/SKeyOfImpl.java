@@ -11,7 +11,8 @@ import java.lang.reflect.Method;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.ReflectionUtils.FieldCallback;
 import org.springframework.util.ReflectionUtils.MethodCallback;
@@ -59,9 +60,9 @@ public class SKeyOfImpl<V> implements SKeyOf<V> {
 		ReflectionUtils.doWithMethods(type, new MethodCallback(){
 			@Override
 			public void doWith( final Method method ) throws IllegalArgumentException, IllegalAccessException {
-				final Annotation[] annotations = AnnotationUtils.getAnnotations( method );
-				for( final Annotation annotation: annotations ) {
-					if( "id".equalsIgnoreCase( annotation.annotationType().getSimpleName() ) ) {
+				final MergedAnnotations mergedAnnotations = MergedAnnotations.from( method );
+				for( final MergedAnnotation<?> mergedAnnotation: mergedAnnotations ) {
+					if( "id".equalsIgnoreCase( mergedAnnotation.getType().getSimpleName() ) ) {
 						result.set( method );
 					}
 				}

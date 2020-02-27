@@ -136,6 +136,7 @@ export class Ajax {
 				}
 			}
 		}
+		xhr.setRequestHeader( "X-Requested-With", "XMLHttpRequest" );
 
 		// Timeout
 		if( settings.timeout != null ) {

@@ -9,9 +9,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.NavigableMap;
 
-import org.wcardinal.controller.data.SLockable;
-
-public interface SMapContainer<V> extends SContainer<NavigableMap<String, V>, SPatchesPacked<NavigableMap<String, V>, SMapPatch<V>>>, SLockable {
+public interface SMapContainer<V> extends SContainer<NavigableMap<String, V>, SPatchesPacked<NavigableMap<String, V>, SMapPatch<V>>> {
 	boolean onPut( String key, V value );
 	boolean onPutAll( Map<? extends String, ? extends V> values );
 	void onRemove( String key );
