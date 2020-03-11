@@ -1713,7 +1713,6 @@ public class Controller implements ControllerContext, MethodContainer, SParent {
 			triggerRequests.put( getNextTriggerId(), TriggerRequests.create( name, arguments, null ) );
 			if( 0 < MAXIMUM_TRIGGER_QUEUE_SIZE && MAXIMUM_TRIGGER_QUEUE_SIZE < triggerRequests.size() ) {
 				triggerRequests.pollFirstEntry();
-				onTriggerQueueOverflow();
 			}
 		}
 	}
@@ -1730,7 +1729,6 @@ public class Controller implements ControllerContext, MethodContainer, SParent {
 				triggerDirects.set( triggerRequests );
 				if( 0 < MAXIMUM_TRIGGER_QUEUE_SIZE && MAXIMUM_TRIGGER_QUEUE_SIZE < triggerRequests.size() ) {
 					triggerRequests.remove( 0 );
-					onTriggerQueueOverflow();
 				}
 			}
 		}
@@ -1761,15 +1759,6 @@ public class Controller implements ControllerContext, MethodContainer, SParent {
 		}, timeout );
 
 		return new TriggerResult(deferred.promise());
-	}
-
-	private void onTriggerQueueOverflow() {
-		logger.warn(
-			"Exceeded the maximum number of trigger requests, {0}. " +
-			"Some trigger events may be lost. " +
-			"See WCardinalConfiguration#getMaximumTriggerQueueSize().",
-			MAXIMUM_TRIGGER_QUEUE_SIZE
-		);
 	}
 
 	public void show(final String name) {
