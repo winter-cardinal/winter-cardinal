@@ -93,15 +93,16 @@ export class MessageSource {
 	 * @param parameters message parameters
 	 * @returns message of the specified message ID
 	 */
-	get( id: string, ...parameters: unknown[] ): string {
+	get( id: string, ...parameter0: unknown[] ): string;
+	get( id: string ): string {
 		const translated = this.source[ id ];
 		if( translated == null ) {
 			return id;
 		}
-		if( parameters.length <= 1 ) {
+		const args = arguments as any as [ string, ...unknown[]];
+		if (args.length <= 1) {
 			return translated;
 		}
-		const args: [ string, ...unknown[] ] = [ translated, ...parameters ];
 		return format.apply( null, args );
 	}
 

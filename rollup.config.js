@@ -213,8 +213,8 @@ export default ( !process.env.ROLLUP_WATCH ?
 			commonjs(),
 			copy({
 				targets: [
-					{ src: 'dist/' + name + '.js', dest: META_INF_OUTPUT },
-					{ src: 'dist/' + name + '.js', dest: META_INF_OUTPUT, rename: 'wcardinal.min.js' }
+					{ src: 'dist/wcardinal.js', dest: META_INF_OUTPUT },
+					{ src: 'dist/wcardinal.js', dest: META_INF_OUTPUT, rename: 'wcardinal.min.js' }
 				],
 				hook: 'writeBundle'
 			})
