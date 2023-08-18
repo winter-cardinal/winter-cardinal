@@ -31,6 +31,21 @@
 			var value = /*[[${messageValue2}]]*/ 'en';
 			cb.assertEquals( messageSource.get( key ), value ).done();
 		})
+		.test("Message check case 3", function( cb ){
+			var key = /*[[${messageKey3}]]*/ 'c.a';
+			var value = /*[[${messageValue3}]]*/ 'en';
+			cb.assertEquals( messageSource.get( key, 'a' ), value ).done();
+		})
+		.test("Message check case 4", function( cb ){
+			var key = /*[[${messageKey4}]]*/ 'd.a';
+			var value = /*[[${messageValue4}]]*/ 'en';
+			cb.assertEquals( messageSource.get( key, 'a', 'b' ), value ).done();
+		})
+		.test("Message check case 5", function( cb ){
+			var key = /*[[${messageKey5}]]*/ 'e.a';
+			var value = /*[[${messageValue5}]]*/ 'en';
+			cb.assertEquals( messageSource.get( key, 'a', 'b' ), value ).done();
+		})
 		.execute();
 	}());
 	</script>

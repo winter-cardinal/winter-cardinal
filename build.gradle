@@ -6,7 +6,7 @@ plugins {
 	id 'net.researchgate.release' version '2.6.0'
 	id 'de.marcphilipp.nexus-publish' version '0.3.0'
 	id 'io.codearte.nexus-staging' version '0.21.0'
-	id 'net.minecrell.licenser' version '0.4.1'
+	id 'org.cadixdev.licenser' version '0.6.1'
 	id 'com.github.jlouns.cpe' version '0.5.0'
 }
 
@@ -120,19 +120,19 @@ nexusStaging {
 
 // DEPENDENCIES
 dependencies {
-	compile 'org.springframework.boot:spring-boot-starter-websocket:2.2.4.RELEASE'
-	compile 'org.jdeferred:jdeferred-core:1.2.6'
-	compile 'com.google.guava:guava:27.0.1-jre'
-	compile 'org.webjars:webjars-locator:0.34'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket:2.2.4.RELEASE'
+	implementation 'org.jdeferred:jdeferred-core:1.2.6'
+	implementation 'com.google.guava:guava:27.0.1-jre'
+	implementation 'org.webjars:webjars-locator:0.34'
 
-	testCompile 'org.springframework.boot:spring-boot-starter-security:2.2.4.RELEASE'
-	testCompile 'org.springframework.boot:spring-boot-starter-thymeleaf:2.2.4.RELEASE'
-	testCompile 'junit:junit:4.12'
+	testImplementation 'org.springframework.boot:spring-boot-starter-security:2.2.4.RELEASE'
+	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.2.4.RELEASE'
+	testImplementation 'junit:junit:4.12'
 }
 
 // TEST
 jacoco {
-	toolVersion = '0.8.2'
+	toolVersion = '0.8.10'
 }
 
 test {
@@ -164,13 +164,13 @@ clean.dependsOn cleanJavaScript
 license {
 	tasks {
 		directory {
-			files = project.files( 'src/' )
+			files.from( 'src/' )
 		}
 	}
 
 	style {
 		put( 'ts', 'BLOCK_COMMENT' )
-		put( 'html', new net.minecrell.gradle.licenser.header.CommentHeaderFormat( 'HTML', ~/^\s*<!--/, ~/-->\s*(.*?)$/, null, '<!--', '', '-->' ) )
+		put( 'html', new org.cadixdev.gradle.licenser.header.CommentHeaderFormat( 'HTML', ~/^\s*<!--/, ~/-->\s*(.*?)$/, null, '<!--', '', '-->' ) )
 	}
 
 	header = file( 'LICENSE_HEADER' )

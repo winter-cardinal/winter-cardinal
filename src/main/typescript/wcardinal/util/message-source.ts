@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { format } from "./lang/format";
+import { doFormat } from "./lang/format";
 import { PlainObject } from "./lang/plain-object";
 
 /**
@@ -93,17 +93,15 @@ export class MessageSource {
 	 * @param parameters message parameters
 	 * @returns message of the specified message ID
 	 */
-	get( id: string, ...parameter0: unknown[] ): string;
-	get( id: string ): string {
+	get( id: string, ...parameter0: unknown[] ): string {
 		const translated = this.source[ id ];
 		if( translated == null ) {
 			return id;
 		}
-		const args = arguments as any as [ string, ...unknown[]];
-		if (args.length <= 1) {
+		if (parameter0.length <= 0) {
 			return translated;
 		}
-		return format.apply( null, args );
+		return doFormat( translated, parameter0 );
 	}
 
 	static getInstance(): MessageSource {

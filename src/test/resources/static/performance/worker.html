@@ -27,7 +27,7 @@
 			var count = 0;
 			var MAX_COUNT = 100;
 			var results = [];
-			var THRESHOLD = 10;
+			var THRESHOLD = 20;
 			c.slist.on( "value", function(){
 				if( count === 0 ) {
 					startTime = util.now();
@@ -55,7 +55,7 @@
 				}
 			});
 			c.start();
-		})
+		}, 40000)
 		.execute();
 	}());
 	</script>

@@ -185,7 +185,7 @@ public class TaskController implements ControllerOnChangeHandler {
 					}
 				}
 			} else {
-				if( isNonNull && data == null ) {
+				if( data == null && isNonNull ) {
 					task.cancel( TaskResultType.NULL_RESULT );
 				} else {
 					task.complete( data, null );

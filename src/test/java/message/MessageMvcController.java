@@ -29,6 +29,12 @@ public class MessageMvcController {
 		mav.addObject( "messageValue1", "en" );
 		mav.addObject( "messageKey2", "b.a" );
 		mav.addObject( "messageValue2", "en" );
+		mav.addObject( "messageKey3", "c.a" );
+		mav.addObject( "messageValue3", "en-a" );
+		mav.addObject( "messageKey4", "d.a" );
+		mav.addObject( "messageValue4", "en-b-a" );
+		mav.addObject( "messageKey5", "e.a" );
+		mav.addObject( "messageValue5", "en-a-b" );
 		mav.setViewName("message");
 		return mav;
 	}
@@ -41,6 +47,12 @@ public class MessageMvcController {
 		mav.addObject( "messageValue1", "ja" );
 		mav.addObject( "messageKey2", "b.a" );
 		mav.addObject( "messageValue2", "ja" );
+		mav.addObject( "messageKey3", "c.a" );
+		mav.addObject( "messageValue3", "ja-a" );
+		mav.addObject( "messageKey4", "d.a" );
+		mav.addObject( "messageValue4", "ja-b-a" );
+		mav.addObject( "messageKey5", "e.a" );
+		mav.addObject( "messageValue5", "ja-a-b" );
 		mav.setViewName("message");
 		return mav;
 	}
@@ -53,6 +65,12 @@ public class MessageMvcController {
 		mav.addObject( "messageValue1", "a.a" );
 		mav.addObject( "messageKey2", "b.a" );
 		mav.addObject( "messageValue2", "en" );
+		mav.addObject( "messageKey3", "c.a" );
+		mav.addObject( "messageValue3", "c.a" );
+		mav.addObject( "messageKey4", "d.a" );
+		mav.addObject( "messageValue4", "d.a" );
+		mav.addObject( "messageKey5", "e.a" );
+		mav.addObject( "messageValue5", "e.a" );
 		mav.setViewName("message");
 		return mav;
 	}
@@ -65,6 +83,12 @@ public class MessageMvcController {
 		mav.addObject( "messageValue1", "a.a" );
 		mav.addObject( "messageKey2", "b.a" );
 		mav.addObject( "messageValue2", "ja" );
+		mav.addObject( "messageKey3", "c.a" );
+		mav.addObject( "messageValue3", "c.a" );
+		mav.addObject( "messageKey4", "d.a" );
+		mav.addObject( "messageValue4", "d.a" );
+		mav.addObject( "messageKey5", "e.a" );
+		mav.addObject( "messageValue5", "e.a" );
 		mav.setViewName("message");
 		return mav;
 	}
