@@ -64,7 +64,7 @@ export class CallableMemory<RESULT, ARGUMENTS extends unknown[]> {
 						resolve( result as RESULT );
 					}
 				} else {
-					resolve( undefined as RESULT );
+					resolve();
 				}
 
 				if (0 <= timeout) {
