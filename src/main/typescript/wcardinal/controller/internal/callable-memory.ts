@@ -64,12 +64,14 @@ export class CallableMemory<RESULT, ARGUMENTS extends unknown[]> {
 						resolve( result as RESULT );
 					}
 				} else {
-					resolve();
+					resolve( undefined as RESULT );
 				}
 
-				self.setTimeout(() => {
-					reject( "timeout" );
-				}, timeout);
+				if (0 <= timeout) {
+					self.setTimeout(() => {
+						reject( "timeout" );
+					}, timeout);
+				}
 			});
 		} else {
 			return this._parent.call_( [this._name, args], this._timeout, this._properties.isAjax_() );

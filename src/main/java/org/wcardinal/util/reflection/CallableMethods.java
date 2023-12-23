@@ -11,8 +11,9 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.ResolvableType;
-
+import org.springframework.lang.Nullable;
 import org.wcardinal.controller.internal.Properties;
 import org.wcardinal.controller.internal.Property;
 import org.wcardinal.controller.internal.info.StaticDataCallable;
@@ -45,11 +46,11 @@ public class CallableMethods<T> extends AbstractCallableMethods<CallableMethod<T
 		return null;
 	}
 
-	public static <T> CallableMethods<T> create( final Collection<Method> methods, final ResolvableType implementationType ){
+	public static <T> CallableMethods<T> create( final Collection<Method> methods, final ResolvableType implementationType, @Nullable final ApplicationContext context ){
 		final CallableMethods<T> result = new CallableMethods<>();
 
 		for( final Method method: methods ){
-			result.add(new CallableMethod<T>(method, implementationType));
+			result.add(new CallableMethod<T>(method, implementationType, context));
 		}
 
 		return result;

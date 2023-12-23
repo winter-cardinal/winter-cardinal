@@ -11,6 +11,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.ResolvableType;
 
 import org.wcardinal.controller.internal.Properties;
@@ -45,11 +46,11 @@ public class TaskMethods<T> extends AbstractCallableMethods<CallableMethod<T>, T
 		return null;
 	}
 
-	public static <T> TaskMethods<T> create( final Collection<Method> methods, final ResolvableType implementationType ){
+	public static <T> TaskMethods<T> create( final Collection<Method> methods, final ResolvableType implementationType, final ApplicationContext context ){
 		final TaskMethods<T> result = new TaskMethods<>();
 
 		for( final Method method: methods ){
-			result.add(new CallableMethod<T>(method, implementationType));
+			result.add(new CallableMethod<T>(method, implementationType, context));
 		}
 
 		return result;

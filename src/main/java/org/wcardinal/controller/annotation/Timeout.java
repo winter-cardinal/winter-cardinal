@@ -32,5 +32,13 @@ public @interface Timeout {
 	 *
 	 * @return default timeout limit in milliseconds
 	 */
-	long value();
+	long value() default 5000;
+
+	/**
+	 * Returns default timeout limit in milliseconds.
+	 * The expression &mdash; for example, <code>${app.timeout}</code>.
+	 *
+	 * @return default timeout limit in milliseconds
+	 */
+	String string() default "";
 }

@@ -287,7 +287,7 @@ public class MethodTest {
 		methods.add( methodTracked );
 		methods.add( methodStaticTracked );
 		final CallableMethods<Void> callableMethods
-			= CallableMethods.create( methods, ResolvableType.forClass(MethodTest.class) );
+			= CallableMethods.create( methods, ResolvableType.forClass(MethodTest.class), null );
 
 		Assert.assertFalse( callableMethods.containsTrackable( "callable" ) );
 		Assert.assertFalse( callableMethods.containsTrackable( "bar" ) );

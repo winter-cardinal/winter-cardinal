@@ -479,13 +479,13 @@ public class ControllerFactory {
 		this.exceptionHandlers = TypedExceptionHandlerMethods.create( exceptionHandlers, type, ExceptionHandler.class );
 
 		// Tasks
-		this.tasks = TaskMethods.create( taskNameToMethod.values(), type );
+		this.tasks = TaskMethods.create( taskNameToMethod.values(), type, context );
 		this.taskNameToMethod = taskNameToMethod;
 		checkTaskExceptionHandlers( taskExceptionHandlers );
 		this.taskExceptionHandlers = TypedExceptionHandlerMethods.create( taskExceptionHandlers, type, TaskExceptionHandler.class );
 
 		// Callables
-		this.callables = CallableMethods.create( callableNameToMethod.values(), type );
+		this.callables = CallableMethods.create( callableNameToMethod.values(), type, context );
 		this.callableNameToMethod = callableNameToMethod;
 		checkCallableExceptionHandlers( callableExceptionHandlers );
 		this.callableExceptionHandlers = TypedExceptionHandlerMethods.create( callableExceptionHandlers, type, CallableExceptionHandler.class );

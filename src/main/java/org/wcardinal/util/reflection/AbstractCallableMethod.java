@@ -7,6 +7,11 @@ package org.wcardinal.util.reflection;
 
 import java.lang.reflect.Method;
 
+import org.springframework.beans.factory.config.BeanExpressionContext;
+import org.springframework.beans.factory.config.BeanExpressionResolver;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -18,6 +23,7 @@ import org.wcardinal.controller.annotation.Task;
 import org.wcardinal.controller.annotation.Timeout;
 import org.wcardinal.controller.data.annotation.Historical;
 import org.wcardinal.controller.data.annotation.NonNull;
+import org.wcardinal.exception.IllegalTimeoutStringException;
 import org.wcardinal.util.json.Json;
 
 public class AbstractCallableMethod<T> extends MethodWrapper<T> {
@@ -29,12 +35,11 @@ public class AbstractCallableMethod<T> extends MethodWrapper<T> {
 	final boolean nonnull;
 	final boolean readonly;
 
-	public AbstractCallableMethod( final Method method, final ResolvableType implementationType ){
+	public AbstractCallableMethod( final Method method, final ResolvableType implementationType, final ApplicationContext context ){
 		super( method );
 
 		// Timeout
-		final Timeout timeout = AnnotationUtils.findAnnotation(this.method, Timeout.class);
-		this.timeout = ( timeout != null ? timeout.value() : 5000 );
+		this.timeout = toTimeout( method, implementationType, context );
 
 		// Ajax
 		this.ajax = (AnnotationUtils.findAnnotation(this.method, Ajax.class) != null);
@@ -53,6 +58,41 @@ public class AbstractCallableMethod<T> extends MethodWrapper<T> {
 
 		// Read-only
 		this.readonly = (AnnotationUtils.findAnnotation(this.method, ReadOnly.class) != null);
+	}
+
+	long toTimeout( final Method method, final ResolvableType implementationType, final ApplicationContext context ) {
+		final Timeout timeout = AnnotationUtils.findAnnotation(this.method, Timeout.class);
+		if (timeout != null) {
+			final String string = timeout.string();
+			if (string != null && !string.isEmpty()) {
+				try {
+					final Object evaluated = this.evalutate( string, context );
+					if (evaluated instanceof Number) {
+						return ((Number)evaluated).longValue();
+					} else if (evaluated instanceof String) {
+						return Long.parseLong((String)evaluated);
+					}
+				} catch (Exception e) {
+					throw new IllegalTimeoutStringException(string, method, e);
+				}
+				throw new IllegalTimeoutStringException(string, method);
+			} else {
+				return timeout.value();
+			}
+		}
+		return 5000;
+	}
+
+	private Object evalutate( final String value, final ApplicationContext context ) {
+		if (context instanceof ConfigurableApplicationContext) {
+			final ConfigurableApplicationContext configurableContext = (ConfigurableApplicationContext)context;
+			final ConfigurableBeanFactory configurableBeanFactory = configurableContext.getBeanFactory();
+			final String placeholdersResolved = configurableBeanFactory.resolveEmbeddedValue(value);
+			final BeanExpressionResolver exprResolver = configurableBeanFactory.getBeanExpressionResolver();
+			final BeanExpressionContext expressionContext = new BeanExpressionContext(configurableBeanFactory, null);
+			return exprResolver.evaluate(placeholdersResolved, expressionContext);
+		}
+		return null;
 	}
 
 	JavaType[] toTypes( final Method method, final ResolvableType implementationType ){
