@@ -36,7 +36,7 @@ public @interface Timeout {
 
 	/**
 	 * Returns default timeout limit in milliseconds.
-	 * The expression &mdash; for example, <code>${app.timeout}</code>.
+	 * This accepts the same expressions as {@link org.springframework.beans.factory.annotation.Value} &mdash; for example, <code>${app.timeout}</code>.
 	 *
 	 * @return default timeout limit in milliseconds
 	 */
