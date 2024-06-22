@@ -85,6 +85,14 @@ Note that the `wcardinal.min.js` must be loaded before loading your controller a
 	* [JS](https://winter-cardinal.github.io/winter-cardinal/api/js/)
 * [Cheatsheet](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/all-in-one.html)
 
+### Compatibility Matrix
+
+|WinterCardinal Version|JDK Version        |Spring Boot Version |
+|--                    |--                 |--                  |
+|1.0.x                 |8                  |2.2.4.RELEASE       |
+|1.1.0                 |8                  |2.7.18              |
+|2.0.0                 |17                 |3.3.1               |
+
 ### Browser support
 
 Supports the latest version of Chrome, Firefox, Edge and Safari.
