@@ -76,7 +76,7 @@ import * as wcardinal from '@wcardinal/wcardinal';
 ```
 
 All the classes are in `window.wcardinal` in this case.
-Note that the `wcardinal.min.js` must be loaded before loading your controller as shown above.
+Note that the `wcardinal.worker.min.js` must be loaded before loading your controller as shown above.
 
 ### Documentation
 
@@ -87,21 +87,13 @@ Note that the `wcardinal.min.js` must be loaded before loading your controller a
 
 ### Compatibility Matrix
 
-|WinterCardinal Version|JDK Version        |Spring Boot Version |
-|--                    |--                 |--                  |
-|1.0.x                 |8                  |2.2.4.RELEASE       |
-|1.1.0                 |8                  |2.7.18              |
-|2.0.0                 |17                 |3.3.1               |
-
-### Browser support
-
-Supports the latest version of Chrome, Firefox, Edge and Safari.
-IE9 and later are supported on Windows.
+|WinterCardinal Version|JDK Version        |Spring Boot Version |Chrome / Firefox / Safari |
+|--                    |--                 |--                  |--     |
+|1.0.x                 |8                  |2.2.4.RELEASE       |Latest |
+|1.1.0                 |8                  |2.7.18              |Latest |
+|2.0.0                 |17                 |3.3.1               |Latest |
 
 ### How to build
-
-The following commands are for building Winter Cardinal itself.
-For most users, you do not need to do this.
 
 #### JS for release
 
@@ -154,6 +146,9 @@ ossrhUsername=<OSSRH-USERNAME>
 ossrhPassword=<OSSRH-PASSWORD>
 ossrhName=<OSSRH-NAME>
 ossrhEMail=<OSSRH-EMAIL>
+
+ossrhToken=<OSSRH-USER-TOKEN>
+ossrhTokenPassword=<OSSRH-USER-TOKEN-PASSWORD>
 ```
 
 and then execute
