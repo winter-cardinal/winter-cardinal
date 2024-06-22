@@ -52,7 +52,7 @@ WebJars can be loaded from browsers as follows:
 <script src="webjars/wcardinal/wcardinal.worker.min.js"></script>
 ```
 
-Please note that the `${version}` part is omitted.
+Please note that the `${version}` part is omitted. The worker version `wcardinal.worker.min.js` is strongly recommended over the non-worker version `wcardinal.min.js` as the `setTimeout` is not reliable in some cases.
 
 #### NPM
 
