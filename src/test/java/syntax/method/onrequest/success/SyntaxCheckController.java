@@ -5,8 +5,8 @@
 
 package syntax.method.onrequest.success;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.wcardinal.controller.ControllerAttributes;
 import org.wcardinal.controller.annotation.Controller;

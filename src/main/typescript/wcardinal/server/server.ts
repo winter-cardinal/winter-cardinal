@@ -65,6 +65,8 @@ export interface Server extends MessageEmitter<string[]> {
 
 	/**
 	 * Returns settings.
+	 *
+	 * @since 1.1.0
 	 */
 	getSettings(): Settings;
 

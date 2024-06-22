@@ -5,7 +5,7 @@
 
 package syntax.method.onrequest.fail4;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.wcardinal.controller.ControllerAttributes;
 import org.wcardinal.controller.annotation.Controller;

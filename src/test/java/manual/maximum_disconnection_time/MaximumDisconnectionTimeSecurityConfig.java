@@ -17,9 +17,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class MaximumDisconnectionTimeSecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().permitAll();
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
-		http.csrf().disable();
+		http.authorizeHttpRequests(requests -> requests.requestMatchers("/**").permitAll().anyRequest().permitAll());
+		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+		http.csrf(csrf -> csrf.disable());
 		return http.build();
 	}
 }

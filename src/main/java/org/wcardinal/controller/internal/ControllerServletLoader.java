@@ -69,7 +69,7 @@ public class ControllerServletLoader {
 		}
 		handler.setOrder(Integer.MAX_VALUE - 2);
 		handler.setUrlMap( urlMap );
-
+		handler.setPatternParser(null);
 		return handler;
 	}
 

@@ -8,7 +8,7 @@ package org.wcardinal.controller.scope.shared;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.context.annotation.Bean;

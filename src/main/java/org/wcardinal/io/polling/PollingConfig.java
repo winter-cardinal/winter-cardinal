@@ -26,7 +26,7 @@ public class PollingConfig {
 	WCardinalConfigurationSupport configuration;
 
 	@Bean
-	public HandlerMapping mapping(){
+	public HandlerMapping pollingConfigHandlerMapping(){
 		final AbstractController endpoint;
 		if( configuration.isSharedConnectionEnabled() ){
 			endpoint = new SharedPollingEndpoint( configuration );
@@ -40,6 +40,7 @@ public class PollingConfig {
 		final SimpleUrlHandlerMapping handler = new SimpleUrlHandlerMapping();
 		handler.setOrder( Integer.MAX_VALUE - 2 );
 		handler.setUrlMap( mapping );
+		handler.setPatternParser(null);
 		return handler;
 	}
 }

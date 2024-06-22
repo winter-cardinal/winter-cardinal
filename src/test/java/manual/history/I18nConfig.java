@@ -9,10 +9,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@SuppressWarnings( "deprecation" )
-public class I18nConfig extends org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter {
+public class I18nConfig implements WebMvcConfigurer {
 	@Bean
 	public MessageSource messageSource() {
 		final ReloadableResourceBundleMessageSource result = new ReloadableResourceBundleMessageSource();

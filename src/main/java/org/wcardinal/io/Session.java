@@ -7,17 +7,17 @@ package org.wcardinal.io;
 
 import java.io.Serializable;
 import java.security.Principal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -210,7 +210,7 @@ public class Session implements Serializable, Runnable {
 	public void run() {
 		if( isDestroyed() != true ){
 			cleanup();
-			scheduler.schedule(this, new Date(System.currentTimeMillis() + maximumIdleTime));
+			scheduler.schedule(this, Instant.ofEpochMilli(System.currentTimeMillis() + maximumIdleTime));
 		}
 	}
 }

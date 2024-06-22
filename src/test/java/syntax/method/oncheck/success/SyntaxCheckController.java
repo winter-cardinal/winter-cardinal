@@ -5,7 +5,7 @@
 
 package syntax.method.oncheck.success;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.OnCheck;
