@@ -120,13 +120,13 @@ nexusStaging {
 
 // DEPENDENCIES
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-websocket:2.2.4.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket:2.7.18'
 	implementation 'org.jdeferred:jdeferred-core:1.2.6'
 	implementation 'com.google.guava:guava:27.0.1-jre'
 	implementation 'org.webjars:webjars-locator:0.34'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-security:2.2.4.RELEASE'
-	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.2.4.RELEASE'
+	testImplementation 'org.springframework.boot:spring-boot-starter-security:2.7.18'
+	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.7.18'
 	testImplementation 'junit:junit:4.12'
 }
 

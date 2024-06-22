@@ -37,10 +37,6 @@ export class ServerImpl extends MessageEmitter<string[]> implements Server {
 		return this._serverBase.getIo_();
 	}
 
-	getSettings() {
-		return this._serverBase.getSettings_();
-	}
-
 	connect(): this {
 		this._serverBase.connect_();
 		return this;
@@ -62,6 +58,10 @@ export class ServerImpl extends MessageEmitter<string[]> implements Server {
 
 	getProtocol( allowedProtocols?: PlainObject<IoSettings> ): string | null {
 		return this._serverBase.getProtocol_( allowedProtocols );
+	}
+
+	getSettings() {
+		return this._serverBase.getSettings_();
 	}
 
 	send( type: string, content: unknown ): this {

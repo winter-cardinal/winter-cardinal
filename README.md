@@ -45,11 +45,11 @@ dependencies {
 ```
 
 Client-side libraries are packed in this JAR as a WebJars.
-Please find the `wcardinal.min.js` in the directory `META-INF/resources/webjars/wcardinal/${version}/`.
+Please find the `wcardinal.worker.min.js` in the directory `META-INF/resources/webjars/wcardinal/${version}/`.
 WebJars can be loaded from browsers as follows:
 
 ```html
-<script src="webjars/wcardinal/wcardinal.min.js"></script>
+<script src="webjars/wcardinal/wcardinal.worker.min.js"></script>
 ```
 
 Please note that the `${version}` part is omitted.
@@ -71,7 +71,7 @@ import * as wcardinal from '@wcardinal/wcardinal';
 #### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@wcardinal/wcardinal/dist/wcardinal.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@wcardinal/wcardinal/dist/wcardinal.worker.min.js"></script>
 <script src="./my-controller"></script>
 ```
 

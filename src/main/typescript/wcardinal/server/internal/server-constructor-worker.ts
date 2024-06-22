@@ -96,6 +96,10 @@ export const ServerConstructorWorker: ServerConstructor =
 			return ServerBase.findProtocol_( this._protocol, allowedProtocols );
 		}
 
+		getSettings(): Settings {
+			return this._sttgs;
+		}
+
 		send( type: string, content: unknown ) {
 			const messageString = ServerBase.toMessageString_( type, content );
 			if( messageString != null ) {

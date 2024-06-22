@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { Settings } from "../controller/internal/settings";
 import { Event } from "../event/event";
 import { IoSettings } from "../io/io-settings";
 import { MessageEmitter } from "../io/message-emitter";
@@ -61,6 +62,11 @@ export interface Server extends MessageEmitter<string[]> {
 	 * @returns The name of the current communication protocol.
 	 */
 	getProtocol( allowedProtocols?: PlainObject<IoSettings> ): string | null;
+
+	/**
+	 * Returns settings.
+	 */
+	getSettings(): Settings;
 
 	/**
 	 * Sends a message to a remote server.

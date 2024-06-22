@@ -39,7 +39,7 @@ export abstract class Io extends MessageEmitter<string> {
 
 		if( typeof window !== "undefined" ) {
 			this._onUnloadBound = () => { this.onUnload(); };
-			addEventListener( window, "unload", this._onUnloadBound );
+			addEventListener( window, "pagehide", this._onUnloadBound );
 		} else {
 			this._onUnloadBound = null;
 		}
@@ -113,7 +113,7 @@ export abstract class Io extends MessageEmitter<string> {
 	destroy(): Io {
 		if( this._onUnloadBound != null ) {
 			if( typeof window !== "undefined" ) {
-				removeEventListener( window, "unload", this._onUnloadBound );
+				removeEventListener( window, "pagehide", this._onUnloadBound );
 			}
 			this._onUnloadBound = null;
 		}
