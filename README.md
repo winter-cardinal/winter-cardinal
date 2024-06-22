@@ -84,14 +84,15 @@ Note that the `wcardinal.worker.min.js` must be loaded before loading your contr
 	* [Java](https://winter-cardinal.github.io/winter-cardinal/api/java/)
 	* [JS](https://winter-cardinal.github.io/winter-cardinal/api/js/)
 * [Cheatsheet](https://winter-cardinal.github.io/winter-cardinal/cheatsheet/all-in-one.html)
+* [Starter](https://github.com/winter-cardinal/winter-cardinal-starter)
 
 ### Compatibility Matrix
 
 |WinterCardinal Version|JDK Version        |Spring Boot Version |Chrome / Firefox / Safari |
-|--                    |--                 |--                  |--     |
-|1.0.x                 |8                  |2.2.4.RELEASE       |Latest |
-|1.1.0                 |8                  |2.7.18              |Latest |
-|2.0.0                 |17                 |3.3.1               |Latest |
+|--                    |--                 |--                  |--                        |
+|1.0.x                 |8                  |2.2.4.RELEASE       |Latest                    |
+|1.1.0                 |8                  |2.7.18              |Latest                    |
+|2.0.0                 |17                 |3.3.1               |Latest                    |
 
 ### How to build
 
