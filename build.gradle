@@ -87,7 +87,7 @@ publishing {
 					developer {
 						id = project.findProperty('ossrhUsername') ?: ''
 						name = project.findProperty('ossrhName') ?: ''
-						email = project.findProperty('ossrhUsername') ?: ''
+						email = project.findProperty('ossrhEMail') ?: ''
 					}
 				}
 			}
@@ -106,16 +106,16 @@ nexusPublishing {
 	repositories {
 		sonatype {
 			packageGroup = group
-			username = project.findProperty('ossrhUsername') ?: ''
-			password = project.findProperty('ossrhPassword') ?: ''
+			username = project.findProperty('ossrhToken') ?: ''
+			password = project.findProperty('ossrhTokenPassword') ?: ''
 		}
 	}
 }
 
 nexusStaging {
 	packageGroup = group
-	username = project.findProperty('ossrhUsername') ?: ''
-	password = project.findProperty('ossrhPassword') ?: ''
+	username = project.findProperty('ossrhToken') ?: ''
+	password = project.findProperty('ossrhTokenPassword') ?: ''
 }
 
 // DEPENDENCIES
