@@ -6,9 +6,6 @@
 package syntax;
 
 import org.junit.Test;
-import org.springframework.beans.BeanInstantiationException;
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.UnsatisfiedDependencyException;
 import org.springframework.boot.SpringApplication;
 
 import org.wcardinal.exception.AmbiguousExceptionHandlerException;
@@ -28,18 +25,14 @@ class Assert {
 		SpringApplication.exit( SpringApplication.run( applicationClass, new String[] {"--server.port="+(port++)} ) );
 	}
 
-	private static void check( final Exception e, final Class<? extends Exception> expected, final Exception root ) {
+	private static void check( final Throwable e, final Class<? extends Exception> expected, final Exception root ) {
 		final Throwable cause = e.getCause();
-		if( cause instanceof UnsatisfiedDependencyException ) {
-			check( (UnsatisfiedDependencyException) cause, expected, root );
-		} else if( cause instanceof BeanCreationException ) {
-			check( (BeanCreationException) cause, expected, root );
-		} else if( cause instanceof BeanInstantiationException ) {
-			if( expected.isInstance( cause.getCause() ) ) {
+		if (cause != null) {
+			check(cause, expected, root);
+		} else {
+			if( expected.isInstance( e ) ) {
 				return;
 			}
-			throw new IllegalStateException( root );
-		} else {
 			throw new IllegalStateException( root );
 		}
 	}
