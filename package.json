@@ -4,7 +4,10 @@
 	"license": "Apache-2.0",
 	"description": "Winter Cardinal client-side libraries",
 	"homepage": "https://github.com/winter-cardinal/winter-cardinal",
-	"repository": "github:winter-cardinal/winter-cardinal",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/winter-cardinal/winter-cardinal.git"
+	},
 	"keywords": [
 		"Spring framework",
 		"WebSocket",
