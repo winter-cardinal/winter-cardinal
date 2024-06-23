@@ -988,7 +988,7 @@ public class ControllerFactory {
 	public RootController createRoot( final ControllerBaggage baggage ) {
 		ControllerScopeAttributesHolder.set(baggage.scopeAttributes);
 		final AutowireCapableBeanFactory factory = context.getAutowireCapableBeanFactory();
-		final Object instance = factory.createBean(klass, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
+		final Object instance = factory.createBean(klass);
 		postBeanCreationProcess(instance);
 		ControllerScopeAttributesHolder.remove();
 		return new RootController( name, this, instance, baggage );
@@ -1036,7 +1036,7 @@ public class ControllerFactory {
 			final ArrayNode factoryParameters, final AutoCloseableReentrantLock lock, final TaskInternalQueue tasks ) {
 		ControllerScopeAttributesHolder.set(baggage.scopeAttributes);
 		final AutowireCapableBeanFactory factory = context.getAutowireCapableBeanFactory();
-		final Object instance = factory.createBean(klass, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
+		final Object instance = factory.createBean(klass);
 		postBeanCreationProcess(instance);
 		ControllerScopeAttributesHolder.remove();
 		return new ComponentController( name, parent, this, instance, baggage, factoryParameters, lock, tasks );
@@ -1046,7 +1046,7 @@ public class ControllerFactory {
 			final ArrayNode factoryParameters, final AutoCloseableReentrantLock lock, final TaskInternalQueue tasks ) {
 		ControllerScopeAttributesHolder.set(baggage.scopeAttributes);
 		final AutowireCapableBeanFactory factory = context.getAutowireCapableBeanFactory();
-		final Object instance = factory.createBean(klass, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
+		final Object instance = factory.createBean(klass);
 		postBeanCreationProcess(instance);
 		ControllerScopeAttributesHolder.remove();
 		return new PageController( name, parent, this, instance, baggage, factoryParameters, lock, tasks );
@@ -1056,7 +1056,7 @@ public class ControllerFactory {
 			final ArrayNode factoryParameters, final AutoCloseableReentrantLock lock, final TaskInternalQueue tasks ) {
 		ControllerScopeAttributesHolder.set(baggage.scopeAttributes);
 		final AutowireCapableBeanFactory factory = context.getAutowireCapableBeanFactory();
-		final Object instance = factory.createBean(klass, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
+		final Object instance = factory.createBean(klass);
 		postBeanCreationProcess(instance);
 		ControllerScopeAttributesHolder.remove();
 		return new PopupController( name, parent, this, instance, baggage, factoryParameters, lock, tasks, false );
