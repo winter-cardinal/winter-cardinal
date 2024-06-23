@@ -28,14 +28,23 @@ Please refer to [Spring Boot: External config](http://docs.spring.io/spring-boot
 
 * `wcardinal.idle.max=15000`
 
-  The browsers that don't send any messages or heartbeats longer than this time span are considered inactive.
+  If `wcardinal.disconnection.max` is negative, the browsers that don't send any messages or heartbeats longer than `wcardinal.idle.max` are considered inactive.
   The controllers, the instances of classes annotated with `@Controller`, that are assigned to inactive browsers are destroyed.
+
+  If `wcardinal.disconnection.max` is not negative, the browsers that had network connections before and now don't have network connections longer than `wcardinal.disconnection.max` are considered inactive.
+  The browsers that had never network connections before and don't send heartbeats longer than `max(wcardinal.idle.max, wcardinal.disconnection.max)` are also considered inactive.
+
+  If the controllers have methods annotated with `@OnIdleCheck`, the browsers that those methods return negative numbers are considered inactive. In this case, `wcardinal.idle.max` and `wcardinal.disconnection.max` are not taken into the consideration.
 
 * `wcardinal.disconnection.max=-1`
 
-  The browsers that had network connections before and now don't have network connections longer than this time span are considered inactive.
+  If `wcardinal.disconnection.max` is negative, the browsers that don't send any messages or heartbeats longer than `wcardinal.idle.max` are considered inactive.
   The controllers, the instances of classes annotated with `@Controller`, that are assigned to inactive browsers are destroyed.
-  If this value is negative, the maximum disconnection time is not checked.
+
+  If `wcardinal.disconnection.max` is not negative, the browsers that had network connections before and now don't have network connections longer than `wcardinal.disconnection.max` are considered inactive.
+  The browsers that had never network connections before and don't send heartbeats longer than `max(wcardinal.idle.max, wcardinal.disconnection.max)` are also considered inactive.
+
+  If the controllers have methods annotated with `@OnIdleCheck`, the browsers that those methods return negative numbers are considered inactive. In this case, `wcardinal.idle.max` and `wcardinal.disconnection.max` are not taken into the consideration.
 
 * `wcardinal.allowed-origins=`
 
