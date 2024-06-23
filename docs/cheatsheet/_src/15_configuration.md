@@ -28,7 +28,14 @@ Please refer to [Spring Boot: External config](http://docs.spring.io/spring-boot
 
 * `wcardinal.idle.max=15000`
 
-  Criteria to decide whether browser are considered inactive or disconnected.
+  The browsers that don't send any messages or heartbeats longer than this time span are considered inactive.
+  The controllers, the instances of classes annotated with `@Controller`, that are assigned to inactive browsers are destroyed.
+
+* `wcardinal.disconnection.max=-1`
+
+  The browsers that don't have network connections longer than this time span are considered inactive.
+  The controllers, the instances of classes annotated with `@Controller`, that are assigned to inactive browsers are destroyed.
+  If this value is negative, the maximum disconnection time is not checked.
 
 * `wcardinal.allowed-origins=`
 
