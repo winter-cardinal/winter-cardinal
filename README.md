@@ -88,11 +88,11 @@ Note that the `wcardinal.worker.min.js` must be loaded before loading your contr
 
 ### Compatibility Matrix
 
-|WinterCardinal Version|Tested JDK Version        |Tested Spring Boot Version |Tested Chrome / Firefox / Safari Version |
-|--                    |--                        |--                         |--                                       |
-|1.0.x                 |8                         |2.2.4.RELEASE              |Latest                                   |
-|1.1.0                 |8                         |2.7.18                     |Latest                                   |
-|2.0.0                 |17                        |3.3.1                      |Latest                                   |
+|WinterCardinal Version|JDK Version        |Spring Boot Version |
+|--                    |--                 |--                  |
+|1.0.x                 |8                  |2.2.4.RELEASE       |
+|1.1.0                 |8                  |2.7.18              |
+|2.0.0                 |17                 |3.3.1               |
 
 ### How to build
 
