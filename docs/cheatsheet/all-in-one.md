@@ -4802,7 +4802,7 @@ Please refer to [Spring Boot: External config](http://docs.spring.io/spring-boot
 
 * `wcardinal.disconnection.max=-1`
 
-  The browsers that don't have network connections longer than this time span are considered inactive.
+  The browsers that had network connections before and now don't have network connections longer than this time span are considered inactive.
   The controllers, the instances of classes annotated with `@Controller`, that are assigned to inactive browsers are destroyed.
   If this value is negative, the maximum disconnection time is not checked.
 
