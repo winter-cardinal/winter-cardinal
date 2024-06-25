@@ -4803,7 +4803,7 @@ Please refer to [Spring Boot: External config](http://docs.spring.io/spring-boot
     * If `wcardinal.disconnection.max` is negative, the browsers that don't send any messages or heartbeats for longer than   `wcardinal.idle.max` are considered inactive.
 
     * If `wcardinal.disconnection.max` is not negative, the browsers that had network connections before and don't have network connections for longer than `wcardinal.disconnection.max` now are considered inactive.
-      The browsers that never had network connections before and don't send heartbeats longer than `max(wcardinal.idle.max, wcardinal.disconnection.max)` are also considered inactive.
+      The browsers that have network connections now, or never had network connections before, and don't send heartbeats longer than `max(wcardinal.idle.max, wcardinal.disconnection.max)` are also considered inactive.
 
     * If the controllers have methods annotated with `@OnIdleCheck`, the browsers that those methods return negative numbers are considered inactive. `wcardinal.idle.max` and `wcardinal.disconnection.max` are not taken into the consideration in this case.
 
