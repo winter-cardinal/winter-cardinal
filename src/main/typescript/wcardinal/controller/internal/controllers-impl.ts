@@ -135,7 +135,7 @@ const findTypeByName = ( name: string ): TypeInfo | null => {
 };
 
 const findTypeByConstructor = ( constructor: Function ): TypeInfo | null => {
-	let type: SType | null = STypeToClass.getType_( constructor );
+	let type: STypeOrTaskOrCallable | null = STypeToClass.getType_( constructor );
 	if( type != null ) {
 		if( type === SType.DESCENDING_MAP ) {
 			type = SType.ASCENDING_MAP;
