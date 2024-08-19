@@ -1,4 +1,6 @@
-Winter Cardinal is a library for real-time web applications build on top of the Spring framework.
+### WinterCardinal
+
+WinterCardinal is a library for real-time web applications build on top of the Spring framework.
 It is designed for making single-page applications stable against unintended network/server failures.
 The controller class and its fields defined on a server will be synchronized with clones on browsers in real time.
 Also enables us to call methods defined on the controller class from browsers.
@@ -14,7 +16,7 @@ class MyController {
 	SLong field;
 
 	@Callable
-	String hello( String name ){
+	String hello(String name){
 		return "Hello, "+name;
 	}
 }
@@ -25,11 +27,11 @@ class MyController {
 <script src="./my-controller"></script>
 <script>
 myController.field.get();      // Gets a field value
-myController.field.set( 128 ); // Changes a field value
+myController.field.set(128); // Changes a field value
 
-// Calls `hello( String )` method
-myController.hello( 'John' ).then(( result ) => {
-	console.log( result ); // Prints 'Hello, John'
+// Calls `hello(String)` method
+myController.hello("John").then((result) => {
+	console.log(result); // Prints "Hello, John"
 });
 </script>
 ```
@@ -65,7 +67,7 @@ npm i @wcardinal/wcardinal
 Please note that the NPM package has no default exports.
 
 ```javascript
-import * as wcardinal from '@wcardinal/wcardinal';
+import * as wcardinal from "@wcardinal/wcardinal";
 ```
 
 #### CDN
@@ -94,15 +96,15 @@ Note that the `wcardinal.worker.min.js` must be loaded before loading your contr
 |1.1.0                 |8                  |2.7.18              |
 |2.0.0 to 2.1.0        |17                 |3.3.1               |
 
-### How to build
+### How to Build
 
-#### JS for release
+#### JS for Release
 
 ```shell
 npm run build
 ```
 
-#### JS for development
+#### JS for Development
 
 ```shell
 npm run watch:ts
@@ -114,13 +116,13 @@ and then in an another terminal
 npm run watch:rollup
 ```
 
-#### Java API document
+#### Java API Document
 
 ```shell
 ./gradlew compileJavaApiDocument
 ```
 
-#### JS API document
+#### JS API Document
 
 ```shell
 npm run build:api
