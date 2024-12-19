@@ -6,7 +6,7 @@
 package basics;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.wcardinal.controller.StreamingResult;
 import org.wcardinal.controller.annotation.Ajax;
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.CallableExceptionHandler;
@@ -34,6 +34,26 @@ public class BasicsCallableAjaxController {
 	@Unlocked
 	int callable_ajax_unlocked( final int value ){
 		return value * 3;
+	}
+
+	@Callable
+	@Ajax
+	StreamingResult callable_ajax_streaming( final int value ){
+		return (generator) -> {
+			generator.writeNumber(value * 3);
+		};
+	}
+
+	@Callable
+	@Ajax
+	StreamingResult callable_ajax_streaming_array( final int value ){
+		return (generator) -> {
+			generator.writeStartArray();
+			for (int i = 0; i < 3; ++i) {
+				generator.writeNumber(i);
+			}
+			generator.writeEndArray();
+		};
 	}
 
 	@Callable

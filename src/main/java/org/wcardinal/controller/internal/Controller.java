@@ -10,7 +10,6 @@ import java.lang.reflect.Method;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1402,7 +1401,7 @@ public class Controller implements ControllerContext, MethodContainer, SParent {
 					}
 				});
 			} else {
-				callSMapsPut.putResultIfExists( callKey, CallResultType.NO_SUCH_METHOD );
+				callSMapsPut.putErrorIfExists( callKey, CallResultType.NO_SUCH_METHOD );
 			}
 		}
 	}
@@ -1410,24 +1409,24 @@ public class Controller implements ControllerContext, MethodContainer, SParent {
 	void completeCall( final CallSMapsPut callSMapsPut, final String callKey, final MethodResult<Object> callResult, final String name ){
 		if( callResult instanceof MethodResultData ){
 			final MethodResultData<?> callResultData = (MethodResultData<?>) callResult;
-			callSMapsPut.putResultIfExists( callKey, Collections.singleton(callResultData.data) );
+			callSMapsPut.putResultIfExists( callKey, callResultData.data );
 		} else if( callResult instanceof MethodResultException ) {
 			final MethodResultException<?> callResultException = (MethodResultException<?>) callResult;
 			final Throwable throwable = callResultException.getInvocationTargetThrowable();
 			if( throwable != null ) {
 				final Class<? extends Throwable> throwableClass = throwable.getClass();
 				if( handleCallException( callSMapsPut, callKey, this, name, throwableClass, throwable, callResultException.getMethod() ) != true ) {
-					callSMapsPut.putResultIfExists( callKey, CallResultType.EXCEPTION );
+					callSMapsPut.putErrorIfExists( callKey, CallResultType.EXCEPTION );
 					this.handle( callResult );
 				}
 			} else {
-				callSMapsPut.putResultIfExists( callKey, CallResultType.EXCEPTION );
+				callSMapsPut.putErrorIfExists( callKey, CallResultType.EXCEPTION );
 				this.handle( callResult );
 			}
 		} else if( callResult instanceof MethodResultVoid ) {
-			callSMapsPut.putResultIfExists( callKey, Collections.emptyList() );
+			callSMapsPut.putVoidIfExists( callKey );
 		} else {
-			callSMapsPut.putResultIfExists( callKey, CallResultType.NO_SUCH_METHOD );
+			callSMapsPut.putErrorIfExists( callKey, CallResultType.NO_SUCH_METHOD );
 		}
 	}
 
@@ -1439,9 +1438,9 @@ public class Controller implements ControllerContext, MethodContainer, SParent {
 			if( LockRequirements.REQUIRED_OR_UNSPECIFIED.contains( handler.getLockRequirement() ) ) {
 				final MethodResult<String> handlerResult = handler.call( controller, handlerTrackingData, null, controller.instance, throwable, method );
 				if( handlerResult instanceof MethodResultData ) {
-					callSMapsPut.putResultIfExists( callKey, ((MethodResultData<String>)handlerResult).data );
+					callSMapsPut.putErrorIfExists( callKey, ((MethodResultData<String>)handlerResult).data );
 				} else {
-					callSMapsPut.putResultIfExists( callKey, CallResultType.EXCEPTION );
+					callSMapsPut.putErrorIfExists( callKey, CallResultType.EXCEPTION );
 				}
 				controller.handle( handlerResult );
 			} else {
@@ -1451,9 +1450,9 @@ public class Controller implements ControllerContext, MethodContainer, SParent {
 						final MethodResult<String> handlerResult = handler.call( controller, handlerTrackingData, null, controller.instance, throwable, method );
 						try( final Unlocker unlocker = controller.lock() ) {
 							if( handlerResult instanceof MethodResultData ) {
-								callSMapsPut.putResultIfExists( callKey, ((MethodResultData<String>)handlerResult).data );
+								callSMapsPut.putErrorIfExists( callKey, ((MethodResultData<String>)handlerResult).data );
 							} else {
-								callSMapsPut.putResultIfExists( callKey, CallResultType.EXCEPTION );
+								callSMapsPut.putErrorIfExists( callKey, CallResultType.EXCEPTION );
 							}
 							controller.handle( handlerResult );
 						}

@@ -12,8 +12,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-
+import org.wcardinal.controller.StreamingResult;
 import org.wcardinal.util.json.Json;
+
+import com.fasterxml.jackson.core.JsonGenerator;
 
 public class CallSMapsPutImpl implements CallSMapsPut {
 	final AsyncContext context;
@@ -33,7 +35,21 @@ public class CallSMapsPutImpl implements CallSMapsPut {
 	}
 
 	@Override
+	public void putVoidIfExists( final String key ) {
+		putIfExists( key, null, true, null );
+	}
+
+	@Override
+	public void putErrorIfExists( final String key, final String error ) {
+		putIfExists( key, error, false, null );
+	}
+
+	@Override
 	public void putResultIfExists( final String key, final Object result ) {
+		putIfExists( key, null, false, result );
+	}
+
+	private void putIfExists( final String key, final String error, final boolean isVoid, final Object result ) {
 		HttpServletResponse response = null;
 		try {
 			response = (HttpServletResponse)context.getResponse();
@@ -41,7 +57,24 @@ public class CallSMapsPutImpl implements CallSMapsPut {
 			response.setHeader("Content-Type", "application/json");
 			OutputStream oStream = response.getOutputStream();
 			try {
-				Json.non_closing_writer.writeValue(oStream, result);
+				if (error != null) {
+					Json.non_closing_writer.writeValue(oStream, error);
+				} else {
+					JsonGenerator generator = Json.mapper.getFactory().createGenerator(oStream);
+					try {
+						generator.writeStartArray();
+						if (!isVoid) {
+							if (result instanceof StreamingResult) {
+								((StreamingResult) result).serialize(generator);
+							} else {
+								generator.writeObject(result);
+							}
+						}
+						generator.writeEndArray();
+					} finally {
+						generator.close();
+					}
+				}
 			} finally {
 				IOUtils.closeQuietly(oStream);
 			}

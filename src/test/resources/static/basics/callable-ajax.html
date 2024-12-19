@@ -51,6 +51,48 @@
 				cb.fail( reason );
 			});
 		})
+		.test("Callable ajax streaming check", function( cb ){
+			c.callable_ajax_streaming( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax streaming ajax check", function( cb ){
+			c.callable_ajax_streaming.ajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax streaming unajax check", function( cb ){
+			c.callable_ajax_streaming.unajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, 3 ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax streaming array check", function( cb ){
+			c.callable_ajax_streaming_array( 1 ).then(function( result ){
+				cb.assertEquals( result, [0, 1, 2] ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax streaming array ajax check", function( cb ){
+			c.callable_ajax_streaming_array.ajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, [0, 1, 2] ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
+		.test("Callable ajax streaming array unajax check", function( cb ){
+			c.callable_ajax_streaming_array.unajax().call( 1 ).then(function( result ){
+				cb.assertEquals( result, [0, 1, 2] ).done();
+			}, function( reason ){
+				cb.fail( reason );
+			});
+		})
 		.test("Callable ajax exception check", function( cb ){
 			c.callable_ajax_exception( 1 ).then(function( result ){
 				cb.fail( result );
@@ -100,7 +142,7 @@
 				cb.fail( reason );
 			});
 		})
-			.test("Callable ajax component ajax check", function( cb ){
+		.test("Callable ajax component ajax check", function( cb ){
 			c.component.callable_ajax.ajax().call( 1 ).then(function( result ){
 				cb.assertEquals( result, 3 ).done();
 			}, function( reason ){

@@ -6,5 +6,7 @@
 package org.wcardinal.controller.internal;
 
 public interface CallSMapsPut {
-	void putResultIfExists( String key, Object result );
+	void putVoidIfExists( final String key );
+	void putErrorIfExists( final String key, final String error );
+	void putResultIfExists( final String key, final Object result );
 }

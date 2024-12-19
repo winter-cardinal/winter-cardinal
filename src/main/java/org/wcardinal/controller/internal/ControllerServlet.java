@@ -290,7 +290,7 @@ public class ControllerServlet extends AbstractController {
 								if( controller != null ) {
 									controller.call( new CallSMapsPutImpl( req ), null, callPathAndRequest.request );
 								} else {
-									new CallSMapsPutImpl( req ).putResultIfExists( null, CallResultType.NO_SUCH_METHOD );
+									new CallSMapsPutImpl( req ).putErrorIfExists( null, CallResultType.NO_SUCH_METHOD );
 								}
 								return;
 							}
