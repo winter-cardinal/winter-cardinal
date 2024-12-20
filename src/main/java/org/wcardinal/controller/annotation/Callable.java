@@ -16,6 +16,32 @@ import java.lang.annotation.Target;
  *
  * When a method is called, a controller owing the method is locked.
  * Accessing fields of the controller owing the method, thus, is thread safe.
+
+ * <pre>{@code&nbsp;
+ *    import org.wcardinal.controller.annotation.Controller;
+ *    import org.wcardinal.controller.annotation.Callable;
+ *
+ *    &#64;Controller
+ *    class MyController {
+ *      &#64;Callable
+ *      int callable() {
+ *        return 1;
+ *      }
+ *    }
+ * }</pre>
+ *
+ * In browsers, {@code MyController#callable()} can be called as follows:
+ *
+ * <pre>{@code&nbsp;
+ *    <script src="my-controller"></script>
+ *    <script>
+ *       console.log( await myController.callable() ); // Prints 1
+ *    </script>
+ * }</pre>
+ *
+ * @see org.wcardinal.controller.StreamingResult
+ * @see org.wcardinal.controller.annotation.Ajax
+ * @see org.wcardinal.controller.annotation.Task
  */
 @Documented
 @Decoratable

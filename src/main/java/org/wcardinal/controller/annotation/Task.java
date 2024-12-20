@@ -13,6 +13,20 @@ import java.lang.annotation.Target;
 
 /**
  * Marks an annotated method as a task.
+ *
+ * <pre>{@code&nbsp;
+ *    &#64;Controller
+ *    class MyController {
+ *      &#64;Task
+ *      int task() {
+ *        return 1;
+ *      }
+ *    }
+ * }</pre>
+ *
+ * @see org.wcardinal.controller.StreamingResult
+ * @see org.wcardinal.controller.annotation.Ajax
+ * @see org.wcardinal.controller.annotation.Callable
  */
 @Documented
 @Decoratable
