@@ -15,6 +15,9 @@ import java.lang.annotation.Target;
  * Marks an annotated method as a task.
  *
  * <pre>{@code&nbsp;
+ *    import org.wcardinal.controller.annotation.Controller;
+ *    import org.wcardinal.controller.annotation.Task;
+ *
  *    &#64;Controller
  *    class MyController {
  *      &#64;Task

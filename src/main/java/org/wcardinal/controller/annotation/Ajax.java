@@ -22,6 +22,9 @@ import java.lang.annotation.Target;
  * Browsers may change this behavior.
  *
  * <pre>{@code&nbsp;
+ *    import org.wcardinal.controller.annotation.Callable;
+ *    import org.wcardinal.controller.annotation.Controller;
+ *
  *    &#64;Controller
  *    class MyController {
  *      &#64;Ajax

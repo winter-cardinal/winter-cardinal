@@ -22,6 +22,10 @@ import com.fasterxml.jackson.core.JsonGenerator;
  * is highly recommended if the serialized data are considered to be large.
  *
  * <pre>{@code&nbsp;
+ *    import org.wcardinal.controller.StreamingResult;
+ *    import org.wcardinal.controller.annotation.Callable;
+ *    import org.wcardinal.controller.annotation.Controller;
+ *
  *    &#64;Controller
  *    class MyController {
  *      &#64;Ajax
@@ -29,11 +33,11 @@ import com.fasterxml.jackson.core.JsonGenerator;
  *      StreamingResult callable() {
  *        return (generator) -&gt; {
  *          generator.writeStartArray();
- *          for (int i = 0; i &lt; 10; ++i) {
+ *          for (int i = 0; i &lt; 3; ++i) {
  *            generator.writeNumber(i);
  *          }
  *          generator.writeEndArray();
- *        }
+ *        };
  *      }
  *    }
  * }</pre>

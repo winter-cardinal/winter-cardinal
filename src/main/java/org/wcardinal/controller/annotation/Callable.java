@@ -18,8 +18,8 @@ import java.lang.annotation.Target;
  * Accessing fields of the controller owing the method, thus, is thread safe.
 
  * <pre>{@code&nbsp;
- *    import org.wcardinal.controller.annotation.Controller;
  *    import org.wcardinal.controller.annotation.Callable;
+ *    import org.wcardinal.controller.annotation.Controller;
  *
  *    &#64;Controller
  *    class MyController {
@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
  * <pre>{@code&nbsp;
  *    <script src="my-controller"></script>
  *    <script>
- *       console.log( await myController.callable() ); // Prints 1
+ *       console.log(await myController.callable()); // Prints 1
  *    </script>
  * }</pre>
  *
