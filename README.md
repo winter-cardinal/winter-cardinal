@@ -5,7 +5,7 @@ It is designed for making single-page applications stable against unintended net
 The controller class and its fields defined on a server will be synchronized with clones on browsers in real time.
 Also enables us to call methods defined on the controller class from browsers.
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.AbstractController;
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Callable;
@@ -31,7 +31,7 @@ class MyController extends AbstractController {
 }
 ```
 
-```html:HTML
+```html
 <script src="./my-controller"></script>
 <script>
 	// Accessing Fields
@@ -52,7 +52,7 @@ class MyController extends AbstractController {
 
 #### Gradle
 
-```groovy:build.gradle
+```groovy
 dependencies {
 	compile 'com.github.winter-cardinal:winter-cardinal:latest.release'
 }
@@ -62,7 +62,7 @@ Client-side libraries are packed in this JAR as a WebJars.
 Please find the `wcardinal.worker.min.js` in the directory `META-INF/resources/webjars/wcardinal/${version}/`.
 WebJars can be loaded from browsers as follows:
 
-```html:HTML
+```html
 <script src="webjars/wcardinal/wcardinal.worker.min.js"></script>
 ```
 
@@ -72,7 +72,7 @@ Please note that the `${version}` part is omitted. The worker version `wcardinal
 
 The client-side libraries are also available as a NPM package.
 
-```shell:Terminal
+```shell
 $> npm i @wcardinal/wcardinal
 ```
 
@@ -84,7 +84,7 @@ import * as wcardinal from "@wcardinal/wcardinal";
 
 #### CDN
 
-```html:HTML
+```html
 <script src="https://cdn.jsdelivr.net/npm/@wcardinal/wcardinal/dist/wcardinal.worker.min.js"></script>
 <script src="./my-controller"></script>
 ```

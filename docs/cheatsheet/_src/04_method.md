@@ -2,7 +2,7 @@
 
 ### Calling Methods From JavaScript
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 
@@ -15,7 +15,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
@@ -24,37 +24,38 @@ console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 In the TypeScript projects, the type declaration of `MyController` shown in above will look like this.
 
 ```typescript:TypeScript
-	import { controller } from "@wcardinal/wcardinal";
+import { controller } from "@wcardinal/wcardinal";
 
-	interface MyController extends controller.Controller {
-		hello: controller.Callable<string, [name: string]>;
-	}
+interface MyController extends controller.Controller {
+	hello: controller.Callable<string, [name: string]>;
+}
 ```
 
 If methods like `controller.Controller#on(string, function): this` and `controller.Callable#timeout(number)`
 aren't mandatory, the declaration can be simplified to:
 
-```typescript:TypeScript
+```typescript
 interface MyController {
 	hello(name: string): Promise<string>;
 }
 ```
 
-> [!NOTE]
+> **NOTE**
+>
 > In the versions prior to 2.2.0, the type declaration of `MyController` will look like the following.
 > Otherwise, `myController.hello("Cardinal")` doesn't compile.
 >
-> ```typescript:TypeScript
-> 	import { controller } from "@wcardinal/wcardinal";
+> ```typescript
+> import { controller } from "@wcardinal/wcardinal";
 >
->	interface MyController extends controller.Controller {
->		hello: controller.Callable<string, [name: string]> & controller.CallableCall<string, [name: string]>;
->	}
+> interface MyController extends controller.Controller {
+> 	hello: controller.Callable<string, [name: string]> & controller.CallableCall<string, [name: string]>;
+> }
 > ```
 
 ### Adjusting Method Timeout (Pattern 1)
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Timeout;
@@ -74,7 +75,7 @@ class MyController {
 
 We can use Spring properties instead.
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 
@@ -92,7 +93,7 @@ class MyController {
 
 The timeout values can be overridden in browsers by the `.timeout(number)` method.
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 
@@ -105,7 +106,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 // Overrides the timeout value of the `hello` method to 10 seconds
 console.log(await myController.hello.timeout(10000).call("Cardinal")); // Prints "Hello, Cardinal!"
 ```
@@ -115,7 +116,7 @@ console.log(await myController.hello.timeout(10000).call("Cardinal")); // Prints
 When `@Callable` / `@Task` methods need to return large data, it is
 preferable to send them via the Ajax to avoid consuming large heap memory.
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Ajax;
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
@@ -130,7 +131,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.large()); // Prints "Large Data"
 ```
 
@@ -138,7 +139,7 @@ console.log(await myController.large()); // Prints "Large Data"
 
 Wa can use the Ajax even when the callable methods are not annotated with `@Ajax` as follows:
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 
@@ -151,13 +152,13 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.large.ajax().call()); // Prints "Large Data"
 ```
 
 ### Calling @Ajax-Annotated Methods From JavaScript via WebSocket
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Ajax;
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
@@ -172,7 +173,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.large.unajax.call()); // Prints "Large Data"
 ```
 
@@ -190,7 +191,7 @@ serialized data still consume the heap memory, although the data themselve
 don't. Because of this, it's highly recommended to annotate methods with
 `@Ajax` if the serialized data are considered to be large.
 
-```java:Java
+```java
 import org.wcardinal.controller.StreamingResult;
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
@@ -211,13 +212,13 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.large()) // Prints [0, 1, 2]
 ```
 
 ### Method Exception Handling
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.CallableExceptionHandler;
 import org.wcardinal.controller.annotation.Controller;
@@ -236,7 +237,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello("Cardinal").catch((reason) => {
 	console.log(reason); // Prints "fail-reason"
 });
@@ -245,7 +246,7 @@ myController.hello("Cardinal").catch((reason) => {
 If there is more than one exception handler, most specific one is chosen
 and executed based on types of raised exceptions and arguments of handlers:
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.CallableExceptionHandler;
 import org.wcardinal.controller.annotation.Controller;
@@ -271,7 +272,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello("Cardinal").catch((reason) => {
 	console.log(reason); // Prints "fail-reason-b"
 });
@@ -279,7 +280,7 @@ myController.hello("Cardinal").catch((reason) => {
 
 If there is no appropriate handler, one of the handlers on a parent is called:
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.CallableExceptionHandler;
 import org.wcardinal.controller.annotation.Controller;
@@ -309,7 +310,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.component.hello("Cardinal").catch((reason) => {
 	console.log(reason); // Prints "fail-reason-b"
 });

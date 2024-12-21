@@ -1131,7 +1131,7 @@ Therefore, it is guaranteed that `field1` has `2` when `field0` is changed to `1
 
 ### Calling Methods From JavaScript
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 
@@ -1144,7 +1144,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
@@ -1153,37 +1153,38 @@ console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 In the TypeScript projects, the type declaration of `MyController` shown in above will look like this.
 
 ```typescript:TypeScript
-	import { controller } from "@wcardinal/wcardinal";
+import { controller } from "@wcardinal/wcardinal";
 
-	interface MyController extends controller.Controller {
-		hello: controller.Callable<string, [name: string]>;
-	}
+interface MyController extends controller.Controller {
+	hello: controller.Callable<string, [name: string]>;
+}
 ```
 
 If methods like `controller.Controller#on(string, function): this` and `controller.Callable#timeout(number)`
 aren't mandatory, the declaration can be simplified to:
 
-```typescript:TypeScript
+```typescript
 interface MyController {
 	hello(name: string): Promise<string>;
 }
 ```
 
-> [!NOTE]
+> **NOTE**
+>
 > In the versions prior to 2.2.0, the type declaration of `MyController` will look like the following.
 > Otherwise, `myController.hello("Cardinal")` doesn't compile.
 >
-> ```typescript:TypeScript
-> 	import { controller } from "@wcardinal/wcardinal";
+> ```typescript
+> import { controller } from "@wcardinal/wcardinal";
 >
->	interface MyController extends controller.Controller {
->		hello: controller.Callable<string, [name: string]> & controller.CallableCall<string, [name: string]>;
->	}
+> interface MyController extends controller.Controller {
+> 	hello: controller.Callable<string, [name: string]> & controller.CallableCall<string, [name: string]>;
+> }
 > ```
 
 ### Adjusting Method Timeout (Pattern 1)
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Timeout;
@@ -1203,7 +1204,7 @@ class MyController {
 
 We can use Spring properties instead.
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 
@@ -1221,7 +1222,7 @@ class MyController {
 
 The timeout values can be overridden in browsers by the `.timeout(number)` method.
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 
@@ -1234,7 +1235,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 // Overrides the timeout value of the `hello` method to 10 seconds
 console.log(await myController.hello.timeout(10000).call("Cardinal")); // Prints "Hello, Cardinal!"
 ```
@@ -1244,7 +1245,7 @@ console.log(await myController.hello.timeout(10000).call("Cardinal")); // Prints
 When `@Callable` / `@Task` methods need to return large data, it is
 preferable to send them via the Ajax to avoid consuming large heap memory.
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Ajax;
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
@@ -1259,7 +1260,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.large()); // Prints "Large Data"
 ```
 
@@ -1267,7 +1268,7 @@ console.log(await myController.large()); // Prints "Large Data"
 
 Wa can use the Ajax even when the callable methods are not annotated with `@Ajax` as follows:
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
 
@@ -1280,13 +1281,13 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.large.ajax().call()); // Prints "Large Data"
 ```
 
 ### Calling @Ajax-Annotated Methods From JavaScript via WebSocket
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Ajax;
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
@@ -1301,7 +1302,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.large.unajax.call()); // Prints "Large Data"
 ```
 
@@ -1319,7 +1320,7 @@ serialized data still consume the heap memory, although the data themselve
 don't. Because of this, it's highly recommended to annotate methods with
 `@Ajax` if the serialized data are considered to be large.
 
-```java:Java
+```java
 import org.wcardinal.controller.StreamingResult;
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
@@ -1340,13 +1341,13 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 console.log(await myController.large()) // Prints [0, 1, 2]
 ```
 
 ### Method Exception Handling
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.CallableExceptionHandler;
 import org.wcardinal.controller.annotation.Controller;
@@ -1365,7 +1366,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello("Cardinal").catch((reason) => {
 	console.log(reason); // Prints "fail-reason"
 });
@@ -1374,7 +1375,7 @@ myController.hello("Cardinal").catch((reason) => {
 If there is more than one exception handler, most specific one is chosen
 and executed based on types of raised exceptions and arguments of handlers:
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.CallableExceptionHandler;
 import org.wcardinal.controller.annotation.Controller;
@@ -1400,7 +1401,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello("Cardinal").catch((reason) => {
 	console.log(reason); // Prints "fail-reason-b"
 });
@@ -1408,7 +1409,7 @@ myController.hello("Cardinal").catch((reason) => {
 
 If there is no appropriate handler, one of the handlers on a parent is called:
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.CallableExceptionHandler;
 import org.wcardinal.controller.annotation.Controller;
@@ -1438,7 +1439,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.component.hello("Cardinal").catch((reason) => {
 	console.log(reason); // Prints "fail-reason-b"
 });
@@ -1451,7 +1452,7 @@ myController.component.hello("Cardinal").catch((reason) => {
 Let us think about an application which searches and displays alarms containing given words when a user pushes an search button.
 The simplest implementation looks like this:
 
-```java:Java
+```java
 class Alarm {
 
 }
@@ -1465,7 +1466,7 @@ class MyAlarmController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 const alarms = await myAlarmController.find(...);
 // Render the `alarms`.
 ```
@@ -1476,7 +1477,7 @@ Therefore, the user who pushed the search button can not change the search words
 It may not be acceptable.
 This lock behavior of `@Callable` methods can be overridden by using `@Unlocked`:
 
-```java:Java
+```java
 @Controller
 class MyAlarmController {
 	@Callable
@@ -1500,7 +1501,7 @@ But, because `find("B")` finished before `find("A")` did,
 the application may override the `find("B")`'s result with the `find("A")`'s result.
 To fix this issue, a version control on a browser side is required:
 
-```javascript:JavaScript
+```javascript
 let currentVersion = 0;
 
 const renderer = (expectedVersion, alarms) => {
@@ -1526,7 +1527,7 @@ We may need to implement features:
 * Canceling the `find("A")` when the `find("B")`,
 * Auto retry when a connection is lost.
 
-```java:Java
+```java
 @Controller
 class MyAlarmController{
 	long currentVersion;
@@ -1550,7 +1551,7 @@ class MyAlarmController{
 }
 ```
 
-```javascript:JavaScript
+```javascript
 let currentVersion = 0;
 
 const renderer = (expectedVersion, alarms) => {
@@ -1579,7 +1580,7 @@ search("B");
 The `@Task` is for implementing this kind of time-consuming tasks.
 With `@Task`, the above codes can be simplified as follows:
 
-```java:Java
+```java
 @Controller
 class MyAlarmController extends AbstractController {
 	@Task
@@ -1590,7 +1591,7 @@ class MyAlarmController extends AbstractController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myAlarmController.find.on("success", (e, alarms) => {
 	// Render the `alarms`.
 };
@@ -1602,7 +1603,7 @@ myAlarmController.find("B");
 Please note that `@Task` methods **do not own their locks** when being called by default.
 This behavior can be changed by `@Locked`:
 
-```java:Java
+```java
 @Controller
 class MyAlarmController extends AbstractController {
 	@Task
@@ -1615,7 +1616,7 @@ class MyAlarmController extends AbstractController {
 
 ### Task Basics
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Task;
 
@@ -1628,7 +1629,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello
 .on("success", (e, result) => {
 	// Called when the task `hello` succeeds.
@@ -1645,29 +1646,30 @@ controller.hello("Cardinal");
 
 In the TypeScript projects, the type declaration of `MyController` shown in above will look like this.
 
-```typescript:TypeScript
-	import { controller } from "@wcardinal/wcardinal";
+```typescript
+import { controller } from "@wcardinal/wcardinal";
 
-	interface MyController extends controller.Controller {
-		hello: controller.Task<string, [name: string]>;
-	}
+interface MyController extends controller.Controller {
+	hello: controller.Task<string, [name: string]>;
+}
 ```
 
-> [!NOTE]
+> **NOTE**
+>
 > In the versions prior to 2.2.0, the type declaration of `MyController` will look like the following.
 > Otherwise, `myController.hello("Cardinal")` doesn't compile.
 >
-> ```typescript:TypeScript
-> 	import { controller } from "@wcardinal/wcardinal";
+> ```typescript
+> import { controller } from "@wcardinal/wcardinal";
 >
->	interface MyController extends controller.Controller {
->		hello: controller.Task<string, [name: string]> & controller.TaskCall<[name: string], string>;
->	}
+> interface MyController extends controller.Controller {
+> 	hello: controller.Task<string, [name: string]> & controller.TaskCall<[name: string], string>;
+> }
 > ```
 
 ### Aborting a Task
 
-```java:Java
+```java
 import org.wcardinal.controller.TaskResult;
 import org.wcardinal.controller.TaskResults;
 import org.wcardinal.controller.TaskAbortException;
@@ -1684,7 +1686,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello.on("fail", (e, reason) => {
 	console.log(reason); // Prints "fail-reason"
 });
@@ -1694,7 +1696,7 @@ myController.hello("Cardinal");
 
 ### Failing a Task
 
-```java:Java
+```java
 import org.wcardinal.controller.TaskResult;
 import org.wcardinal.controller.TaskResults;
 import org.wcardinal.controller.annotation.Controller;
@@ -1709,7 +1711,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello.on("fail", (e, reason) => {
 	console.log(reason); // Prints "fail-reason"
 });
@@ -1719,7 +1721,7 @@ myController.hello("Cardinal");
 
 ### Retrieving Task Arguments
 
-```javascript:JavaScript
+```javascript
 myController.hello("Cardinal");
 console.log(myController.hello.getArguments());	// Prints ["Cardinal"]
 console.log(myController.hello.getArgument(0));	// Prints "Cardinal"
@@ -1727,7 +1729,7 @@ console.log(myController.hello.getArgument(0));	// Prints "Cardinal"
 
 ### Retrieving a Task Result
 
-```java:Java
+```java
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Task;
 
@@ -1740,7 +1742,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello.on("success", () => {
 	console.log(myController.hello.getResult()); // Prints "Hello, Cardinal!"
 });
@@ -1750,7 +1752,7 @@ myController.hello("Cardinal");
 
 ### Retrieving a Reason Why Failed
 
-```java:Java
+```java
 import org.wcardinal.controller.TaskResult;
 import org.wcardinal.controller.TaskResults;
 import org.wcardinal.controller.annotation.Controller;
@@ -1765,7 +1767,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello.on("fail", () => {
 	console.log(myController.hello.getReason()); // Prints "fail-reason"
 });
@@ -1775,25 +1777,25 @@ myController.hello("Cardinal");
 
 ### Check Whether a Task Is Finished
 
-```javascript:JavaScript
+```javascript
 console.log(myController.hello.isDone()); // Prints true if finished. Otherwise, prints false.
 ```
 
 ### Check Whether a Task Is Finished Successfully
 
-```javascript:JavaScript
+```javascript
 console.log(myController.hello.isSucceeded()); // Prints true if finished successfully. Otherwise, prints false.
 ```
 
 ### Check Whether a Task Is Finished Unsuccessfully
 
-```javascript:JavaScript
+```javascript
 console.log(myController.hello.isFailed()); // Prints true if finished unsuccessfully. Otherwise, prints false.
 ```
 
 ### Task Exception Handling
 
-```java:Java
+```java
 import org.wcardinal.controller.TaskResults;
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Task;
@@ -1812,7 +1814,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello.on("fail", (e, reason) => {
 	console.log(reason); // Prints "fail-reason"
 });
@@ -1823,7 +1825,7 @@ myController.hello("Cardinal");
 If there is more than one exception handler, most specific one is chosen
 and executed based on types of raised exceptions and arguments of handlers:
 
-```java:Java
+```java
 import org.wcardinal.controller.TaskResults;
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Task;
@@ -1849,7 +1851,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.hello.on("fail", (e, reason) => {
 	console.log(reason); // Prints "fail-reason-b"
 });
@@ -1859,7 +1861,7 @@ myController.hello("Cardinal");
 
 If there is no appropriate handler, one of the handlers on a parent is called:
 
-```java:Java
+```java
 import org.wcardinal.controller.TaskResults;
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Task;
@@ -1891,7 +1893,7 @@ class MyController {
 }
 ```
 
-```javascript:JavaScript
+```javascript
 myController.component.hello.on("fail", (e, reason) => {
 	console.log(reason); // Prints "fail-reason-b"
 });
