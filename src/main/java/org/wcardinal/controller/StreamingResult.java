@@ -21,26 +21,35 @@ import com.fasterxml.jackson.core.JsonGenerator;
  * this, the annotating methods with {@link org.wcardinal.controller.annotation.Ajax @Ajax}
  * is highly recommended if the serialized data are considered to be large.
  *
- * <pre>{@code&nbsp;
- *    import org.wcardinal.controller.StreamingResult;
- *    import org.wcardinal.controller.annotation.Callable;
- *    import org.wcardinal.controller.annotation.Controller;
+ * <blockquote><pre>
+ * import org.wcardinal.controller.StreamingResult;
+ * import org.wcardinal.controller.annotation.Callable;
+ * import org.wcardinal.controller.annotation.Controller;
  *
- *    &#64;Controller
- *    class MyController {
- *      &#64;Ajax
- *      &#64;Callable
- *      StreamingResult callable() {
- *        return (generator) -&gt; {
- *          generator.writeStartArray();
- *          for (int i = 0; i &lt; 3; ++i) {
- *            generator.writeNumber(i);
- *          }
- *          generator.writeEndArray();
- *        };
- *      }
- *    }
- * }</pre>
+ * &#64;Controller
+ * class MyController {
+ *   &#64;Ajax
+ *   &#64;Callable
+ *   StreamingResult callable() {
+ *     return (generator) -&gt; {
+ *       generator.writeStartArray();
+ *       for (int i = 0; i &lt; 3; ++i) {
+ *         generator.writeNumber(i);
+ *       }
+ *       generator.writeEndArray();
+ *     };
+ *   }
+ * }</pre></blockquote>
+ *
+ * <h2>Thread Safety</h2>
+ *
+ * In the case that {@link org.wcardinal.controller.annotation.Callable @Callable} /
+ * {@link org.wcardinal.controller.annotation.Task @Task} methods have a lock,
+ * {@link #serialize(JsonGenerator)} gets called before releasing that lock.
+ *
+ * When {@link org.wcardinal.controller.annotation.Callable @Callable} /
+ * {@link org.wcardinal.controller.annotation.Task @Task} methods don't have a lock,
+ * a lock isn't aquired automatically before calling {@link #serialize(JsonGenerator)}.
  *
  * @see org.wcardinal.controller.annotation.Ajax
  * @see org.wcardinal.controller.annotation.Callable

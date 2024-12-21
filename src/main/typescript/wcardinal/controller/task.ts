@@ -5,14 +5,14 @@
 
 import { Connectable } from "../event/connectable";
 import { TaskMemory } from "./internal/task-memory";
+import { TaskCall } from "./task-call";
 import { TaskMethod } from "./task-method";
 
 /**
- * Represents a task.
+ * A central class for task methods.
  *
  * @param RESULT a result type
  * @param ARGUMENTS argument types
- * @param RETURN a return type
  */
 export class Task<RESULT, ARGUMENTS extends unknown[]> extends Connectable
 	implements TaskMethod<RESULT, ARGUMENTS> {
@@ -106,3 +106,6 @@ export class Task<RESULT, ARGUMENTS extends unknown[]> extends Connectable
 		return this.__mem__.toString_();
 	}
 }
+
+export interface Task<RESULT, ARGUMENTS extends unknown[]>
+	extends Connectable, TaskMethod<RESULT, ARGUMENTS>, TaskCall<ARGUMENTS, RESULT> {}

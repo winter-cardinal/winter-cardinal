@@ -1,6 +1,6 @@
 ## Method
 
-### Calling methods from JavaScript
+### Calling Methods From JavaScript
 
 ```java:Java
 import org.wcardinal.controller.annotation.Callable;
@@ -19,7 +19,40 @@ class MyController {
 console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
-### Adjusting method timeout (Pattern 1)
+### Type Declaration for TypeScript
+
+In the TypeScript projects, the type declaration of `MyController` shown in above will look like this.
+
+```typescript:TypeScript
+	import { controller } from "@wcardinal/wcardinal";
+
+	interface MyController extends controller.Controller {
+		hello: controller.Callable<string, [name: string]>;
+	}
+```
+
+If methods like `controller.Controller#on(string, function): this` and `controller.Callable#timeout(number)`
+aren't mandatory, the declaration can be simplified to:
+
+```typescript:TypeScript
+interface MyController {
+	hello(name: string): Promise<string>;
+}
+```
+
+> [!NOTE]
+> In the versions prior to 2.2.0, the type declaration of `MyController` will look like the following.
+> Otherwise, `myController.hello("Cardinal")` doesn't compile.
+>
+> ```typescript:TypeScript
+> 	import { controller } from "@wcardinal/wcardinal";
+>
+>	interface MyController extends controller.Controller {
+>		hello: controller.Callable<string, [name: string]> & controller.CallableCall<string, [name: string]>;
+>	}
+> ```
+
+### Adjusting Method Timeout (Pattern 1)
 
 ```java:Java
 import org.wcardinal.controller.annotation.Callable;
@@ -37,7 +70,7 @@ class MyController {
 }
 ```
 
-### Adjusting method timeout (Pattern 2)
+### Adjusting Method Timeout (Pattern 2)
 
 We can use Spring properties instead.
 
@@ -55,7 +88,7 @@ class MyController {
 }
 ```
 
-### Adjusting method timeout (Pattern 3)
+### Adjusting Method Timeout (Pattern 3)
 
 The timeout values can be overridden in browsers by the `.timeout(number)` method.
 
@@ -77,7 +110,7 @@ class MyController {
 console.log(await myController.hello.timeout(10000).call("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
-### Calling methods from JavaScript via Ajax (Pattern 1)
+### Calling Methods From JavaScript via Ajax (Pattern 1)
 
 When `@Callable` / `@Task` methods need to return large data, it is
 preferable to send them via the Ajax to avoid consuming large heap memory.
@@ -101,7 +134,7 @@ class MyController {
 console.log(await myController.large()); // Prints "Large Data"
 ```
 
-### Calling methods from JavaScript via Ajax (Pattern 2)
+### Calling Methods From JavaScript via Ajax (Pattern 2)
 
 Wa can use the Ajax even when the callable methods are not annotated with `@Ajax` as follows:
 
@@ -122,7 +155,28 @@ class MyController {
 console.log(await myController.large.ajax().call()); // Prints "Large Data"
 ```
 
-### Streaming large set of data
+### Calling @Ajax-Annotated Methods From JavaScript via WebSocket
+
+```java:Java
+import org.wcardinal.controller.annotation.Ajax;
+import org.wcardinal.controller.annotation.Callable;
+import org.wcardinal.controller.annotation.Controller;
+
+@Controller
+class MyController {
+	@Ajax
+	@Callable
+	String large() {
+		return "Large Data";
+	}
+}
+```
+
+```javascript:JavaScript
+console.log(await myController.large.unajax.call()); // Prints "Large Data"
+```
+
+### Streaming Large Set of Data
 
 When `@Callable` / `@Task` methods need to return large set of data, it is
 preferable to stream those data instead of consuming large heap memory.
@@ -161,7 +215,7 @@ class MyController {
 console.log(await myController.large()) // Prints [0, 1, 2]
 ```
 
-### Method exception handling
+### Method Exception Handling
 
 ```java:Java
 import org.wcardinal.controller.annotation.Callable;

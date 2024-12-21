@@ -4,11 +4,12 @@
  */
 
 import { Connectable } from "../event/connectable";
+import { CallableCall } from "./callable-call";
 import { CallableMethod } from "./callable-method";
 import { CallableMemory } from "./internal/callable-memory";
 
 /**
- * A central class for making controller methods.
+ * A central class for callble methods.
  *
  * @param RESULT a return type
  * @param ARGUMENTS argument types
@@ -51,3 +52,6 @@ export class Callable<RESULT, ARGUMENTS extends unknown[]> extends Connectable
 		return this.__mem__.call_( args );
 	}
 }
+
+export interface Callable<RESULT, ARGUMENTS extends unknown[]>
+	extends Connectable, CallableMethod<RESULT, ARGUMENTS>, CallableCall<RESULT, ARGUMENTS> {}

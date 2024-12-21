@@ -63,21 +63,12 @@ export interface CallableMethod<RESULT, ARGUMENTS extends unknown[]> extends Con
 	unsafe(): CallableMethod<RESULT, ARGUMENTS>;
 
 	/**
-	 * Invokes the method and returns a wcardinal.util.Thenable instance.
-	 * The returned value is passed the `done` handler of the instance.
-	 * If the method invocation goes to failure, the `fail` handler of the instance
-	 * is invoked with the string representing a reason.
+	 * Invokes a callable method.
 	 *
-	 *     call( "John" )
-	 *     .then(function( returnedValue ){
-	 *         // success
-	 *     })
-	 *     .catch(function( reason ){
-	 *         // failure
-	 *     });
+	 *     const returnedValue = await call("Cardinal");
 	 *
 	 * @param args method arguments
-	 * @returns the thenable object
+	 * @returns a promise
 	 */
 	call( ...args: ARGUMENTS ): Promise<RESULT>;
 }

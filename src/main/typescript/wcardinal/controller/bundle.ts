@@ -7,6 +7,7 @@ import * as dataModule from "./data/bundle";
 import * as internalModule from "./internal/bundle";
 
 import * as CallableModule from "./callable";
+import * as CallableMethodModule from "./callable-method";
 import * as CallableCallModule from "./callable-call";
 import * as ControllersModule from "./controllers";
 import * as ComponentFactoryImplModule from "./internal/component-factory-impl";
@@ -27,6 +28,7 @@ export namespace controller {
 	export import internal = internalModule.internal;
 
 	export import Callable = CallableModule.Callable;
+	export import CallableMethod = CallableMethodModule.CallableMethod;
 	export import CallableCall = CallableCallModule.CallableCall;
 	export import ComponentFactory = ComponentFactoryImplModule.ComponentFactoryImpl;
 	export import Component = ComponentImplModule.ComponentImpl;
