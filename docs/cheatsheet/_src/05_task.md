@@ -195,7 +195,7 @@ myController.hello
 controller.hello("Cardinal");
 ```
 
-### Type Declaration for TypeScript
+### Type Declaration of Task Methods for TypeScript
 
 In the TypeScript projects, the type declaration of `MyController` shown in above will look like this.
 

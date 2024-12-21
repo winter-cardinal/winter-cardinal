@@ -37,7 +37,7 @@
 	* [Controlling field synchronization timing (Java)](#controlling-field-synchronization-timing-java)
 * [Method](#method)
 	* [Calling Methods From JavaScript](#calling-methods-from-javascript)
-	* [Type Declaration for TypeScript](#type-declaration-for-typescript)
+	* [Type Declaration of Callable Methods for TypeScript](#type-declaration-of-callable-methods-for-typescript)
 	* [Adjusting Method Timeout (Pattern 1)](#adjusting-method-timeout-pattern-1)
 	* [Adjusting Method Timeout (Pattern 2)](#adjusting-method-timeout-pattern-2)
 	* [Adjusting Method Timeout (Pattern 3)](#adjusting-method-timeout-pattern-3)
@@ -49,7 +49,7 @@
 * [Task](#task)
 	* [Introduction](#introduction)
 	* [Task Basics](#task-basics)
-	* [Type Declaration for TypeScript](#type-declaration-for-typescript)
+	* [Type Declaration of Task Methods for TypeScript](#type-declaration-of-task-methods-for-typescript)
 	* [Aborting a Task](#aborting-a-task)
 	* [Failing a Task](#failing-a-task)
 	* [Retrieving Task Arguments](#retrieving-task-arguments)
@@ -1148,7 +1148,7 @@ class MyController {
 console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
-### Type Declaration for TypeScript
+### Type Declaration of Callable Methods for TypeScript
 
 In the TypeScript projects, the type declaration of `MyController` shown in above will look like this.
 
@@ -1642,7 +1642,7 @@ myController.hello
 controller.hello("Cardinal");
 ```
 
-### Type Declaration for TypeScript
+### Type Declaration of Task Methods for TypeScript
 
 In the TypeScript projects, the type declaration of `MyController` shown in above will look like this.
 

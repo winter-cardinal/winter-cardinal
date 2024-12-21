@@ -19,7 +19,7 @@ class MyController {
 console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
-### Type Declaration for TypeScript
+### Type Declaration of Callable Methods for TypeScript
 
 In the TypeScript projects, the type declaration of `MyController` shown in above will look like this.
 
