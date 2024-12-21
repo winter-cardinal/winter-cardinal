@@ -5,34 +5,46 @@ It is designed for making single-page applications stable against unintended net
 The controller class and its fields defined on a server will be synchronized with clones on browsers in real time.
 Also enables us to call methods defined on the controller class from browsers.
 
-```java
-// Java
+```java:Java
+import org.wcardinal.controller.annotation.AbstractController;
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.Callable;
 
 @Controller
-class MyController {
+class MyController extends AbstractController {
 	@Autowired
 	SLong field;
 
+	@OnCreate
+	void init() {
+		field.set(42);
+	}
+
 	@Callable
-	String hello(String name){
-		return "Hello, "+name;
+	String hello(String name) {
+		return "Hello, " + name + "!";
+	}
+
+	void method() {
+		trigger("eventname", 42);
 	}
 }
 ```
 
-```html
-<!-- HTML -->
+```html:HTML
 <script src="./my-controller"></script>
 <script>
-myController.field.get();      // Gets a field value
-myController.field.set(128); // Changes a field value
+	// Accessing Fields
+	console.log(myController.field.get()); // Prints 42
+	myController.field.set(84);
 
-// Calls `hello(String)` method
-myController.hello("John").then((result) => {
-	console.log(result); // Prints "Hello, John"
-});
+	// Calling Methods
+	console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
+
+	// Catching Events
+	myController.on("eventname", (e, value) => {
+		console.log(value); // Prints 42
+	});
 </script>
 ```
 
@@ -40,7 +52,7 @@ myController.hello("John").then((result) => {
 
 #### Gradle
 
-```groovy
+```groovy:build.gradle
 dependencies {
 	compile 'com.github.winter-cardinal:winter-cardinal:latest.release'
 }
@@ -50,7 +62,7 @@ Client-side libraries are packed in this JAR as a WebJars.
 Please find the `wcardinal.worker.min.js` in the directory `META-INF/resources/webjars/wcardinal/${version}/`.
 WebJars can be loaded from browsers as follows:
 
-```html
+```html:HTML
 <script src="webjars/wcardinal/wcardinal.worker.min.js"></script>
 ```
 
@@ -60,19 +72,19 @@ Please note that the `${version}` part is omitted. The worker version `wcardinal
 
 The client-side libraries are also available as a NPM package.
 
-```shell
-npm i @wcardinal/wcardinal
+```shell:Terminal
+$> npm i @wcardinal/wcardinal
 ```
 
 Please note that the NPM package has no default exports.
 
-```javascript
+```javascript:JavaScript
 import * as wcardinal from "@wcardinal/wcardinal";
 ```
 
 #### CDN
 
-```html
+```html:HTML
 <script src="https://cdn.jsdelivr.net/npm/@wcardinal/wcardinal/dist/wcardinal.worker.min.js"></script>
 <script src="./my-controller"></script>
 ```
@@ -94,7 +106,7 @@ Note that the `wcardinal.worker.min.js` must be loaded before loading your contr
 |--                    |--                 |--                  |
 |1.0.x                 |8                  |2.2.4.RELEASE       |
 |1.1.0                 |8                  |2.7.18              |
-|2.0.0 to 2.1.0        |17                 |3.3.1               |
+|2.0.0 to 2.2.0        |17                 |3.3.1               |
 
 ### How to Build
 
