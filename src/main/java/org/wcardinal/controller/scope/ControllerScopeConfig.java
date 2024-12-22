@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class ControllerScopeConfig {
 	@Bean
 	static CustomScopeConfigurer controllerScopeConfigurer(){
-		final CustomScopeConfigurer configurer = new CustomScopeConfigurer ();
+		final CustomScopeConfigurer configurer = new CustomScopeConfigurer();
 		final Map<String, Object> mapping = new HashMap<String, Object>();
 		mapping.put("controller", new ControllerScope());
 		configurer.setScopes(mapping);

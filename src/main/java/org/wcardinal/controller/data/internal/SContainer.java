@@ -10,12 +10,11 @@ import java.util.EnumSet;
 import org.springframework.core.ResolvableType;
 
 import org.wcardinal.controller.data.SLockable;
-import org.wcardinal.controller.internal.Controller;
 import org.wcardinal.controller.internal.Property;
 import org.wcardinal.util.thread.AutoCloseableReentrantLock;
 
 public interface SContainer<V, P> extends SLockable {
-	void init( final String name, final Controller controller, final AutoCloseableReentrantLock lock, final ResolvableType type, final EnumSet<Property> properties );
+	void init( final String name, final SContainerParent parent, final AutoCloseableReentrantLock lock, final ResolvableType type, final EnumSet<Property> properties );
 	void addOrigin( final Object origin );
 	void removeOrigin( final Object origin );
 
@@ -27,7 +26,7 @@ public interface SContainer<V, P> extends SLockable {
 	long getRevision();
 	void setRevision( long revision );
 
-	Controller getController();
+	SContainerParent getParent();
 	AutoCloseableReentrantLock getLock();
 	ResolvableType getType();
 	V getValue();

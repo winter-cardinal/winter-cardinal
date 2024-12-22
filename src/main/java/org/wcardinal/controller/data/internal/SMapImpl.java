@@ -26,12 +26,12 @@ import org.springframework.stereotype.Component;
 
 import org.wcardinal.controller.data.SKeyOf;
 import org.wcardinal.controller.data.SMap;
-import org.wcardinal.controller.internal.Controller;
 import org.wcardinal.controller.internal.ControllerDynamicInfoHandler;
 import org.wcardinal.controller.internal.Property;
 import org.wcardinal.controller.internal.info.DynamicDataObject;
 import org.wcardinal.controller.internal.info.SetDynamicDataMap;
 import org.wcardinal.util.thread.AutoCloseableReentrantLock;
+import org.wcardinal.util.thread.AutoCloseableReentrantLockNotReady;
 import org.wcardinal.util.thread.Unlocker;
 
 @Primary
@@ -39,12 +39,12 @@ import org.wcardinal.util.thread.Unlocker;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SMapImpl<V> extends SMap<V> implements SMapContainer<V>, ControllerDynamicInfoHandler {
 	String name = null;
-	Controller controller = null;
+	SContainerParent parent = SContainerParentNotReady.INSTANCE;
 	boolean isReadOnly = false;
 	boolean isNonNull = false;
 	boolean isSoft = false;
 	boolean isInitialized = false;
-	AutoCloseableReentrantLock lock;
+	AutoCloseableReentrantLock lock = AutoCloseableReentrantLockNotReady.INSTANCE;
 	ResolvableType type;
 
 	long revision = 0;
@@ -57,9 +57,9 @@ public class SMapImpl<V> extends SMap<V> implements SMapContainer<V>, Controller
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void init( final String name, final Controller controller, final AutoCloseableReentrantLock lock, final ResolvableType type, final EnumSet<Property> properties ) {
+	public void init( final String name, final SContainerParent parent, final AutoCloseableReentrantLock lock, final ResolvableType type, final EnumSet<Property> properties ) {
 		this.name = name;
-		this.controller = controller;
+		this.parent = parent;
 		this.lock = lock;
 		this.type = type;
 		this.isReadOnly = properties.contains( Property.READ_ONLY );
@@ -68,7 +68,7 @@ public class SMapImpl<V> extends SMap<V> implements SMapContainer<V>, Controller
 		this.isInitialized = ! properties.contains( Property.UNINITIALIZED );
 		this.keyOf = new SKeyOfImpl<V>( (Class<V>) type.resolve(Object.class) );
 
-		controller.put( this );
+		parent.put( this );
 	}
 
 	@Override
@@ -92,8 +92,8 @@ public class SMapImpl<V> extends SMap<V> implements SMapContainer<V>, Controller
 	}
 
 	@Override
-	public Controller getController() {
-		return controller;
+	public SContainerParent getParent() {
+		return parent;
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class SMapImpl<V> extends SMap<V> implements SMapContainer<V>, Controller
 
 	@Override
 	public boolean compact() {
-		if( isSoft != true || controller == null || controller.isShared() || values.isEmpty() ) return false;
+		if( isSoft != true || parent == null || parent.isShared() || values.isEmpty() ) return false;
 		this.values.clear();
 		return true;
 	}
@@ -382,27 +382,27 @@ public class SMapImpl<V> extends SMap<V> implements SMapContainer<V>, Controller
 
 	@Override
 	public Unlocker lock(){
-		return controller.lock();
+		return parent.lock();
 	}
 
 	@Override
 	public boolean tryLock(){
-		return controller.tryLock();
+		return parent.tryLock();
 	}
 
 	@Override
 	public boolean tryLock(final long timeout, final TimeUnit unit){
-		return controller.tryLock(timeout, unit);
+		return parent.tryLock(timeout, unit);
 	}
 
 	@Override
 	public boolean isLocked(){
-		return controller.isLocked();
+		return parent.isLocked();
 	}
 
 	@Override
 	public void unlock() {
-		controller.unlock();
+		parent.unlock();
 	}
 
 	@Override

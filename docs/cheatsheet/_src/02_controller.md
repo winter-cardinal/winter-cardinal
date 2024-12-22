@@ -80,34 +80,34 @@ class MyController {
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
-import org.wcardinal.controller.annotation.ControllerScopedService;
+import org.wcardinal.controller.annotation.ControllerScopeService;
 
-@ControllerScopedService
-class MyControllerScopedService {
+@ControllerScopeService
+class MyControllerScopeService {
 
 }
 
 @Controller
 class MyController {
 	@Autowired
-	MyControllerScopedService service;
+	MyControllerScopeService service;
 }
 ```
 
 Controller-scoped services are instantiated per controller instances.
-Thus, the `service` and `component.service` are the same instance of `MyControllerScopedService`:
+Thus, the `service` and `component.service` are the same instance of `MyControllerScopeService`:
 
 ```java
 @Component
 class MyComponent {
 	@Autowired
-	MyControllerScopedService service;
+	MyControllerScopeService service;
 }
 
 @Controller
 class MyController {
    @Autowired
-   MyControllerScopedService service;
+   MyControllerScopeService service;
 
    @Autorired
    MyComponent component;

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.wcardinal.util.thread.AutoCloseableReentrantLock;
+import org.wcardinal.util.thread.AutoCloseableReentrantLockNotReady;
 import org.wcardinal.util.thread.Unlocker;
 
 public abstract class SBaseImpl<T> implements SBase<T> {
@@ -26,7 +27,7 @@ public abstract class SBaseImpl<T> implements SBase<T> {
 	boolean isLoose = false;
 	SParent parent = null;
 	final int type;
-	AutoCloseableReentrantLock lock = null;
+	AutoCloseableReentrantLock lock = AutoCloseableReentrantLockNotReady.INSTANCE;
 	Unlocker unlocker = new Unlocker( this );
 
 	SBaseImpl( final int type ){

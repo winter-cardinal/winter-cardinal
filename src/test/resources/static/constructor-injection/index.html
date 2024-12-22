@@ -1,0 +1,123 @@
+<!--
+ Copyright (C) 2019 Toshiba Corporation
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/wcardinal/wcardinal.min.js"></script>
+	<script src="/constructor-injection-controller"></script>
+	<script src="/test/puppeteer.js"></script>
+</head>
+<body>
+	<script>
+	(function(){
+		'use strict';
+
+		var c = constructorInjectionController;
+		var value = 42;
+		var setValue0 = 84;
+		var setValue1 = 42;
+
+		puppeteer
+
+		// Scalar
+		.test("Constructor Injection Scalar Check", (cb) => {
+			cb.assertNotEquals(c.scalar, null).done();
+		})
+		.test("Constructor Injection Scalar Initial Value", (cb) => {
+			cb.assertEquals(c.scalar.get(), value).done();
+		})
+		.test("Constructor Injection Scalar Set", (cb) => {
+			c.scalar.one("change", (e, newValue, oldValue) => {
+				cb.assertEquals(newValue, setValue0)
+					.assertEquals(oldValue, setValue1)
+					.done();
+			});
+
+			c.scalar.set(setValue0);
+		})
+		.test("Constructor Injection Scalar Sync", (cb) => {
+			c.getScalar().then((value) => {
+				cb.assertEquals(value, setValue0).done();
+			});
+		})
+
+		// List
+		.test("Constructor Injection List Check", (cb) => {
+			cb.assertNotEquals(c.list, null).done();
+		})
+		.test("Constructor Injection List Initial Value", (cb) => {
+			cb.assertEquals(c.list.get(0), value).done();
+		})
+		.test("Constructor Injection List Set", (cb) => {
+			c.list.one("change", (e, addeds, removeds) => {
+				cb.assertEquals(addeds.length, 1)
+					.assertEquals(addeds[0].index, 1)
+					.assertEquals(addeds[0].value, setValue0)
+					.assertEquals(removeds.length, 0)
+					.done();
+			});
+
+			c.list.add(setValue0);
+		})
+		.test("Constructor Injection List Sync", (cb) => {
+			c.getList(1).then((value) => {
+				cb.assertEquals(value, setValue0).done();
+			});
+		})
+
+		// Component Scalar
+		.test("Constructor Injection Component Scalar Check", (cb) => {
+			cb.assertNotEquals(c.component.scalar, null).done();
+		})
+		.test("Constructor Injection Component Scalar Initial Value", (cb) => {
+			cb.assertEquals(c.component.scalar.get(), value).done();
+		})
+		.test("Constructor Injection Component Scalar Set", (cb) => {
+			c.component.scalar.one("change", (e, newValue, oldValue) => {
+				cb.assertEquals(newValue, setValue0)
+					.assertEquals(oldValue, setValue1)
+					.done();
+			});
+
+			c.component.scalar.set(setValue0);
+		})
+		.test("Constructor Injection Component Scalar Sync", (cb) => {
+			c.component.getScalar().then((value) => {
+				cb.assertEquals(value, setValue0).done();
+			});
+		})
+
+		// Component List
+		.test("Constructor Injection Component List Check", (cb) => {
+			cb.assertNotEquals(c.component.list, null).done();
+		})
+		.test("Constructor Injection Component List Initial Value", (cb) => {
+			cb.assertEquals(c.component.list.get(0), value).done();
+		})
+		.test("Constructor Injection Component List Set", (cb) => {
+			c.component.list.one("change", (e, addeds, removeds) => {
+				cb.assertEquals(addeds.length, 1)
+					.assertEquals(addeds[0].index, 1)
+					.assertEquals(addeds[0].value, setValue0)
+					.assertEquals(removeds.length, 0)
+					.done();
+			});
+
+			c.component.list.add(setValue0);
+		})
+		.test("Constructor Injection Component List Sync", (cb) => {
+			c.component.getList(1).then((value) => {
+				cb.assertEquals(value, setValue0).done();
+			});
+		})
+		.execute();
+	}());
+	</script>
+</body>
+</html>

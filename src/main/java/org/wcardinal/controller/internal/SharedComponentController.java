@@ -28,6 +28,7 @@ import org.wcardinal.util.reflection.LockRequirements;
 import org.wcardinal.util.reflection.TrackingData;
 import org.wcardinal.util.reflection.VoidTypedParametrizedMethods;
 import org.wcardinal.util.thread.AutoCloseableReentrantLock;
+import org.wcardinal.util.thread.AutoCloseableReentrantLockImpl;
 import org.wcardinal.util.thread.Unlocker;
 
 public class SharedComponentController extends ComponentController implements Runnable {
@@ -44,7 +45,7 @@ public class SharedComponentController extends ComponentController implements Ru
 			final String name, final Controller parent,
 			final ControllerFactory factory, final Object instance,
 			final ControllerBaggage baggage, final ArrayNode factoryParameters ) {
-		super(name, parent, factory, instance, baggage, factoryParameters, new AutoCloseableReentrantLock(), new TaskInternalQueue());
+		super(name, parent, factory, instance, baggage, factoryParameters, new AutoCloseableReentrantLockImpl(), new TaskInternalQueue());
 
 		SYNC_CLIENT_UPDATE_INTERVAL = baggage.configuration.getSyncClientUpdateInterval();
 		baggage.scheduler.execute( this );

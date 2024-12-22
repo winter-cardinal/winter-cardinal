@@ -5,18 +5,16 @@
 
 package org.wcardinal.util.thread;
 
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.TimeUnit;
 
-public class AutoCloseableReentrantLock extends ReentrantLock implements AutoCloseable {
-	private static final long serialVersionUID = -4018664219297885401L;
-
-	public AutoCloseableReentrantLock open() {
-		lock();
-		return this;
-	}
-
-	@Override
-	public void close() {
-		unlock();
-	}
+public interface AutoCloseableReentrantLock extends AutoCloseable {
+	AutoCloseableReentrantLock open();
+	void lock();
+	boolean isLocked();
+	boolean tryLock();
+	boolean tryLock(long timeout, TimeUnit unit) throws InterruptedException;
+	void unlock();
+	void close();
+	int getHoldCount();
+	boolean isHeldByCurrentThread();
 }

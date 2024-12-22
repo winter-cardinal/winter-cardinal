@@ -51,6 +51,7 @@ import org.wcardinal.controller.data.internal.SBase;
 import org.wcardinal.controller.data.internal.SChange;
 import org.wcardinal.controller.data.internal.SClassImpl;
 import org.wcardinal.controller.data.internal.SContainer;
+import org.wcardinal.controller.data.internal.SContainerParent;
 import org.wcardinal.controller.data.internal.SContainers;
 import org.wcardinal.controller.data.internal.SMapImpl;
 import org.wcardinal.controller.data.internal.SNavigableMapImpl;
@@ -95,7 +96,7 @@ import org.wcardinal.util.thread.AutoCloseableReentrantLock;
 import org.wcardinal.util.thread.Scheduler;
 import org.wcardinal.util.thread.Unlocker;
 
-public class Controller implements ControllerContext, MethodContainer, SParent {
+public class Controller implements ControllerContext, MethodContainer, SContainerParent {
 	static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
 	final Set<Controller> parents = Sets.newConcurrentHashSet();

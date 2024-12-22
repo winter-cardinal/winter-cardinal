@@ -35,6 +35,7 @@ import org.wcardinal.io.message.RequestMessageUpdate;
 import org.wcardinal.util.Reference;
 import org.wcardinal.util.json.Json;
 import org.wcardinal.util.thread.AutoCloseableReentrantLock;
+import org.wcardinal.util.thread.AutoCloseableReentrantLockImpl;
 import org.wcardinal.util.thread.Unlocker;
 
 public class RootController extends Controller implements Runnable {
@@ -56,7 +57,7 @@ public class RootController extends Controller implements Runnable {
 
 	public RootController( final String name, final ControllerFactory factory, final Object instance,
 			final ControllerBaggage baggage ){
-		super( name, null, factory, instance, baggage, null, new AutoCloseableReentrantLock(), new TaskInternalQueue() );
+		super( name, null, factory, instance, baggage, null, new AutoCloseableReentrantLockImpl(), new TaskInternalQueue() );
 
 		SYNC_CONNECT_TIMEOUT = baggage.configuration.getSyncConnectTimeout();
 		SYNC_UPDATE_TIMEOUT = baggage.configuration.getSyncUpdateTimeout();

@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.springframework.core.ResolvableType;
 
-import org.wcardinal.controller.internal.Controller;
 import org.wcardinal.controller.internal.info.DynamicDataObject;
 import org.wcardinal.controller.internal.info.SetDynamicDataMap;
 import org.wcardinal.util.thread.AutoCloseableReentrantLock;
@@ -47,69 +46,69 @@ public abstract class SContainerData<V, P extends SPatch, S extends SPatches<V, 
 		$bn  = SContainers.toId( name, "b"  );
 
 		final boolean isInitialized = scontainer.isInitialized();
-		final Controller controller = scontainer.getController();
+		final SContainerParent parent = scontainer.getParent();
 		final AutoCloseableReentrantLock lock = scontainer.getLock();
 
 		$ar = new SLongImpl();
-		$ar.setParent( controller );
+		$ar.setParent( parent );
 		$ar.setLock( lock );
 		$ar.setNonNull( true );
 		$ar.setReadOnly( true );
-		controller.put( origin, $arn, $ar );
+		parent.put( origin, $arn, $ar );
 		if( isInitialized != true ) {
 			$ar.uninitialize();
 		}
 
 		$af = new SIntegerImpl();
-		$af.setParent( controller );
+		$af.setParent( parent );
 		$af.setLock( lock );
 		$af.setNonNull( true );
 		$af.setReadOnly( true );
-		controller.put( origin, $afn, $af );
+		parent.put( origin, $afn, $af );
 		if( isInitialized != true ) {
 			$af.uninitialize();
 		}
 
 		$a = new SClassImpl<Object>();
-		$a.setParent( controller );
+		$a.setParent( parent );
 		$a.setLock( lock );
 		$a.setNonNull( false );
 		$a.setReadOnly( true );
 		$a.setGenericType( ResolvableType.forClass( Object.class ) );
 		$a.setSoft( true );
-		controller.put( origin, $an, $a );
+		parent.put( origin, $an, $a );
 		if( isInitialized != true ) {
 			$a.uninitialize();
 		}
 
 		$br = new SLongImpl();
-		$br.setParent( controller );
+		$br.setParent( parent );
 		$br.setLock( lock );
 		$br.setNonNull( true );
 		$br.setReadOnly( false );
-		controller.put( origin, $brn, $br );
+		parent.put( origin, $brn, $br );
 		if( isInitialized != true ) {
 			$br.uninitialize();
 		}
 
 		$bf = new SIntegerImpl();
-		$bf.setParent( controller );
+		$bf.setParent( parent );
 		$bf.setLock( lock );
 		$bf.setNonNull( true );
 		$bf.setReadOnly( false );
-		controller.put( origin, $bfn, $bf );
+		parent.put( origin, $bfn, $bf );
 		if( isInitialized != true ) {
 			$bf.uninitialize();
 		}
 
 		$b = new SClassImpl<SPatchesPacked<V, P>>();
-		$b.setParent( controller );
+		$b.setParent( parent );
 		$b.setLock( lock );
 		$b.setNonNull( false );
 		$b.setReadOnly( false );
 		$b.setLoose( true );
 		$b.setGenericType( $bType );
-		controller.put( origin, $bn, $b );
+		parent.put( origin, $bn, $b );
 		if( isInitialized != true ) {
 			$b.uninitialize();
 		}
