@@ -131,21 +131,21 @@
 			cb.assertEquals( c.task.cancel(), c.task ).done();
 		})
 		.test("Task create after create", function( cb ){
-			cb.assertEquals( c.task( "john" ), c )
+			cb.assertEquals( c.task( "Cardinal" ), c )
 			.assertEquals( c.task.isDone(), false ).done();
 		})
 		.test("Task getResult after two 'create' calls", function( cb ){
 			cb.within( 2000, function(){
-				if( c.task.getResult() === 4 ) {
+				if( c.task.getResult() === 8 ) {
 					cb.done();
 				}
 			});
 		})
 		.test("Task getArguments after two 'create' calls", function( cb ){
-			cb.assertEquals( c.task.getArguments(), ["john"] ).done();
+			cb.assertEquals( c.task.getArguments(), ["Cardinal"] ).done();
 		})
 		.test("Task getArgument( 0 ) after two 'create' calls", function( cb ){
-			cb.assertEquals( c.task.getArgument( 0 ), "john" ).done();
+			cb.assertEquals( c.task.getArgument( 0 ), "Cardinal" ).done();
 		})
 		.test("Task getArgument( 1 ) after two 'create' calls", function( cb ){
 			cb.assertEquals( c.task.getArgument( 1 ), null ).done();
@@ -359,7 +359,7 @@
 					c.fail_task_with_reason.isSucceeded() === false &&
 					c.fail_task_with_reason.isFailed() === true &&
 					c.fail_task_with_reason.isCanceled() === false &&
-					c.fail_task_with_reason.getReason() === "john" ) {
+					c.fail_task_with_reason.getReason() === "Cardinal" ) {
 					cb.done();
 				}
 			});

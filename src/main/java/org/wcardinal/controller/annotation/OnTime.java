@@ -96,7 +96,7 @@ import java.lang.annotation.Target;
  *     }
  *
  *     // Thread safe because {@link org.wcardinal.controller.data.SScalar#set(Object) set(Object)} locks the `MyController` internally.
- *     name.set( "John" );
+ *     name.set( "Cardinal" );
  *   }
  * }
  * </code></pre>

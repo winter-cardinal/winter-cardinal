@@ -24,24 +24,24 @@
 
 		puppeteer
 		.test("Callable check", function( cb ){
-			c.callable( "John" ).then(function( result ){
-				cb.assertEquals( result, "Hello, John" ).done();
+			c.callable( "Cardinal" ).then(function( result ){
+				cb.assertEquals( result, "Hello, Cardinal" ).done();
 			}, function( reason ){
 				cb.fail( reason );
 			});
 		})
 		.test("Callable object argument check", function( cb ){
-			c.callable( {name: "John"} ).then(function( result ){
+			c.callable( {name: "Cardinal"} ).then(function( result ){
 				cb.assertNotEquals( result, null )
-					.assertEquals( result.name, "JohnJohn" ).done();
+					.assertEquals( result.name, "CardinalCardinal" ).done();
 			}, function( reason ){
 				cb.fail( reason );
 			});
 		})
 		.test("Callable array argument check", function( cb ){
-			c.callable([ "John" ]).then(function( result ){
+			c.callable([ "Cardinal" ]).then(function( result ){
 				cb.assertNotEquals( result, null )
-					.assertEquals( result[ 0 ], "JohnJohn" ).done();
+					.assertEquals( result[ 0 ], "CardinalCardinal" ).done();
 			}, function( reason ){
 				cb.fail( reason );
 			});
@@ -183,7 +183,7 @@
 			"callable_static_locked"
 		])
 		.test("Callable class check", function( cb ){
-			c.callable_class( {field: "john"} )
+			c.callable_class( {field: "Cardinal"} )
 			.then(function( result ){
 				cb.assertEquals( result, true ).done();
 			}, function( reason ){
@@ -191,7 +191,7 @@
 			});
 		})
 		.test("Callable 2 classes check", function( cb ){
-			c.callable_2_classes( {field: "john"},  {field: "john"} )
+			c.callable_2_classes( {field: "Cardinal"},  {field: "Cardinal"} )
 			.then(function( result ){
 				cb.assertEquals( result, true ).done();
 			}, function( reason ){
@@ -199,7 +199,7 @@
 			});
 		})
 		.test("Callable class array check", function( cb ){
-			c.callable_class_array( [{field: "john"},{field: "john"}] )
+			c.callable_class_array( [{field: "Cardinal"},{field: "Cardinal"}] )
 			.then(function( result ){
 				cb.assertEquals( result, true ).done();
 			}, function( reason ){
@@ -207,7 +207,7 @@
 			});
 		})
 		.test("Callable class incompatible check", function( cb ){
-			c.callable_class_incompatible( {foo: "john"} )
+			c.callable_class_incompatible( {foo: "Cardinal"} )
 			.then(function( result ){
 				cb.fail( result );
 			}, function( reason ){
@@ -215,7 +215,7 @@
 			});
 		})
 		.test("Callable class incompatible override check", function( cb ){
-			c.callable_class_incompatible_override( {field: "john"} )
+			c.callable_class_incompatible_override( {field: "Cardinal"} )
 			.then(function( result ){
 				cb.assertEquals( result, true ).done();
 			}, function( reason ){

@@ -39,12 +39,6 @@ const TERSER_OPTIONS = {
 	},
 	output: {
 		preamble: BANNER
-	},
-	mangle: {
-		properties: {
-			regex: /(^_[\$\w]+[A-Za-z]$|^[A-Za-z]\w+_$)/,
-			reserved: ['_immediateFn', '_element', '_$element', '_settings']
-		}
 	}
 };
 

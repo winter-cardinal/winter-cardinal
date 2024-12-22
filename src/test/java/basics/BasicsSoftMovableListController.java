@@ -40,7 +40,7 @@ public class BasicsSoftMovableListController {
 	@OnCreate
 	void init(){
 		facade.interval( "check1", 100 );
-		field.add( "John" );
+		field.add( "Cardinal" );
 		initial_check_result1.set( ! field.isEmpty() );
 	}
 
@@ -50,7 +50,7 @@ public class BasicsSoftMovableListController {
 			check_result1.set( true );
 			facade.cancel();
 			try( Unlocker unlocker = field.lock() ) {
-				field.add( "John" );
+				field.add( "Cardinal" );
 				initial_check_result2.set( ! field.isEmpty() );
 			}
 			facade.interval( "check2", 100 );

@@ -33,7 +33,7 @@ public class BasicsSoftScalarController {
 	@OnCreate
 	void init(){
 		facade.interval( "check", 100 );
-		field.set( "John" );
+		field.set( "Cardinal" );
 		initial_check_result.set( field.get() != null );
 	}
 

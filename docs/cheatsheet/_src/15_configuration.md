@@ -1,6 +1,6 @@
 ## Configuration
 
-### Boot-time configuration
+### Boot-time Configuration
 
 The following configurations are configurable in the same way as Spring Boot.
 For instance, `wcardinal.message.binary.size.max=1000000` in your `application.properties` sets the maximum size of binary messages to 1MB.
@@ -115,8 +115,8 @@ Java configuration is also supported:
 @Configuration
 public class MyConfigurer implements WCardinalConfigurer {
 	@Override
-	public void configure( final WCardinalConfiguration configuration ) {
-		configuration.setMaximumBinaryMessageSize( 1000000 );
+	public void configure(final WCardinalConfiguration configuration) {
+		configuration.setMaximumBinaryMessageSize(1000000);
 	}
 }
 ```

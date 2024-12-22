@@ -16,6 +16,6 @@ public class MessageFactoryComponent {
 
 	@OnCreate
 	void init() {
-		name.set( "John" );
+		name.set( "Cardinal" );
 	}
 }

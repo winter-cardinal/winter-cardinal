@@ -87,7 +87,7 @@
 						<a href="controller.callablemethod.html" class="tsd-signature-type">CallableMethod</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RESULT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ARGUMENTS</span><span class="tsd-signature-symbol">&gt;</span>
 					</li>
 					<li>
-						<a href="controller.callablecall.html" class="tsd-signature-type">CallableCall</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RESULT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ARGUMENTS</span><span class="tsd-signature-symbol">&gt;</span>
+						<span class="tsd-signature-type">function</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">CallableWrapper</span>
@@ -105,7 +105,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/callable-call.ts#L6">src/main/typescript/wcardinal/controller/callable-call.ts:6</a></li>
+								<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/callable-call.ts#L6">src/main/typescript/wcardinal/controller/callable-call.ts:6</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -167,7 +167,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L17">src/main/typescript/wcardinal/event/connectable.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L17">src/main/typescript/wcardinal/event/connectable.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="controller_internal.callablewrapper.html" class="tsd-signature-type">CallableWrapper</a></h4>
@@ -188,7 +188,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="controller.callablemethod.html">CallableMethod</a>.<a href="controller.callablemethod.html#ajax">ajax</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/callable-method.ts#L30">src/main/typescript/wcardinal/controller/callable-method.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/callable-method.ts#L30">src/main/typescript/wcardinal/controller/callable-method.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -214,23 +214,14 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="controller.callablemethod.html">CallableMethod</a>.<a href="controller.callablemethod.html#call">call</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/callable-method.ts#L82">src/main/typescript/wcardinal/controller/callable-method.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/callable-method.ts#L73">src/main/typescript/wcardinal/controller/callable-method.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Invokes the method and returns a wcardinal.util.Thenable instance.
-										The returned value is passed the <code>done</code> handler of the instance.
-										If the method invocation goes to failure, the <code>fail</code> handler of the instance
-									is invoked with the string representing a reason.</p>
+									<p>Invokes a callable method.</p>
 								</div>
-								<pre><code>call( <span class="hljs-string">"John"</span> )
-.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( returnedValue )</span></span>{
-    <span class="hljs-comment">// success</span>
-})
-.<span class="hljs-keyword">catch</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">( reason )</span></span>{
-    <span class="hljs-comment">// failure</span>
-});</code></pre>
+								<pre><code><span class="hljs-keyword">const</span> returnedValue = <span class="hljs-keyword">await</span> <span class="hljs-keyword">call</span>(<span class="hljs-string">"Cardinal"</span>);</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -242,7 +233,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RESULT</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>the thenable object</p>
+							<p>a promise</p>
 						</li>
 					</ul>
 				</section>
@@ -257,7 +248,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#connector">connector</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L23">src/main/typescript/wcardinal/event/connectable.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L23">src/main/typescript/wcardinal/event/connectable.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/event_internal.connector.html" class="tsd-signature-type">Connector</a></h4>
@@ -276,7 +267,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#off">off</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L240">src/main/typescript/wcardinal/event/connectable.ts:240</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L240">src/main/typescript/wcardinal/event/connectable.ts:240</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -316,7 +307,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#off">off</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L261">src/main/typescript/wcardinal/event/connectable.ts:261</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L261">src/main/typescript/wcardinal/event/connectable.ts:261</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -371,7 +362,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#offoff">offoff</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L99">src/main/typescript/wcardinal/event/connectable.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L99">src/main/typescript/wcardinal/event/connectable.ts:99</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -411,7 +402,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#offon">offon</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L85">src/main/typescript/wcardinal/event/connectable.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L85">src/main/typescript/wcardinal/event/connectable.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -452,7 +443,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#on">on</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L127">src/main/typescript/wcardinal/event/connectable.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L127">src/main/typescript/wcardinal/event/connectable.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -497,7 +488,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#on">on</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L153">src/main/typescript/wcardinal/event/connectable.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L153">src/main/typescript/wcardinal/event/connectable.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -558,7 +549,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#one">one</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L186">src/main/typescript/wcardinal/event/connectable.ts:186</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L186">src/main/typescript/wcardinal/event/connectable.ts:186</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -601,7 +592,7 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#one">one</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L210">src/main/typescript/wcardinal/event/connectable.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L210">src/main/typescript/wcardinal/event/connectable.ts:210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -659,7 +650,7 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#onoff">onoff</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L71">src/main/typescript/wcardinal/event/connectable.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L71">src/main/typescript/wcardinal/event/connectable.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -705,7 +696,7 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#onon">onon</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L51">src/main/typescript/wcardinal/event/connectable.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L51">src/main/typescript/wcardinal/event/connectable.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -754,7 +745,7 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#retrigger">retrigger</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L380">src/main/typescript/wcardinal/event/connectable.ts:380</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L380">src/main/typescript/wcardinal/event/connectable.ts:380</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -797,7 +788,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#retrigger">retrigger</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L404">src/main/typescript/wcardinal/event/connectable.ts:404</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L404">src/main/typescript/wcardinal/event/connectable.ts:404</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -858,7 +849,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="controller.callablemethod.html">CallableMethod</a>.<a href="controller.callablemethod.html#safe">safe</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/callable-method.ts#L53">src/main/typescript/wcardinal/controller/callable-method.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/callable-method.ts#L53">src/main/typescript/wcardinal/controller/callable-method.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -891,7 +882,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="controller.callablemethod.html">CallableMethod</a>.<a href="controller.callablemethod.html#timeout">timeout</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/callable-method.ts#L20">src/main/typescript/wcardinal/controller/callable-method.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/callable-method.ts#L20">src/main/typescript/wcardinal/controller/callable-method.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -929,7 +920,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#trigger">trigger</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L298">src/main/typescript/wcardinal/event/connectable.ts:298</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L298">src/main/typescript/wcardinal/event/connectable.ts:298</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -969,7 +960,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#trigger">trigger</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L319">src/main/typescript/wcardinal/event/connectable.ts:319</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L319">src/main/typescript/wcardinal/event/connectable.ts:319</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1025,7 +1016,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#triggerdirect">triggerDirect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L349">src/main/typescript/wcardinal/event/connectable.ts:349</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L349">src/main/typescript/wcardinal/event/connectable.ts:349</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1049,7 +1040,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#triggerdirect">triggerDirect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L352">src/main/typescript/wcardinal/event/connectable.ts:352</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L352">src/main/typescript/wcardinal/event/connectable.ts:352</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1082,7 +1073,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="controller.callablemethod.html">CallableMethod</a>.<a href="controller.callablemethod.html#unajax">unajax</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/callable-method.ts#L40">src/main/typescript/wcardinal/controller/callable-method.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/callable-method.ts#L40">src/main/typescript/wcardinal/controller/callable-method.ts:40</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1108,7 +1099,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="controller.callablemethod.html">CallableMethod</a>.<a href="controller.callablemethod.html#unsafe">unsafe</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/callable-method.ts#L63">src/main/typescript/wcardinal/controller/callable-method.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/callable-method.ts#L63">src/main/typescript/wcardinal/controller/callable-method.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1138,7 +1129,7 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/event.connectable.html">Connectable</a>.<a href="../classes/event.connectable.html#extend">extend</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L450">src/main/typescript/wcardinal/event/connectable.ts:450</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L450">src/main/typescript/wcardinal/event/connectable.ts:450</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

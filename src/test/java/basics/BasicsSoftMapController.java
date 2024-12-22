@@ -39,7 +39,7 @@ public class BasicsSoftMapController {
 	@OnCreate
 	void init(){
 		facade.interval( "check1", 100 );
-		field.put( "name1", "John" );
+		field.put( "name1", "Cardinal" );
 		initial_check_result1.set( ! field.isEmpty() );
 	}
 
@@ -48,8 +48,8 @@ public class BasicsSoftMapController {
 		if( field.isEmpty() ) {
 			check_result1.set( true );
 			facade.cancel();
-			field.put( "name1", "John" );
-			field.put( "name2", "John" );
+			field.put( "name1", "Cardinal" );
+			field.put( "name2", "Cardinal" );
 			initial_check_result2.set( ! field.isEmpty() );
 			facade.interval( "check2", 100 );
 		}

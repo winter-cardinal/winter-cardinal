@@ -3,7 +3,7 @@
 ### Logging (JavaScript)
 
 ```javascript
-wcardinal.util.logger.info( "Information" );
+wcardinal.util.logger.info("Information");
 ```
 
 Please refer to [wcardinal.util.Logger](../api/js/classes/util.logger.html).
@@ -16,27 +16,26 @@ import org.wcardinal.controller.annotation.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
-	public MyController(){
-		logger.info( "Information" );
+	public MyController() {
+		log.info("Information");
 	}
 }
 ```
 
 Please refer to [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html) for details.
 
-### Log level (JavaScript)
+### Log Level (JavaScript)
 
 ```javascript
-wcardinal.util.logger.setLevel( 'DEBUG' );
+wcardinal.util.logger.setLevel("DEBUG");
 ```
 
 Please refer to [wcardinal.util.Logger](../api/js/classes/util.logger.html).
 
-### Log level (Java)
+### Log Level (Java)
 
 Add the following line to your `application.properties`:
 

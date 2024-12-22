@@ -1,12 +1,12 @@
 ## Event
 
-### Trigger events (server to browser)
+### Trigger Events (Server to Browser)
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	void triggerReadyEvent() {
-		trigger( "ready", 1, 2, 3 );
+		trigger("ready", 1, 2, 3);
 	}
 }
 ```
@@ -20,24 +20,24 @@ class MyController extends AbstractController {
 	ControllerFacade facade;
 
 	void triggerReadyEvent() {
-		facade.trigger( "ready", 1, 2, 3 );
+		facade.trigger("ready", 1, 2, 3);
 	}
 }
 ```
 
 ```javascript
-myController.on( 'ready', ( e, p1, p2, p3 ) => {
+myController.on("ready", (e, p1, p2, p3) => {
 	console.log( p1, p2, p3 ); // Prints 1, 2, 3
 });
 ```
 
-### Trigger events (server to server)
+### Trigger Events (Server to Server)
 
 ```java
 @Component
 class MyComponent extends AbstractComponent {
 	void foo() {
-		notify( "ready", 1, 2, 3 );
+		notify("ready", 1, 2, 3);
 	}
 }
 
@@ -46,10 +46,10 @@ class MyController {
 	@Autowired
 	MyComponent component;
 
-	@OnNotice( "component.ready" )
-	void bar( int p1, int p2, int p3 ) {
+	@OnNotice("component.ready")
+	void bar(int p1, int p2, int p3) {
 		// Called when `component` raises a "ready" event.
-		System.out.println( String.format( "%d, %d, %d" ) ); // Prints "1, 2, 3"
+		System.out.println(String.format("%d, %d, %d")); // Prints "1, 2, 3"
 	}
 }
 ```
@@ -63,7 +63,7 @@ class MyComponent {
 	ComponentFacade facade;
 
 	void foo() {
-		facade.notify( "ready", 1, 2, 3 );
+		facade.notify("ready", 1, 2, 3);
 	}
 }
 
@@ -72,15 +72,15 @@ class MyController extends AbstractController {
 	@Autowired
 	MyComponent component;
 
-	@OnNotice( "component.ready" )
-	void bar( int p1, int p2, int p3 ) {
+	@OnNotice("component.ready")
+	void bar(int p1, int p2, int p3) {
 		// Called when `component` raises a "ready" event.
-		System.out.println( String.format( "%d, %d, %d" ) ); // Prints "1, 2, 3"
+		System.out.println(String.format("%d, %d, %d")); // Prints "1, 2, 3"
 	}
 }
 ```
 
-### Retrieving returned values of event handlers (server to browser)
+### Retrieving Returned Values of Event Handlers (Server to Browser)
 
 ```java
 import java.util.List;
@@ -95,10 +95,10 @@ import org.wcardinal.controller.TriggerErrors;
 @Controller
 class MyController extends AbstractController {
 	void triggerReadyEvent() {
-		triggerAndWait( "ready", 1000, 1, 2, 3 )
-		.done(new DoneCallback<List<JsonNode>>(){
+		triggerAndWait("ready", 1000, 1, 2, 3)
+		.done(new DoneCallback<List<JsonNode>>() {
 			@Override
-			public void onDone( List<JsonNode> result ) {
+			public void onDone(List<JsonNode> result) {
 				System.out.println( result ); // Prints [ 6 ]
 			}
 		});
@@ -107,7 +107,7 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-myController.on( 'ready', ( e, p1, p2, p3 ) => {
+myController.on("ready", (e, p1, p2, p3) => {
 	return p1 + p2 + p3;
 });
 ```

@@ -719,9 +719,9 @@
 				results.push( value );
 			});
 
-			controller.component.foo.set( "john" );
+			controller.component.foo.set( "Cardinal" );
 
-			cb.assertEquals( results, [ null, "john" ] ).done();
+			cb.assertEquals( results, [ null, "Cardinal" ] ).done();
 		})
 		.test("Local controller event 2", function( cb ){
 			var controller = Controllers.create({
@@ -735,9 +735,9 @@
 				results.push( this.foo.get() );
 			});
 
-			controller.component.foo.set( "john" );
+			controller.component.foo.set( "Cardinal" );
 
-			cb.assertEquals( results, [ null, "john" ] ).done();
+			cb.assertEquals( results, [ null, "Cardinal" ] ).done();
 		})
 		.test("Local controller event 3", function( cb ){
 			var controller = Controllers.create({
@@ -751,9 +751,9 @@
 				results.push( this.component.foo.get() );
 			});
 
-			controller.component.foo.set( "john" );
+			controller.component.foo.set( "Cardinal" );
 
-			cb.assertEquals( results, [ null, "john" ] ).done();
+			cb.assertEquals( results, [ null, "Cardinal" ] ).done();
 		})
 		.test("Local controller event 4", function( cb ){
 			var controller = Controllers.create({
@@ -767,9 +767,9 @@
 				results.push( value );
 			});
 
-			controller.component.foo.set( "john" );
+			controller.component.foo.set( "Cardinal" );
 
-			cb.assertEquals( results, [ "john" ] ).done();
+			cb.assertEquals( results, [ "Cardinal" ] ).done();
 		})
 		.test("Local controller event 5", function( cb ){
 			var controller = Controllers.create({
@@ -783,9 +783,9 @@
 				results.push( value );
 			});
 
-			controller.component.foo.set( "john" );
+			controller.component.foo.set( "Cardinal" );
 
-			cb.assertEquals( results, [ "", "john" ] ).done();
+			cb.assertEquals( results, [ "", "Cardinal" ] ).done();
 		})
 		.test("Local controller isInitialized/isNonNull 1", function( cb ){
 			var controller = Controllers.create({

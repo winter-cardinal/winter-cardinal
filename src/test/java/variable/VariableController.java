@@ -26,6 +26,6 @@ public class VariableController {
 
 	@OnCreate
 	void init(){
-		field.set( "john" );
+		field.set( "Cardinal" );
 	}
 }

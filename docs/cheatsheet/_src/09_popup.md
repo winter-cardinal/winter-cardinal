@@ -33,7 +33,7 @@ class MyController {
 
 In this case, `myPopup1`, `myPopup2` and `myPopup3` can be visible simultaneously.
 
-### Popup basics
+### Popup Basics
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -51,7 +51,7 @@ class MyController {
 }
 ```
 
-### Showing/hiding popups (JavaScript)
+### Showing/Hiding Popups (JavaScript)
 
 ```java
 @Popup
@@ -71,7 +71,7 @@ myController.myPopup.show();
 myController.myPopup.hide();
 ```
 
-### Showing/hiding popups (Java)
+### Showing/Hiding Popups (Java)
 
 ```java
 @Popup
@@ -85,7 +85,7 @@ class MyController {
 	MyPopup myPopup;
 
 	@Callable
-	void onCalled(){
+	void onCalled() {
 		myPopup.show();
 	}
 }
@@ -99,11 +99,11 @@ class MyPopup {
 	@Autowired
 	PopupFacade facade;
 
-	public void show(){
+	public void show() {
 		facade.show();
 	}
 
-	public void hide(){
+	public void hide() {
 		facade.hide();
 	}
 }
@@ -114,13 +114,13 @@ class MyController {
 	MyPopup myPopup;
 
 	@Callable
-	void onCalled(){
+	void onCalled() {
 		myPopup.show();
 	}
 }
 ```
 
-### Checking whether a popup is shown/hidden (JavaScript)
+### Checking Whether a Popup is Shown/Hidden (JavaScript)
 
 ```java
 @Popup
@@ -136,11 +136,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.myPopup.isShown() ); // Prints true
-console.log( myController.myPopup.isHidden() ); // Prints false
+console.log(myController.myPopup.isShown()); // Prints true
+console.log(myController.myPopup.isHidden()); // Prints false
 ```
 
-### Checking whether a popup is shown/hidden (Java)
+### Checking Whether a Popup is Shown/Hidden (Java)
 
 ```java
 import org.wcardinal.controller.AbstractPopup;
@@ -155,9 +155,9 @@ class MyController {
 	@Autowired
 	MyPopup myPopup;
 
-	void foo(){
-		System.out.println( myPopup.isShown() ); // Prints true
-		System.out.println( myPopup.isHidden() ); // Prints false
+	void foo() {
+		System.out.println(myPopup.isShown()); // Prints true
+		System.out.println(myPopup.isHidden()); // Prints false
 	}
 }
 ```
@@ -172,11 +172,11 @@ class MyPopup {
 	@Autowired
 	PopupFacade facade;
 
-	public boolean isShown(){
+	public boolean isShown() {
 		return facade.isShown();
 	}
 
-	public boolean isHidden(){
+	public boolean isHidden() {
 		return facade.isHidden();
 	}
 }
@@ -186,14 +186,14 @@ class MyController {
 	@Autowired
 	MyPopup myPopup;
 
-	void foo(){
-		System.out.println( myPopup.isShown() ); // Prints true
-		System.out.println( myPopup.isHidden() ); // Prints false
+	void foo() {
+		System.out.println(myPopup.isShown()); // Prints true
+		System.out.println(myPopup.isHidden()); // Prints false
 	}
 }
 ```
 
-### Retrieving parent (JavaScript)
+### Retrieving Parent (JavaScript)
 
 ```java
 @Popup
@@ -209,11 +209,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.getParent() ); // Prints null
-console.log( myController.myPopup.getParent() === myController ); // Prints true
+console.log(myController.getParent()); // Prints null
+console.log(myController.myPopup.getParent() === myController); // Prints true
 ```
 
-### Retrieving parent (Java)
+### Retrieving Parent (Java)
 
 ```java
 @Popup
@@ -227,8 +227,8 @@ class MyController {
 	MyPopup myPopup;
 
 	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myPopup.getParent() == this ); // Prints true
+		System.out.println(getParent()); // Prints null
+		System.out.println(myPopup.getParent() == this); // Prints true
 	}
 }
 ```
@@ -241,7 +241,7 @@ class MyPopup {
 	@Autowired
 	PopupFacade facade;
 
-	Object getParent(){
+	Object getParent() {
 		return facade.getParent();
 	}
 }
@@ -251,14 +251,14 @@ class MyController {
 	@Autowired
 	MyPopup myPopup;
 
-	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myPopup.getParent() == this ); // Prints true
+	void foo() {
+		System.out.println(getParent()); // Prints null
+		System.out.println(myPopup.getParent() == this); // Prints true
 	}
 }
 ```
 
-### Primary popup
+### Primary Popup
 
 ```java
 @Popup
@@ -278,7 +278,7 @@ If the `@Primary` is not present, `myPopup` is hidden by default.
 
 ```java
 @Popup
-class MyPopup{
+class MyPopup {
 	...
 }
 
@@ -289,30 +289,30 @@ class MyController {
 }
 ```
 
-### Detecting popup visibility change (JavaScript)
+### Detecting Popup Visibility Change (JavaScript)
 
 ```javascript
-myController.myPopup.on( 'show', () => {
+myController.myPopup.on("show", () => {
 	// Called when event handlers are set if `myPopup` is shown, or after `myPopup` gets to be shown.
 });
 
-myController.myPopup.on( 'hide', () => {
+myController.myPopup.on("hide", () => {
 	// Called when event handlers are set if `myPopup` is hidden, or after `myPopup` gets to be hidden.
 });
 ```
 
-### Detecting popup visibility change (Java)
+### Detecting Popup Visibility Change (Java)
 
 ```java
 @Popup
 class MyPopup{
 	@OnShow
-	void onShow(){
+	void onShow() {
 		// Called after being shown.
 	}
 
 	@OnHide
-	void onHide(){
+	void onHide() {
 		// Called after being hidden.
 	}
 }
@@ -330,19 +330,19 @@ class MyController {
 	@Autowired
 	MyPopup myPopup;
 
-	@OnShow( "myPopup" )
-	void onShowMyPopup(){
+	@OnShow("myPopup")
+	void onShowMyPopup() {
 		// Called after `myPopup` gets to be shown.
 	}
 
-	@OnHide( "myPopup" )
-	void onHideMyPopup(){
+	@OnHide("myPopup")
+	void onHideMyPopup() {
 		// Called after `myPopup` gets to be hidden.
 	}
 }
 ```
 
-### Popup lifecycle handling
+### Popup Lifecycle Handling
 
 ```java
 import org.wcardinal.controller.annotation.Popup;
@@ -352,24 +352,24 @@ import org.wcardinal.controller.annotation.OnDestroy;
 @Popup
 class MyPopup {
 	@OnCreate
-	void init(){
+	void init() {
 		// Called after instantiated.
 	}
 
 	@OnDestroy
-	void destroy(){
+	void destroy() {
 		// Called before getting destroyed.
 	}
 }
 ```
 
-### Popup name in title
+### Popup Name in Title
 
 ```java
 import org.wcardinal.controller.annotation.DisplayName;
 
 @Popup
-@DisplayName( "Popup name in title" )
+@DisplayName("Popup name in title")
 class MyPopup {
 	...
 }
@@ -394,18 +394,18 @@ class MyPopup {
 @Controller
 class MyController {
 	@Autowired
-	@DisplayName( "Popup name in title" )
+	@DisplayName("Popup name in title")
 	MyPopup myPopup;
 }
 ```
 
-### Popup name in title (I18N)
+### Popup Name in Title (I18N)
 
 ```java
 import org.wcardinal.controller.annotation.DisplayNameMessage;
 
 @Popup
-@DisplayNameMessage( "my-popup.name" )
+@DisplayNameMessage("my-popup.name")
 class MyPopup {
 	...
 }
@@ -430,7 +430,7 @@ class MyPopup {
 @Controller
 class MyController {
 	@Autowired
-	@DisplayNameMessage( "my-popup.name" )
+	@DisplayNameMessage("my-popup.name")
 	MyPopup myPopup;
 }
 ```
@@ -441,7 +441,7 @@ And add the followings to your `messages_en.properties`:
 my-popup.name=Popup name in title
 ```
 
-### Creating popups dynamically (JavaScript)
+### Creating Popups Dynamically (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -453,7 +453,7 @@ class MyPopup {
 
 	@OnCreate
 	void onCreate() {
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -465,12 +465,12 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-myController.factory.create().value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create().value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating popups dynamically (Java)
+### Creating Popups Dynamically (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -482,7 +482,7 @@ class MyPopup {
 
 	@OnCreate
 	void onCreate() {
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -500,15 +500,15 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-myController.factory.on( 'create', ( e, newInstance ) => {
+myController.factory.on("create", (e, newInstance) => {
 	// Called when a new instance is created.
-	newInstance.value.on( 'value', ( e, value ) => {
-		console.log( value ); // Prints 128
+	newInstance.value.on("value", (e, value) => {
+		console.log(value); // Prints 128
 	});
 });
 ```
 
-### Creating popups dynamically with parameters (JavaScript)
+### Creating Popups Dynamically With Parameters (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -520,8 +520,8 @@ class MyPopup extends AbstractPopup {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -533,12 +533,12 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-myController.factory.create( 128 ).value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create(128).value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating popups dynamically with parameters (Java)
+### Creating Popups Dynamically With Parameters (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -550,8 +550,8 @@ class MyPopup extends AbstractPopup {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -563,12 +563,12 @@ class MyController extends AbstractController {
 	@OnCreate
 	void onCreate() {
 		// Creates a `MyPopup` instance with an integer of 128.
-		factory.create( 128 );
+		factory.create(128);
 	}
 }
 ```
 
-### Destroying dynamic popups (JavaScript)
+### Destroying Dynamic Popups (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -586,10 +586,10 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.destroy( myController.factory.create() );
+myController.factory.destroy(myController.factory.create());
 ```
 
-### Destroying dynamic popups (Java)
+### Destroying Dynamic Popups (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -600,13 +600,13 @@ class MyPopup extends AbstractPopup {
 	@OnCreate
 	void onCreate() {
 		// Calls the `OnTime` method after 10 seconds.
-		timeout( "destroy", 10000 );
+		timeout("destroy", 10000);
 	}
 
 	@OnTime
 	void onDone() {
 		// Destroys itself.
-		getParentAsFactory().destroy( this );
+		getParentAsFactory().destroy(this);
 	}
 }
 
@@ -624,7 +624,7 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'destroy', ( e, newInstance ) => {
+myController.factory.on("destroy", (e, newInstance) => {
 	// Called when instances are destroyed.
 });
 ```

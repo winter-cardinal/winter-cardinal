@@ -1,16 +1,16 @@
 ## Security
 
-### Switching controllers based on roles
+### Switching Controllers Based on Roles
 
 ```java
 // For users with an "ADMIN" role
-@Controller( name="MyController", roles="ADMIN" )
+@Controller(name="MyController", roles="ADMIN")
 class MyControllerForAdmin {
 
 }
 
 // For others
-@Controller( name="MyController" )
+@Controller(name="MyController")
 class MyControllerForOthers {
 
 }
@@ -23,26 +23,26 @@ class MyControllerForOthers {
 Users who have the `ADMIN` role always get a `MyControllerForAdmin` instance
 because controllers are chosen by the longest match principle.
 
-### Switching controllers by custom logics
+### Switching Controllers by Custom Logics
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.OnCheck;
 
 // For users with an "ADMIN" role
-@Controller( name="MyController" )
+@Controller(name="MyController")
 class MyControllerForAdmin {
 	@OnCheck
-	static boolean check( HttpServletRequest request ){
-		return request.isUserInRole( "ADMIN" );
+	static boolean check(HttpServletRequest request) {
+		return request.isUserInRole("ADMIN");
 	}
 }
 
 // For others
-@Controller( name="MyController" )
+@Controller(name="MyController")
 class MyControllerForOthers {
 	@OnCheck
-	static boolean check( HttpServletRequest request ){
+	static boolean check(HttpServletRequest request) {
 		return true;
 	}
 }
@@ -52,7 +52,7 @@ class MyControllerForOthers {
 <script src="my-controller"></script>
 ```
 
-### Retrieving user principal
+### Retrieving User Principal
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -61,13 +61,12 @@ import org.wcardinal.controller.annotation.OnCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController extends AbstractController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
 	@OnCreate
-	void init(){
-		logger.info( getPrincipal() );
+	void init() {
+		log.info(getPrincipal());
 	}
 }
 ```
@@ -82,23 +81,22 @@ import org.wcardinal.controller.ControllerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
 	@Autowired
 	ControllerFacade facade;
 
 	@OnCreate
 	void init(){
-		logger.info( facade.getPrincipal() );
+		log.info(facade.getPrincipal());
 	}
 }
 ```
 
 Please refer to [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
 
-### Retrieving remote address
+### Retrieving Remote Address
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -107,13 +105,12 @@ import org.wcardinal.controller.annotation.OnCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController extends AbstractController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
 	@OnCreate
 	void init(){
-		logger.info( getRemoteAddress() );
+		log.info(getRemoteAddress());
 	}
 }
 ```
@@ -128,16 +125,15 @@ import org.wcardinal.controller.ControllerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
 	@Autowired
 	ControllerFacade facade;
 
 	@OnCreate
-	void init(){
-		logger.info( facade.getRemoteAddress() );
+	void init() {
+		log.info(facade.getRemoteAddress());
 	}
 }
 ```
@@ -155,7 +151,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 class MyController {
 	@OnRequest
-	static void onRequest( HttpServletRequest request ){
+	static void onRequest(HttpServletRequest request) {
 		// DO SOMETHING
 	}
 }
@@ -164,18 +160,18 @@ class MyController {
 Note that the `onRequest(HttpServletRequest)` is a static method.
 Please refer to [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).
 
-### Retrieving HttpServletRequest and customizing controller attributes
+### Retrieving HttpServletRequest and Customizing Controller Attributes
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnRequest
-	static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
-		attributes.put( "name", "John" );
+	static void onRequest(HttpServletRequest request, ControllerAttributes attributes) {
+		attributes.put("name", "Cardinal");
 	}
 
-	void something(){
-		System.out.println( getAttributes().get( "name" ) ); // Prints "John"
+	void something() {
+		System.out.println(getAttributes().get("name")); // Prints "Cardinal"
 	}
 }
 ```

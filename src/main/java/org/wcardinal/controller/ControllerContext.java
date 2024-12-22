@@ -199,14 +199,14 @@ public interface ControllerContext extends Unlockable {
 	 * The parameters are taken from the query string or posted form data.
 	 *
 	 * <pre><code> // HTML
-	 * {@literal <script src="my-controller?name=John"></script>}
+	 * {@literal <script src="my-controller?name=Cardinal"></script>}
 	 *
 	 * // Java
 	 * {@literal @}Controller
 	 * class MyController {
 	 *   {@literal @}OnCreate
 	 *   void onCreate(){
-	 *      System.out.println( getParameter("name") ); // prints "John"
+	 *      System.out.println( getParameter("name") ); // prints "Cardinal"
 	 *   }
 	 * }
 	 * </code></pre>
@@ -222,14 +222,14 @@ public interface ControllerContext extends Unlockable {
 	 * The parameters are taken from the query string or posted form data.
 	 *
 	 * <pre><code> // HTML
-	 * {@literal <script src="my-controller?name=John"></script>}
+	 * {@literal <script src="my-controller?name=Cardinal"></script>}
 	 *
 	 * // Java
 	 * {@literal @}Controller
 	 * class MyController {
 	 *   {@literal @}OnCreate
 	 *   void onCreate(){
-	 *     System.out.println( Arrays.toString(getParameters("name")) ); // prints ["John"]
+	 *     System.out.println( Arrays.toString(getParameters("name")) ); // prints ["Cardinal"]
 	 *   }
 	 * }
 	 * </code></pre>
@@ -246,14 +246,14 @@ public interface ControllerContext extends Unlockable {
 	 * The parameters are taken from the query string or posted form data.
 	 *
 	 * <pre><code> // HTML
-	 * {@literal <script src="my-controller?name=John"></script>}
+	 * {@literal <script src="my-controller?name=Cardinal"></script>}
 	 *
 	 * // Java
 	 * {@literal @}Controller
 	 * class MyController {
 	 *   {@literal @}OnCreate
 	 *   void onCreate(){
-	 *     System.out.println( getParameterMap("name") ); // prints {name=["John"]}
+	 *     System.out.println( getParameterMap("name") ); // prints {name=["Cardinal"]}
 	 *   }
 	 * }
 	 * </code></pre>
@@ -275,14 +275,14 @@ public interface ControllerContext extends Unlockable {
 	 *
 	 *   {@literal @}OnCreate
 	 *   void onCreate(){
-	 *     factory.create(1, "John");
+	 *     factory.create(1, "Cardinal");
 	 *   }
 	 * }
 	 *
 	 * class MyComponent extends AbstractComponent {
 	 *   {@literal @}OnCreate
 	 *   void onCreate(){
-	 *     System.out.println( getFactoryParameters() ); // prints [1, "John"]
+	 *     System.out.println( getFactoryParameters() ); // prints [1, "Cardinal"]
 	 *   }
 	 * }
 	 * </code></pre>
@@ -603,7 +603,7 @@ public interface ControllerContext extends Unlockable {
 	 *
 	 * <pre><code> // JavaScript
 	 * myController.on( 'hello', function( e, name ){
-	 *   console.log( name ); // prints 'John'
+	 *   console.log( name ); // prints 'Cardinal'
 	 * });
 	 *
 	 * // Java
@@ -616,7 +616,7 @@ public interface ControllerContext extends Unlockable {
 	 *
 	 *   {@literal @}OnTime
 	 *   void hello(){
-	 *     trigger( "hello", "John" );
+	 *     trigger( "hello", "Cardinal" );
 	 *   }
 	 * }
 	 * </code></pre>
@@ -653,7 +653,7 @@ public interface ControllerContext extends Unlockable {
 	 *
 	 * <pre><code> // JavaScript
 	 * myController.on( 'hello', function( e, name ){
-	 *   console.log( name ); // prints 'John'
+	 *   console.log( name ); // prints 'Cardinal'
 	 *   return 'Hello, '+name;
 	 * });
 	 *
@@ -667,10 +667,10 @@ public interface ControllerContext extends Unlockable {
 	 *
 	 *   {@literal @}OnTime
 	 *   void hello(){
-	 *     trigger( "hello", 3000, "John" )
+	 *     trigger( "hello", 3000, "Cardinal" )
 	 *     .done(new {@literal DoneCallback<List<JsonNode>>}(){
 	 *       public void onDone({@literal List<JsonNode>} result) {
-	 *         System.out.println( result.get( 0 ).asText() ); // prints "Hello, John"
+	 *         System.out.println( result.get( 0 ).asText() ); // prints "Hello, Cardinal"
 	 *       }
 	 *     });
 	 *   }

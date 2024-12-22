@@ -15,12 +15,12 @@ class MyComponent {
 	SLong field;
 
 	@OnCreate
-	void init(){
-		field.set( 1 );
+	void init() {
+		field.set(1);
 	}
 
 	@Callable
-	int callble(){
+	int callble() {
 		return 2;
 	}
 }
@@ -33,13 +33,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.component.field.get() ); // Prints 1
-myController.component.callable().then(( result ) => {
-	console.log( result ); // Prints 2
-});
+console.log(myController.component.field.get()); // Prints 1
+console.log(await myController.component.callable()); // Prints 2
 ```
 
-### Component basics
+### Component Basics
 
 ```java
 import org.wcardinal.controller.annotation.Component;
@@ -48,8 +46,8 @@ import org.wcardinal.controller.annotation.Controller;
 @Component
 class MyComponent {
 	@Callable
-	String hello( String name ){
-		return "Hello, " + name;
+	String hello(String name){
+		return "Hello, " + name + "!";
 	}
 }
 
@@ -61,12 +59,10 @@ class MyController {
 ```
 
 ```javascript
-myController.component.hello( 'John' ).then(( result ) => {
-	console.log( result ); // Prints "Hello, John"
-});
+console.log(await myController.component.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
-### Retrieving parent (JavaScript)
+### Retrieving Parent (JavaScript)
 
 ```java
 @Component
@@ -82,11 +78,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.getParent() ); // Prints null
-console.log( myController.myComponent.getParent() === controller ); // Prints true
+console.log(myController.getParent()); // Prints null
+console.log(myController.myComponent.getParent() === controller); // Prints true
 ```
 
-### Retrieving parent (Java)
+### Retrieving Parent (Java)
 
 ```java
 @Component
@@ -99,9 +95,9 @@ class MyController {
 	@Autowired
 	MyComponent myComponent;
 
-	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myComponent.getParent() == this ); // Prints true
+	void foo() {
+		System.out.println(getParent()); // Prints null
+		System.out.println(myComponent.getParent() == this); // Prints true
 	}
 }
 ```
@@ -114,7 +110,7 @@ class MyComponent {
 	@Autowired
 	ComponentFacade facade;
 
-	Object getParent(){
+	Object getParent() {
 		return facade.getParent();
 	}
 }
@@ -124,14 +120,14 @@ class MyController {
 	@Autowired
 	MyComponent myComponent;
 
-	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myComponent.getParent() == this ); // Prints true
+	void foo() {
+		System.out.println(getParent()); // Prints null
+		System.out.println(myComponent.getParent() == this); // Prints true
 	}
 }
 ```
 
-### Component lifecycle handling
+### Component Lifecycle Handling
 
 ```java
 import org.wcardinal.controller.annotation.Component;
@@ -141,18 +137,18 @@ import org.wcardinal.controller.annotation.OnDestroy;
 @Component
 class MyComponent {
 	@OnCreate
-	void init(){
+	void init() {
 		// Called after instantiated.
 	}
 
 	@OnDestroy
-	void destroy(){
+	void destroy() {
 		// Called before getting destroyed.
 	}
 }
 ```
 
-### Creating components dynamically (JavaScript)
+### Creating Components Dynamically (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -164,7 +160,7 @@ class MyComponent {
 
 	@OnCreate
 	void onCreate() {
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -176,12 +172,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.create().value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create().value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating components dynamically (Java)
+### Creating Components Dynamically (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -193,7 +189,7 @@ class MyComponent {
 
 	@OnCreate
 	void onCreate() {
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -211,15 +207,15 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'create', ( e, newInstance ) => {
+myController.factory.on("create", (e, newInstance) => {
 	// Called when a new instance is created.
-	newInstance.value.on( 'value', ( e, value ) => {
-		console.log( value ); // Prints 128
+	newInstance.value.on("value", (e, value) => {
+		console.log(value); // Prints 128
 	});
 });
 ```
 
-### Creating components dynamically with parameters (JavaScript)
+### Creating Components Dynamically With Parameters (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -230,8 +226,8 @@ class MyComponent {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -243,12 +239,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.create( 128 ).value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create(128).value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating components dynamically with parameters (Java)
+### Creating Components Dynamically With Parameters (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -259,8 +255,8 @@ class MyComponent {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -272,12 +268,12 @@ class MyController {
 	@OnCreate
 	void onCreate() {
 		// Creates a `MyComponent` instance with a integer of 128.
-		factory.create( 128 );
+		factory.create(128);
 	}
 }
 ```
 
-### Destroying dynamic components (JavaScript)
+### Destroying Dynamic Components (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -295,10 +291,10 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.destroy( controller.factory.create() );
+myController.factory.destroy(controller.factory.create());
 ```
 
-### Destroying dynamic components (Java)
+### Destroying Dynamic Components (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -309,13 +305,13 @@ class MyComponent extends AbstractComponent {
 	@OnCreate
 	void onCreate() {
 		// Calls the `@OnTime` method after 10 seconds.
-		timeout( "done", 10000 );
+		timeout("done", 10000);
 	}
 
 	@OnTime
 	void destroy() {
 		// Destroys itself.
-		getParentAsFactory().destroy( this );
+		getParentAsFactory().destroy(this);
 	}
 }
 
@@ -333,12 +329,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'destroy', ( e, newInstance ) => {
+myController.factory.on("destroy", (e, newInstance) => {
 	// Called when instances are destroyed.
 });
 ```
 
-### Sharing components among browsers
+### Sharing Components Among Browsers
 
 ```java
 import org.wcardinal.controller.Controller;
@@ -362,18 +358,18 @@ class MyController {
 
 Please note that the `MySharedComponent` class is annotated with the `SharedComponent` annotation.
 
-### Shared component lifecycle handling
+### Shared Component Lifecycle Handling
 
 ```java
 @SharedComponent
 class MySharedComponent {
 	@OnCreate
-	void init(){
+	void init() {
 		// Called after instantiated.
 	}
 
 	@OnDestroy
-	void destroy(){
+	void destroy() {
 		// Called before getting destroyed.
 	}
 }

@@ -35,7 +35,7 @@ In this case, if `myPage1` is shown, `myPage2` never be shown.
 On the contrary, if `myPage2` is shown, `myPage1` never be shown.
 However, `myPage1` and `myPage3` can be shown simultaneously because these two belongs to different classes.
 
-### Page basics
+### Page Basics
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -61,7 +61,7 @@ class MyController {
 }
 ```
 
-### Showing/hiding pages (JavaScript)
+### Showing/Hiding Pages (JavaScript)
 
 ```java
 @Page
@@ -81,7 +81,7 @@ myController.myPage.show();
 myController.myPage.hide();
 ```
 
-### Showing/hiding pages (Java)
+### Showing/Hiding Pages (Java)
 
 ```java
 import org.wcardinal.controller.AbstractPage;
@@ -96,11 +96,11 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	void showMyPage(){
+	void showMyPage() {
 		myPage.show();
 	}
 
-	void hideMyPage(){
+	void hideMyPage() {
 		myPage.hide();
 	}
 }
@@ -116,11 +116,11 @@ class MyPage {
 	@Autowired
 	PageFacade facade;
 
-	public void show(){
+	public void show() {
 		return facade.show();
 	}
 
-	public void hide(){
+	public void hide() {
 		return facade.hide();
 	}
 }
@@ -130,17 +130,17 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	void showMyPage(){
+	void showMyPage() {
 		myPage.show();
 	}
 
-	void hideMyPage(){
+	void hideMyPage() {
 		myPage.hide();
 	}
 }
 ```
 
-### Retrieving active page (JavaScript)
+### Retrieving Active Page (JavaScript)
 
 ```java
 import org.wcardinal.controller.AbstractController;
@@ -158,10 +158,10 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-console.log( myController.getActivePage() === myController.myPage ); // Prints true
+console.log(myController.getActivePage() === myController.myPage); // Prints true
 ```
 
-### Retrieving active page (Java)
+### Retrieving Active Page (Java)
 
 ```java
 import org.wcardinal.controller.AbstractController;
@@ -177,12 +177,12 @@ class MyController extends AbstractController {
 	MyPage myPage;
 
 	void foo(){
-		System.out.println( getActivePage() == myPage ); // Prints true
+		System.out.println(getActivePage() == myPage); // Prints true
 	}
 }
 ```
 
-### Checking whether a page is shown/hidden (JavaScript)
+### Checking Whether a Page is Shown/Hidden (JavaScript)
 
 ```java
 @Page
@@ -198,11 +198,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.myPage.isShown() ); // Prints true
-console.log( myController.myPage.isHidden() ); // Prints false
+console.log(myController.myPage.isShown()); // Prints true
+console.log(myController.myPage.isHidden()); // Prints false
 ```
 
-### Checking whether a page is shown/hidden (Java)
+### Checking Whether a Page is Shown/Hidden (Java)
 
 ```java
 import org.wcardinal.controller.AbstractPage;
@@ -217,14 +217,14 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	void foo(){
-		System.out.println( myPage.isShown() ); // Prints true
-		System.out.println( myPage.isHidden() ); // Prints false
+	void foo() {
+		System.out.println(myPage.isShown()); // Prints true
+		System.out.println(myPage.isHidden()); // Prints false
 	}
 }
 ```
 
-### Retrieving parent (JavaScript)
+### Retrieving Parent (JavaScript)
 
 ```java
 @Page
@@ -240,11 +240,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.getParent() ); // Prints null
-console.log( myController.myPage.getParent() === myController ); // Prints true
+console.log(myController.getParent()); // Prints null
+console.log(myController.myPage.getParent() === myController); // Prints true
 ```
 
-### Retrieving parent (Java)
+### Retrieving Parent (Java)
 
 ```java
 @Page
@@ -258,8 +258,8 @@ class MyController {
 	MyPage myPage;
 
 	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myPage.getParent() == this ); // Prints true
+		System.out.println(getParent()); // Prints null
+		System.out.println(myPage.getParent() == this); // Prints true
 	}
 }
 ```
@@ -272,7 +272,7 @@ class MyPage {
 	@Autowired
 	PageFacade facade;
 
-	Object getParent(){
+	Object getParent() {
 		return facade.getParent();
 	}
 }
@@ -282,14 +282,14 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myPage.getParent() == this ); // Prints true
+	void foo() {
+		System.out.println(getParent()); // Prints null
+		System.out.println(myPage.getParent() == this); // Prints true
 	}
 }
 ```
 
-### Primary page
+### Primary Page
 
 ```java
 @Page
@@ -323,7 +323,7 @@ class MyController {
 }
 ```
 
-### No primary page
+### No Primary Page
 
 ```java
 import org.wcardinal.controller.annotation.NoPrimaryPage;
@@ -344,7 +344,7 @@ class MyController {
 }
 ```
 
-### Detecting page change (JavaScript)
+### Detecting Page Change (JavaScript)
 
 ```java
 @Page
@@ -360,31 +360,31 @@ class MyController {
 ```
 
 ```javascript
-myController.myPage.on( 'show', () => {
+myController.myPage.on("show", () => {
 	// Called when event handlers are set if `myPage` is shown or after `myPage` gets to be shown.
 });
 
-myController.myPage.on( 'hide', () => {
+myController.myPage.on("hide", () => {
 	// Called when event handlers are set if `myPage` is hidden or after `myPage` gets to be hidden.
 });
 
-myController.on( 'page', ( e, newPageName, oldPageName ) => {
+myController.on("page", (e, newPageName, oldPageName) => {
 	// Called when event handlers are set or when the active page of this controller is changed.
 });
 ```
 
-### Detecting page change (Java)
+### Detecting Page Change (Java)
 
 ```java
 @Page
 class MyPage {
 	@OnShow
-	void onShow(){
+	void onShow() {
 		// Called after being shown.
 	}
 
 	@OnHide
-	void onHide(){
+	void onHide() {
 		// Called after being hidden.
 	}
 }
@@ -402,24 +402,24 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	@OnShow( "myPage" )
+	@OnShow("myPage")
 	void onShowMyPage(){
 		// Called after `myPage` gets to be shown.
 	}
 
-	@OnHide( "equipmentPage" )
+	@OnHide("equipmentPage")
 	void onShowMyPage(){
 		// Called after `myPage` gets to be hidden.
 	}
 
-	@OnChange( "page" )
-	void onChangePage( String newPageName, String oldPageName ){
+	@OnChange("page")
+	void onChangePage(String newPageName, String oldPageName){
 		// Called when the active page of this controller is changes.
 	}
 }
 ```
 
-### Page lifecycle handling
+### Page Lifecycle Handling
 
 ```java
 import org.wcardinal.controller.annotation.Page;
@@ -429,24 +429,24 @@ import org.wcardinal.controller.annotation.OnDestroy;
 @Page
 class MyPage {
 	@OnCreate
-	void init(){
+	void init() {
 		// Called after instantiated.
 	}
 
 	@OnDestroy
-	void destroy(){
+	void destroy() {
 		// Called before getting destroyed.
 	}
 }
 ```
 
-### Page name in title
+### Page Name in Title
 
 ```java
 import org.wcardinal.controller.annotation.DisplayName;
 
 @Page
-@DisplayName( "Page name in title" )
+@DisplayName("Page name in title")
 class MyPage {
 	...
 }
@@ -471,18 +471,18 @@ class MyPage {
 @Controller
 class MyController {
 	@Autowired
-	@DisplayName( "Page name in title" )
+	@DisplayName("Page name in title")
 	MyPage myPage;
 }
 ```
 
-### Page name in title (I18N)
+### Page Name in Title (I18N)
 
 ```java
 import org.wcardinal.controller.annotation.DisplayNameMessage;
 
 @Page
-@DisplayNameMessage( "my-page.name" )
+@DisplayNameMessage("my-page.name")
 class MyPage {
 	...
 }
@@ -507,7 +507,7 @@ class MyPage {
 @Controller
 class MyController {
 	@Autowired
-	@DisplayNameMessage( "my-page.name" )
+	@DisplayNameMessage("my-page.name")
 	MyPage myPage;
 }
 ```
@@ -518,7 +518,7 @@ And add the followings to your `messages_en.properties`:
 my-page.name=Page name in title
 ```
 
-### Creating pages dynamically (JavaScript)
+### Creating Pages Dynamically (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -531,7 +531,7 @@ class MyPage {
 	@OnCreate
 	void onCreate() {
 		// Called when instantiated.
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -543,12 +543,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.create().value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create().value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating pages dynamically (Java)
+### Creating Pages Dynamically (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -561,7 +561,7 @@ class MyPage {
 	@OnCreate
 	void onCreate() {
 		// Called when instantiated.
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -579,15 +579,15 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'create', ( e, newInstance ) => {
+myController.factory.on("create", (e, newInstance) => {
 	// Called when a new instance is created.
-	newInstance.value.on( 'value', ( e, value ) => {
-		console.log( value ); // Prints 128
+	newInstance.value.on("value", (e, value) => {
+		console.log(value); // Prints 128
 	});
 });
 ```
 
-### Creating pages dynamically with parameters (JavaScript)
+### Creating Pages Dynamically With Parameters (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -598,8 +598,8 @@ class MyPage {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -611,12 +611,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.create( 128 ).value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create(128).value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating pages dynamically with parameters (Java)
+### Creating Pages Dynamically With Parameters (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -627,8 +627,8 @@ class MyPage {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -640,12 +640,12 @@ class MyController extends AbstractController {
 	@OnCreate
 	void onCreate() {
 		// Creates a `MyPage` instance with an integer of 128.
-		factory.create( 128 );
+		factory.create(128);
 	}
 }
 ```
 
-### Destroying dynamic pages (JavaScript)
+### Destroying Dynamic Pages (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -663,10 +663,10 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.destroy( myController.factory.create() );
+myController.factory.destroy(myController.factory.create());
 ```
 
-### Destroying dynamic pages (Java)
+### Destroying Dynamic Pages (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -677,13 +677,13 @@ class MyPage extends AbstractPage {
 	@OnCreate
 	void onCreate() {
 		// Calls the `@OnTime` method after 10 seconds.
-		timeout( "destroy", 10000 );
+		timeout("destroy", 10000);
 	}
 
 	@OnTime
 	void destroy() {
 		// Destroys itself.
-		getParentAsFactory().destroy( this );
+		getParentAsFactory().destroy(this);
 	}
 }
 
@@ -701,7 +701,7 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'destroy', ( e, newInstance ) => {
+myController.factory.on("destroy", (e, newInstance) => {
 	// Called when instances are destroyed.
 });
 ```

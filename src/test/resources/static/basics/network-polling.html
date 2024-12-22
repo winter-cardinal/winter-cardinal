@@ -32,14 +32,14 @@
 			}
 		})
 		.test("Syncronization check", function( cb ){
-			c.field_string.set( "John" );
+			c.field_string.set( "Cardinal" );
 			c.field_string.one( "change", function( e, value ){
-				cb.assertEquals( value, "Hello, John" ).done();
+				cb.assertEquals( value, "Hello, Cardinal" ).done();
 			});
 		})
 		.test("Callable check", function( cb ){
-			c.hello( "John" ).then(function( result ){
-				cb.assertEquals( result, "Hello, John" ).done();
+			c.hello( "Cardinal" ).then(function( result ){
+				cb.assertEquals( result, "Hello, Cardinal" ).done();
 			});
 		})
 		.execute();

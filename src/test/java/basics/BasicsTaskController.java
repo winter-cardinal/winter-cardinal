@@ -111,7 +111,7 @@ public class BasicsTaskController {
 
 	@Task
 	TaskResult<Void> fail_task_with_reason(){
-		return TaskResults.fail( "john" );
+		return TaskResults.fail( "Cardinal" );
 	}
 
 	// ABORT

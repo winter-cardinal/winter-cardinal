@@ -231,7 +231,7 @@ class MyController {
 	}
 
 	@CallableExceptionHandler
-	String handle(Exception e){
+	String handle(Exception e) {
 		return "fail-reason";
 	}
 }
@@ -259,7 +259,7 @@ class MyController {
 	}
 
 	@CallableExceptionHandler
-	String handle(Exception e){
+	String handle(Exception e) {
 		// Never be called because the other one has the more specific signature.
 		return "fail-reason-a";
 	}
@@ -299,7 +299,7 @@ class MyController {
 	MyComponent component;
 
 	@CallableExceptionHandler
-	String handle(Exception e){
+	String handle(Exception e) {
 		return "fail-reason-a";
 	}
 

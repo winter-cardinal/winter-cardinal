@@ -1,6 +1,6 @@
 ## Field
 
-### Accessing fields from JavaScript
+### Accessing Fields From JavaScript
 
 ```java
 @Controller
@@ -58,7 +58,7 @@ class Series {
 	...
 }
 
-class MyController{
+class MyController {
 	@Autowired
 	SList<Series> series;
 }
@@ -70,10 +70,16 @@ Namely, all fields in the `Series` class must have getter/setter methods:
 class Series {
 	private long time;
 
-	long getTime(){ return time; }
-	void setTime( long time ) { this.time = time; }
+	long getTime(){
+		return time;
+	}
+
+	void setTime(long time) {
+		this.time = time;
+	}
 }
 ```
+
 or be public:
 
 ```java
@@ -87,7 +93,7 @@ Please refer to [Jackson document](http://wiki.fasterxml.com/JacksonHome) for de
 The key type of `SMap<T>`、`SNavigableMap<T>`, `SObjectNode` is `String`.
 This limitation comes from the JavaScript's `Object` and the JSON specifications.
 
-### Detecting field changes (JavaScript)
+### Detecting Field Changes (JavaScript)
 
 ```java
 @Controller
@@ -98,14 +104,14 @@ class MyController{
 ```
 
 ```javascript
-myController.time.on('value', ( e, newValue, oldValue ) => {
+myController.time.on("value", (e, newValue, oldValue) => {
 	// Variables `newValue` and `oldValue` are
 	// a new value and an old value of the `time`, respectively.
 });
 
 // Or use `value` event on the controller to detect the change of the `time` field.
-myController.on('value', () => {
-	console.log( controller.time.get() );
+myController.on("value", () => {
+	console.log(controller.time.get());
 });
 ```
 
@@ -173,7 +179,7 @@ The arguments of the `value` event varies by types:
 	+ `Array.<T>` addedItems: Added items sorted by their indices
 	+ `Array.<T>` removedItems: Removed items sorted by their indices
 
-### Detecting field changes (Java)
+### Detecting Field Changes (Java)
 
 ```java
 @Controller
@@ -181,8 +187,8 @@ class MyController {
 	@Autowired
 	SLong time;
 
-	@OnChange( "time" )
-	void handler( Long newValue, Long oldValue ){
+	@OnChange("time")
+	void handler(Long newValue, Long oldValue){
 		// Called immediately after the `time` field changes.
 		// Arguments `newValue` and `oldValue` are a new value and
 		// an old value of the `time` field, respectively.
@@ -265,8 +271,8 @@ class MyController {
 	@Autowired
 	MyComponent component;
 
-	@OnChange( "component.time" )
-	void handler( Long newValue, Long oldValue ){
+	@OnChange("component.time")
+	void handler(Long newValue, Long oldValue){
 		// Called immediately after the `component.time` field changes.
 	}
 }
@@ -293,7 +299,7 @@ class MyController {
 ```
 
 ```javascript
-myController.time.set( 0 ); // Throws `wcardinal.exception.UnsupportedOperationException`
+myController.time.set(0); // Throws `wcardinal.exception.UnsupportedOperationException`
 ```
 
 ### Non-null fields
@@ -364,26 +370,25 @@ class MyController extends AbstractController {
 	SLong time;
 
 	@OnCreate
-	void onCreate(){
-		timeout( "init", 1000 );
+	void onCreate() {
+		timeout("init", 1000);
 
 
 	@OnTime
-	void init(){
+	void init() {
 		// Time-consuming tasks
-
-		time.set( 42 );
+		time.set(42);
 	}
 }
 ```
 
 ```javascript
-myController.time.on( 'value', ( e, time ) => {
-	console.log( time ); // Prints 42 after 1 second.
+myController.time.on("value", (e, time) => {
+	console.log(time); // Prints 42 after 1 second.
 });
 ```
 
-### Freeing fields when a synchronization is finished
+### Freeing Fields When a Synchronization is Finished
 
 If some of fields holds large data, a server may experience a memory starvation since JVM can not free heap memories for those data, .
 One of the solutions to prevent this situation is setting such fields to null when the synchronization between a server and a browser is finished.
@@ -431,17 +436,17 @@ class MyController {
 	int NON_FINAL_CONSTANT = 0;
 
 	@OnCreate
-	void init(){
+	void init() {
 		NON_FINAL_CONSTANT = 3;
 	}
 }
 ```
 
 ```javascript
-console.log( myController.MyEnum.ENUM0 );       // Prints "ENUM0"
-console.log( myController.STATIC_CONSTANT );    // Prints 1
-console.log( myController.CONSTANT );           // Prints 2
-console.log( myController.NON_FINAL_CONSTANT ); // Prints 3
+console.log(myController.MyEnum.ENUM0);       // Prints "ENUM0"
+console.log(myController.STATIC_CONSTANT);    // Prints 1
+console.log(myController.CONSTANT);           // Prints 2
+console.log(myController.NON_FINAL_CONSTANT); // Prints 3
 ```
 
 For non-static constants, values at the time all the locked `@OnCreate` method invocations are finished are sent to browsers.
@@ -454,19 +459,19 @@ class MyController extends AbstractController {
 	int CONSTANT; // Initialized to 0.
 
 	@OnCreate
-	void init(){
-		timeout( "init", 1000 );
+	void init() {
+		timeout("init", 1000);
 	}
 
 	@OnTime
-	void init(){
+	void init() {
 		CONSTANT = 1; // Browsers never see this value.
 	}
 }
 ```
 
 ```javascript
-console.log( myController.CONSTANT ); // Prints 0
+console.log(myController.CONSTANT); // Prints 0
 ```
 
 ### Controlling field synchronization timing (JavaScript)
@@ -484,9 +489,9 @@ class MyController {
 	@Autowired
 	SLong field1;
 
-	@OnChange( "field0" )
-	void foo(){
-		System.out.println( field1.get() == 2 ); // Always prints true
+	@OnChange("field0")
+	void foo() {
+		System.out.println(field1.get() == 2); // Always prints true
 	}
 }
 ```
@@ -494,8 +499,8 @@ class MyController {
 ```javascript
 myController.lock();
 try {
-	myController.field0.set( 1 );
-	myController.field1.set( 2 );
+	myController.field0.set(1);
+	myController.field1.set(2);
 } finally {
 	myController.unlock();
 }
@@ -504,7 +509,7 @@ try {
 Updated fields within the same lock is synchronized atomically.
 Therefore, it is guaranteed that `field1` has `2` when `field0` is changed to `1` in servers.
 
-### Controlling field synchronization timing (Java)
+### Controlling Field Synchronization Timing (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -519,19 +524,19 @@ class MyController extends AbstractController {
 	@Autowired
 	SLong field1;
 
-	void foo(){
-		try( Unlocker unlocker = lock() ) {
-			field0.set( 1 );
-			field1.set( 2 );
+	void foo() {
+		try(Unlocker unlocker = lock()) {
+			field0.set(1);
+			field1.set(2);
 		}
 	}
 }
 ```
 
 ```javascript
-myController.field0.on( 'value', ( e, value ) => {
-	if( value === 1 ) {
-		console.log( myController.field1.get() === 2 ); // Always prints true
+myController.field0.on("value", (e, value) => {
+	if (value === 1) {
+		console.log(myController.field1.get() === 2); // Always prints true
 	}
 });
 ```

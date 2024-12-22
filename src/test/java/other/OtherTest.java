@@ -256,24 +256,24 @@ public class OtherTest {
 	@Test
 	public void controllerScope() {
 		final ControllerScopeAttributes controllerScopeAttributes = new ControllerScopeAttributes( "a", "b" );
-		controllerScopeAttributes.registerDestructionCallback("john", new Runnable() {
+		controllerScopeAttributes.registerDestructionCallback("Cardinal", new Runnable() {
 			@Override
 			public void run() {}
 		});
 		ControllerScopeAttributesHolder.set( controllerScopeAttributes );
 		final ControllerScope controllerScope = new ControllerScope();
-		Assert.assertNull( controllerScope.remove( "john" ) );
-		Assert.assertEquals(controllerScope.get("john", new ObjectFactory<ControllerScope>() {
+		Assert.assertNull( controllerScope.remove( "Cardinal" ) );
+		Assert.assertEquals(controllerScope.get("Cardinal", new ObjectFactory<ControllerScope>() {
 			@Override
 			public ControllerScope getObject() throws BeansException {
 				return controllerScope;
 			}
 		}), controllerScope);
-		Assert.assertEquals( controllerScope.remove( "john" ), controllerScope );
-		Assert.assertNull( controllerScope.resolveContextualObject( "john" ) );
+		Assert.assertEquals( controllerScope.remove( "Cardinal" ), controllerScope );
+		Assert.assertNull( controllerScope.resolveContextualObject( "Cardinal" ) );
 		Assert.assertEquals( controllerScope.getConversationId(), "a-b" );
 		ControllerScopeAttributesHolder.set( null );
-		controllerScopeAttributes.registerDestructionCallback("john", new Runnable() {
+		controllerScopeAttributes.registerDestructionCallback("Cardinal", new Runnable() {
 			@Override
 			public void run() {}
 		});
@@ -283,22 +283,22 @@ public class OtherTest {
 	@Test
 	public void sharedComponentScope() {
 		final SharedComponentScope sharedComponentScope = new SharedComponentScope();
-		sharedComponentScope.registerDestructionCallback("john", new Runnable() {
+		sharedComponentScope.registerDestructionCallback("Cardinal", new Runnable() {
 			@Override
 			public void run() {}
 		});
-		Assert.assertNull( sharedComponentScope.remove( "john" ) );
-		Assert.assertEquals(sharedComponentScope.get("john", new ObjectFactory<SharedComponentScope>() {
+		Assert.assertNull( sharedComponentScope.remove( "Cardinal" ) );
+		Assert.assertEquals(sharedComponentScope.get("Cardinal", new ObjectFactory<SharedComponentScope>() {
 			@Override
 			public SharedComponentScope getObject() throws BeansException {
 				return sharedComponentScope;
 			}
 		}), sharedComponentScope);
-		Assert.assertEquals(sharedComponentScope.get( "john", null ), sharedComponentScope);
-		Assert.assertEquals( sharedComponentScope.remove( "john" ), sharedComponentScope );
-		Assert.assertNull( sharedComponentScope.resolveContextualObject( "john" ) );
+		Assert.assertEquals(sharedComponentScope.get( "Cardinal", null ), sharedComponentScope);
+		Assert.assertEquals( sharedComponentScope.remove( "Cardinal" ), sharedComponentScope );
+		Assert.assertNull( sharedComponentScope.resolveContextualObject( "Cardinal" ) );
 		Assert.assertNull( sharedComponentScope.getConversationId() );
-		sharedComponentScope.registerDestructionCallback("john", new Runnable() {
+		sharedComponentScope.registerDestructionCallback("Cardinal", new Runnable() {
 			@Override
 			public void run() {}
 		});

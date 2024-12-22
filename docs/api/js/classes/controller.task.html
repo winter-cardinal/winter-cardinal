@@ -62,7 +62,7 @@
 					<a href="controller.task.html">Task</a>
 				</li>
 			</ul>
-			<h1>Class Task&lt;RESULT, ARGUMENTS&gt;</h1>
+			<h1>Class Task&lt;RESULT, ARGUMENTS, RESULT, ARGUMENTS&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -72,13 +72,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Represents a task.</p>
+						<p>A central class for task methods.</p>
 					</div>
-					<dl class="tsd-comment-tags">
-						<dt>param</dt>
-						<dd><p>a return type</p>
-						</dd>
-					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -100,6 +95,12 @@
 							</div>
 						</div>
 					</li>
+					<li>
+						<h4>RESULT</h4>
+					</li>
+					<li>
+						<h4>ARGUMENTS<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></h4>
+					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -107,6 +108,15 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<a href="event.connectable.html" class="tsd-signature-type">Connectable</a>
+					</li>
+					<li>
+						<a href="event.connectable.html" class="tsd-signature-type">Connectable</a>
+					</li>
+					<li>
+						<a href="../interfaces/controller.taskmethod.html" class="tsd-signature-type">TaskMethod</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RESULT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ARGUMENTS</span><span class="tsd-signature-symbol">&gt;</span>
+					</li>
+					<li>
+						<span class="tsd-signature-type">function</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">Task</span>
@@ -121,6 +131,33 @@
 					<li><a href="../interfaces/controller.taskmethod.html" class="tsd-signature-type">TaskMethod</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RESULT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ARGUMENTS</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3 class="tsd-before-signature">Callable</h3>
+				<ul class="tsd-signatures tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ARGUMENTS</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RETURN</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task-call.ts#L6">src/main/typescript/wcardinal/controller/task-call.ts:6</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>A central class for task methods.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">ARGUMENTS</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">RETURN</span></h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -129,6 +166,13 @@
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-inherited">
+							<h3>Events</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-event tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#fail" class="tsd-kind-icon">fail</a></li>
+								<li class="tsd-kind-event tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#success" class="tsd-kind-icon">success</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private-protected">
@@ -140,38 +184,38 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#cancel" class="tsd-kind-icon">cancel</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#connector" class="tsd-kind-icon">connector</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#create" class="tsd-kind-icon">create</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#getargument" class="tsd-kind-icon">get<wbr>Argument</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#getarguments" class="tsd-kind-icon">get<wbr>Arguments</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#getreason" class="tsd-kind-icon">get<wbr>Reason</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#getresult" class="tsd-kind-icon">get<wbr>Result</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#cancel" class="tsd-kind-icon">cancel</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#connector" class="tsd-kind-icon">connector</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#create" class="tsd-kind-icon">create</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#getargument" class="tsd-kind-icon">get<wbr>Argument</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#getarguments" class="tsd-kind-icon">get<wbr>Arguments</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#getreason" class="tsd-kind-icon">get<wbr>Reason</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#getresult" class="tsd-kind-icon">get<wbr>Result</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#initialize" class="tsd-kind-icon">initialize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#iscanceled" class="tsd-kind-icon">is<wbr>Canceled</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#isdone" class="tsd-kind-icon">is<wbr>Done</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#isfailed" class="tsd-kind-icon">is<wbr>Failed</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#isinitialized" class="tsd-kind-icon">is<wbr>Initialized</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#islocked" class="tsd-kind-icon">is<wbr>Locked</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#isnonnull" class="tsd-kind-icon">is<wbr>Non<wbr>Null</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#isreadonly" class="tsd-kind-icon">is<wbr>Read<wbr>Only</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#issucceeded" class="tsd-kind-icon">is<wbr>Succeeded</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#lock" class="tsd-kind-icon">lock</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#off" class="tsd-kind-icon">off</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#offoff" class="tsd-kind-icon">offoff</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#offon" class="tsd-kind-icon">offon</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#on" class="tsd-kind-icon">on</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#one" class="tsd-kind-icon">one</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#onoff" class="tsd-kind-icon">onoff</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#onon" class="tsd-kind-icon">onon</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#retrigger" class="tsd-kind-icon">retrigger</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#tojson" class="tsd-kind-icon">to<wbr>Json</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#trigger" class="tsd-kind-icon">trigger</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controller.task.html#triggerdirect" class="tsd-kind-icon">trigger<wbr>Direct</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#iscanceled" class="tsd-kind-icon">is<wbr>Canceled</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#isdone" class="tsd-kind-icon">is<wbr>Done</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#isfailed" class="tsd-kind-icon">is<wbr>Failed</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#isinitialized" class="tsd-kind-icon">is<wbr>Initialized</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#islocked" class="tsd-kind-icon">is<wbr>Locked</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#isnonnull" class="tsd-kind-icon">is<wbr>Non<wbr>Null</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#isreadonly" class="tsd-kind-icon">is<wbr>Read<wbr>Only</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#issucceeded" class="tsd-kind-icon">is<wbr>Succeeded</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#lock" class="tsd-kind-icon">lock</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#off" class="tsd-kind-icon">off</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#offoff" class="tsd-kind-icon">offoff</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#offon" class="tsd-kind-icon">offon</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#on" class="tsd-kind-icon">on</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#one" class="tsd-kind-icon">one</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#onoff" class="tsd-kind-icon">onoff</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#onon" class="tsd-kind-icon">onon</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#retrigger" class="tsd-kind-icon">retrigger</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#tojson" class="tsd-kind-icon">to<wbr>Json</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#trigger" class="tsd-kind-icon">trigger</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="controller.task.html#triggerdirect" class="tsd-kind-icon">trigger<wbr>Direct</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#uninitialize" class="tsd-kind-icon">uninitialize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="controller.task.html#unlock" class="tsd-kind-icon">unlock</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static"><a href="controller.task.html#extend" class="tsd-kind-icon">extend</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="controller.task.html#unlock" class="tsd-kind-icon">unlock</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite tsd-is-inherited tsd-is-static"><a href="controller.task.html#extend" class="tsd-kind-icon">extend</a></li>
 							</ul>
 						</section>
 					</div>
@@ -190,7 +234,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L18">src/main/typescript/wcardinal/controller/task.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L18">src/main/typescript/wcardinal/controller/task.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -204,6 +248,97 @@
 					</ul>
 				</section>
 			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+				<h2>Events</h2>
+				<section class="tsd-panel tsd-member tsd-kind-event tsd-parent-kind-class tsd-is-inherited">
+					<a name="fail" class="tsd-anchor"></a>
+					<h3>fail</h3>
+					<ul class="tsd-signatures tsd-kind-event tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">onfail<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span>, reason<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, task<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#fail">fail</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task-method.ts#L172">src/main/typescript/wcardinal/controller/task-method.ts:172</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Triggered when a task is failed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">Event</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>an event object</p>
+									</div>
+								</li>
+								<li>
+									<h5>reason: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a reason</p>
+									</div>
+								</li>
+								<li>
+									<h5>task: <span class="tsd-signature-type">this</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a task itself</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-event tsd-parent-kind-class tsd-is-inherited">
+					<a name="success" class="tsd-anchor"></a>
+					<h3>success</h3>
+					<ul class="tsd-signatures tsd-kind-event tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">onsuccess<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span>, result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RESULT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, task<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#success">success</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task-method.ts#L162">src/main/typescript/wcardinal/controller/task-method.ts:162</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Triggered when a task is done successfully.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">Event</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>an event object</p>
+									</div>
+								</li>
+								<li>
+									<h5>result: <span class="tsd-signature-type">RESULT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a task result</p>
+									</div>
+								</li>
+								<li>
+									<h5>task: <span class="tsd-signature-type">this</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a task itself</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
@@ -212,35 +347,36 @@
 					<div class="tsd-signature tsd-kind-icon">__mem__<span class="tsd-signature-symbol">:</span> <a href="controller_internal.taskmemory.html" class="tsd-signature-type">TaskMemory</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RESULT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ARGUMENTS</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L19">src/main/typescript/wcardinal/controller/task.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L19">src/main/typescript/wcardinal/controller/task.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="cancel" class="tsd-anchor"></a>
 					<h3>cancel</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">cancel<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#cancel">cancel</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#cancel">cancel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L60">src/main/typescript/wcardinal/controller/task.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L60">src/main/typescript/wcardinal/controller/task.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="connector" class="tsd-anchor"></a>
 					<h3>connector</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">connector<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="event_internal.connector.html" class="tsd-signature-type">Connector</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
@@ -248,26 +384,28 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#connector">connector</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#connector">connector</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#connector">connector</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L23">src/main/typescript/wcardinal/event/connectable.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L23">src/main/typescript/wcardinal/event/connectable.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="event_internal.connector.html" class="tsd-signature-type">Connector</a></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="create" class="tsd-anchor"></a>
 					<h3>create</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ARGUMENTS</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#create">create</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#create">create</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L39">src/main/typescript/wcardinal/controller/task.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L39">src/main/typescript/wcardinal/controller/task.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -280,18 +418,19 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getargument" class="tsd-anchor"></a>
 					<h3>get<wbr>Argument</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Argument<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#getargument">getArgument</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#getargument">getArgument</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L27">src/main/typescript/wcardinal/controller/task.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L27">src/main/typescript/wcardinal/controller/task.ts:27</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -304,36 +443,38 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getarguments" class="tsd-anchor"></a>
 					<h3>get<wbr>Arguments</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Arguments<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ARGUMENTS</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#getarguments">getArguments</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#getarguments">getArguments</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L23">src/main/typescript/wcardinal/controller/task.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L23">src/main/typescript/wcardinal/controller/task.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ARGUMENTS</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getreason" class="tsd-anchor"></a>
 					<h3>get<wbr>Reason</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Reason<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#getreason">getReason</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#getreason">getReason</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L35">src/main/typescript/wcardinal/controller/task.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L35">src/main/typescript/wcardinal/controller/task.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span>
@@ -343,18 +484,19 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getresult" class="tsd-anchor"></a>
 					<h3>get<wbr>Result</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Result<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RESULT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#getresult">getResult</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#getresult">getResult</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L31">src/main/typescript/wcardinal/controller/task.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L31">src/main/typescript/wcardinal/controller/task.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">RESULT</span>
@@ -374,179 +516,188 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L82">src/main/typescript/wcardinal/controller/task.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L82">src/main/typescript/wcardinal/controller/task.ts:82</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="iscanceled" class="tsd-anchor"></a>
 					<h3>is<wbr>Canceled</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Canceled<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#iscanceled">isCanceled</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#iscanceled">isCanceled</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L44">src/main/typescript/wcardinal/controller/task.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L44">src/main/typescript/wcardinal/controller/task.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="isdone" class="tsd-anchor"></a>
 					<h3>is<wbr>Done</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Done<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isdone">isDone</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isdone">isDone</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L56">src/main/typescript/wcardinal/controller/task.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L56">src/main/typescript/wcardinal/controller/task.ts:56</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="isfailed" class="tsd-anchor"></a>
 					<h3>is<wbr>Failed</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Failed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isfailed">isFailed</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isfailed">isFailed</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L52">src/main/typescript/wcardinal/controller/task.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L52">src/main/typescript/wcardinal/controller/task.ts:52</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="isinitialized" class="tsd-anchor"></a>
 					<h3>is<wbr>Initialized</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Initialized<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isinitialized">isInitialized</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isinitialized">isInitialized</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L78">src/main/typescript/wcardinal/controller/task.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L78">src/main/typescript/wcardinal/controller/task.ts:78</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="islocked" class="tsd-anchor"></a>
 					<h3>is<wbr>Locked</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Locked<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#islocked">isLocked</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#islocked">isLocked</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L92">src/main/typescript/wcardinal/controller/task.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L92">src/main/typescript/wcardinal/controller/task.ts:92</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="isnonnull" class="tsd-anchor"></a>
 					<h3>is<wbr>Non<wbr>Null</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Non<wbr>Null<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isnonnull">isNonNull</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isnonnull">isNonNull</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L69">src/main/typescript/wcardinal/controller/task.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L69">src/main/typescript/wcardinal/controller/task.ts:69</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="isreadonly" class="tsd-anchor"></a>
 					<h3>is<wbr>Read<wbr>Only</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Read<wbr>Only<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isreadonly">isReadOnly</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#isreadonly">isReadOnly</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L65">src/main/typescript/wcardinal/controller/task.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L65">src/main/typescript/wcardinal/controller/task.ts:65</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="issucceeded" class="tsd-anchor"></a>
 					<h3>is<wbr>Succeeded</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Succeeded<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#issucceeded">isSucceeded</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#issucceeded">isSucceeded</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L48">src/main/typescript/wcardinal/controller/task.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L48">src/main/typescript/wcardinal/controller/task.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="lock" class="tsd-anchor"></a>
 					<h3>lock</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">lock<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#lock">lock</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#lock">lock</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L87">src/main/typescript/wcardinal/controller/task.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L87">src/main/typescript/wcardinal/controller/task.ts:87</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="off" class="tsd-anchor"></a>
 					<h3>off</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span>, types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
@@ -555,8 +706,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#off">off</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#off">off</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#off">off</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L240">src/main/typescript/wcardinal/event/connectable.ts:240</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L240">src/main/typescript/wcardinal/event/connectable.ts:240</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -596,8 +748,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#off">off</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#off">off</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#off">off</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L261">src/main/typescript/wcardinal/event/connectable.ts:261</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L261">src/main/typescript/wcardinal/event/connectable.ts:261</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -641,10 +794,10 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="offoff" class="tsd-anchor"></a>
 					<h3>offoff</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">offoff<span class="tsd-signature-symbol">(</span>types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">?: </span><a href="../modules/event.html#onoffhandler" class="tsd-signature-type">OnoffHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
@@ -652,8 +805,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#offoff">offoff</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#offoff">offoff</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#offoff">offoff</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L99">src/main/typescript/wcardinal/event/connectable.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L99">src/main/typescript/wcardinal/event/connectable.ts:99</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -682,10 +836,10 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="offon" class="tsd-anchor"></a>
 					<h3>offon</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">offon<span class="tsd-signature-symbol">(</span>types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">?: </span><a href="../modules/event.html#ononhandler" class="tsd-signature-type">OnonHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
@@ -693,8 +847,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#offon">offon</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#offon">offon</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#offon">offon</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L85">src/main/typescript/wcardinal/event/connectable.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L85">src/main/typescript/wcardinal/event/connectable.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -723,10 +878,10 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="on" class="tsd-anchor"></a>
 					<h3>on</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span>, types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
@@ -735,8 +890,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#on">on</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#on">on</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#on">on</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L127">src/main/typescript/wcardinal/event/connectable.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L127">src/main/typescript/wcardinal/event/connectable.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -781,8 +937,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#on">on</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#on">on</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#on">on</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L153">src/main/typescript/wcardinal/event/connectable.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L153">src/main/typescript/wcardinal/event/connectable.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -831,10 +988,10 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="one" class="tsd-anchor"></a>
 					<h3>one</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">one<span class="tsd-signature-symbol">(</span>types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">one<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span>, types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
@@ -843,8 +1000,9 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#one">one</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#one">one</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#one">one</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L186">src/main/typescript/wcardinal/event/connectable.ts:186</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L186">src/main/typescript/wcardinal/event/connectable.ts:186</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -887,8 +1045,9 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#one">one</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#one">one</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#one">one</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L210">src/main/typescript/wcardinal/event/connectable.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L210">src/main/typescript/wcardinal/event/connectable.ts:210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -935,10 +1094,10 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="onoff" class="tsd-anchor"></a>
 					<h3>onoff</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">onoff<span class="tsd-signature-symbol">(</span>types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/event.html#onoffhandler" class="tsd-signature-type">OnoffHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
@@ -946,8 +1105,9 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#onoff">onoff</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#onoff">onoff</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#onoff">onoff</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L71">src/main/typescript/wcardinal/event/connectable.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L71">src/main/typescript/wcardinal/event/connectable.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -982,10 +1142,10 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="onon" class="tsd-anchor"></a>
 					<h3>onon</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">onon<span class="tsd-signature-symbol">(</span>types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/event.html#ononhandler" class="tsd-signature-type">OnonHandler</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
@@ -993,8 +1153,9 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#onon">onon</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#onon">onon</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#onon">onon</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L51">src/main/typescript/wcardinal/event/connectable.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L51">src/main/typescript/wcardinal/event/connectable.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1031,10 +1192,10 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="retrigger" class="tsd-anchor"></a>
 					<h3>retrigger</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">retrigger<span class="tsd-signature-symbol">(</span>originalEvent<span class="tsd-signature-symbol">: </span><a href="../interfaces/event.originalevent.html" class="tsd-signature-type">OriginalEvent</a>, types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, parameters<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></li>
 						<li class="tsd-signature tsd-kind-icon">retrigger<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, originalEvent<span class="tsd-signature-symbol">: </span><a href="../interfaces/event.originalevent.html" class="tsd-signature-type">OriginalEvent</a>, types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, parameters<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
@@ -1043,8 +1204,9 @@ one( <span class="hljs-string">"success fail"</span>, <span class="hljs-function
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#retrigger">retrigger</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#retrigger">retrigger</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#retrigger">retrigger</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L380">src/main/typescript/wcardinal/event/connectable.ts:380</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L380">src/main/typescript/wcardinal/event/connectable.ts:380</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1087,8 +1249,9 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#retrigger">retrigger</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#retrigger">retrigger</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#retrigger">retrigger</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L404">src/main/typescript/wcardinal/event/connectable.ts:404</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L404">src/main/typescript/wcardinal/event/connectable.ts:404</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1138,46 +1301,48 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="tojson" class="tsd-anchor"></a>
 					<h3>to<wbr>Json</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">to<wbr>Json<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#tojson">toJson</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#tojson">toJson</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L101">src/main/typescript/wcardinal/controller/task.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L101">src/main/typescript/wcardinal/controller/task.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="tostring" class="tsd-anchor"></a>
 					<h3>to<wbr>String</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">to<wbr>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#tostring">toString</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#tostring">toString</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L105">src/main/typescript/wcardinal/controller/task.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L105">src/main/typescript/wcardinal/controller/task.ts:105</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="trigger" class="tsd-anchor"></a>
 					<h3>trigger</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">trigger<span class="tsd-signature-symbol">(</span>types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, parameters<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></li>
 						<li class="tsd-signature tsd-kind-icon">trigger<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, types<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, parameters<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
@@ -1186,8 +1351,9 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#trigger">trigger</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#trigger">trigger</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#trigger">trigger</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L298">src/main/typescript/wcardinal/event/connectable.ts:298</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L298">src/main/typescript/wcardinal/event/connectable.ts:298</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1227,8 +1393,9 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#trigger">trigger</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#trigger">trigger</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#trigger">trigger</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L319">src/main/typescript/wcardinal/event/connectable.ts:319</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L319">src/main/typescript/wcardinal/event/connectable.ts:319</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1272,10 +1439,10 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="triggerdirect" class="tsd-anchor"></a>
 					<h3>trigger<wbr>Direct</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">trigger<wbr>Direct<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, results<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span></li>
 						<li class="tsd-signature tsd-kind-icon">trigger<wbr>Direct<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, results<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
@@ -1284,8 +1451,9 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#triggerdirect">triggerDirect</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#triggerdirect">triggerDirect</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#triggerdirect">triggerDirect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L349">src/main/typescript/wcardinal/event/connectable.ts:349</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L349">src/main/typescript/wcardinal/event/connectable.ts:349</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1309,8 +1477,9 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#triggerdirect">triggerDirect</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#triggerdirect">triggerDirect</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#triggerdirect">triggerDirect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L352">src/main/typescript/wcardinal/event/connectable.ts:352</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L352">src/main/typescript/wcardinal/event/connectable.ts:352</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1342,35 +1511,36 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L73">src/main/typescript/wcardinal/controller/task.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L73">src/main/typescript/wcardinal/controller/task.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="unlock" class="tsd-anchor"></a>
 					<h3>unlock</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">unlock<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#unlock">unlock</a></p>
+								<p>Overrides <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#unlock">unlock</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/controller/task.ts#L96">src/main/typescript/wcardinal/controller/task.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/controller/task.ts#L96">src/main/typescript/wcardinal/controller/task.ts:96</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite tsd-is-inherited tsd-is-static">
 					<a name="extend" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> extend</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite tsd-is-inherited tsd-is-static">
 						<li class="tsd-signature tsd-kind-icon">extend&lt;T&gt;<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> &amp; </span><a href="event.connectable.html" class="tsd-signature-type">Connectable</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
@@ -1378,8 +1548,9 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/controller.taskmethod.html">TaskMethod</a>.<a href="../interfaces/controller.taskmethod.html#extend">extend</a></p>
 								<p>Inherited from <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#extend">extend</a></p>
+								<p>Overrides <a href="event.connectable.html">Connectable</a>.<a href="event.connectable.html#extend">extend</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/cde9c50/src/main/typescript/wcardinal/event/connectable.ts#L450">src/main/typescript/wcardinal/event/connectable.ts:450</a></li>
+									<li>Defined in <a href="https://github.com/winter-cardinal/winter-cardinal/blob/b9b648a/src/main/typescript/wcardinal/event/connectable.ts#L450">src/main/typescript/wcardinal/event/connectable.ts:450</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1496,112 +1667,115 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
+							<li class=" tsd-kind-event tsd-parent-kind-class tsd-is-inherited">
+								<a href="controller.task.html#fail" class="tsd-kind-icon">fail</a>
+							</li>
+							<li class=" tsd-kind-event tsd-parent-kind-class tsd-is-inherited">
+								<a href="controller.task.html#success" class="tsd-kind-icon">success</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="controller.task.html#__mem__" class="tsd-kind-icon">__mem__</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#cancel" class="tsd-kind-icon">cancel</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#connector" class="tsd-kind-icon">connector</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#create" class="tsd-kind-icon">create</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#getargument" class="tsd-kind-icon">get<wbr>Argument</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#getarguments" class="tsd-kind-icon">get<wbr>Arguments</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#getreason" class="tsd-kind-icon">get<wbr>Reason</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#getresult" class="tsd-kind-icon">get<wbr>Result</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="controller.task.html#initialize" class="tsd-kind-icon">initialize</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#iscanceled" class="tsd-kind-icon">is<wbr>Canceled</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#isdone" class="tsd-kind-icon">is<wbr>Done</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#isfailed" class="tsd-kind-icon">is<wbr>Failed</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#isinitialized" class="tsd-kind-icon">is<wbr>Initialized</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#islocked" class="tsd-kind-icon">is<wbr>Locked</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#isnonnull" class="tsd-kind-icon">is<wbr>Non<wbr>Null</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#isreadonly" class="tsd-kind-icon">is<wbr>Read<wbr>Only</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#issucceeded" class="tsd-kind-icon">is<wbr>Succeeded</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#lock" class="tsd-kind-icon">lock</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#off" class="tsd-kind-icon">off</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#offoff" class="tsd-kind-icon">offoff</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#offon" class="tsd-kind-icon">offon</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#on" class="tsd-kind-icon">on</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#one" class="tsd-kind-icon">one</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#onoff" class="tsd-kind-icon">onoff</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#onon" class="tsd-kind-icon">onon</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#retrigger" class="tsd-kind-icon">retrigger</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#tojson" class="tsd-kind-icon">to<wbr>Json</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#trigger" class="tsd-kind-icon">trigger</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="controller.task.html#triggerdirect" class="tsd-kind-icon">trigger<wbr>Direct</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="controller.task.html#uninitialize" class="tsd-kind-icon">uninitialize</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="controller.task.html#unlock" class="tsd-kind-icon">unlock</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-static">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite tsd-is-inherited tsd-is-static">
 								<a href="controller.task.html#extend" class="tsd-kind-icon">extend</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../interfaces/controller.callablecall.html" class="tsd-kind-icon">Callable<wbr>Call</a>
-					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="../interfaces/controller.callablemethod.html" class="tsd-kind-icon">Callable<wbr>Method</a>
 					</li>
@@ -1633,13 +1807,16 @@ retrigger( <span class="hljs-name">originalEvent</span>, <span class="hljs-strin
 						<a href="../interfaces/controller.rootcontroller.html" class="tsd-kind-icon">Root<wbr>Controller</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../interfaces/controller.taskcall.html" class="tsd-kind-icon">Task<wbr>Call</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="../interfaces/controller.taskmethod.html" class="tsd-kind-icon">Task<wbr>Method</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/controller.visibilitycontroller.html" class="tsd-kind-icon">Visibility<wbr>Controller</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="../modules/controller.html#callablecall" class="tsd-kind-icon">Callable<wbr>Call</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="../modules/controller.html#taskcall" class="tsd-kind-icon">Task<wbr>Call</a>
 					</li>
 				</ul>
 			</nav>

@@ -54,7 +54,7 @@ public class BasicsSoftQueueController {
 	@OnCreate
 	void init() {
 		facade.interval( "check1", 100 );
-		field.add( "John" );
+		field.add( "Cardinal" );
 		initial_check_result1.set( field.peek() != null );
 	}
 
@@ -63,7 +63,7 @@ public class BasicsSoftQueueController {
 		if( field.isEmpty() ) {
 			check_result1.set( true );
 			facade.cancel();
-			field.add( "John" );
+			field.add( "Cardinal" );
 			try( Unlocker unlocker = field.lock() ) {
 				for( final String value: field ) {
 					if( value != null ) {
@@ -85,7 +85,7 @@ public class BasicsSoftQueueController {
 		facade.cancel();
 		field.capacity( 10 );
 		for( int i=0; i<10; ++i ) {
-			field.addAll( queueOf( "John" ) );
+			field.addAll( queueOf( "Cardinal" ) );
 		}
 		facade.interval( "check3", 100 );
 	}

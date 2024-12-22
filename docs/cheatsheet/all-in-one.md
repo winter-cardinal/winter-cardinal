@@ -2,39 +2,39 @@
 
 ## Table of contents
 
-* [Getting started](#getting-started)
-	* [Step 1: Add compile dependency](#step-1-add-compile-dependency)
-	* [Step 2: Create a controller class](#step-2-create-a-controller-class)
-	* [Step 3: Load scripts](#step-3-load-scripts)
-	* [Step 4: Load a controller script](#step-4-load-a-controller-script)
-	* [Step 5: Run and check with browsers](#step-5-run-and-check-with-browsers)
+* [Getting Started](#getting-started)
+	* [Step 1: Add Compile Dependency](#step-1-add-compile-dependency)
+	* [Step 2: Create a Controller Class](#step-2-create-a-controller-class)
+	* [Step 3: Load Scripts](#step-3-load-scripts)
+	* [Step 4: Load a Controller Script](#step-4-load-a-controller-script)
+	* [Step 5: Run and Check With Browsers](#step-5-run-and-check-with-browsers)
 * [Controller](#controller)
-	* [Controller basics](#controller-basics)
-	* [Controller inheritance](#controller-inheritance)
+	* [Controller Basics](#controller-basics)
+	* [Controller Inheritance](#controller-inheritance)
 	* [Controller URL](#controller-url)
-	* [Controller name](#controller-name)
-	* [Controller-scoped service](#controller-scoped-service)
-	* [Controller locales](#controller-locales)
-	* [Controller parameters](#controller-parameters)
-	* [Controller attributes](#controller-attributes)
-	* [Controller creation/destruction handling](#controller-creationdestruction-handling)
-	* [Controller post-creation handling](#controller-post-creation-handling)
-	* [Network protocols](#network-protocols)
-	* [Network reconnection](#network-reconnection)
-	* [Keep alive](#keep-alive)
-	* [Title separators](#title-separators)
-	* [Title separators (I18N)](#title-separators-i18n)
+	* [Controller Name](#controller-name)
+	* [Controller-Scoped Service](#controller-scoped-service)
+	* [Controller Locales](#controller-locales)
+	* [Controller Parameters](#controller-parameters)
+	* [Controller Attributes](#controller-attributes)
+	* [Controller Creation/Destruction Handling](#controller-creationdestruction-handling)
+	* [Controller Post-Creation Handling](#controller-post-creation-handling)
+	* [Network Protocols](#network-protocols)
+	* [Network Reconnection](#network-reconnection)
+	* [Keep Alive](#keep-alive)
+	* [Title Separators](#title-separators)
+	* [Title Separators (I18N)](#title-separators-i18n)
 * [Field](#field)
-	* [Accessing fields from JavaScript](#accessing-fields-from-javascript)
-	* [Detecting field changes (JavaScript)](#detecting-field-changes-javascript)
-	* [Detecting field changes (Java)](#detecting-field-changes-java)
+	* [Accessing Fields From JavaScript](#accessing-fields-from-javascript)
+	* [Detecting Field Changes (JavaScript)](#detecting-field-changes-javascript)
+	* [Detecting Field Changes (Java)](#detecting-field-changes-java)
 	* [Read-only fields](#read-only-fields)
 	* [Non-null fields](#non-null-fields)
 	* [Uninitialized fields](#uninitialized-fields)
-	* [Freeing fields when a synchronization is finished](#freeing-fields-when-a-synchronization-is-finished)
+	* [Freeing Fields When a Synchronization is Finished](#freeing-fields-when-a-synchronization-is-finished)
 	* [Constants](#constants)
 	* [Controlling field synchronization timing (JavaScript)](#controlling-field-synchronization-timing-javascript)
-	* [Controlling field synchronization timing (Java)](#controlling-field-synchronization-timing-java)
+	* [Controlling Field Synchronization Timing (Java)](#controlling-field-synchronization-timing-java)
 * [Method](#method)
 	* [Calling Methods From JavaScript](#calling-methods-from-javascript)
 	* [Type Declaration of Callable Methods for TypeScript](#type-declaration-of-callable-methods-for-typescript)
@@ -60,118 +60,118 @@
 	* [Check Whether a Task Is Finished Unsuccessfully](#check-whether-a-task-is-finished-unsuccessfully)
 	* [Task Exception Handling](#task-exception-handling)
 * [Event](#event)
-	* [Trigger events (server to browser)](#trigger-events-server-to-browser)
-	* [Trigger events (server to server)](#trigger-events-server-to-server)
-	* [Retrieving returned values of event handlers (server to browser)](#retrieving-returned-values-of-event-handlers-server-to-browser)
+	* [Trigger Events (Server to Browser)](#trigger-events-server-to-browser)
+	* [Trigger Events (Server to Server)](#trigger-events-server-to-server)
+	* [Retrieving Returned Values of Event Handlers (Server to Browser)](#retrieving-returned-values-of-event-handlers-server-to-browser)
 * [Component](#component)
 	* [Introduction](#introduction)
-	* [Component basics](#component-basics)
-	* [Retrieving parent (JavaScript)](#retrieving-parent-javascript)
-	* [Retrieving parent (Java)](#retrieving-parent-java)
-	* [Component lifecycle handling](#component-lifecycle-handling)
-	* [Creating components dynamically (JavaScript)](#creating-components-dynamically-javascript)
-	* [Creating components dynamically (Java)](#creating-components-dynamically-java)
-	* [Creating components dynamically with parameters (JavaScript)](#creating-components-dynamically-with-parameters-javascript)
-	* [Creating components dynamically with parameters (Java)](#creating-components-dynamically-with-parameters-java)
-	* [Destroying dynamic components (JavaScript)](#destroying-dynamic-components-javascript)
-	* [Destroying dynamic components (Java)](#destroying-dynamic-components-java)
-	* [Sharing components among browsers](#sharing-components-among-browsers)
-	* [Shared component lifecycle handling](#shared-component-lifecycle-handling)
+	* [Component Basics](#component-basics)
+	* [Retrieving Parent (JavaScript)](#retrieving-parent-javascript)
+	* [Retrieving Parent (Java)](#retrieving-parent-java)
+	* [Component Lifecycle Handling](#component-lifecycle-handling)
+	* [Creating Components Dynamically (JavaScript)](#creating-components-dynamically-javascript)
+	* [Creating Components Dynamically (Java)](#creating-components-dynamically-java)
+	* [Creating Components Dynamically With Parameters (JavaScript)](#creating-components-dynamically-with-parameters-javascript)
+	* [Creating Components Dynamically With Parameters (Java)](#creating-components-dynamically-with-parameters-java)
+	* [Destroying Dynamic Components (JavaScript)](#destroying-dynamic-components-javascript)
+	* [Destroying Dynamic Components (Java)](#destroying-dynamic-components-java)
+	* [Sharing Components Among Browsers](#sharing-components-among-browsers)
+	* [Shared Component Lifecycle Handling](#shared-component-lifecycle-handling)
 * [Page](#page)
 	* [Introduction](#introduction)
-	* [Page basics](#page-basics)
-	* [Showing/hiding pages (JavaScript)](#showinghiding-pages-javascript)
-	* [Showing/hiding pages (Java)](#showinghiding-pages-java)
-	* [Retrieving active page (JavaScript)](#retrieving-active-page-javascript)
-	* [Retrieving active page (Java)](#retrieving-active-page-java)
-	* [Checking whether a page is shown/hidden (JavaScript)](#checking-whether-a-page-is-shownhidden-javascript)
-	* [Checking whether a page is shown/hidden (Java)](#checking-whether-a-page-is-shownhidden-java)
-	* [Retrieving parent (JavaScript)](#retrieving-parent-javascript)
-	* [Retrieving parent (Java)](#retrieving-parent-java)
-	* [Primary page](#primary-page)
-	* [No primary page](#no-primary-page)
-	* [Detecting page change (JavaScript)](#detecting-page-change-javascript)
-	* [Detecting page change (Java)](#detecting-page-change-java)
-	* [Page lifecycle handling](#page-lifecycle-handling)
-	* [Page name in title](#page-name-in-title)
-	* [Page name in title (I18N)](#page-name-in-title-i18n)
-	* [Creating pages dynamically (JavaScript)](#creating-pages-dynamically-javascript)
-	* [Creating pages dynamically (Java)](#creating-pages-dynamically-java)
-	* [Creating pages dynamically with parameters (JavaScript)](#creating-pages-dynamically-with-parameters-javascript)
-	* [Creating pages dynamically with parameters (Java)](#creating-pages-dynamically-with-parameters-java)
-	* [Destroying dynamic pages (JavaScript)](#destroying-dynamic-pages-javascript)
-	* [Destroying dynamic pages (Java)](#destroying-dynamic-pages-java)
+	* [Page Basics](#page-basics)
+	* [Showing/Hiding Pages (JavaScript)](#showinghiding-pages-javascript)
+	* [Showing/Hiding Pages (Java)](#showinghiding-pages-java)
+	* [Retrieving Active Page (JavaScript)](#retrieving-active-page-javascript)
+	* [Retrieving Active Page (Java)](#retrieving-active-page-java)
+	* [Checking Whether a Page is Shown/Hidden (JavaScript)](#checking-whether-a-page-is-shownhidden-javascript)
+	* [Checking Whether a Page is Shown/Hidden (Java)](#checking-whether-a-page-is-shownhidden-java)
+	* [Retrieving Parent (JavaScript)](#retrieving-parent-javascript)
+	* [Retrieving Parent (Java)](#retrieving-parent-java)
+	* [Primary Page](#primary-page)
+	* [No Primary Page](#no-primary-page)
+	* [Detecting Page Change (JavaScript)](#detecting-page-change-javascript)
+	* [Detecting Page Change (Java)](#detecting-page-change-java)
+	* [Page Lifecycle Handling](#page-lifecycle-handling)
+	* [Page Name in Title](#page-name-in-title)
+	* [Page Name in Title (I18N)](#page-name-in-title-i18n)
+	* [Creating Pages Dynamically (JavaScript)](#creating-pages-dynamically-javascript)
+	* [Creating Pages Dynamically (Java)](#creating-pages-dynamically-java)
+	* [Creating Pages Dynamically With Parameters (JavaScript)](#creating-pages-dynamically-with-parameters-javascript)
+	* [Creating Pages Dynamically With Parameters (Java)](#creating-pages-dynamically-with-parameters-java)
+	* [Destroying Dynamic Pages (JavaScript)](#destroying-dynamic-pages-javascript)
+	* [Destroying Dynamic Pages (Java)](#destroying-dynamic-pages-java)
 * [Popup](#popup)
 	* [Introduction](#introduction)
-	* [Popup basics](#popup-basics)
-	* [Showing/hiding popups (JavaScript)](#showinghiding-popups-javascript)
-	* [Showing/hiding popups (Java)](#showinghiding-popups-java)
-	* [Checking whether a popup is shown/hidden (JavaScript)](#checking-whether-a-popup-is-shownhidden-javascript)
-	* [Checking whether a popup is shown/hidden (Java)](#checking-whether-a-popup-is-shownhidden-java)
-	* [Retrieving parent (JavaScript)](#retrieving-parent-javascript)
-	* [Retrieving parent (Java)](#retrieving-parent-java)
-	* [Primary popup](#primary-popup)
-	* [Detecting popup visibility change (JavaScript)](#detecting-popup-visibility-change-javascript)
-	* [Detecting popup visibility change (Java)](#detecting-popup-visibility-change-java)
-	* [Popup lifecycle handling](#popup-lifecycle-handling)
-	* [Popup name in title](#popup-name-in-title)
-	* [Popup name in title (I18N)](#popup-name-in-title-i18n)
-	* [Creating popups dynamically (JavaScript)](#creating-popups-dynamically-javascript)
-	* [Creating popups dynamically (Java)](#creating-popups-dynamically-java)
-	* [Creating popups dynamically with parameters (JavaScript)](#creating-popups-dynamically-with-parameters-javascript)
-	* [Creating popups dynamically with parameters (Java)](#creating-popups-dynamically-with-parameters-java)
-	* [Destroying dynamic popups (JavaScript)](#destroying-dynamic-popups-javascript)
-	* [Destroying dynamic popups (Java)](#destroying-dynamic-popups-java)
+	* [Popup Basics](#popup-basics)
+	* [Showing/Hiding Popups (JavaScript)](#showinghiding-popups-javascript)
+	* [Showing/Hiding Popups (Java)](#showinghiding-popups-java)
+	* [Checking Whether a Popup is Shown/Hidden (JavaScript)](#checking-whether-a-popup-is-shownhidden-javascript)
+	* [Checking Whether a Popup is Shown/Hidden (Java)](#checking-whether-a-popup-is-shownhidden-java)
+	* [Retrieving Parent (JavaScript)](#retrieving-parent-javascript)
+	* [Retrieving Parent (Java)](#retrieving-parent-java)
+	* [Primary Popup](#primary-popup)
+	* [Detecting Popup Visibility Change (JavaScript)](#detecting-popup-visibility-change-javascript)
+	* [Detecting Popup Visibility Change (Java)](#detecting-popup-visibility-change-java)
+	* [Popup Lifecycle Handling](#popup-lifecycle-handling)
+	* [Popup Name in Title](#popup-name-in-title)
+	* [Popup Name in Title (I18N)](#popup-name-in-title-i18n)
+	* [Creating Popups Dynamically (JavaScript)](#creating-popups-dynamically-javascript)
+	* [Creating Popups Dynamically (Java)](#creating-popups-dynamically-java)
+	* [Creating Popups Dynamically With Parameters (JavaScript)](#creating-popups-dynamically-with-parameters-javascript)
+	* [Creating Popups Dynamically With Parameters (Java)](#creating-popups-dynamically-with-parameters-java)
+	* [Destroying Dynamic Popups (JavaScript)](#destroying-dynamic-popups-javascript)
+	* [Destroying Dynamic Popups (Java)](#destroying-dynamic-popups-java)
 * [Local controller](#local-controller)
 	* [Introduction](#introduction)
-	* [Local controller basics](#local-controller-basics)
-	* [Non-null local controller field](#non-null-local-controller-field)
-	* [Uninitialized local controller field](#uninitialized-local-controller-field)
-	* [Local controller fields with default values](#local-controller-fields-with-default-values)
-	* [@Callable methods](#callable-methods)
-	* [Asynchronous @Callable methods](#asynchronous-callable-methods)
-	* [Failing @Callable methods](#failing-callable-methods)
-	* [@Task methods](#task-methods)
-	* [Asynchronous @Task methods](#asynchronous-task-methods)
-	* [Failing @Task methods](#failing-task-methods)
+	* [Local Controller Basics](#local-controller-basics)
+	* [Non-Null Local Controller Field](#non-null-local-controller-field)
+	* [Uninitialized Local Controller Field](#uninitialized-local-controller-field)
+	* [Local Controller Fields With Default Values](#local-controller-fields-with-default-values)
+	* [@Callable Methods](#callable-methods)
+	* [Asynchronous @Callable Methods](#asynchronous-callable-methods)
+	* [Failing @Callable Methods](#failing-callable-methods)
+	* [@Task Methods](#task-methods)
+	* [Asynchronous @Task Methods](#asynchronous-task-methods)
+	* [Failing @Task Methods](#failing-task-methods)
 * [Threading](#threading)
 	* [Introduction](#introduction)
-	* [Locking controller](#locking-controller)
-	* [Periodic method calls](#periodic-method-calls)
-	* [Periodic method calls with parameters](#periodic-method-calls-with-parameters)
-	* [Periodic executions of runnables](#periodic-executions-of-runnables)
-	* [Canceling periodic calls from the outside](#canceling-periodic-calls-from-the-outside)
-	* [Canceling periodic calls from the inside](#canceling-periodic-calls-from-the-inside)
-	* [One-time method calls with a delay](#one-time-method-calls-with-a-delay)
-	* [One-time method calls with a delay and parameters](#one-time-method-calls-with-a-delay-and-parameters)
-	* [One-time execution of runnables with a delay](#one-time-execution-of-runnables-with-a-delay)
-	* [One-time execution of callables with a delay](#one-time-execution-of-callables-with-a-delay)
-	* [Canceling one-time method calls](#canceling-one-time-method-calls)
-	* [One-time method calls without a delay](#one-time-method-calls-without-a-delay)
-	* [One-time method calls without a delay and parameters](#one-time-method-calls-without-a-delay-and-parameters)
-	* [Canceling all concurrent requests](#canceling-all-concurrent-requests)
+	* [Locking Controller](#locking-controller)
+	* [Periodic Method Calls](#periodic-method-calls)
+	* [Periodic Method Calls With Parameters](#periodic-method-calls-with-parameters)
+	* [Periodic Executions of Runnables](#periodic-executions-of-runnables)
+	* [Canceling Periodic Calls From the Outside](#canceling-periodic-calls-from-the-outside)
+	* [Canceling Periodic Calls From the Inside](#canceling-periodic-calls-from-the-inside)
+	* [One-time Method Calls With a Delay](#one-time-method-calls-with-a-delay)
+	* [One-time Method Calls With a Delay and Parameters](#one-time-method-calls-with-a-delay-and-parameters)
+	* [One-time Execution of Runnables With a Delay](#one-time-execution-of-runnables-with-a-delay)
+	* [One-time Execution of Callables With a Delay](#one-time-execution-of-callables-with-a-delay)
+	* [Canceling One-Time Method Calls](#canceling-one-time-method-calls)
+	* [One-time Method Calls Without a Delay](#one-time-method-calls-without-a-delay)
+	* [One-time Method Calls Without a Delay and Parameters](#one-time-method-calls-without-a-delay-and-parameters)
+	* [Canceling All Concurrent Requests](#canceling-all-concurrent-requests)
 	* [Enabling WebWorker](#enabling-webworker)
 * [Logging](#logging)
 	* [Logging (JavaScript)](#logging-javascript)
 	* [Logging (Java)](#logging-java)
-	* [Log level (JavaScript)](#log-level-javascript)
-	* [Log level (Java)](#log-level-java)
+	* [Log Level (JavaScript)](#log-level-javascript)
+	* [Log Level (Java)](#log-level-java)
 * [I18N](#i18n)
 	* [I18N (JavaScript)](#i18n-javascript)
 	* [I18N (Java)](#i18n-java)
 * [Security](#security)
-	* [Switching controllers based on roles](#switching-controllers-based-on-roles)
-	* [Switching controllers by custom logics](#switching-controllers-by-custom-logics)
-	* [Retrieving user principal](#retrieving-user-principal)
-	* [Retrieving remote address](#retrieving-remote-address)
+	* [Switching Controllers Based on Roles](#switching-controllers-based-on-roles)
+	* [Switching Controllers by Custom Logics](#switching-controllers-by-custom-logics)
+	* [Retrieving User Principal](#retrieving-user-principal)
+	* [Retrieving Remote Address](#retrieving-remote-address)
 	* [Retrieving HttpServletRequest](#retrieving-httpservletrequest)
-	* [Retrieving HttpServletRequest and customizing controller attributes](#retrieving-httpservletrequest-and-customizing-controller-attributes)
+	* [Retrieving HttpServletRequest and Customizing Controller Attributes](#retrieving-httpservletrequest-and-customizing-controller-attributes)
 * [Configuration](#configuration)
-	* [Boot-time configuration](#boot-time-configuration)
+	* [Boot-time Configuration](#boot-time-configuration)
 
-## Getting started
+## Getting Started
 
-### Step 1: Add compile dependency
+### Step 1: Add Compile Dependency
 
 ```gradle
 repositories {
@@ -183,7 +183,7 @@ dependencies {
 }
 ```
 
-### Step 2: Create a controller class
+### Step 2: Create a Controller Class
 
 ```java
 import org.springframework.beans.factory.annotation.Autowired;
@@ -198,8 +198,8 @@ class MyController {
 	SLong field;
 
 	@Callable
-	String hello( String name ){
-		return "Hello, "+name;
+	String hello(String name) {
+		return "Hello, " + name + "!";
 	}
 }
 ```
@@ -211,20 +211,16 @@ Detecting Spring your controller class, working wcardinal successfully, in a log
 2019-10-28 22:27:52.875  INFO 19517 --- [ost-startStop-1] d.c.internal.ControllerServletLoader     : Mapping controller: 'MyController' to [/my-controller] with roles [] as 'MyController'
 ```
 
-### Step 3: Load scripts
-
-```html
-<script src="webjars/wcardinal/wcardinal.min.js"></script>
-```
-
-If the WebWorker version is required, load `wcardinal.worker.min.js` instead.
-The `wcardinal.worker.min.js` utilizes the WebWorker if available while the `wcardinal.min.js` does not.
+### Step 3: Load Scripts
 
 ```html
 <script src="webjars/wcardinal/wcardinal.worker.min.js"></script>
 ```
 
-### Step 4: Load a controller script
+There is an non-worker version called `webjars/wcardinal/wcardinal.min.js`.
+The worker version `wcardinal.worker.min.js` is strongly recommended over this non-worker version as the `setTimeout` is not reliable in some cases.
+
+### Step 4: Load a Controller Script
 
 ```html
 <script src="my-controller"></script>
@@ -232,7 +228,7 @@ The `wcardinal.worker.min.js` utilizes the WebWorker if available while the `wca
 
 The default URL is a kebab-case of a controller name.
 
-### Step 5: Run and check with browsers
+### Step 5: Run and Check With Browsers
 
 ```text
 cd your/project/directory
@@ -243,16 +239,13 @@ Then open `http://localhost:8080/` with a browser.
 Please find a `MyController` clone at `window.myController`.
 
 ```javascript
-console.log( myController.field.get() ); // Prints 64
-
-myController.hello( 'John' ).then(( result ) => {
-	console.log( result ); // Prints 'Hello, John'
-});
+console.log(myController.field.get()); // Prints 64
+console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
 ## Controller
 
-### Controller basics
+### Controller Basics
 
 ```java
 @Controller
@@ -264,20 +257,20 @@ class MyController {
 ```html
 <script src="my-controller"></script>
 <script>
-	// `MyController` instance is available at `window.myController`.
+	// The MyController instance is available at window.myController.
 	console.log( window.myController );
 </script>
 ```
 
 Please note that the default URL is the kebab-case of the class name, `my-controller`.
 
-### Controller inheritance
+### Controller Inheritance
 
 ```java
 class MySuperController {
 	@Callable
-	String hello( String name ) {
-		return "Hello, " + name;
+	String hello(String name) {
+		return "Hello, " + name + "!";
 	}
 }
 
@@ -288,13 +281,13 @@ class MyController extends MySuperController {
 ```
 
 ```javascript
-console.log( myController.hello( 'John' ) ); // Prints 'Hello, John'
+console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
 ### Controller URL
 
 ```java
-@Controller( "/my-controller-url" )
+@Controller("/my-controller-url")
 class MyController {
 
 }
@@ -303,7 +296,7 @@ class MyController {
 or
 
 ```java
-@Controller( urls="/my-controller-url" )
+@Controller(urls="/my-controller-url")
 class MyController {
 
 }
@@ -315,10 +308,10 @@ class MyController {
 
 Please refer to [org.wcardinal.controller.annotation.Controller](../api/java/org/wcardinal/controller/annotation/Controller.html).
 
-### Controller name
+### Controller Name
 
 ```java
-@Controller( name="MyControllerName" )
+@Controller(name="MyControllerName")
 class MyController {
 
 }
@@ -328,9 +321,10 @@ class MyController {
 <script src="my-controller-name"></script>
 ```
 
-### Controller-scoped service
+### Controller-Scoped Service
 
 ```java
+import org.springframework.beans.factory.annotation.Autowired;
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.ControllerScopeService;
 
@@ -366,14 +360,14 @@ class MyController {
 }
 ```
 
-### Controller locales
+### Controller Locales
 
 ```java
 @Controller
 class MyController extends AbstractController {
-   void foo(){
-	   System.out.println( getLocale() );
-   }
+	void foo() {
+		System.out.println(getLocale());
+	}
 }
 ```
 
@@ -382,31 +376,33 @@ or
 ```java
 @Controller
 class MyController {
-   @Autowired
-   ControllerFacade facade;
+	@Autowired
+	ControllerFacade facade;
 
-   void foo(){
-	   System.out.println( facade.getLocale() );
-   }
+	void foo() {
+		System.out.println(facade.getLocale());
+	}
 }
 ```
 
-### Controller parameters
+### Controller Parameters
 
 ```html
-<script src="my-controller?name=John"></script>
+<script src="my-controller?name=Cardinal"></script>
 ```
 
 ```Java
 import org.wcardinal.controller.AbstractController;
+import org.wcardinal.controller.annotation.Controller;
+import org.wcardinal.controller.annotation.OnCreate;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 class MyController extends AbstractController {
-	final Log logger = LogFactory.getLog(MyController.class);
-
 	@OnCreate
-	void init(){
-		logger.info( getParameter( "name" ) ); // Prints "John"
+	void init() {
+		log.info(getParameter("name")); // Prints "Cardinal"
 	}
 }
 ```
@@ -414,36 +410,39 @@ class MyController extends AbstractController {
 or
 
 ```Java
+import org.springframework.beans.factory.annotation.Autowired;
 import org.wcardinal.controller.ControllerFacade;
+import org.wcardinal.controller.annotation.Controller;
+import org.wcardinal.controller.annotation.OnCreate;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 class MyController {
-	final Log logger = LogFactory.getLog(MyController.class);
-
 	@Autowired
 	ControllerFacade facade;
 
 	@OnCreate
-	void init(){
-		logger.info( facade.getParameter( "name" ) ); // Prints "John"
+	void init() {
+		log.info(facade.getParameter("name")); // Prints "Cardinal"
 	}
 }
 ```
 
 Please refer to [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
 
-### Controller attributes
+### Controller Attributes
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnRequest
-	static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
-		attributes.put( "name", "John" );
+	static void onRequest(HttpServletRequest request, ControllerAttributes attributes){
+		attributes.put("name", "Cardinal");
 	}
 
-	void something(){
-		System.out.println( getAttributes().get( "name" ) ); // Prints "John"
+	void something() {
+		System.out.println(getAttributes().get("name")); // Prints "Cardinal"
 	}
 }
 ```
@@ -457,17 +456,17 @@ class MyController {
 	ControllerFacade facade;
 
 	@OnRequest
-	static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
-		attributes.put( "name", "John" );
+	static void onRequest(HttpServletRequest request, ControllerAttributes attributes) {
+		attributes.put("name", "Cardinal");
 	}
 
-	void something(){
-		System.out.println( facade.getAttributes().get( "name" ) ); // Prints "John"
+	void something() {
+		System.out.println(facade.getAttributes().get("name")); // Prints "Cardinal"
 	}
 }
 ```
 
-### Controller creation/destruction handling
+### Controller Creation/Destruction Handling
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -477,12 +476,12 @@ import org.wcardinal.controller.annotation.OnDestroy;
 @Controller
 class MyController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Called after instantiated.
 	}
 
 	@OnDestroy
-	void destroy(){
+	void destroy() {
 		// Called before getting destroyed.
 	}
 }
@@ -491,7 +490,7 @@ class MyController {
 Field modifications made in the `@OnCreate` methods are sent to browsers as a part of HTTP responses.
 If this behavior is not desirable, please use the `@OnPostCreate` instead.
 
-### Controller post-creation handling
+### Controller Post-Creation Handling
 
 Methods annotated with `@OnPostCreate` are called immediately after `@OnCreate` methods.
 In contrast to the `@OnCreate`, no changes made in `@OnPostCreate` methods are sent as a part of HTTP responses.
@@ -503,32 +502,32 @@ import org.wcardinal.controller.annotation.OnPostCreate;
 @Controller
 class MyController {
 	@OnPostCreate
-	void init(){
+	void init() {
 		// Called after @OnCreate methods.
 	}
 }
 ```
 
-### Network protocols
+### Network Protocols
 
 ```java
 // Allows `WebSocket` and `Long polling`
-@Controller( protocols={ "websocket", "polling" } )
+@Controller(protocols={ "websocket", "polling" })
 class MyController {
 
 }
 
 // Allows `WebSocket` only
-@Controller( protocols="websocket" )
+@Controller(protocols="websocket")
 class MyController {
 
 }
 ```
 
-### Network reconnection
+### Network Reconnection
 
 ```java
-@Controller( retry=@Retry( delay=5000, interval=15000 ) )
+@Controller(retry = @Retry(delay = 5000, interval = 15000))
 class MyController {
 
 }
@@ -536,16 +535,16 @@ class MyController {
 
 In the above settings, wcardinal trys to reconnect every 15 seconds, starting after 5 seconds, when a connection is lost.
 
-### Keep alive
+### Keep Alive
 
 ```java
-@Controller( keepAlive=@KeepAlive(
+@Controller(keepAlive = @KeepAlive(
 	// Sets a HTTP session keep-alive interval to 240 seconds.
 	interval=240000,
 
 	// Sets a ping interval to 15 seconds.
 	ping=15000
-) )
+))
 class MyController {
 
 }
@@ -561,19 +560,19 @@ class MyController {
 The sub session is quite similar to the familiar session.
 However, the sub session is not shared across browser tabs of the same URL.
 
-### Title separators
+### Title Separators
 
 ```java
-@Controller( separators={ " - ", " / " } )
+@Controller(separators={" - ", " / "})
 class MyController {
 
 }
 ```
 
-### Title separators (I18N)
+### Title Separators (I18N)
 
 ```java
-@Controller( separatorMessages={ "title.separator.root", "title.separator.leaf" } )
+@Controller(separatorMessages={"title.separator.root", "title.separator.leaf"})
 class MyController {
 
 }
@@ -588,7 +587,7 @@ title.separator.leaf= /
 
 ## Field
 
-### Accessing fields from JavaScript
+### Accessing Fields From JavaScript
 
 ```java
 @Controller
@@ -646,7 +645,7 @@ class Series {
 	...
 }
 
-class MyController{
+class MyController {
 	@Autowired
 	SList<Series> series;
 }
@@ -658,10 +657,16 @@ Namely, all fields in the `Series` class must have getter/setter methods:
 class Series {
 	private long time;
 
-	long getTime(){ return time; }
-	void setTime( long time ) { this.time = time; }
+	long getTime(){
+		return time;
+	}
+
+	void setTime(long time) {
+		this.time = time;
+	}
 }
 ```
+
 or be public:
 
 ```java
@@ -675,7 +680,7 @@ Please refer to [Jackson document](http://wiki.fasterxml.com/JacksonHome) for de
 The key type of `SMap<T>`、`SNavigableMap<T>`, `SObjectNode` is `String`.
 This limitation comes from the JavaScript's `Object` and the JSON specifications.
 
-### Detecting field changes (JavaScript)
+### Detecting Field Changes (JavaScript)
 
 ```java
 @Controller
@@ -686,14 +691,14 @@ class MyController{
 ```
 
 ```javascript
-myController.time.on('value', ( e, newValue, oldValue ) => {
+myController.time.on("value", (e, newValue, oldValue) => {
 	// Variables `newValue` and `oldValue` are
 	// a new value and an old value of the `time`, respectively.
 });
 
 // Or use `value` event on the controller to detect the change of the `time` field.
-myController.on('value', () => {
-	console.log( controller.time.get() );
+myController.on("value", () => {
+	console.log(controller.time.get());
 });
 ```
 
@@ -761,7 +766,7 @@ The arguments of the `value` event varies by types:
 	+ `Array.<T>` addedItems: Added items sorted by their indices
 	+ `Array.<T>` removedItems: Removed items sorted by their indices
 
-### Detecting field changes (Java)
+### Detecting Field Changes (Java)
 
 ```java
 @Controller
@@ -769,8 +774,8 @@ class MyController {
 	@Autowired
 	SLong time;
 
-	@OnChange( "time" )
-	void handler( Long newValue, Long oldValue ){
+	@OnChange("time")
+	void handler(Long newValue, Long oldValue){
 		// Called immediately after the `time` field changes.
 		// Arguments `newValue` and `oldValue` are a new value and
 		// an old value of the `time` field, respectively.
@@ -853,8 +858,8 @@ class MyController {
 	@Autowired
 	MyComponent component;
 
-	@OnChange( "component.time" )
-	void handler( Long newValue, Long oldValue ){
+	@OnChange("component.time")
+	void handler(Long newValue, Long oldValue){
 		// Called immediately after the `component.time` field changes.
 	}
 }
@@ -881,7 +886,7 @@ class MyController {
 ```
 
 ```javascript
-myController.time.set( 0 ); // Throws `wcardinal.exception.UnsupportedOperationException`
+myController.time.set(0); // Throws `wcardinal.exception.UnsupportedOperationException`
 ```
 
 ### Non-null fields
@@ -952,26 +957,25 @@ class MyController extends AbstractController {
 	SLong time;
 
 	@OnCreate
-	void onCreate(){
-		timeout( "init", 1000 );
+	void onCreate() {
+		timeout("init", 1000);
 
 
 	@OnTime
-	void init(){
+	void init() {
 		// Time-consuming tasks
-
-		time.set( 42 );
+		time.set(42);
 	}
 }
 ```
 
 ```javascript
-myController.time.on( 'value', ( e, time ) => {
-	console.log( time ); // Prints 42 after 1 second.
+myController.time.on("value", (e, time) => {
+	console.log(time); // Prints 42 after 1 second.
 });
 ```
 
-### Freeing fields when a synchronization is finished
+### Freeing Fields When a Synchronization is Finished
 
 If some of fields holds large data, a server may experience a memory starvation since JVM can not free heap memories for those data, .
 One of the solutions to prevent this situation is setting such fields to null when the synchronization between a server and a browser is finished.
@@ -1019,17 +1023,17 @@ class MyController {
 	int NON_FINAL_CONSTANT = 0;
 
 	@OnCreate
-	void init(){
+	void init() {
 		NON_FINAL_CONSTANT = 3;
 	}
 }
 ```
 
 ```javascript
-console.log( myController.MyEnum.ENUM0 );       // Prints "ENUM0"
-console.log( myController.STATIC_CONSTANT );    // Prints 1
-console.log( myController.CONSTANT );           // Prints 2
-console.log( myController.NON_FINAL_CONSTANT ); // Prints 3
+console.log(myController.MyEnum.ENUM0);       // Prints "ENUM0"
+console.log(myController.STATIC_CONSTANT);    // Prints 1
+console.log(myController.CONSTANT);           // Prints 2
+console.log(myController.NON_FINAL_CONSTANT); // Prints 3
 ```
 
 For non-static constants, values at the time all the locked `@OnCreate` method invocations are finished are sent to browsers.
@@ -1042,19 +1046,19 @@ class MyController extends AbstractController {
 	int CONSTANT; // Initialized to 0.
 
 	@OnCreate
-	void init(){
-		timeout( "init", 1000 );
+	void init() {
+		timeout("init", 1000);
 	}
 
 	@OnTime
-	void init(){
+	void init() {
 		CONSTANT = 1; // Browsers never see this value.
 	}
 }
 ```
 
 ```javascript
-console.log( myController.CONSTANT ); // Prints 0
+console.log(myController.CONSTANT); // Prints 0
 ```
 
 ### Controlling field synchronization timing (JavaScript)
@@ -1072,9 +1076,9 @@ class MyController {
 	@Autowired
 	SLong field1;
 
-	@OnChange( "field0" )
-	void foo(){
-		System.out.println( field1.get() == 2 ); // Always prints true
+	@OnChange("field0")
+	void foo() {
+		System.out.println(field1.get() == 2); // Always prints true
 	}
 }
 ```
@@ -1082,8 +1086,8 @@ class MyController {
 ```javascript
 myController.lock();
 try {
-	myController.field0.set( 1 );
-	myController.field1.set( 2 );
+	myController.field0.set(1);
+	myController.field1.set(2);
 } finally {
 	myController.unlock();
 }
@@ -1092,7 +1096,7 @@ try {
 Updated fields within the same lock is synchronized atomically.
 Therefore, it is guaranteed that `field1` has `2` when `field0` is changed to `1` in servers.
 
-### Controlling field synchronization timing (Java)
+### Controlling Field Synchronization Timing (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -1107,19 +1111,19 @@ class MyController extends AbstractController {
 	@Autowired
 	SLong field1;
 
-	void foo(){
-		try( Unlocker unlocker = lock() ) {
-			field0.set( 1 );
-			field1.set( 2 );
+	void foo() {
+		try(Unlocker unlocker = lock()) {
+			field0.set(1);
+			field1.set(2);
 		}
 	}
 }
 ```
 
 ```javascript
-myController.field0.on( 'value', ( e, value ) => {
-	if( value === 1 ) {
-		console.log( myController.field1.get() === 2 ); // Always prints true
+myController.field0.on("value", (e, value) => {
+	if (value === 1) {
+		console.log(myController.field1.get() === 2); // Always prints true
 	}
 });
 ```
@@ -1360,7 +1364,7 @@ class MyController {
 	}
 
 	@CallableExceptionHandler
-	String handle(Exception e){
+	String handle(Exception e) {
 		return "fail-reason";
 	}
 }
@@ -1388,7 +1392,7 @@ class MyController {
 	}
 
 	@CallableExceptionHandler
-	String handle(Exception e){
+	String handle(Exception e) {
 		// Never be called because the other one has the more specific signature.
 		return "fail-reason-a";
 	}
@@ -1428,7 +1432,7 @@ class MyController {
 	MyComponent component;
 
 	@CallableExceptionHandler
-	String handle(Exception e){
+	String handle(Exception e) {
 		return "fail-reason-a";
 	}
 
@@ -1903,13 +1907,13 @@ myController.hello("Cardinal");
 
 ## Event
 
-### Trigger events (server to browser)
+### Trigger Events (Server to Browser)
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	void triggerReadyEvent() {
-		trigger( "ready", 1, 2, 3 );
+		trigger("ready", 1, 2, 3);
 	}
 }
 ```
@@ -1923,24 +1927,24 @@ class MyController extends AbstractController {
 	ControllerFacade facade;
 
 	void triggerReadyEvent() {
-		facade.trigger( "ready", 1, 2, 3 );
+		facade.trigger("ready", 1, 2, 3);
 	}
 }
 ```
 
 ```javascript
-myController.on( 'ready', ( e, p1, p2, p3 ) => {
+myController.on("ready", (e, p1, p2, p3) => {
 	console.log( p1, p2, p3 ); // Prints 1, 2, 3
 });
 ```
 
-### Trigger events (server to server)
+### Trigger Events (Server to Server)
 
 ```java
 @Component
 class MyComponent extends AbstractComponent {
 	void foo() {
-		notify( "ready", 1, 2, 3 );
+		notify("ready", 1, 2, 3);
 	}
 }
 
@@ -1949,10 +1953,10 @@ class MyController {
 	@Autowired
 	MyComponent component;
 
-	@OnNotice( "component.ready" )
-	void bar( int p1, int p2, int p3 ) {
+	@OnNotice("component.ready")
+	void bar(int p1, int p2, int p3) {
 		// Called when `component` raises a "ready" event.
-		System.out.println( String.format( "%d, %d, %d" ) ); // Prints "1, 2, 3"
+		System.out.println(String.format("%d, %d, %d")); // Prints "1, 2, 3"
 	}
 }
 ```
@@ -1966,7 +1970,7 @@ class MyComponent {
 	ComponentFacade facade;
 
 	void foo() {
-		facade.notify( "ready", 1, 2, 3 );
+		facade.notify("ready", 1, 2, 3);
 	}
 }
 
@@ -1975,15 +1979,15 @@ class MyController extends AbstractController {
 	@Autowired
 	MyComponent component;
 
-	@OnNotice( "component.ready" )
-	void bar( int p1, int p2, int p3 ) {
+	@OnNotice("component.ready")
+	void bar(int p1, int p2, int p3) {
 		// Called when `component` raises a "ready" event.
-		System.out.println( String.format( "%d, %d, %d" ) ); // Prints "1, 2, 3"
+		System.out.println(String.format("%d, %d, %d")); // Prints "1, 2, 3"
 	}
 }
 ```
 
-### Retrieving returned values of event handlers (server to browser)
+### Retrieving Returned Values of Event Handlers (Server to Browser)
 
 ```java
 import java.util.List;
@@ -1998,10 +2002,10 @@ import org.wcardinal.controller.TriggerErrors;
 @Controller
 class MyController extends AbstractController {
 	void triggerReadyEvent() {
-		triggerAndWait( "ready", 1000, 1, 2, 3 )
-		.done(new DoneCallback<List<JsonNode>>(){
+		triggerAndWait("ready", 1000, 1, 2, 3)
+		.done(new DoneCallback<List<JsonNode>>() {
 			@Override
-			public void onDone( List<JsonNode> result ) {
+			public void onDone(List<JsonNode> result) {
 				System.out.println( result ); // Prints [ 6 ]
 			}
 		});
@@ -2010,7 +2014,7 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-myController.on( 'ready', ( e, p1, p2, p3 ) => {
+myController.on("ready", (e, p1, p2, p3) => {
 	return p1 + p2 + p3;
 });
 ```
@@ -2032,12 +2036,12 @@ class MyComponent {
 	SLong field;
 
 	@OnCreate
-	void init(){
-		field.set( 1 );
+	void init() {
+		field.set(1);
 	}
 
 	@Callable
-	int callble(){
+	int callble() {
 		return 2;
 	}
 }
@@ -2050,13 +2054,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.component.field.get() ); // Prints 1
-myController.component.callable().then(( result ) => {
-	console.log( result ); // Prints 2
-});
+console.log(myController.component.field.get()); // Prints 1
+console.log(await myController.component.callable()); // Prints 2
 ```
 
-### Component basics
+### Component Basics
 
 ```java
 import org.wcardinal.controller.annotation.Component;
@@ -2065,8 +2067,8 @@ import org.wcardinal.controller.annotation.Controller;
 @Component
 class MyComponent {
 	@Callable
-	String hello( String name ){
-		return "Hello, " + name;
+	String hello(String name){
+		return "Hello, " + name + "!";
 	}
 }
 
@@ -2078,12 +2080,10 @@ class MyController {
 ```
 
 ```javascript
-myController.component.hello( 'John' ).then(( result ) => {
-	console.log( result ); // Prints "Hello, John"
-});
+console.log(await myController.component.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```
 
-### Retrieving parent (JavaScript)
+### Retrieving Parent (JavaScript)
 
 ```java
 @Component
@@ -2099,11 +2099,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.getParent() ); // Prints null
-console.log( myController.myComponent.getParent() === controller ); // Prints true
+console.log(myController.getParent()); // Prints null
+console.log(myController.myComponent.getParent() === controller); // Prints true
 ```
 
-### Retrieving parent (Java)
+### Retrieving Parent (Java)
 
 ```java
 @Component
@@ -2116,9 +2116,9 @@ class MyController {
 	@Autowired
 	MyComponent myComponent;
 
-	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myComponent.getParent() == this ); // Prints true
+	void foo() {
+		System.out.println(getParent()); // Prints null
+		System.out.println(myComponent.getParent() == this); // Prints true
 	}
 }
 ```
@@ -2131,7 +2131,7 @@ class MyComponent {
 	@Autowired
 	ComponentFacade facade;
 
-	Object getParent(){
+	Object getParent() {
 		return facade.getParent();
 	}
 }
@@ -2141,14 +2141,14 @@ class MyController {
 	@Autowired
 	MyComponent myComponent;
 
-	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myComponent.getParent() == this ); // Prints true
+	void foo() {
+		System.out.println(getParent()); // Prints null
+		System.out.println(myComponent.getParent() == this); // Prints true
 	}
 }
 ```
 
-### Component lifecycle handling
+### Component Lifecycle Handling
 
 ```java
 import org.wcardinal.controller.annotation.Component;
@@ -2158,18 +2158,18 @@ import org.wcardinal.controller.annotation.OnDestroy;
 @Component
 class MyComponent {
 	@OnCreate
-	void init(){
+	void init() {
 		// Called after instantiated.
 	}
 
 	@OnDestroy
-	void destroy(){
+	void destroy() {
 		// Called before getting destroyed.
 	}
 }
 ```
 
-### Creating components dynamically (JavaScript)
+### Creating Components Dynamically (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2181,7 +2181,7 @@ class MyComponent {
 
 	@OnCreate
 	void onCreate() {
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -2193,12 +2193,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.create().value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create().value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating components dynamically (Java)
+### Creating Components Dynamically (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2210,7 +2210,7 @@ class MyComponent {
 
 	@OnCreate
 	void onCreate() {
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -2228,15 +2228,15 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'create', ( e, newInstance ) => {
+myController.factory.on("create", (e, newInstance) => {
 	// Called when a new instance is created.
-	newInstance.value.on( 'value', ( e, value ) => {
-		console.log( value ); // Prints 128
+	newInstance.value.on("value", (e, value) => {
+		console.log(value); // Prints 128
 	});
 });
 ```
 
-### Creating components dynamically with parameters (JavaScript)
+### Creating Components Dynamically With Parameters (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2247,8 +2247,8 @@ class MyComponent {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -2260,12 +2260,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.create( 128 ).value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create(128).value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating components dynamically with parameters (Java)
+### Creating Components Dynamically With Parameters (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2276,8 +2276,8 @@ class MyComponent {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -2289,12 +2289,12 @@ class MyController {
 	@OnCreate
 	void onCreate() {
 		// Creates a `MyComponent` instance with a integer of 128.
-		factory.create( 128 );
+		factory.create(128);
 	}
 }
 ```
 
-### Destroying dynamic components (JavaScript)
+### Destroying Dynamic Components (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2312,10 +2312,10 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.destroy( controller.factory.create() );
+myController.factory.destroy(controller.factory.create());
 ```
 
-### Destroying dynamic components (Java)
+### Destroying Dynamic Components (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2326,13 +2326,13 @@ class MyComponent extends AbstractComponent {
 	@OnCreate
 	void onCreate() {
 		// Calls the `@OnTime` method after 10 seconds.
-		timeout( "done", 10000 );
+		timeout("done", 10000);
 	}
 
 	@OnTime
 	void destroy() {
 		// Destroys itself.
-		getParentAsFactory().destroy( this );
+		getParentAsFactory().destroy(this);
 	}
 }
 
@@ -2350,12 +2350,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'destroy', ( e, newInstance ) => {
+myController.factory.on("destroy", (e, newInstance) => {
 	// Called when instances are destroyed.
 });
 ```
 
-### Sharing components among browsers
+### Sharing Components Among Browsers
 
 ```java
 import org.wcardinal.controller.Controller;
@@ -2379,18 +2379,18 @@ class MyController {
 
 Please note that the `MySharedComponent` class is annotated with the `SharedComponent` annotation.
 
-### Shared component lifecycle handling
+### Shared Component Lifecycle Handling
 
 ```java
 @SharedComponent
 class MySharedComponent {
 	@OnCreate
-	void init(){
+	void init() {
 		// Called after instantiated.
 	}
 
 	@OnDestroy
-	void destroy(){
+	void destroy() {
 		// Called before getting destroyed.
 	}
 }
@@ -2433,7 +2433,7 @@ In this case, if `myPage1` is shown, `myPage2` never be shown.
 On the contrary, if `myPage2` is shown, `myPage1` never be shown.
 However, `myPage1` and `myPage3` can be shown simultaneously because these two belongs to different classes.
 
-### Page basics
+### Page Basics
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2459,7 +2459,7 @@ class MyController {
 }
 ```
 
-### Showing/hiding pages (JavaScript)
+### Showing/Hiding Pages (JavaScript)
 
 ```java
 @Page
@@ -2479,7 +2479,7 @@ myController.myPage.show();
 myController.myPage.hide();
 ```
 
-### Showing/hiding pages (Java)
+### Showing/Hiding Pages (Java)
 
 ```java
 import org.wcardinal.controller.AbstractPage;
@@ -2494,11 +2494,11 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	void showMyPage(){
+	void showMyPage() {
 		myPage.show();
 	}
 
-	void hideMyPage(){
+	void hideMyPage() {
 		myPage.hide();
 	}
 }
@@ -2514,11 +2514,11 @@ class MyPage {
 	@Autowired
 	PageFacade facade;
 
-	public void show(){
+	public void show() {
 		return facade.show();
 	}
 
-	public void hide(){
+	public void hide() {
 		return facade.hide();
 	}
 }
@@ -2528,17 +2528,17 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	void showMyPage(){
+	void showMyPage() {
 		myPage.show();
 	}
 
-	void hideMyPage(){
+	void hideMyPage() {
 		myPage.hide();
 	}
 }
 ```
 
-### Retrieving active page (JavaScript)
+### Retrieving Active Page (JavaScript)
 
 ```java
 import org.wcardinal.controller.AbstractController;
@@ -2556,10 +2556,10 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-console.log( myController.getActivePage() === myController.myPage ); // Prints true
+console.log(myController.getActivePage() === myController.myPage); // Prints true
 ```
 
-### Retrieving active page (Java)
+### Retrieving Active Page (Java)
 
 ```java
 import org.wcardinal.controller.AbstractController;
@@ -2575,12 +2575,12 @@ class MyController extends AbstractController {
 	MyPage myPage;
 
 	void foo(){
-		System.out.println( getActivePage() == myPage ); // Prints true
+		System.out.println(getActivePage() == myPage); // Prints true
 	}
 }
 ```
 
-### Checking whether a page is shown/hidden (JavaScript)
+### Checking Whether a Page is Shown/Hidden (JavaScript)
 
 ```java
 @Page
@@ -2596,11 +2596,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.myPage.isShown() ); // Prints true
-console.log( myController.myPage.isHidden() ); // Prints false
+console.log(myController.myPage.isShown()); // Prints true
+console.log(myController.myPage.isHidden()); // Prints false
 ```
 
-### Checking whether a page is shown/hidden (Java)
+### Checking Whether a Page is Shown/Hidden (Java)
 
 ```java
 import org.wcardinal.controller.AbstractPage;
@@ -2615,14 +2615,14 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	void foo(){
-		System.out.println( myPage.isShown() ); // Prints true
-		System.out.println( myPage.isHidden() ); // Prints false
+	void foo() {
+		System.out.println(myPage.isShown()); // Prints true
+		System.out.println(myPage.isHidden()); // Prints false
 	}
 }
 ```
 
-### Retrieving parent (JavaScript)
+### Retrieving Parent (JavaScript)
 
 ```java
 @Page
@@ -2638,11 +2638,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.getParent() ); // Prints null
-console.log( myController.myPage.getParent() === myController ); // Prints true
+console.log(myController.getParent()); // Prints null
+console.log(myController.myPage.getParent() === myController); // Prints true
 ```
 
-### Retrieving parent (Java)
+### Retrieving Parent (Java)
 
 ```java
 @Page
@@ -2656,8 +2656,8 @@ class MyController {
 	MyPage myPage;
 
 	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myPage.getParent() == this ); // Prints true
+		System.out.println(getParent()); // Prints null
+		System.out.println(myPage.getParent() == this); // Prints true
 	}
 }
 ```
@@ -2670,7 +2670,7 @@ class MyPage {
 	@Autowired
 	PageFacade facade;
 
-	Object getParent(){
+	Object getParent() {
 		return facade.getParent();
 	}
 }
@@ -2680,14 +2680,14 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myPage.getParent() == this ); // Prints true
+	void foo() {
+		System.out.println(getParent()); // Prints null
+		System.out.println(myPage.getParent() == this); // Prints true
 	}
 }
 ```
 
-### Primary page
+### Primary Page
 
 ```java
 @Page
@@ -2721,7 +2721,7 @@ class MyController {
 }
 ```
 
-### No primary page
+### No Primary Page
 
 ```java
 import org.wcardinal.controller.annotation.NoPrimaryPage;
@@ -2742,7 +2742,7 @@ class MyController {
 }
 ```
 
-### Detecting page change (JavaScript)
+### Detecting Page Change (JavaScript)
 
 ```java
 @Page
@@ -2758,31 +2758,31 @@ class MyController {
 ```
 
 ```javascript
-myController.myPage.on( 'show', () => {
+myController.myPage.on("show", () => {
 	// Called when event handlers are set if `myPage` is shown or after `myPage` gets to be shown.
 });
 
-myController.myPage.on( 'hide', () => {
+myController.myPage.on("hide", () => {
 	// Called when event handlers are set if `myPage` is hidden or after `myPage` gets to be hidden.
 });
 
-myController.on( 'page', ( e, newPageName, oldPageName ) => {
+myController.on("page", (e, newPageName, oldPageName) => {
 	// Called when event handlers are set or when the active page of this controller is changed.
 });
 ```
 
-### Detecting page change (Java)
+### Detecting Page Change (Java)
 
 ```java
 @Page
 class MyPage {
 	@OnShow
-	void onShow(){
+	void onShow() {
 		// Called after being shown.
 	}
 
 	@OnHide
-	void onHide(){
+	void onHide() {
 		// Called after being hidden.
 	}
 }
@@ -2800,24 +2800,24 @@ class MyController {
 	@Autowired
 	MyPage myPage;
 
-	@OnShow( "myPage" )
+	@OnShow("myPage")
 	void onShowMyPage(){
 		// Called after `myPage` gets to be shown.
 	}
 
-	@OnHide( "equipmentPage" )
+	@OnHide("equipmentPage")
 	void onShowMyPage(){
 		// Called after `myPage` gets to be hidden.
 	}
 
-	@OnChange( "page" )
-	void onChangePage( String newPageName, String oldPageName ){
+	@OnChange("page")
+	void onChangePage(String newPageName, String oldPageName){
 		// Called when the active page of this controller is changes.
 	}
 }
 ```
 
-### Page lifecycle handling
+### Page Lifecycle Handling
 
 ```java
 import org.wcardinal.controller.annotation.Page;
@@ -2827,24 +2827,24 @@ import org.wcardinal.controller.annotation.OnDestroy;
 @Page
 class MyPage {
 	@OnCreate
-	void init(){
+	void init() {
 		// Called after instantiated.
 	}
 
 	@OnDestroy
-	void destroy(){
+	void destroy() {
 		// Called before getting destroyed.
 	}
 }
 ```
 
-### Page name in title
+### Page Name in Title
 
 ```java
 import org.wcardinal.controller.annotation.DisplayName;
 
 @Page
-@DisplayName( "Page name in title" )
+@DisplayName("Page name in title")
 class MyPage {
 	...
 }
@@ -2869,18 +2869,18 @@ class MyPage {
 @Controller
 class MyController {
 	@Autowired
-	@DisplayName( "Page name in title" )
+	@DisplayName("Page name in title")
 	MyPage myPage;
 }
 ```
 
-### Page name in title (I18N)
+### Page Name in Title (I18N)
 
 ```java
 import org.wcardinal.controller.annotation.DisplayNameMessage;
 
 @Page
-@DisplayNameMessage( "my-page.name" )
+@DisplayNameMessage("my-page.name")
 class MyPage {
 	...
 }
@@ -2905,7 +2905,7 @@ class MyPage {
 @Controller
 class MyController {
 	@Autowired
-	@DisplayNameMessage( "my-page.name" )
+	@DisplayNameMessage("my-page.name")
 	MyPage myPage;
 }
 ```
@@ -2916,7 +2916,7 @@ And add the followings to your `messages_en.properties`:
 my-page.name=Page name in title
 ```
 
-### Creating pages dynamically (JavaScript)
+### Creating Pages Dynamically (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2929,7 +2929,7 @@ class MyPage {
 	@OnCreate
 	void onCreate() {
 		// Called when instantiated.
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -2941,12 +2941,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.create().value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create().value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating pages dynamically (Java)
+### Creating Pages Dynamically (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2959,7 +2959,7 @@ class MyPage {
 	@OnCreate
 	void onCreate() {
 		// Called when instantiated.
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -2977,15 +2977,15 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'create', ( e, newInstance ) => {
+myController.factory.on("create", (e, newInstance) => {
 	// Called when a new instance is created.
-	newInstance.value.on( 'value', ( e, value ) => {
-		console.log( value ); // Prints 128
+	newInstance.value.on("value", (e, value) => {
+		console.log(value); // Prints 128
 	});
 });
 ```
 
-### Creating pages dynamically with parameters (JavaScript)
+### Creating Pages Dynamically With Parameters (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -2996,8 +2996,8 @@ class MyPage {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -3009,12 +3009,12 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.create( 128 ).value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create(128).value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating pages dynamically with parameters (Java)
+### Creating Pages Dynamically With Parameters (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3025,8 +3025,8 @@ class MyPage {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -3038,12 +3038,12 @@ class MyController extends AbstractController {
 	@OnCreate
 	void onCreate() {
 		// Creates a `MyPage` instance with an integer of 128.
-		factory.create( 128 );
+		factory.create(128);
 	}
 }
 ```
 
-### Destroying dynamic pages (JavaScript)
+### Destroying Dynamic Pages (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3061,10 +3061,10 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.destroy( myController.factory.create() );
+myController.factory.destroy(myController.factory.create());
 ```
 
-### Destroying dynamic pages (Java)
+### Destroying Dynamic Pages (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3075,13 +3075,13 @@ class MyPage extends AbstractPage {
 	@OnCreate
 	void onCreate() {
 		// Calls the `@OnTime` method after 10 seconds.
-		timeout( "destroy", 10000 );
+		timeout("destroy", 10000);
 	}
 
 	@OnTime
 	void destroy() {
 		// Destroys itself.
-		getParentAsFactory().destroy( this );
+		getParentAsFactory().destroy(this);
 	}
 }
 
@@ -3099,7 +3099,7 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'destroy', ( e, newInstance ) => {
+myController.factory.on("destroy", (e, newInstance) => {
 	// Called when instances are destroyed.
 });
 ```
@@ -3139,7 +3139,7 @@ class MyController {
 
 In this case, `myPopup1`, `myPopup2` and `myPopup3` can be visible simultaneously.
 
-### Popup basics
+### Popup Basics
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3157,7 +3157,7 @@ class MyController {
 }
 ```
 
-### Showing/hiding popups (JavaScript)
+### Showing/Hiding Popups (JavaScript)
 
 ```java
 @Popup
@@ -3177,7 +3177,7 @@ myController.myPopup.show();
 myController.myPopup.hide();
 ```
 
-### Showing/hiding popups (Java)
+### Showing/Hiding Popups (Java)
 
 ```java
 @Popup
@@ -3191,7 +3191,7 @@ class MyController {
 	MyPopup myPopup;
 
 	@Callable
-	void onCalled(){
+	void onCalled() {
 		myPopup.show();
 	}
 }
@@ -3205,11 +3205,11 @@ class MyPopup {
 	@Autowired
 	PopupFacade facade;
 
-	public void show(){
+	public void show() {
 		facade.show();
 	}
 
-	public void hide(){
+	public void hide() {
 		facade.hide();
 	}
 }
@@ -3220,13 +3220,13 @@ class MyController {
 	MyPopup myPopup;
 
 	@Callable
-	void onCalled(){
+	void onCalled() {
 		myPopup.show();
 	}
 }
 ```
 
-### Checking whether a popup is shown/hidden (JavaScript)
+### Checking Whether a Popup is Shown/Hidden (JavaScript)
 
 ```java
 @Popup
@@ -3242,11 +3242,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.myPopup.isShown() ); // Prints true
-console.log( myController.myPopup.isHidden() ); // Prints false
+console.log(myController.myPopup.isShown()); // Prints true
+console.log(myController.myPopup.isHidden()); // Prints false
 ```
 
-### Checking whether a popup is shown/hidden (Java)
+### Checking Whether a Popup is Shown/Hidden (Java)
 
 ```java
 import org.wcardinal.controller.AbstractPopup;
@@ -3261,9 +3261,9 @@ class MyController {
 	@Autowired
 	MyPopup myPopup;
 
-	void foo(){
-		System.out.println( myPopup.isShown() ); // Prints true
-		System.out.println( myPopup.isHidden() ); // Prints false
+	void foo() {
+		System.out.println(myPopup.isShown()); // Prints true
+		System.out.println(myPopup.isHidden()); // Prints false
 	}
 }
 ```
@@ -3278,11 +3278,11 @@ class MyPopup {
 	@Autowired
 	PopupFacade facade;
 
-	public boolean isShown(){
+	public boolean isShown() {
 		return facade.isShown();
 	}
 
-	public boolean isHidden(){
+	public boolean isHidden() {
 		return facade.isHidden();
 	}
 }
@@ -3292,14 +3292,14 @@ class MyController {
 	@Autowired
 	MyPopup myPopup;
 
-	void foo(){
-		System.out.println( myPopup.isShown() ); // Prints true
-		System.out.println( myPopup.isHidden() ); // Prints false
+	void foo() {
+		System.out.println(myPopup.isShown()); // Prints true
+		System.out.println(myPopup.isHidden()); // Prints false
 	}
 }
 ```
 
-### Retrieving parent (JavaScript)
+### Retrieving Parent (JavaScript)
 
 ```java
 @Popup
@@ -3315,11 +3315,11 @@ class MyController {
 ```
 
 ```javascript
-console.log( myController.getParent() ); // Prints null
-console.log( myController.myPopup.getParent() === myController ); // Prints true
+console.log(myController.getParent()); // Prints null
+console.log(myController.myPopup.getParent() === myController); // Prints true
 ```
 
-### Retrieving parent (Java)
+### Retrieving Parent (Java)
 
 ```java
 @Popup
@@ -3333,8 +3333,8 @@ class MyController {
 	MyPopup myPopup;
 
 	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myPopup.getParent() == this ); // Prints true
+		System.out.println(getParent()); // Prints null
+		System.out.println(myPopup.getParent() == this); // Prints true
 	}
 }
 ```
@@ -3347,7 +3347,7 @@ class MyPopup {
 	@Autowired
 	PopupFacade facade;
 
-	Object getParent(){
+	Object getParent() {
 		return facade.getParent();
 	}
 }
@@ -3357,14 +3357,14 @@ class MyController {
 	@Autowired
 	MyPopup myPopup;
 
-	void foo(){
-		System.out.println( getParent() ); // Prints null
-		System.out.println( myPopup.getParent() == this ); // Prints true
+	void foo() {
+		System.out.println(getParent()); // Prints null
+		System.out.println(myPopup.getParent() == this); // Prints true
 	}
 }
 ```
 
-### Primary popup
+### Primary Popup
 
 ```java
 @Popup
@@ -3384,7 +3384,7 @@ If the `@Primary` is not present, `myPopup` is hidden by default.
 
 ```java
 @Popup
-class MyPopup{
+class MyPopup {
 	...
 }
 
@@ -3395,30 +3395,30 @@ class MyController {
 }
 ```
 
-### Detecting popup visibility change (JavaScript)
+### Detecting Popup Visibility Change (JavaScript)
 
 ```javascript
-myController.myPopup.on( 'show', () => {
+myController.myPopup.on("show", () => {
 	// Called when event handlers are set if `myPopup` is shown, or after `myPopup` gets to be shown.
 });
 
-myController.myPopup.on( 'hide', () => {
+myController.myPopup.on("hide", () => {
 	// Called when event handlers are set if `myPopup` is hidden, or after `myPopup` gets to be hidden.
 });
 ```
 
-### Detecting popup visibility change (Java)
+### Detecting Popup Visibility Change (Java)
 
 ```java
 @Popup
 class MyPopup{
 	@OnShow
-	void onShow(){
+	void onShow() {
 		// Called after being shown.
 	}
 
 	@OnHide
-	void onHide(){
+	void onHide() {
 		// Called after being hidden.
 	}
 }
@@ -3436,19 +3436,19 @@ class MyController {
 	@Autowired
 	MyPopup myPopup;
 
-	@OnShow( "myPopup" )
-	void onShowMyPopup(){
+	@OnShow("myPopup")
+	void onShowMyPopup() {
 		// Called after `myPopup` gets to be shown.
 	}
 
-	@OnHide( "myPopup" )
-	void onHideMyPopup(){
+	@OnHide("myPopup")
+	void onHideMyPopup() {
 		// Called after `myPopup` gets to be hidden.
 	}
 }
 ```
 
-### Popup lifecycle handling
+### Popup Lifecycle Handling
 
 ```java
 import org.wcardinal.controller.annotation.Popup;
@@ -3458,24 +3458,24 @@ import org.wcardinal.controller.annotation.OnDestroy;
 @Popup
 class MyPopup {
 	@OnCreate
-	void init(){
+	void init() {
 		// Called after instantiated.
 	}
 
 	@OnDestroy
-	void destroy(){
+	void destroy() {
 		// Called before getting destroyed.
 	}
 }
 ```
 
-### Popup name in title
+### Popup Name in Title
 
 ```java
 import org.wcardinal.controller.annotation.DisplayName;
 
 @Popup
-@DisplayName( "Popup name in title" )
+@DisplayName("Popup name in title")
 class MyPopup {
 	...
 }
@@ -3500,18 +3500,18 @@ class MyPopup {
 @Controller
 class MyController {
 	@Autowired
-	@DisplayName( "Popup name in title" )
+	@DisplayName("Popup name in title")
 	MyPopup myPopup;
 }
 ```
 
-### Popup name in title (I18N)
+### Popup Name in Title (I18N)
 
 ```java
 import org.wcardinal.controller.annotation.DisplayNameMessage;
 
 @Popup
-@DisplayNameMessage( "my-popup.name" )
+@DisplayNameMessage("my-popup.name")
 class MyPopup {
 	...
 }
@@ -3536,7 +3536,7 @@ class MyPopup {
 @Controller
 class MyController {
 	@Autowired
-	@DisplayNameMessage( "my-popup.name" )
+	@DisplayNameMessage("my-popup.name")
 	MyPopup myPopup;
 }
 ```
@@ -3547,7 +3547,7 @@ And add the followings to your `messages_en.properties`:
 my-popup.name=Popup name in title
 ```
 
-### Creating popups dynamically (JavaScript)
+### Creating Popups Dynamically (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3559,7 +3559,7 @@ class MyPopup {
 
 	@OnCreate
 	void onCreate() {
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -3571,12 +3571,12 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-myController.factory.create().value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create().value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating popups dynamically (Java)
+### Creating Popups Dynamically (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3588,7 +3588,7 @@ class MyPopup {
 
 	@OnCreate
 	void onCreate() {
-		value.set( 128 );
+		value.set(128);
 	}
 }
 
@@ -3606,15 +3606,15 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-myController.factory.on( 'create', ( e, newInstance ) => {
+myController.factory.on("create", (e, newInstance) => {
 	// Called when a new instance is created.
-	newInstance.value.on( 'value', ( e, value ) => {
-		console.log( value ); // Prints 128
+	newInstance.value.on("value", (e, value) => {
+		console.log(value); // Prints 128
 	});
 });
 ```
 
-### Creating popups dynamically with parameters (JavaScript)
+### Creating Popups Dynamically With Parameters (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3626,8 +3626,8 @@ class MyPopup extends AbstractPopup {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -3639,12 +3639,12 @@ class MyController extends AbstractController {
 ```
 
 ```javascript
-myController.factory.create( 128 ).value.on( 'value', ( e, value ) => {
-	console.log( value ); // Prints 128
+myController.factory.create(128).value.on("value", (e, value) => {
+	console.log(value); // Prints 128
 });
 ```
 
-### Creating popups dynamically with parameters (Java)
+### Creating Popups Dynamically With Parameters (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3656,8 +3656,8 @@ class MyPopup extends AbstractPopup {
 	SLong value;
 
 	@OnCreate
-	void onCreate( int parameter ) {
-		value.set( parameter );
+	void onCreate(int parameter) {
+		value.set(parameter);
 	}
 }
 
@@ -3669,12 +3669,12 @@ class MyController extends AbstractController {
 	@OnCreate
 	void onCreate() {
 		// Creates a `MyPopup` instance with an integer of 128.
-		factory.create( 128 );
+		factory.create(128);
 	}
 }
 ```
 
-### Destroying dynamic popups (JavaScript)
+### Destroying Dynamic Popups (JavaScript)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3692,10 +3692,10 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.destroy( myController.factory.create() );
+myController.factory.destroy(myController.factory.create());
 ```
 
-### Destroying dynamic popups (Java)
+### Destroying Dynamic Popups (Java)
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -3706,13 +3706,13 @@ class MyPopup extends AbstractPopup {
 	@OnCreate
 	void onCreate() {
 		// Calls the `OnTime` method after 10 seconds.
-		timeout( "destroy", 10000 );
+		timeout("destroy", 10000);
 	}
 
 	@OnTime
 	void onDone() {
 		// Destroys itself.
-		getParentAsFactory().destroy( this );
+		getParentAsFactory().destroy(this);
 	}
 }
 
@@ -3730,7 +3730,7 @@ class MyController {
 ```
 
 ```javascript
-myController.factory.on( 'destroy', ( e, newInstance ) => {
+myController.factory.on("destroy", (e, newInstance) => {
 	// Called when instances are destroyed.
 });
 ```
@@ -3759,19 +3759,19 @@ Namely, `controller.field`, `controller.component` and `controller.component.fie
 [Component](../api/js/interfaces/controller.component.html) and [SList](../api/js/classes/controller_data.slist.html), respectively.
 
 ```javascript
-controller.field.set( 1 );
-controller.field.on( "value", ( e, value ) => {
-	console.log( value ); // Prints 1
+controller.field.set(1);
+controller.field.on("value", (e, value) => {
+	console.log(value); // Prints 1
 });
 
-console.log( controller.component.field.size() ); // Prints 0
+console.log(controller.component.field.size()); // Prints 0
 ```
 
 Controllers created by [Controllers#create][1] are referred to as local controllers.
 
 [1]: ../api/js/classes/controller.controllers.html#create
 
-### Local controller basics
+### Local Controller Basics
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3782,15 +3782,15 @@ const controller = Controllers.create({
 	}
 });
 
-controller.field.set( 1 );
-controller.field.on( "value", ( e, value ) => {
-	console.log( value ); // Prints 1
+controller.field.set(1);
+controller.field.on("value", (e, value) => {
+	console.log(value); // Prints 1
 });
 
-console.log( controller.component.field.size() ); // Prints 0
+console.log(controller.component.field.size()); // Prints 0
 ```
 
-### Non-null local controller field
+### Non-Null Local Controller Field
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3798,18 +3798,18 @@ const controller = Controllers.create({
 	field: "@NonNull SInteger"
 });
 
-controller.field.set( null ); // Throws `wcardinal.exception.NullArgumentException`
+controller.field.set(null); // Throws `wcardinal.exception.NullArgumentException`
 ```
 
 or
 
 ```javascript
 const controller = Controllers.create({
-	field: { type: "SInteger", nonnull: true }
+	field: {type: "SInteger", nonnull: true}
 });
 ```
 
-### Uninitialized local controller field
+### Uninitialized Local Controller Field
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3817,7 +3817,7 @@ const controller = Controllers.create({
 	field: "@Uninitialized SInteger"
 });
 
-controller.field.on( "value", () => {
+controller.field.on("value", () => {
 	// *Not fired* because the `field` is not initialized yet.
 });
 ```
@@ -3826,11 +3826,11 @@ or
 
 ```javascript
 const controller = Controllers.create({
-	field: { type: "SInteger", uninitialized: true }
+	field: {type: "SInteger", uninitialized: true}
 });
 ```
 
-### Local controller fields with default values
+### Local Controller Fields With Default Values
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3838,20 +3838,20 @@ const controller = Controllers.create({
 	field: "SInteger: 24"
 });
 
-console.log( controller.field.get() ); // Prints 24
+console.log(controller.field.get()); // Prints 24
 ```
 
 or
 
 ```javascript
 const controller = Controllers.create({
-	field: { type: "SInteger", value: 24 }
+	field: {type: "SInteger", value: 24}
 });
 ```
 
 Default values must be valid as JSON.
 
-### @Callable methods
+### @Callable Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3860,16 +3860,16 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.callable` is called.
-controller.callable.on( "call", ( e, arg ) => {
+controller.callable.on("call", (e, arg) => {
 	return arg + ", World!";
 });
 
-controller.callable( "Hello" ).then(( result ) => {
-	console.log( result ); // Prints "Hello, World!"
+controller.callable("Hello").then((result) => {
+	console.log(result); // Prints "Hello, World!"
 });
 ```
 
-### Asynchronous @Callable methods
+### Asynchronous @Callable Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3880,21 +3880,21 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.callable` is called.
-controller.callable.on( "call", ( e, arg ) => {
-	// Returns a `thenable` or a promise.
-	return new Thenable(( resolve ) => {
+controller.callable.on("call", (e, arg) => {
+	// Returns a promise.
+	return new Promise((resolve) => {
 		setTimeout(() => {
-			resolve( arg + ", World!" );
+			resolve(arg + ", World!");
 		}, 1000);
 	});
 });
 
-controller.callable( "Hello" ).then(( result ) => {
-	console.log( result ); // Prints "Hello, World!"
+controller.callable("Hello").then((result) => {
+	console.log(result); // Prints "Hello, World!"
 });
 ```
 
-### Failing @Callable methods
+### Failing @Callable Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3905,16 +3905,16 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.callable` is called.
-controller.callable.on( "call", ( e, arg ) => {
-	return Thenable.reject( "fail-reason" );
+controller.callable.on("call", (e, arg) => {
+	return Thenable.reject("fail-reason");
 });
 
-controller.callable( "Hello" ).catch(( reason ) => {
-	console.log( reason ); // Prints "fail-reason"
+controller.callable("Hello").catch((reason) => {
+	console.log(reason); // Prints "fail-reason"
 });
 ```
 
-### @Task methods
+### @Task Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3923,19 +3923,19 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.task` is called.
-controller.task.on( "call", ( e, arg ) => {
+controller.task.on("call", (e, arg) => {
 	return arg + ", World!";
 });
 
-controller.task.on( "success", ( e, result ) => {
+controller.task.on("success", (e, result) => {
 	// Called when the task `task` succeeds.
 	console.log( result ); // Prints "Hello, World!"
 });
 
-controller.task( "Hello" );
+controller.task("Hello");
 ```
 
-### Asynchronous @Task methods
+### Asynchronous @Task Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3946,24 +3946,24 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.task` is called.
-controller.task.on( "call", ( e, arg ) => {
+controller.task.on("call", (e, arg) => {
 	// Returns a `thenable` or a promise.
-	return new Thenable(( resolve ) => {
+	return new Thenable((resolve) => {
 		setTimeout(() => {
-			resolve( arg + ", World!" );
+			resolve(arg + ", World!");
 		}, 1000);
 	});
 });
 
-controller.task.on( "success", ( e, result ) => {
+controller.task.on("success", (e, result) => {
 	// Called when the task `task` succeeds.
 	console.log( result ); // Prints "Hello, World!"
 });
 
-controller.task( "Hello" );
+controller.task("Hello");
 ```
 
-### Failing @Task methods
+### Failing @Task Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -3974,17 +3974,17 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.task` is called.
-controller.task.on( "call", ( e, arg ) => {
+controller.task.on("call", (e, arg) => {
 	return Thenable.reject( "fail-reason" );
 });
 
 
-controller.task.on( "fail", ( e, reason ) => {
+controller.task.on("fail", (e, reason) => {
 	// Called when the task `task` fails.
 	console.log( reason ); // Prints "fail-reason"
 })
 
-controller.task( "Hello" );
+controller.task("Hello");
 ```
 
 ## Threading
@@ -3999,7 +3999,7 @@ Thus, basically, such methods and fields are thread safe.
 @Controller
 class MyController {
 	@Callable
-	void foo(){
+	void foo() {
 	   // When called by wcardinal, a lock this instance has is locked.
 	   // Thus, in that case, this method is thread safe.
 	}
@@ -4013,12 +4013,12 @@ class MyController {
 	SLong field;
 
 	@OnCreate
-	void init(){
+	void init() {
 		new Thread(new Runnable(){
 			@Override
-			public void run(){
+			public void run() {
 				// Thread safe because the `SLong#set( Long )` is thread safe.
-				field.set( 0 );
+				field.set(0);
 			}
 		}).start();
 	}
@@ -4031,10 +4031,10 @@ However, calling the non-thread safe `MyController#foo()` from a thread which do
 @Controller
 class MyController {
 	@OnCreate
-	void init(){
-		new Thread(new Runnable(){
+	void init() {
+		new Thread(new Runnable() {
 			@Override
-			public void run(){
+			public void run() {
 				// Not thread safe because the `foo` is not thread safe.
 				foo();
 			}
@@ -4042,7 +4042,7 @@ class MyController {
 	}
 
 	// Non-thread safe
-	void foo(){
+	void foo() {
 		...
 	}
 }
@@ -4055,18 +4055,18 @@ calling the `MyController#foo()` from such methods is not thread safe either.
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
-	   timeout( "bar", 0 );
+	void init() {
+		timeout("bar", 0);
 	}
 
 	@OnTime
-	void bar(){
+	void bar() {
 		// Not thread safe because the `foo` is not thread safe.
 		foo();
 	}
 
 	// Non-thread safe
-	void foo(){
+	void foo() {
 		...
 	}
 }
@@ -4078,19 +4078,19 @@ There are two ways to fix this: making `MyController#foo()` thread safe
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
-	   timeout( "bar", 0 );
+	void init() {
+		timeout("bar", 0);
 	}
 
 	@OnTime
-	void bar(){
+	void bar() {
 		// Thread safe because the `foo` is thread safe.
 		foo();
 	}
 
 	// Thread safe because the `foo` acquires a lock inside.
-	void foo(){
-		try( Unlocker unlocker = lock() ){
+	void foo() {
+		try(Unlocker unlocker = lock()){
 			...
 		}
 	}
@@ -4103,20 +4103,20 @@ and acquiring a lock before calling the non-thread safe `MyController#foo()`.
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
-	   timeout( "bar", 0 );
+	void init() {
+		timeout("bar", 0);
 	}
 
 	@OnTime
 	@Locked
-	void bar(){
+	void bar() {
 		// Thread safe because the `bar` is annotated with a `@Locked` annotation.
 		// A thread that executes the `bar` acquires a lock before calling the `bar`.
 		foo();
 	}
 
 	// Non-thread safe
-	void foo(){
+	void foo() {
 		...
 	}
 }
@@ -4131,31 +4131,31 @@ Sometimes, it is useful to change this default behavior as shown above.
 class MyController extends AbstractController {
 	@OnCreate
 	@Unlocked
-	void onCreate(){
+	void onCreate() {
 	   // Called without a lock.
 	}
 
 	@OnTime
 	@Locked
-	void onTime(){
+	void onTime() {
 	   // Called with a lock.
 	}
 
 	@Callable
 	@Unlocked
-	void callable(){
+	void callable() {
 		// Called without a lock.
 	}
 
 	@Task
 	@Locked
-	void task(){
+	void task() {
 		// Called with a lock.
 	}
 
 	@OnChange
 	@Unlocked
-	void onChange(){
+	void onChange() {
 		// Called without a lock
 	}
 }
@@ -4169,9 +4169,9 @@ Thus, the followings are equivalent:
 ```java
 @Controller
 class MyController extends AbstractController {
-	void foo(){
+	void foo() {
 		// Lock by `AbstractController#lock()`
-		try( Unlocker unlocker = lock() ){
+		try (Unlocker unlocker = lock()) {
 			...
 		}
 	}
@@ -4184,9 +4184,9 @@ class MyController {
 	@Autowired
 	SLong field;
 
-	void foo(){
+	void foo() {
 		// Lock by `SLong#lock()` of `field`
-		try( Unlocker unlocker = field.lock() ){
+		try (Unlocker unlocker = field.lock()) {
 			...
 		}
 	}
@@ -4204,9 +4204,9 @@ class MyController extends AbstractController {
 	@Autowired
 	MyComponent component;
 
-	void foo(){
+	void foo() {
 		// Lock by `MyComponent#lock()`
-		try( Unlocker unlocker = component.lock() ){
+		try (Unlocker unlocker = component.lock()) {
 			...
 		}
 	}
@@ -4225,9 +4225,9 @@ class MyController extends AbstractController {
 	@Autowired
 	MyComponent component;
 
-	void foo(){
+	void foo() {
 		// Lock by `SLong#lock()` of `MyComponent#field`
-		try( Unlocker unlocker = component.field.lock() ){
+		try (Unlocker unlocker = component.field.lock()) {
 			...
 		}
 	}
@@ -4246,9 +4246,9 @@ class MyController extends AbstractController {
 	@Autowired
 	MyComponent component;
 
-	void foo(){
+	void foo() {
 		// Lock by `ComponentFacade#lock()` of `MyComponent#facade`
-		try( Unlocker unlocker = component.facade.lock() ){
+		try (Unlocker unlocker = component.facade.lock()) {
 			...
 		}
 	}
@@ -4270,22 +4270,22 @@ class MyController {
 	@Autowired
 	MySharedComponent component;
 
-	void foo(){
+	void foo() {
 		// `MySharedComponent#lock()` and `MyController#lock()` are not equivalent.
-		try( Unlocker unlocker = component.lock() ){
+		try (Unlocker unlocker = component.lock()) {
 			...
 		}
 	}
 }
 ```
 
-### Locking controller
+### Locking Controller
 
 ```java
 @Controller
 class MyController extends AbstractController {
-	void foo(){
-		try( Unlocker unlocker = lock() ){
+	void foo() {
+		try (Unlocker unlocker = lock()) {
 			...
 		}
 	}
@@ -4298,8 +4298,8 @@ class MyController {
 	@Autowired
 	ControllerFacad facade;
 
-	void foo(){
-		try( Unlocker unlocker = facade.lock() ){
+	void foo() {
+		try (Unlocker unlocker = facade.lock()) {
 			...
 		}
 	}
@@ -4314,15 +4314,15 @@ class MyController {
 	@Autowired
 	SLong field;
 
-	void foo(){
-		try( Unlocker unlocker = field.lock() ){
+	void foo() {
+		try (Unlocker unlocker = field.lock()) {
 			...
 		}
 	}
 }
 ```
 
-### Periodic method calls
+### Periodic Method Calls
 
 ```java
 @Controller
@@ -4331,23 +4331,23 @@ class MyController extends AbstractController {
 	void init() {
 		// Requests to call @OnTime( "process" ) methods
 		// with a 1000 milliseconds interval.
-		interval( "process", 1000 );
+		interval("process", 1000);
 	}
 
-	@OnTime( "process" )
-	void processA(){
+	@OnTime("process")
+	void processA() {
 		// Called with an interval of 1000 milliseconds *without a lock*
 	}
 
-	@OnTime( "process" )
+	@OnTime("process")
 	@Locked
-	void processB(){
+	void processB() {
 		// Called with an interval of 1000 milliseconds *with a lock*
 	}
 }
 ```
 
-### Periodic method calls with parameters
+### Periodic Method Calls With Parameters
 
 ```java
 @Controller
@@ -4358,18 +4358,18 @@ class MyController extends AbstractController {
 		// with a 1000 milliseconds interval
 		// starting after 50 milliseconds
 		// with parameters "b" and 1
-		interval( "process", 50, 1000, "b", 1 );
+		interval("process", 50, 1000, "b", 1);
 	}
 
 	@OnTime
-	void process( String b, int one ){
-		System.out.println( b );		// Prints "b"
-		System.out.println( "" + one ); // Prints 1
+	void process(String b, int one) {
+		System.out.println(b);		// Prints "b"
+		System.out.println("" + one); // Prints 1
 	}
 }
 ```
 
-### Periodic executions of runnables
+### Periodic Executions of Runnables
 
 ```java
 @Controller
@@ -4378,215 +4378,215 @@ class MyController extends AbstractController {
 	void init() {
 		// Requests to call the runnable
 		// with a 1000 milliseconds interval.
-		interval( new Runnable(){
+		interval(new Runnable() {
 			@Override
-			void run(){
+			void run() {
 				// Called with a 1000 milliseconds interval *without a lock*.
 			}
-		}, 1000 );
+		}, 1000);
 	}
 }
 ```
 
-### Canceling periodic calls from the outside
+### Canceling Periodic Calls From the Outside
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call @OnTime methods
 		// with a 1000 milliseconds interval.
-		long id = interval( "process", 1000 );
+		long id = interval("process", 1000);
 
 		// And cancels the request.
-		cancel( id );
+		cancel(id);
 	}
 
 	@OnTime
-	void process(){
+	void process() {
 		// Not called if canceled before being called.
 	}
 }
 ```
 
-### Canceling periodic calls from the inside
+### Canceling Periodic Calls From the Inside
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call @OnTime methods
 		// with a 1000 milliseconds interval.
-		interval( "process", 1000 );
+		interval("process", 1000);
 	}
 
 	@OnTime
-	void process(){
+	void process() {
 		// Cancels by itself.
 		cancel();
 	}
 }
 ```
 
-### One-time method calls with a delay
+### One-time Method Calls With a Delay
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call @OnTime methods
 		// after 1000 milliseconds.
-		timeout( "process", 1000 );
+		timeout("process", 1000);
 	}
 
 	@OnTime
-	void process(){
+	void process() {
 		// Called once after 1000 milliseconds *without a lock*.
 	}
 }
 ```
 
-### One-time method calls with a delay and parameters
+### One-time Method Calls With a Delay and Parameters
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call @OnTime methods
 		// after 1000 milliseconds
 		// with parameters "b" and 1.
-		timeout( "process", 1000, "b", 1 );
+		timeout("process", 1000, "b", 1);
 	}
 
 	@OnTime
-	void process( String b, int one ){
-		System.out.println( b );		// Prints "b"
-		System.out.println( "" + one ); // Prints 1
+	void process(String b, int one) {
+		System.out.println(b);		// Prints "b"
+		System.out.println("" + one); // Prints 1
 	}
 }
 ```
 
-### One-time execution of runnables with a delay
+### One-time Execution of Runnables With a Delay
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call the runnable
 		// after 1000 milliseconds.
-		timeout( new Runnable(){
+		timeout(new Runnable() {
 			@Overrid
-			void run(){
+			void run() {
 				// Called once after 1000 milliseconds *without a lock*.
 			}
-		}, 1000 );
+		}, 1000);
 	}
 }
 ```
 
-### One-time execution of callables with a delay
+### One-time Execution of Callables With a Delay
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call the callable
 		// after 1000 milliseconds.
-		Future<String> future = timeout( new Callable<String>(){
+		Future<String> future = timeout(new Callable<String>() {
 			@Overrid
-			String call(){
+			String call() {
 				// Called once after 1000 milliseconds *without a lock*.
 				return "a";
 			}
-		}, 1000 );
+		}, 1000);
 
-		System.out.println( future.get() ); // Prints "a"
+		System.out.println(future.get()); // Prints "a"
 	}
 }
 ```
 
-### Canceling one-time method calls
+### Canceling One-Time Method Calls
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call @OnTime methods
 		// after 1000 milliseconds.
-		long id = timeout( "process", 1000);
+		long id = timeout("process", 1000);
 
 		// And cancels the request.
 		cancel( id );
 	}
 
 	@OnTime
-	void process(){
+	void process() {
 		// Not called if canceled before being called.
 	}
 }
 ```
 
-### One-time method calls without a delay
+### One-time Method Calls Without a Delay
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call @OnTime methods immediately.
-		execute( "process" );
+		execute("process");
 	}
 
 	@OnTime
-	void process(){
+	void process() {
 		// Called immediately *without a lock*
 	}
 }
 ```
 
-### One-time method calls without a delay and parameters
+### One-time Method Calls Without a Delay and Parameters
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call @OnTime methods immediately
 		// with parameters "b" and 1.
-		execute( "process", "b", 1 );
+		execute("process", "b", 1);
 	}
 
 	@OnTime
-	void process(){
-		System.out.println( b );		// Prints "b"
-		System.out.println( "" + one ); // Prints 1
+	void process() {
+		System.out.println(b);		// Prints "b"
+		System.out.println("" + one); // Prints 1
 	}
 }
 ```
 
-### Canceling all concurrent requests
+### Canceling All Concurrent Requests
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnCreate
-	void init(){
+	void init() {
 		// Requests to call @OnTime methods after 1000 milliseconds.
-		timeout( "process", 1000 );
+		timeout("process", 1000);
 
 		// Cancels all concurrent requests issued by `execute`, `timeout`, or `interval`
 		cancelAll();
 	}
 
 	@OnTime
-	void process(){
+	void process() {
 		// Not called if canceled before being called.
 	}
 }
@@ -4605,7 +4605,7 @@ The `wcardinal.worker.min.js` utilizes the WebWorker if available while the `wca
 ### Logging (JavaScript)
 
 ```javascript
-wcardinal.util.logger.info( "Information" );
+wcardinal.util.logger.info("Information");
 ```
 
 Please refer to [wcardinal.util.Logger](../api/js/classes/util.logger.html).
@@ -4618,27 +4618,26 @@ import org.wcardinal.controller.annotation.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
-	public MyController(){
-		logger.info( "Information" );
+	public MyController() {
+		log.info("Information");
 	}
 }
 ```
 
 Please refer to [Spring Boot: Logging manual](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html) for details.
 
-### Log level (JavaScript)
+### Log Level (JavaScript)
 
 ```javascript
-wcardinal.util.logger.setLevel( 'DEBUG' );
+wcardinal.util.logger.setLevel("DEBUG");
 ```
 
 Please refer to [wcardinal.util.Logger](../api/js/classes/util.logger.html).
 
-### Log level (Java)
+### Log Level (Java)
 
 Add the following line to your `application.properties`:
 
@@ -4757,25 +4756,25 @@ public class MyController {
 	MessageSource messageSource;
 
 	@OnCreate
-	void init(){
-		System.out.println( messageSource.get( "title" ) ); // Prints "Translated title"
+	void init() {
+		System.out.println(messageSource.get("title")); // Prints "Translated title"
 	}
 }
 ```
 
 ## Security
 
-### Switching controllers based on roles
+### Switching Controllers Based on Roles
 
 ```java
 // For users with an "ADMIN" role
-@Controller( name="MyController", roles="ADMIN" )
+@Controller(name="MyController", roles="ADMIN")
 class MyControllerForAdmin {
 
 }
 
 // For others
-@Controller( name="MyController" )
+@Controller(name="MyController")
 class MyControllerForOthers {
 
 }
@@ -4788,26 +4787,26 @@ class MyControllerForOthers {
 Users who have the `ADMIN` role always get a `MyControllerForAdmin` instance
 because controllers are chosen by the longest match principle.
 
-### Switching controllers by custom logics
+### Switching Controllers by Custom Logics
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
 import org.wcardinal.controller.annotation.OnCheck;
 
 // For users with an "ADMIN" role
-@Controller( name="MyController" )
+@Controller(name="MyController")
 class MyControllerForAdmin {
 	@OnCheck
-	static boolean check( HttpServletRequest request ){
-		return request.isUserInRole( "ADMIN" );
+	static boolean check(HttpServletRequest request) {
+		return request.isUserInRole("ADMIN");
 	}
 }
 
 // For others
-@Controller( name="MyController" )
+@Controller(name="MyController")
 class MyControllerForOthers {
 	@OnCheck
-	static boolean check( HttpServletRequest request ){
+	static boolean check(HttpServletRequest request) {
 		return true;
 	}
 }
@@ -4817,7 +4816,7 @@ class MyControllerForOthers {
 <script src="my-controller"></script>
 ```
 
-### Retrieving user principal
+### Retrieving User Principal
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -4826,13 +4825,12 @@ import org.wcardinal.controller.annotation.OnCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController extends AbstractController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
 	@OnCreate
-	void init(){
-		logger.info( getPrincipal() );
+	void init() {
+		log.info(getPrincipal());
 	}
 }
 ```
@@ -4847,23 +4845,22 @@ import org.wcardinal.controller.ControllerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
 	@Autowired
 	ControllerFacade facade;
 
 	@OnCreate
 	void init(){
-		logger.info( facade.getPrincipal() );
+		log.info(facade.getPrincipal());
 	}
 }
 ```
 
 Please refer to [org.wcardinal.controller.ControllerFacade](../api/java/org/wcardinal/controller/ControllerFacade.html).
 
-### Retrieving remote address
+### Retrieving Remote Address
 
 ```java
 import org.wcardinal.controller.annotation.Controller;
@@ -4872,13 +4869,12 @@ import org.wcardinal.controller.annotation.OnCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController extends AbstractController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
 	@OnCreate
 	void init(){
-		logger.info( getRemoteAddress() );
+		log.info(getRemoteAddress());
 	}
 }
 ```
@@ -4893,16 +4889,15 @@ import org.wcardinal.controller.ControllerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 @Controller
 class MyController {
-	final Logger logger = LoggerFactory.getLogger(MyController.class);
-
 	@Autowired
 	ControllerFacade facade;
 
 	@OnCreate
-	void init(){
-		logger.info( facade.getRemoteAddress() );
+	void init() {
+		log.info(facade.getRemoteAddress());
 	}
 }
 ```
@@ -4920,7 +4915,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 class MyController {
 	@OnRequest
-	static void onRequest( HttpServletRequest request ){
+	static void onRequest(HttpServletRequest request) {
 		// DO SOMETHING
 	}
 }
@@ -4929,18 +4924,18 @@ class MyController {
 Note that the `onRequest(HttpServletRequest)` is a static method.
 Please refer to [org.wcardinal.controller.annotation.OnRequest](../api/java/org/wcardinal/controller/annotation/OnRequest.html).
 
-### Retrieving HttpServletRequest and customizing controller attributes
+### Retrieving HttpServletRequest and Customizing Controller Attributes
 
 ```java
 @Controller
 class MyController extends AbstractController {
 	@OnRequest
-	static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
-		attributes.put( "name", "John" );
+	static void onRequest(HttpServletRequest request, ControllerAttributes attributes) {
+		attributes.put("name", "Cardinal");
 	}
 
-	void something(){
-		System.out.println( getAttributes().get( "name" ) ); // Prints "John"
+	void something() {
+		System.out.println(getAttributes().get("name")); // Prints "Cardinal"
 	}
 }
 ```
@@ -4950,7 +4945,7 @@ Please refer to [org.wcardinal.controller.annotation.OnRequest](../api/java/org/
 
 ## Configuration
 
-### Boot-time configuration
+### Boot-time Configuration
 
 The following configurations are configurable in the same way as Spring Boot.
 For instance, `wcardinal.message.binary.size.max=1000000` in your `application.properties` sets the maximum size of binary messages to 1MB.
@@ -5065,8 +5060,8 @@ Java configuration is also supported:
 @Configuration
 public class MyConfigurer implements WCardinalConfigurer {
 	@Override
-	public void configure( final WCardinalConfiguration configuration ) {
-		configuration.setMaximumBinaryMessageSize( 1000000 );
+	public void configure(final WCardinalConfiguration configuration) {
+		configuration.setMaximumBinaryMessageSize(1000000);
 	}
 }
 ```

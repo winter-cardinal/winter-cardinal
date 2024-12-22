@@ -18,6 +18,6 @@ public class EncodingController {
 
 	@OnCreate
 	void init(){
-		field.set( "john" );
+		field.set( "Cardinal" );
 	}
 }

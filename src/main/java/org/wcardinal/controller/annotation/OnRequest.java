@@ -41,11 +41,11 @@ import java.lang.annotation.Target;
  * class MyController extends AbstractController {
  *     {@literal @}OnRequest
  *     static void onRequest( HttpServletRequest request, ControllerAttributes attributes ){
- *         attributes.put( "name", "John" );
+ *         attributes.put( "name", "Cardinal" );
  *     }
  *
  *     void method(){
- *         System.out.println( getAttributes().get( "name" ) ); // prints "John"
+ *         System.out.println( getAttributes().get( "name" ) ); // prints "Cardinal"
  *     }
  * }
  * </code></pre>

@@ -46,9 +46,9 @@
 			});
 		})
 		.test("Shared callable", function( cb ){
-			c.shared.hello( "John" )
+			c.shared.hello( "Cardinal" )
 			.then(function( result ){
-				cb.assertEquals( result, "Hello, John" ).done();
+				cb.assertEquals( result, "Hello, Cardinal" ).done();
 			}, function( reason ){
 				cb.fail( reason );
 			});
@@ -90,9 +90,9 @@
 			});
 		})
 		.test("Unshared callable", function( cb ){
-			c.unshared.hello( "John" )
+			c.unshared.hello( "Cardinal" )
 			.then(function( result ){
-				cb.assertEquals( result, "Hello, John" ).done();
+				cb.assertEquals( result, "Hello, Cardinal" ).done();
 			}, function( reason ){
 				cb.fail( reason );
 			});

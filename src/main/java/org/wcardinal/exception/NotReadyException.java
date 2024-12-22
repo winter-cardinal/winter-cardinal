@@ -10,7 +10,7 @@ package org.wcardinal.exception;
  *
  * <p>Invoking methods of {@link org.wcardinal.controller.AbstractController AbstractController} or
  * fields including {@link org.wcardinal.controller.data.SClass SClass} from constructors or
- * {@link javax.annotation.PostConstruct @PostConstruct} methods is, typically, the
+ * {@link jakarta.annotation.PostConstruct @PostConstruct} methods is, typically, the
  * root cause of this exception. If this is the case, please consider using
  * {@link org.wcardinal.controller.annotation.OnCreate @OnCreate}.
  *
@@ -20,11 +20,11 @@ package org.wcardinal.exception;
  *
  * &#64;Controller
  * class MyController {
- *   public SClass<String> field;
+ *   public SClass&lt;String&gt; field;
  *
- *   MyController(SClass<String> field) {
+ *   MyController(SClass&lt;String&gt; field) {
  *     this.field = field;
- *     field.set("Cardinal"); // This throws NotReadyException since SClass<String> is not ready to be used.
+ *     field.set("Cardinal"); // This throws NotReadyException since SClass&lt;String&gt; is not ready to be used.
  *   }
  *
  *   &#64;OnCreate
@@ -33,7 +33,7 @@ package org.wcardinal.exception;
  *   }
  * }</pre></blockquote>
  *
- * @see javax.annotation.PostConstruct
+ * @see jakarta.annotation.PostConstruct
  * @see org.wcardinal.controller.annotation.OnCreate
  */
 public class NotReadyException extends RuntimeException {

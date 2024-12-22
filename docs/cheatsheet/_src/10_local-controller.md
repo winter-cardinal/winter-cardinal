@@ -22,19 +22,19 @@ Namely, `controller.field`, `controller.component` and `controller.component.fie
 [Component](../api/js/interfaces/controller.component.html) and [SList](../api/js/classes/controller_data.slist.html), respectively.
 
 ```javascript
-controller.field.set( 1 );
-controller.field.on( "value", ( e, value ) => {
-	console.log( value ); // Prints 1
+controller.field.set(1);
+controller.field.on("value", (e, value) => {
+	console.log(value); // Prints 1
 });
 
-console.log( controller.component.field.size() ); // Prints 0
+console.log(controller.component.field.size()); // Prints 0
 ```
 
 Controllers created by [Controllers#create][1] are referred to as local controllers.
 
 [1]: ../api/js/classes/controller.controllers.html#create
 
-### Local controller basics
+### Local Controller Basics
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -45,15 +45,15 @@ const controller = Controllers.create({
 	}
 });
 
-controller.field.set( 1 );
-controller.field.on( "value", ( e, value ) => {
-	console.log( value ); // Prints 1
+controller.field.set(1);
+controller.field.on("value", (e, value) => {
+	console.log(value); // Prints 1
 });
 
-console.log( controller.component.field.size() ); // Prints 0
+console.log(controller.component.field.size()); // Prints 0
 ```
 
-### Non-null local controller field
+### Non-Null Local Controller Field
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -61,18 +61,18 @@ const controller = Controllers.create({
 	field: "@NonNull SInteger"
 });
 
-controller.field.set( null ); // Throws `wcardinal.exception.NullArgumentException`
+controller.field.set(null); // Throws `wcardinal.exception.NullArgumentException`
 ```
 
 or
 
 ```javascript
 const controller = Controllers.create({
-	field: { type: "SInteger", nonnull: true }
+	field: {type: "SInteger", nonnull: true}
 });
 ```
 
-### Uninitialized local controller field
+### Uninitialized Local Controller Field
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -80,7 +80,7 @@ const controller = Controllers.create({
 	field: "@Uninitialized SInteger"
 });
 
-controller.field.on( "value", () => {
+controller.field.on("value", () => {
 	// *Not fired* because the `field` is not initialized yet.
 });
 ```
@@ -89,11 +89,11 @@ or
 
 ```javascript
 const controller = Controllers.create({
-	field: { type: "SInteger", uninitialized: true }
+	field: {type: "SInteger", uninitialized: true}
 });
 ```
 
-### Local controller fields with default values
+### Local Controller Fields With Default Values
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -101,20 +101,20 @@ const controller = Controllers.create({
 	field: "SInteger: 24"
 });
 
-console.log( controller.field.get() ); // Prints 24
+console.log(controller.field.get()); // Prints 24
 ```
 
 or
 
 ```javascript
 const controller = Controllers.create({
-	field: { type: "SInteger", value: 24 }
+	field: {type: "SInteger", value: 24}
 });
 ```
 
 Default values must be valid as JSON.
 
-### @Callable methods
+### @Callable Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -123,16 +123,16 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.callable` is called.
-controller.callable.on( "call", ( e, arg ) => {
+controller.callable.on("call", (e, arg) => {
 	return arg + ", World!";
 });
 
-controller.callable( "Hello" ).then(( result ) => {
-	console.log( result ); // Prints "Hello, World!"
+controller.callable("Hello").then((result) => {
+	console.log(result); // Prints "Hello, World!"
 });
 ```
 
-### Asynchronous @Callable methods
+### Asynchronous @Callable Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -143,21 +143,21 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.callable` is called.
-controller.callable.on( "call", ( e, arg ) => {
-	// Returns a `thenable` or a promise.
-	return new Thenable(( resolve ) => {
+controller.callable.on("call", (e, arg) => {
+	// Returns a promise.
+	return new Promise((resolve) => {
 		setTimeout(() => {
-			resolve( arg + ", World!" );
+			resolve(arg + ", World!");
 		}, 1000);
 	});
 });
 
-controller.callable( "Hello" ).then(( result ) => {
-	console.log( result ); // Prints "Hello, World!"
+controller.callable("Hello").then((result) => {
+	console.log(result); // Prints "Hello, World!"
 });
 ```
 
-### Failing @Callable methods
+### Failing @Callable Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -168,16 +168,16 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.callable` is called.
-controller.callable.on( "call", ( e, arg ) => {
-	return Thenable.reject( "fail-reason" );
+controller.callable.on("call", (e, arg) => {
+	return Thenable.reject("fail-reason");
 });
 
-controller.callable( "Hello" ).catch(( reason ) => {
-	console.log( reason ); // Prints "fail-reason"
+controller.callable("Hello").catch((reason) => {
+	console.log(reason); // Prints "fail-reason"
 });
 ```
 
-### @Task methods
+### @Task Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -186,19 +186,19 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.task` is called.
-controller.task.on( "call", ( e, arg ) => {
+controller.task.on("call", (e, arg) => {
 	return arg + ", World!";
 });
 
-controller.task.on( "success", ( e, result ) => {
+controller.task.on("success", (e, result) => {
 	// Called when the task `task` succeeds.
 	console.log( result ); // Prints "Hello, World!"
 });
 
-controller.task( "Hello" );
+controller.task("Hello");
 ```
 
-### Asynchronous @Task methods
+### Asynchronous @Task Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -209,24 +209,24 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.task` is called.
-controller.task.on( "call", ( e, arg ) => {
+controller.task.on("call", (e, arg) => {
 	// Returns a `thenable` or a promise.
-	return new Thenable(( resolve ) => {
+	return new Thenable((resolve) => {
 		setTimeout(() => {
-			resolve( arg + ", World!" );
+			resolve(arg + ", World!");
 		}, 1000);
 	});
 });
 
-controller.task.on( "success", ( e, result ) => {
+controller.task.on("success", (e, result) => {
 	// Called when the task `task` succeeds.
 	console.log( result ); // Prints "Hello, World!"
 });
 
-controller.task( "Hello" );
+controller.task("Hello");
 ```
 
-### Failing @Task methods
+### Failing @Task Methods
 
 ```javascript
 const Controllers = wcardinal.controller.Controllers;
@@ -237,15 +237,15 @@ const controller = Controllers.create({
 });
 
 // Called when the `controller.task` is called.
-controller.task.on( "call", ( e, arg ) => {
+controller.task.on("call", (e, arg) => {
 	return Thenable.reject( "fail-reason" );
 });
 
 
-controller.task.on( "fail", ( e, reason ) => {
+controller.task.on("fail", (e, reason) => {
 	// Called when the task `task` fails.
 	console.log( reason ); // Prints "fail-reason"
 })
 
-controller.task( "Hello" );
+controller.task("Hello");
 ```

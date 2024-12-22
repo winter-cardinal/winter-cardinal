@@ -23,8 +23,8 @@ export class Controllers {
 	 *
 	 *     console.log( controller.foo.get() ); // prints "null"
 	 *
-	 *     controller.component.bar.set({ name: "John" });
-	 *     console.log( controller.component.bar.get().name ); // prints "John"
+	 *     controller.component.bar.set({ name: "Cardinal" });
+	 *     console.log( controller.component.bar.get().name ); // prints "Cardinal"
 	 *
 	 * @param {Object} structure a controller structure
 	 * @returns a created controller

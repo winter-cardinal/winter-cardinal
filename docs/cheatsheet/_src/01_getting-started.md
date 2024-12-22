@@ -1,6 +1,6 @@
-## Getting started
+## Getting Started
 
-### Step 1: Add compile dependency
+### Step 1: Add Compile Dependency
 
 ```gradle
 repositories {
@@ -12,7 +12,7 @@ dependencies {
 }
 ```
 
-### Step 2: Create a controller class
+### Step 2: Create a Controller Class
 
 ```java
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,8 @@ class MyController {
 	SLong field;
 
 	@Callable
-	String hello( String name ){
-		return "Hello, "+name;
+	String hello(String name) {
+		return "Hello, " + name + "!";
 	}
 }
 ```
@@ -40,20 +40,16 @@ Detecting Spring your controller class, working wcardinal successfully, in a log
 2019-10-28 22:27:52.875  INFO 19517 --- [ost-startStop-1] d.c.internal.ControllerServletLoader     : Mapping controller: 'MyController' to [/my-controller] with roles [] as 'MyController'
 ```
 
-### Step 3: Load scripts
-
-```html
-<script src="webjars/wcardinal/wcardinal.min.js"></script>
-```
-
-If the WebWorker version is required, load `wcardinal.worker.min.js` instead.
-The `wcardinal.worker.min.js` utilizes the WebWorker if available while the `wcardinal.min.js` does not.
+### Step 3: Load Scripts
 
 ```html
 <script src="webjars/wcardinal/wcardinal.worker.min.js"></script>
 ```
 
-### Step 4: Load a controller script
+There is an non-worker version called `webjars/wcardinal/wcardinal.min.js`.
+The worker version `wcardinal.worker.min.js` is strongly recommended over this non-worker version as the `setTimeout` is not reliable in some cases.
+
+### Step 4: Load a Controller Script
 
 ```html
 <script src="my-controller"></script>
@@ -61,7 +57,7 @@ The `wcardinal.worker.min.js` utilizes the WebWorker if available while the `wca
 
 The default URL is a kebab-case of a controller name.
 
-### Step 5: Run and check with browsers
+### Step 5: Run and Check With Browsers
 
 ```text
 cd your/project/directory
@@ -72,9 +68,6 @@ Then open `http://localhost:8080/` with a browser.
 Please find a `MyController` clone at `window.myController`.
 
 ```javascript
-console.log( myController.field.get() ); // Prints 64
-
-myController.hello( 'John' ).then(( result ) => {
-	console.log( result ); // Prints 'Hello, John'
-});
+console.log(myController.field.get()); // Prints 64
+console.log(await myController.hello("Cardinal")); // Prints "Hello, Cardinal!"
 ```

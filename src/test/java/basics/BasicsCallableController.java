@@ -143,13 +143,13 @@ public class BasicsCallableController {
 
 	@Callable
 	boolean callable_class( final BasicsCallableArgumentClass argument ){
-		return ( argument != null && Objects.equals( argument.field, "john" ) );
+		return ( argument != null && Objects.equals( argument.field, "Cardinal" ) );
 	}
 
 	@Callable
 	boolean callable_2_classes( final BasicsCallableArgumentClass argument0, final BasicsCallableArgumentClass argument1 ){
-		return ( argument0 != null && Objects.equals( argument0.field, "john" ) &&
-				 argument1 != null && Objects.equals( argument1.field, "john" ) );
+		return ( argument0 != null && Objects.equals( argument0.field, "Cardinal" ) &&
+				 argument1 != null && Objects.equals( argument1.field, "Cardinal" ) );
 	}
 
 	@Callable
@@ -157,7 +157,7 @@ public class BasicsCallableController {
 		if( arguments == null || arguments.size() != 2 ) return false;
 
 		for( BasicsCallableArgumentClass argument: arguments ) {
-			if( argument == null || Objects.equals( argument.field, "john" ) != true ) return false;
+			if( argument == null || Objects.equals( argument.field, "Cardinal" ) != true ) return false;
 		}
 
 		return true;
