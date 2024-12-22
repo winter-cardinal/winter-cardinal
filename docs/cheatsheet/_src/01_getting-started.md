@@ -46,8 +46,8 @@ Detecting Spring your controller class, working wcardinal successfully, in a log
 <script src="webjars/wcardinal/wcardinal.worker.min.js"></script>
 ```
 
-There is an non-worker version called `webjars/wcardinal/wcardinal.min.js`.
-The worker version `wcardinal.worker.min.js` is strongly recommended over this non-worker version as the `setTimeout` is not reliable in some cases.
+There is an non-worker version called `webjars/wcardinal/wcardinal.min.js` too.
+However, the worker version `wcardinal.worker.min.js` is strongly recommended over this non-worker version as the `setTimeout` is not reliable in some cases.
 
 ### Step 4: Load a Controller Script
 
