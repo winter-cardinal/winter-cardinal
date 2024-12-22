@@ -106,7 +106,7 @@ Note that the `wcardinal.worker.min.js` must be loaded before loading your contr
 |--                    |--                 |--                  |
 |1.0.x                 |8                  |2.2.4.RELEASE       |
 |1.1.0                 |8                  |2.7.18              |
-|2.0.0 to 2.2.0        |17                 |3.3.1               |
+|2.0.0 to 2.4.0        |17                 |3.3.1               |
 
 ### How to Build
 
