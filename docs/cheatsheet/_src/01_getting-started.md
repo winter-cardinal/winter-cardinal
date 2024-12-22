@@ -59,7 +59,7 @@ The default URL is a kebab-case of a controller name.
 
 ### Step 5: Run and Check With Browsers
 
-```text
+```shell
 cd your/project/directory
 ./gradlew bootRun
 ```
