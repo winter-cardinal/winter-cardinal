@@ -28,7 +28,8 @@
 		"build:rollup": "rollup -c",
 		"build:api": "typedoc --options typedoc.json --out docs/api/js --disableOutputCheck",
 		"watch:ts": "tsc -w",
-		"watch:rollup": "rollup -c -w"
+		"watch:rollup": "rollup -c -w",
+		"prepublishOnly": "npm run build"
 	},
 	"devDependencies": {
 		"@types/promise-polyfill": "^6.0.0",
