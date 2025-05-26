@@ -4,6 +4,7 @@
  */
 
 import { Connectable } from "../event/connectable";
+import { PlainObject } from '../util/lang/plain-object';
 
 export interface CallableMethod<RESULT, ARGUMENTS extends unknown[]> extends Connectable {
 	/**
@@ -18,6 +19,16 @@ export interface CallableMethod<RESULT, ARGUMENTS extends unknown[]> extends Con
 	 * @returns this
 	 */
 	timeout( timeout: number ): CallableMethod<RESULT, ARGUMENTS>;
+
+	/**
+	 * Sets HTTP headers.
+	 * This method replaces existing headers.
+	 * HTTP headers are sent only on the Ajax mode.
+	 *
+	 * @param headers headers or null
+	 * @return this
+	 */
+	headers( headers: PlainObject<string> | null ): CallableMethod<RESULT, ARGUMENTS>;
 
 	/**
 	 * Sets to the Ajax mode.

@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 /**
  * Marks a annotated {@link org.wcardinal.controller.annotation.Callable @Callable} /
  * {@link org.wcardinal.controller.annotation.Task @Task} method as a method invoked
- * via Ajax requests by default.If there are more than one methods of the same name,
+ * via Ajax POST requests by default. If there are more than one methods of the same name,
  * all methods are called via Ajax requests.
  *
  * <blockquote><pre>

@@ -80,8 +80,8 @@ export interface Server extends MessageEmitter<string[]> {
 	send( type: string, content: any ): this;
 
 	ajax(
-		mode: string, data: any, timeout: number, onSuccess: AjaxSuccessHandler,
-		onError: AjaxErrorHandler, context?: any
+		mode: string, data: any, timeout: number, headers: PlainObject<string> | null,
+		onSuccess: AjaxSuccessHandler, onError: AjaxErrorHandler, context?: any
 	): void;
 
 	/**

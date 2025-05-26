@@ -70,9 +70,9 @@ export class ServerImpl extends MessageEmitter<string[]> implements Server {
 	}
 
 	ajax(
-		mode: string, data: BodyInit | null, timeout: number, onSuccess: AjaxSuccessHandler,
-		onError: AjaxErrorHandler, context?: unknown
+		mode: string, data: BodyInit | null, timeout: number, headers: PlainObject<string> | null,
+		onSuccess: AjaxSuccessHandler, onError: AjaxErrorHandler, context?: unknown
 	): void {
-		this._serverBase.ajax_( mode, data, timeout, onSuccess, onError, context );
+		this._serverBase.ajax_( mode, data, timeout, headers, onSuccess, onError, context );
 	}
 }

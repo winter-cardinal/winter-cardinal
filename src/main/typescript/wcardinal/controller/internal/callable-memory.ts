@@ -11,6 +11,7 @@ import { CallableParentMemory } from "./callable-parent";
 import { CallableWrapper } from "./callable-wrapper";
 import { Properties } from "./properties";
 import { Property } from "./property";
+import { PlainObject } from '../../util/lang/plain-object';
 
 export class CallableMemory<RESULT, ARGUMENTS extends unknown[]> {
 	private readonly _wrapper: CallableWrapper<RESULT, ARGUMENTS>;
@@ -18,6 +19,7 @@ export class CallableMemory<RESULT, ARGUMENTS extends unknown[]> {
 	private readonly _name: string;
 	private readonly _parent: CallableParentMemory<RESULT>;
 	private _timeout: number;
+	private _headers: PlainObject<string> | null;
 	private _properties: Properties;
 
 	constructor(
@@ -29,6 +31,7 @@ export class CallableMemory<RESULT, ARGUMENTS extends unknown[]> {
 		this._name = name;
 		this._parent = parent;
 		this._timeout = timeout;
+		this._headers = null;
 		this._properties = properties;
 	}
 
@@ -38,6 +41,11 @@ export class CallableMemory<RESULT, ARGUMENTS extends unknown[]> {
 
 	timeout_( timeout: number ): this {
 		this._timeout = timeout;
+		return this;
+	}
+
+	headers_( headers: PlainObject<string> | null ): this {
+		this._headers = headers;
 		return this;
 	}
 
@@ -74,7 +82,7 @@ export class CallableMemory<RESULT, ARGUMENTS extends unknown[]> {
 				}
 			});
 		} else {
-			return this._parent.call_( [this._name, args], this._timeout, this._properties.isAjax_() );
+			return this._parent.call_( [this._name, args], this._timeout, this._headers, this._properties.isAjax_() );
 		}
 	}
 }

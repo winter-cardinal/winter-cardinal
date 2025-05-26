@@ -109,10 +109,10 @@ export const ServerConstructorWorker: ServerConstructor =
 		}
 
 		ajax(
-			mode: string, data: BodyInit | null, timeout: number, onSuccess: AjaxSuccessHandler,
-			onError: AjaxErrorHandler, context?: unknown
+			mode: string, data: BodyInit | null, timeout: number, headers: PlainObject<string> | null,
+			onSuccess: AjaxSuccessHandler, onError: AjaxErrorHandler, context?: unknown
 		): void {
-			sendAjaxRequest( this._sttgs, mode, data, timeout, onSuccess, onError, context );
+			sendAjaxRequest( this._sttgs, mode, data, timeout, headers, onSuccess, onError, context );
 		}
 	} :
 	ServerImpl

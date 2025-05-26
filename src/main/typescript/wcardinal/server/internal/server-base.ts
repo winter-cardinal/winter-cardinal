@@ -248,10 +248,10 @@ export class ServerBase {
 	}
 
 	ajax_(
-		mode: string, data: BodyInit | null, timeout: number, onSuccess: AjaxSuccessHandler,
-		onError: AjaxErrorHandler, context?: unknown
+		mode: string, data: BodyInit | null, timeout: number, headers: PlainObject<string> | null,
+		onSuccess: AjaxSuccessHandler, onError: AjaxErrorHandler, context?: unknown
 	): void {
-		sendAjaxRequest( this._sttgs, mode, data, timeout, onSuccess, onError, context );
+		sendAjaxRequest( this._sttgs, mode, data, timeout, headers, onSuccess, onError, context );
 	}
 
 	stopServerCheck_(): void {
@@ -436,7 +436,7 @@ export class ServerBase {
 		Ajax.getInstance().get({
 			url: makeServerUrl( settings ),
 			cache: false,
-			headers: toServerHeaders( "keep-alive", settings.ssid ),
+			headers: toServerHeaders( "keep-alive", settings.ssid, null ),
 			timeout: settings.keep_alive.timeout,
 			complete: this._keepServerAlwaysBound
 		});
@@ -467,7 +467,7 @@ export class ServerBase {
 			url: makeServerUrl( settings ),
 			dataType: "json",
 			cache: false,
-			headers: toServerHeaders( "retry", settings.ssid ),
+			headers: toServerHeaders( "retry", settings.ssid, null ),
 			timeout: settings.retry.timeout,
 			success: ( s ) => {
 				settings.ssid = s.ssid;

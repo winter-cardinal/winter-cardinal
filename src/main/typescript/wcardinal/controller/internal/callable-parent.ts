@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { PlainObject } from '../../util/lang/plain-object';
+
 export interface CallableParentMemory<R> {
-	call_( data: [ string, unknown[] ], timeout: number, isAjaxMode: boolean ): Promise<R>;
+	call_( data: [ string, unknown[] ], timeout: number, headers: PlainObject<string> | null, isAjaxMode: boolean ): Promise<R>;
 }

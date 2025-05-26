@@ -7,6 +7,7 @@ import { Connectable } from "../event/connectable";
 import { CallableCall } from "./callable-call";
 import { CallableMethod } from "./callable-method";
 import { CallableMemory } from "./internal/callable-memory";
+import { PlainObject } from '../util/lang/plain-object';
 
 /**
  * A central class for callble methods.
@@ -23,6 +24,11 @@ export class Callable<RESULT, ARGUMENTS extends unknown[]> extends Connectable
 
 	timeout( timeout: number ): this {
 		this.__mem__.timeout_( timeout );
+		return this;
+	}
+
+	headers( headers: PlainObject<string> | null ) {
+		this.__mem__.headers_( headers );
 		return this;
 	}
 

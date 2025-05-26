@@ -1156,14 +1156,14 @@ export class ControllerMemory<W extends Controller = Controller>
 		throw UnsupportedOperationException.create();
 	}
 
-	call_( data: CallRequest, timeout: number, isAjaxMode: boolean ): Promise<unknown> {
+	call_( data: CallRequest, timeout: number, headers: PlainObject<string> | null, isAjaxMode: boolean ): Promise<unknown> {
 		return new Thenable<unknown>(( resolve, reject ) => {
 			if( isAjaxMode ) {
 				const ajaxData = JSON.stringify({
 					path: this.getCallPath_(),
 					request: data
 				});
-				this.getServer_().ajax( "call", ajaxData, timeout, ( result ) => {
+				this.getServer_().ajax( "call", ajaxData, timeout, headers, ( result ) => {
 					rejectOrResolveCallResult( result, resolve, reject );
 				}, ( xhr, reason ) => {
 					reject( reason );
