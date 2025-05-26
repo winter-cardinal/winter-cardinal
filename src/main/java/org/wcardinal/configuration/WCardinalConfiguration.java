@@ -77,7 +77,7 @@ public interface WCardinalConfiguration {
 	/**
 	 * Returns the maximum disconnection time in milliseconds.
 	 * If it is negative, the maximum disconnection time is not checked.
-	 * The default value is -1.
+	 * The default value is 4000.
 	 * The default value can be changed by setting a property
 	 * `wcardinal.disconnection.max` in properties files,
 	 * command-line arguments, etc.

@@ -29,7 +29,7 @@ public class WCardinalConfigurationSupport extends ApplicationObjectSupport impl
 	@Value("${wcardinal.idle.max:30000}")
 	long maximumIdleTime;
 
-	@Value("${wcardinal.disconnection.max:-1}")
+	@Value("${wcardinal.disconnection.max:4000}")
 	long maximumDisconnectionTime;
 
 	@Value("${wcardinal.websocket.path:**/wcardinal-websocket}")

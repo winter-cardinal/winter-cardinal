@@ -38,7 +38,7 @@ Please refer to [Spring Boot: External config](http://docs.spring.io/spring-boot
 
     * If the controllers have methods annotated with `@OnIdleCheck`, the browsers that those methods return negative numbers are considered inactive. `wcardinal.idle.max` and `wcardinal.disconnection.max` are not taken into the consideration in this case.
 
-* `wcardinal.disconnection.max=-1`
+* `wcardinal.disconnection.max=4000`
 
   Criteria to determine whether browsers are inactive or not.
   The controllers, the instances of classes annotated with `@Controller`, that are assigned to inactive browsers are destroyed.
