@@ -4,4 +4,4 @@ org.wcardinal.io.websocket.WebSocketConfig
 org.wcardinal.controller.scope.ControllerScopeConfig
 org.wcardinal.controller.scope.shared.SharedComponentScopeConfig
 org.wcardinal.controller.internal.ControllerServletLoader
-org.wcardinal.controller.internal.ControllerSessionListenerConfig
+org.wcardinal.controller.internal.ControllerSessionListener

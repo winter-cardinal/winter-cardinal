@@ -11,9 +11,12 @@ import jakarta.servlet.http.HttpSessionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.stereotype.Service;
+
 import org.wcardinal.io.Session;
 
-public class ControllerSessionListener implements HttpSessionListener{
+@Service
+public class ControllerSessionListener implements HttpSessionListener {
 	static final Logger logger = LoggerFactory.getLogger(ControllerSessionListener.class);
 
 	static public void sessionCreated( final String sessionId ){
@@ -25,7 +28,6 @@ public class ControllerSessionListener implements HttpSessionListener{
 		if( session != null ) session.destroy();
 		logger.debug("Destroyed HTTP session {}", sessionId);
 	}
-
 
 	@Override
 	public void sessionCreated(HttpSessionEvent se){
