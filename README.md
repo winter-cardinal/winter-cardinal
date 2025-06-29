@@ -153,8 +153,8 @@ npm run build:cheatsheet
 In `~/.gradle/gradle.properties`, add
 
 ```
-systemProp.jreleaser.deploy.maven.mavencentral.sonatype.username=${Sonatype Username}
-systemProp.jreleaser.deploy.maven.mavencentral.sonatype.password=${Sonatype Password}
+systemProp.jreleaser.deploy.maven.mavencentral.sonatype.username=${Username of Generated Token https://central.sonatype.com/account}
+systemProp.jreleaser.deploy.maven.mavencentral.sonatype.password=${Password of Generated Token https://central.sonatype.com/account}
 systemProp.jreleaser.gpg.passphrase=${Passphrase of your key ring}
 systemProp.jreleaser.gpg.secret.key=${Output of gpg --export-secret-keys ZZZZZZZZZZZZZZZZ | base64 -w0}
 systemProp.jreleaser.gpg.public.key=${Output of gpg --export ZZZZZZZZZZZZZZZZ | base64 -w0}
@@ -189,7 +189,6 @@ gpg --export --armor ZZZZZZZZZZZZZZZZ > public.key
 
 Go to https://keyserver.ubuntu.com/ and submit the content of `public.key`.
 
-
 #### Publishing Jars
 
 ```
@@ -199,8 +198,7 @@ npm run build
 ./gradlew jreleaseFullRelease
 ```
 
-`./gradlew jreleaseFullRelease` might fail because of a proxy.
-In that case, upload `build/deploy/mavenCentral/sonatype/*.zip` to `https://central.sonatype.com/publishing` manually.
+In the case that `./gradlew jreleaseFullRelease` fails, upload `build/deploy/mavenCentral/sonatype/*.zip` to `https://central.sonatype.com/publishing` manually.
 
 See also:
 * https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_portal_publisher_api
