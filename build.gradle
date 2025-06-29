@@ -2,45 +2,31 @@ plugins {
 	id 'jacoco'
 	id 'java'
 	id 'maven-publish'
-	id 'signing'
-	id 'net.researchgate.release' version '2.6.0'
-	id 'de.marcphilipp.nexus-publish' version '0.3.0'
-	id 'io.codearte.nexus-staging' version '0.21.0'
-	id 'org.cadixdev.licenser' version '0.6.1'
 	id 'com.github.jlouns.cpe' version '0.5.0'
+	id 'org.jreleaser' version '1.18.0'
 }
 
-group = 'com.github.winter-cardinal'
-archivesBaseName = 'winter-cardinal'
-version = new groovy.json.JsonSlurper().parseText(file('package.json').text).version
+base {
+	group = 'com.github.winter-cardinal'
+	archivesBaseName = 'winter-cardinal'
+}
 
-sourceCompatibility = 17
-targetCompatibility = 17
+version = new groovy.json.JsonSlurper().parseText(file('package.json').text).version
 
 // REPOSITORY
 repositories {
 	mavenCentral()
 }
 
-// JAR
-jar {
-	manifest {
-		attributes( 'Implementation-Title': archivesBaseName )
-		attributes( 'Automatic-Module-Name': 'wcardinal' )
-		attributes( 'Implementation-Version': version )
+// JAVA
+java {
+	withJavadocJar()
+	withSourcesJar()
+	sourceCompatibility = JavaLanguageVersion.of(17)
+	targetCompatibility = JavaLanguageVersion.of(17)
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
 	}
-}
-
-task copyLicense(type: Copy) {
-	from file('./LICENSE')
-	into file('./src/main/resources/META-INF/')
-}
-compileJava.dependsOn copyLicense
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = 'sources'
-	from sourceSets.main.allSource
-	exclude 'META-INF/**'
 }
 
 javadoc {
@@ -48,74 +34,82 @@ javadoc {
 	options.charSet = 'UTF-8'
 	options.encoding = 'UTF-8'
 	options.jFlags '-Dfile.encoding=UTF-8'
+	options.addBooleanOption('Xdoclint:none', true)
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-	classifier = 'javadoc'
-	from javadoc.destinationDir
-}
-
-artifacts {
-	archives sourcesJar
-	archives javadocJar
+jar {
+	manifest {
+		attributes( 'Implementation-Title': base.archivesBaseName )
+		attributes( 'Automatic-Module-Name': 'wcardinal' )
+		attributes( 'Implementation-Version': version )
+	}
 }
 
 // PUBLISHING
 publishing {
 	publications {
-		mavenJava( MavenPublication ) {
+		maven(MavenPublication) {
+			groupId = 'com.github.winter-cardinal'
+			artifactId = 'winter-cardinal'
+
+			from components.java
+
 			pom {
 				name = 'Winter Cardinal'
 				description = 'A library for real-time web applications build on top of the Spring framework'
-				packaging = 'jar'
 				url = 'https://github.com/winter-cardinal/winter-cardinal'
-
-				scm {
-					url = 'https://github.com/winter-cardinal/winter-cardinal'
-					connection = 'scm:git@github.com:winter-cardinal/winter-cardinal.git'
-					developerConnection = 'scm:git@github.com:winter-cardinal/winter-cardinal.git'
-				}
-
+				inceptionYear = '2019'
 				licenses {
 					license {
 						name = 'The Apache License, Version 2.0'
 						url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
 					}
 				}
-
 				developers {
 					developer {
-						id = project.findProperty('ossrhUsername') ?: ''
-						name = project.findProperty('ossrhName') ?: ''
-						email = project.findProperty('ossrhEMail') ?: ''
+						id = project.findProperty('developer.username')
+						name = project.findProperty('developer.name')
 					}
 				}
+				scm {
+					connection = 'scm:git:https://github.com/winter-cardinal/winter-cardinal.git'
+					developerConnection = 'scm:git:ssh://github.com/winter-cardinal/winter-cardinal.git'
+					url = 'https://github.com/winter-cardinal/winter-cardinal'
+				}
 			}
-			from components.java
-			artifact sourcesJar
-			artifact javadocJar
 		}
 	}
-}
 
-signing {
-	sign( publishing.publications )
-}
-
-nexusPublishing {
 	repositories {
-		sonatype {
-			packageGroup = group
-			username = project.findProperty('ossrhToken') ?: ''
-			password = project.findProperty('ossrhTokenPassword') ?: ''
+		maven {
+			url = layout.buildDirectory.dir('staging-deploy')
 		}
 	}
 }
 
-nexusStaging {
-	packageGroup = group
-	username = project.findProperty('ossrhToken') ?: ''
-	password = project.findProperty('ossrhTokenPassword') ?: ''
+jreleaser {
+	release {
+		github {
+			skipTag = true
+			skipRelease = true
+		}
+	}
+	signing {
+		active = 'ALWAYS'
+		armored = true
+		verify = true
+	}
+	deploy {
+		maven {
+			mavenCentral {
+				sonatype {
+					active = 'ALWAYS'
+					url = 'https://central.sonatype.com/api/v1/publisher'
+					stagingRepository('build/staging-deploy')
+				}
+			}
+		}
+	}
 }
 
 // DEPENDENCIES
@@ -139,53 +133,6 @@ test {
 	exclude 'manual/**'
 }
 
-// TYPESCRIPT
-task compileJavaScript( type: CrossPlatformExec ){
-	inputs.files( 'package.json' )
-	inputs.files( 'rollup.config.js' )
-	inputs.files( 'tsconfig.json' )
-	inputs.files( 'tslintrc.json' )
-	inputs.files( fileTree(
-		dir: 'src/main/typescript',
-		exclude: '*.js*'
-	))
-	outputs.dir( 'src/main/resources/META-INF/resources/webjars/wcardinal/' )
-	commandLine 'npm', 'run', 'build'
-}
-compileJava.dependsOn compileJavaScript
-task cleanJavaScript {
-	doLast {
-		delete 'src/main/resources/META-INF/resources/webjars/wcardinal/'
-	}
-}
-clean.dependsOn cleanJavaScript
-
-// License
-license {
-	tasks {
-		directory {
-			files.from( 'src/' )
-		}
-	}
-
-	style {
-		put( 'ts', 'BLOCK_COMMENT' )
-		put( 'html', new org.cadixdev.gradle.licenser.header.CommentHeaderFormat( 'HTML', ~/^\s*<!--/, ~/-->\s*(.*?)$/, null, '<!--', '', '-->' ) )
-	}
-
-	header = file( 'LICENSE_HEADER' )
-
-	include '**/*.java'
-	include '**/*.ts'
-	include '**/*.js'
-	include '**/*.html'
-
-	exclude '**/META-INF/**'
-	exclude '**/javascript/**'
-	exclude '**/pixi.js'
-	exclude '**/pixi.min.js'
-}
-
 // Java API document
 task compileJavaApiDocument( type: Copy, dependsOn: javadoc ) {
 	doFirst {
@@ -194,29 +141,4 @@ task compileJavaApiDocument( type: Copy, dependsOn: javadoc ) {
 
 	from "$buildDir/docs/javadoc"
 	into './docs/api/java'
-}
-
-// Cheatsheet
-task compileCheatsheet {
-	def source = 'docs/cheatsheet/_src';
-	def destination = 'docs/cheatsheet/all-in-one.md';
-	inputs.dir( source )
-	outputs.file( destination )
-
-	doLast {
-		String header = '# Cheatsheet\n\n';
-		String contents = file( source ).listFiles().sort{ it.name }.collect{ it.text }.join( '\n' );
-		String toc = '## Table of contents\n\n' + contents.split( '\n' )
-		.findAll{
-			it.trim().startsWith( '##' )
-		}
-		.collect{
-			boolean isSubSection = it.startsWith( '###' );
-			String trimmed = it.substring( isSubSection ? 3 : 2 ).trim();
-			String anchor = trimmed.toLowerCase().replaceAll( '[^a-zA-Z0-9- ]', '' ).replaceAll( ' +', '-' );
-			return (isSubSection ? '\t' : '') + '* [' + trimmed + '](#' + anchor + ')';
-		}
-		.join( '\n' ) + '\n\n';
-		(new File( destination )).text = header + toc + contents;
-	}
 }

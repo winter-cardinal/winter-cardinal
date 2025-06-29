@@ -23,10 +23,11 @@
 	"scripts": {
 		"lint": "tslint -p .",
 		"lint:fix": "tslint -p . --fix",
-		"build": "rimraf dist && rimraf src/main/javascript && rimraf src/main/resources/META-INF/resources && tsc && rollup -c",
+		"build": "rimraf dist && rimraf src/main/javascript && rimraf src/main/resources/META-INF/resources && tsc && rollup -c && node ./license-copy.mjs",
 		"build:ts": "tsc",
 		"build:rollup": "rollup -c",
 		"build:api": "typedoc --options typedoc.json --out docs/api/js --disableOutputCheck",
+		"build:cheatsheet": "node ./docs/cheatsheet/_src/compile.mjs",
 		"watch:ts": "tsc -w",
 		"watch:rollup": "rollup -c -w",
 		"prepublishOnly": "npm run build"

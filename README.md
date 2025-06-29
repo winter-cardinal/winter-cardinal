@@ -106,7 +106,7 @@ Note that the `wcardinal.worker.min.js` must be loaded before loading your contr
 |--                    |--                 |--                  |
 |1.0.x                 |8                  |2.2.4.RELEASE       |
 |1.1.0                 |8                  |2.7.18              |
-|2.0.0 to 2.4.0        |17                 |3.3.1               |
+|2.0.0 to 2.5.0        |17                 |3.3.1               |
 
 ### How to Build
 
@@ -143,39 +143,70 @@ npm run build:api
 #### Cheatsheet
 
 ```shell
-./gradlew compileCheatsheet
+npm run build:cheatsheet
 ```
 
 ### Publishing
 
-#### JARs to Sonatype
+#### Settings
 
 In `~/.gradle/gradle.properties`, add
 
-```shell
-signing.keyId=<SIGNING-KEYID>
-signing.password=<SIGNING-PASSWORD>
-signing.secretKeyRingFile=<SIGNING-SECRETRINGFILE>
+```
+systemProp.jreleaser.deploy.maven.mavencentral.sonatype.username=${Sonatype Username}
+systemProp.jreleaser.deploy.maven.mavencentral.sonatype.password=${Sonatype Password}
+systemProp.jreleaser.gpg.passphrase=${Passphrase of your key ring}
+systemProp.jreleaser.gpg.secret.key=${Output of gpg --export-secret-keys ZZZZZZZZZZZZZZZZ | base64 -w0}
+systemProp.jreleaser.gpg.public.key=${Output of gpg --export ZZZZZZZZZZZZZZZZ | base64 -w0}
+systemProp.jreleaser.github.token=${GitHub Token https://github.com/settings/tokens/}
 
-ossrhUsername=<OSSRH-USERNAME>
-ossrhPassword=<OSSRH-PASSWORD>
-ossrhName=<OSSRH-NAME>
-ossrhEMail=<OSSRH-EMAIL>
-
-ossrhToken=<OSSRH-USER-TOKEN>
-ossrhTokenPassword=<OSSRH-USER-TOKEN-PASSWORD>
+developer.username=${Sonatype Username}
+developer.name=${Sonatype}
+developer.email=${Your Email}
 ```
 
-and then execute
+Here, `ZZZZZZZZZZZZZZZZ` is from the following:
 
-```shell
-./gradlew publishToSonatype
-./gradlew closeAndReleaseRepository
+```
+$ gpg --list-keys --keyid-format=long
+/c/Users/XXXXXXXX/.gnupg/pubring.kbx
+------------------------------------
+pub   rsa3072/XXXXXXXXXXXXXXXX YYYY-MM-DD [SC] [expires: YYYY-MM-DD]
+      YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+uid                 [ultimate] Your Name <your.name@email.com>
+sub   rsa3072/ZZZZZZZZZZZZZZZZ YYYY-MM-DD [E] [expires: YYYY-MM-DD]
 ```
 
-Or close and release via [Nexus repository manager](https://oss.sonatype.org/).
+Refer to https://foojay.io/today/how-to-release-a-java-module-with-jreleaser-to-maven-central-with-github-actions/
 
-#### NPM
+#### Sending Public Key
+
+Need to send the public key to https://keyserver.ubuntu.com/ .
+
+```
+gpg --export --armor ZZZZZZZZZZZZZZZZ > public.key
+```
+
+Go to https://keyserver.ubuntu.com/ and submit the content of `public.key`.
+
+
+#### Publishing Jars
+
+```
+./gradlew clean
+npm run build
+./gradlew publish
+./gradlew jreleaseFullRelease
+```
+
+`./gradlew jreleaseFullRelease` might fail because of a proxy.
+In that case, upload `build/deploy/mavenCentral/sonatype/*.zip` to `https://central.sonatype.com/publishing` manually.
+
+See also:
+* https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_portal_publisher_api
+* https://central.sonatype.org/publish/publish-portal-gradle/
+
+#### Publishing NPM Modules
 
 ```shell
 npm publish
