@@ -24,7 +24,7 @@ public class SQueuePatchesPackedImplDeserializer extends ValueDeserializer<SPatc
 	}
 
 	@Override
-	public ValueDeserializer<?> createContextual( final DeserializationContext ctxt, final BeanProperty property) {
+	public ValueDeserializer<?> createContextual( final DeserializationContext ctxt, final BeanProperty property ) {
 		final JavaType javaType = (property == null ? ctxt.getContextualType() : property.getType());
 		final JavaType valueType = javaType.containedType( 0 );
 		final SQueuePatchesPackedImplDeserializer deserializer = new SQueuePatchesPackedImplDeserializer( valueType );

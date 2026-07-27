@@ -13,6 +13,6 @@ import tools.jackson.databind.ValueSerializer;
 public class StreamedResultSerializer extends ValueSerializer<StreamedResult> {
 	@Override
 	public void serialize( final StreamedResult streamedResult, final JsonGenerator gen, final SerializationContext ctxt ) throws JacksonException {
-		streamedResult.serialize(gen, ctxt);
+		streamedResult.serialize( gen, ctxt );
 	}
 }

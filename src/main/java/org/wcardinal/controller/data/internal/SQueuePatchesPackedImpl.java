@@ -27,7 +27,7 @@ public class SQueuePatchesPackedImpl<V> extends SQueuePatchesPacked<V, SQueuePat
 		super( startRevision, endRevision, revisionToPatch );
 	}
 
-	public static <V> SQueuePatchesPackedImpl<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType) throws JacksonException {
+	public static <V> SQueuePatchesPackedImpl<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws JacksonException {
 		SPatchUtil.assertCurrentToken( parser, JsonToken.START_ARRAY );
 
 		parser.nextToken();

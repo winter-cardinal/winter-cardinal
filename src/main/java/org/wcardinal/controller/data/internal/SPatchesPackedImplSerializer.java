@@ -14,7 +14,7 @@ public class SPatchesPackedImplSerializer extends ValueSerializer<SPatchesPacked
 	public SPatchesPackedImplSerializer(){}
 
 	@Override
-    public void serialize(final SPatchesPacked<?, ?> value, final JsonGenerator gen, final SerializationContext ctxt) throws JacksonException {
+    public void serialize( final SPatchesPacked<?, ?> value, final JsonGenerator gen, final SerializationContext ctxt ) throws JacksonException {
 		value.serialize( gen );
 	}
 }
