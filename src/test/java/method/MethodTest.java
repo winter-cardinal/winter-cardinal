@@ -507,8 +507,19 @@ public class MethodTest {
 	}
 
 	@Test
+	public void castAtomicDouble() {
+		final JavaType[] types = new JavaType[] { Json.mapper.constructType( AtomicDouble.class ) };
+		final Object[] parameters = new Object[] { 0 };
+		final Object[] casted = AbstractCallableMethod.cast( types, parameters );
+		Assert.assertNotNull( casted );
+		Assert.assertEquals( casted.length, 1 );
+		Assert.assertNotNull( casted[ 0 ] );
+		Assert.assertTrue( casted[ 0 ] instanceof AtomicDouble );
+		Assert.assertEquals( ((AtomicDouble)casted[ 0 ]).get(), 0.0, 0.0 );
+	}
+
+	@Test
 	public void castDouble() {
-		castFail( AtomicDouble.class, 0 );
 		castFail( double.class, true );
 		castFail( double.class, Json.mapper.createArrayNode() );
 	}

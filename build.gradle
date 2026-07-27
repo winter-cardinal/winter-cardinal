@@ -114,13 +114,13 @@ jreleaser {
 
 // DEPENDENCIES
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-websocket:3.3.1'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket:3.5.16'
 	implementation 'org.jdeferred:jdeferred-core:1.2.6'
-	implementation 'com.google.guava:guava:33.2.1-jre'
+	implementation 'com.google.guava:guava:33.6.0-jre'
 	implementation 'org.webjars:webjars-locator:0.52'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-security:3.3.1'
-	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.3.1'
+	testImplementation 'org.springframework.boot:spring-boot-starter-security:3.5.16'
+	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.5.16'
 	testImplementation 'junit:junit:4.13.2'
 }
 
