@@ -16,10 +16,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.ResolvableType;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.NullNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.NullNode;
+import tools.jackson.databind.node.ObjectNode;
 import com.google.common.util.concurrent.AtomicDouble;
 
 import org.wcardinal.controller.annotation.Callable;

@@ -36,9 +36,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.exc.StreamWriteException;
 
 import org.wcardinal.configuration.ControllerVariableEncoding;
 import org.wcardinal.configuration.WCardinalConfiguration;
@@ -86,7 +85,7 @@ public class ControllerServlet extends AbstractController {
 	) throws Exception {
 		try{
 			handle( req, resp );
-		} catch ( final JsonProcessingException e ) {
+		} catch ( final JacksonException e ) {
 			logger.error( "Failed to serialize a controller to JSON", e );
 
 			try {
@@ -214,18 +213,18 @@ public class ControllerServlet extends AbstractController {
 		writer.write("}());");
 	}
 
-	<T> void writeAsJson( final Writer writer, final T data ) throws JsonGenerationException, JsonMappingException, IOException{
+	<T> void writeAsJson( final Writer writer, final T data ) throws StreamWriteException, IOException{
 		Json.non_closing_writer.writeValue(writer, data);
 	}
 
-	void writeDynamic( final Writer writer, final SenderIdAndDynamicInfo senderIdAndDynamicInfo ) throws JsonGenerationException, JsonMappingException, IOException{
+	void writeDynamic( final Writer writer, final SenderIdAndDynamicInfo senderIdAndDynamicInfo ) throws StreamWriteException, IOException{
 		writer.write("settings.info.dynamic = ");
 		Json.non_closing_writer.writeValue(writer, senderIdAndDynamicInfo.dynamicInfo);
 		writer.write(";");
 		writer.write("settings.info.senderId = " + senderIdAndDynamicInfo.senderId + ";");
 	}
 
-	void writeDynamicReplace( final Writer writer, final SenderIdAndDynamicInfo senderIdAndDynamicInfo ) throws JsonGenerationException, JsonMappingException, IOException{
+	void writeDynamicReplace( final Writer writer, final SenderIdAndDynamicInfo senderIdAndDynamicInfo ) throws StreamWriteException, IOException{
 		final String json = Json.mapper.writeValueAsString( senderIdAndDynamicInfo.dynamicInfo );
 		int index = 0;
 		final List<String> list = new ArrayList<>();
@@ -246,20 +245,19 @@ public class ControllerServlet extends AbstractController {
 		writer.write("settings.info.senderId = " + senderIdAndDynamicInfo.senderId + ";");
 	}
 
-	void writeDynamicBase64( final Writer writer, final SenderIdAndDynamicInfo senderIdAndDynamicInfo ) throws JsonGenerationException, JsonMappingException, IOException{
+	void writeDynamicBase64( final Writer writer, final SenderIdAndDynamicInfo senderIdAndDynamicInfo ) throws StreamWriteException, IOException{
 		writer.write("settings.info.dynamic = JSON.parse(wcardinal.util.util.atob(");
 		Json.non_closing_writer.writeValue(writer, Json.mapper.writeValueAsBytes( senderIdAndDynamicInfo.dynamicInfo ) );
 		writer.write("));");
 		writer.write("settings.info.senderId = " + senderIdAndDynamicInfo.senderId + ";");
 	}
 
-	@SuppressWarnings("deprecation")
-	String toScript( final String name, final Map<String, Object> data, final SenderIdAndDynamicInfo senderIdAndDynamicInfo ) throws JsonGenerationException {
+	String toScript( final String name, final Map<String, Object> data, final SenderIdAndDynamicInfo senderIdAndDynamicInfo ) throws IOException {
 		final StringWriter writer = new StringWriter();
 		try {
 			writeScript( writer, name, data, senderIdAndDynamicInfo, true );
 		} catch (final IOException e) {
-			throw new JsonGenerationException( "Failed to create a controller script", e );
+			throw new IOException( "Failed to create a controller script", e );
 		}
 
 		return writer.toString();
@@ -520,11 +518,11 @@ public class ControllerServlet extends AbstractController {
 		}
 	}
 
-	public ControllerServletHandleResult handle( final HttpServletRequest req ) throws JsonProcessingException {
+	public ControllerServletHandleResult handle( final HttpServletRequest req ) throws JacksonException, IOException {
 		return handle( req, spath, null, Collections.<String, String[]>emptyMap() );
 	}
 
-	public ControllerServletHandleResult handle( final HttpServletRequest req, final String contentPath, final String queryString, final Map<String, String[]> parameterMap ) throws JsonProcessingException {
+	public ControllerServletHandleResult handle( final HttpServletRequest req, final String contentPath, final String queryString, final Map<String, String[]> parameterMap ) throws JacksonException, IOException {
 		// Find a factory
 		final ControllerFactoryAndRoles factoryAndRoles = getFactoryAndRoles( req );
 		if( factoryAndRoles == null ) return null;

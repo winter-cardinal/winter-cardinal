@@ -5,7 +5,6 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,12 +13,12 @@ import java.util.NavigableSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.JsonToken;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
 
 import org.wcardinal.controller.data.SMovableList.Move;
 import org.wcardinal.controller.data.SList.Update;
@@ -71,7 +70,7 @@ public class SMovableListPatchMap<V> extends SListPatchMap<V> implements SMovabl
 	}
 
 	@Override
-	public void serialize( final JsonGenerator gen ) throws IOException {
+	public void serialize( final JsonGenerator gen ) throws JacksonException {
 		super.serialize( gen );
 
 		// New moved
@@ -83,7 +82,7 @@ public class SMovableListPatchMap<V> extends SListPatchMap<V> implements SMovabl
 		gen.writeEndArray();
 	}
 
-	public static <V> SMovableListPatchMap<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws IOException, JsonProcessingException {
+	public static <V> SMovableListPatchMap<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws JacksonException {
 		// ADDED
 		SPatchUtil.assertCurrentToken( parser, JsonToken.START_ARRAY );
 		final NavigableMap<Integer, V> added = new TreeMap<>();

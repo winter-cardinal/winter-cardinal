@@ -9,8 +9,8 @@ import java.lang.reflect.Method;
 
 import org.springframework.core.ResolvableType;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
 
 import org.wcardinal.controller.TaskAbortException;
 import org.wcardinal.controller.TaskResultFailed;

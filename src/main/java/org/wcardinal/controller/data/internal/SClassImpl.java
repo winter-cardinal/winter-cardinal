@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.JsonNode;
 
 import org.wcardinal.controller.data.SClass;
 import org.wcardinal.util.json.Json;

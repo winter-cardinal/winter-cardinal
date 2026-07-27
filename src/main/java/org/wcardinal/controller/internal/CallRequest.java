@@ -8,7 +8,7 @@ package org.wcardinal.controller.internal;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ArrayNode;
 
 @JsonFormat(shape=JsonFormat.Shape.ARRAY)
 public class CallRequest {

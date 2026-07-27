@@ -5,12 +5,10 @@
 
 package org.wcardinal.controller.internal;
 
-import java.io.IOException;
-
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize( using=StreamedResultSerializer.class )
 public class StreamedResult {
@@ -20,7 +18,7 @@ public class StreamedResult {
 		this.value = value;
 	}
 
-	public void serialize( final JsonGenerator gen, final SerializerProvider serializers ) throws IOException, JsonProcessingException {
+	public void serialize( final JsonGenerator gen, final SerializationContext ctxt ) throws JacksonException {
 		gen.writeRawValue( this.value );
 	}
 }

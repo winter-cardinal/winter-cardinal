@@ -5,11 +5,11 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.NavigableMap;
 
-import com.fasterxml.jackson.core.JsonGenerator;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
 
 public abstract class SPatchesPackedImpl<V, P extends SPatch> implements SPatchesPacked<V, P> {
 	final long startRevision;
@@ -32,7 +32,7 @@ public abstract class SPatchesPackedImpl<V, P extends SPatch> implements SPatche
 	}
 
 	@Override
-	public void serialize( final JsonGenerator gen ) throws IOException {
+	public void serialize( final JsonGenerator gen ) throws JacksonException {
 		gen.writeStartArray();
 		gen.writeNumber(startRevision);
 		gen.writeNumber( endRevision - startRevision );

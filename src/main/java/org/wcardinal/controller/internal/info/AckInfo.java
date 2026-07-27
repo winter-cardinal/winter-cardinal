@@ -8,8 +8,8 @@ package org.wcardinal.controller.internal.info;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize( using=AckInfoSerializer.class )
 @JsonDeserialize( using=AckInfoDeserializer.class )

@@ -11,7 +11,7 @@ import java.util.EnumSet;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.ResolvableType;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 public class AbstractMethods<T extends AbstractMethodWrapper<?>> {
 	protected boolean hasLockRequired = false;
@@ -99,8 +99,8 @@ public class AbstractMethods<T extends AbstractMethodWrapper<?>> {
 			if( argument.isValueNode() ){
 				if( argument.isBoolean() ){
 					parameters[i] = argument.asBoolean();
-				} else if( argument.isTextual() ){
-					parameters[i] = argument.asText();
+				} else if( argument.isString() ){
+					parameters[i] = argument.asString();
 				} else if( argument.isNumber() ){
 					parameters[i] = argument.numberValue();
 				} else {

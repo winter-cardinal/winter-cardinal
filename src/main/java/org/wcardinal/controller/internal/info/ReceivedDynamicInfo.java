@@ -7,7 +7,7 @@ package org.wcardinal.controller.internal.info;
 
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize( using=ReceivedDynamicInfoDeserializer.class )
 public class ReceivedDynamicInfo extends Info<DynamicDataJsonNode, ReceivedDynamicInfo> {

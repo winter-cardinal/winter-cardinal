@@ -15,7 +15,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.wcardinal.controller.StreamingResult;
 import org.wcardinal.util.json.Json;
 
-import com.fasterxml.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonGenerator;
 
 public class CallSMapsPutImpl implements CallSMapsPut {
 	final AsyncContext context;
@@ -60,14 +60,14 @@ public class CallSMapsPutImpl implements CallSMapsPut {
 				if (error != null) {
 					Json.non_closing_writer.writeValue(oStream, error);
 				} else {
-					JsonGenerator generator = Json.mapper.getFactory().createGenerator(oStream);
+					JsonGenerator generator = Json.mapper.createGenerator(oStream);
 					try {
 						generator.writeStartArray();
 						if (!isVoid) {
 							if (result instanceof StreamingResult) {
 								((StreamingResult) result).serialize(generator);
 							} else {
-								generator.writeObject(result);
+								generator.writePOJO(result);
 							}
 						}
 						generator.writeEndArray();

@@ -5,18 +5,14 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.BeanProperty;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.ValueDeserializer;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.BeanProperty;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-
-public class SMovableListPatchesPackedImplDeserializer extends JsonDeserializer<SPatchesPacked<?, ?>> implements ContextualDeserializer {
+public class SMovableListPatchesPackedImplDeserializer extends ValueDeserializer<SPatchesPacked<?, ?>> {
 	final JavaType valueType;
 
 	public SMovableListPatchesPackedImplDeserializer(){
@@ -28,7 +24,7 @@ public class SMovableListPatchesPackedImplDeserializer extends JsonDeserializer<
 	}
 
 	@Override
-	public JsonDeserializer<?> createContextual( final DeserializationContext ctxt, final BeanProperty property) throws JsonMappingException {
+	public ValueDeserializer<?> createContextual( final DeserializationContext ctxt, final BeanProperty property) {
 		final JavaType javaType = (property == null ? ctxt.getContextualType() : property.getType());
 		final JavaType valueType = javaType.containedType( 0 );
 		final SMovableListPatchesPackedImplDeserializer deserializer = new SMovableListPatchesPackedImplDeserializer( valueType );
@@ -36,7 +32,7 @@ public class SMovableListPatchesPackedImplDeserializer extends JsonDeserializer<
 	}
 
 	@Override
-	public SPatchesPacked<?, ?> deserialize( final JsonParser parser, final DeserializationContext ctxt ) throws IOException, JsonProcessingException {
+	public SPatchesPacked<?, ?> deserialize( final JsonParser parser, final DeserializationContext ctxt ) throws JacksonException {
 		return SMovableListPatchesPackedImpl.deserialize( parser, ctxt, valueType );
 	}
 }

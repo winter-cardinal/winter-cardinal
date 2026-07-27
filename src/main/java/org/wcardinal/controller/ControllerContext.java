@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.jdeferred.Promise;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ArrayNode;
 
 import org.wcardinal.util.doc.ThreadSafe;
 import org.wcardinal.util.thread.Scheduler;

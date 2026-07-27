@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ArrayNode;
 
 import org.wcardinal.controller.ControllerAttributes;
 import org.wcardinal.controller.ControllerIo;

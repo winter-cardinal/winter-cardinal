@@ -5,16 +5,14 @@
 
 package org.wcardinal.controller.internal.info;
 
-import java.io.IOException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-
-public class AckInfoSerializer extends JsonSerializer<AckInfo> {
+public class AckInfoSerializer extends ValueSerializer<AckInfo> {
 	@Override
-	public void serialize( final AckInfo info, final JsonGenerator gen, final SerializerProvider serializers ) throws IOException, JsonProcessingException {
-		gen.writeObject( info.senderIds );
+	public void serialize( final AckInfo info, final JsonGenerator gen, final SerializationContext ctxt ) throws JacksonException {
+		gen.writePOJO( info.senderIds );
 	}
 }

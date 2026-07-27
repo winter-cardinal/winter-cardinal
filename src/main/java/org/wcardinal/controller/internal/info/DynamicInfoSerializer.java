@@ -5,16 +5,14 @@
 
 package org.wcardinal.controller.internal.info;
 
-import java.io.IOException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-
-public class DynamicInfoSerializer extends JsonSerializer<DynamicInfo> {
+public class DynamicInfoSerializer extends ValueSerializer<DynamicInfo> {
 	@Override
-	public void serialize( final DynamicInfo info, final JsonGenerator gen, final SerializerProvider serializers ) throws IOException, JsonProcessingException {
+	public void serialize( final DynamicInfo info, final JsonGenerator gen, final SerializationContext ctxt ) throws JacksonException {
 		gen.writeStartArray();
 
 		// nameToData
@@ -27,7 +25,7 @@ public class DynamicInfoSerializer extends JsonSerializer<DynamicInfo> {
 			gen.writeEndArray();
 			gen.writeStartArray();
 			for( final DynamicDataObject value: info.nameToData.values() ) {
-				gen.writeObject( value );
+				gen.writePOJO( value );
 			}
 			gen.writeEndArray();
 			gen.writeEndArray();
@@ -45,7 +43,7 @@ public class DynamicInfoSerializer extends JsonSerializer<DynamicInfo> {
 			gen.writeEndArray();
 			gen.writeStartArray();
 			for( final DynamicInfo value: info.nameToInfo.values() ) {
-				gen.writeObject( value );
+				gen.writePOJO( value );
 			}
 			gen.writeEndArray();
 			gen.writeEndArray();

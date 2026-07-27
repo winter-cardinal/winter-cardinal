@@ -1,6 +1,6 @@
 {
 	"name": "@wcardinal/wcardinal",
-	"version": "2.6.0",
+	"version": "3.0.0-M1",
 	"license": "Apache-2.0",
 	"description": "Winter Cardinal client-side libraries",
 	"homepage": "https://github.com/winter-cardinal/winter-cardinal",
@@ -23,7 +23,7 @@
 	"scripts": {
 		"lint": "tslint -p .",
 		"lint:fix": "tslint -p . --fix",
-		"build": "rimraf dist && rimraf src/main/javascript && rimraf src/main/resources/META-INF/resources && tsc && rollup -c && node ./license-copy.mjs",
+		"build": "rimraf dist && rimraf src/main/javascript && tsc && rollup -c && node ./license-copy.mjs",
 		"build:ts": "tsc",
 		"build:rollup": "rollup -c",
 		"build:api": "typedoc --options typedoc.json --out docs/api/js --disableOutputCheck",
@@ -49,6 +49,7 @@
 		"tslint": "^5.18.0",
 		"typedoc": "^0.15.6",
 		"typedoc-plugin-external-module-map": "^1.0.0",
-		"typescript": "^3.7.5"
+		"typescript": "^3.7.5",
+		"fs-extra": "^11.1.1"
 	}
 }

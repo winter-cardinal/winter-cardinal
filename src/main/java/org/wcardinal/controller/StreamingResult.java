@@ -7,7 +7,7 @@ package org.wcardinal.controller;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonGenerator;
 
 /**
  * When {@link org.wcardinal.controller.annotation.Callable @Callable} /

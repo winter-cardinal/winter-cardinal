@@ -5,16 +5,14 @@
 
 package org.wcardinal.controller.internal;
 
-import java.io.IOException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-
-public class StreamedResultSerializer extends JsonSerializer<StreamedResult> {
+public class StreamedResultSerializer extends ValueSerializer<StreamedResult> {
 	@Override
-	public void serialize( final StreamedResult streamedResult, final JsonGenerator gen, final SerializerProvider serializers ) throws IOException, JsonProcessingException {
-		streamedResult.serialize(gen, serializers);
+	public void serialize( final StreamedResult streamedResult, final JsonGenerator gen, final SerializationContext ctxt ) throws JacksonException {
+		streamedResult.serialize(gen, ctxt);
 	}
 }

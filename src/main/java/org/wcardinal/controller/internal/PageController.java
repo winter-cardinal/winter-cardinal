@@ -5,7 +5,7 @@
 
 package org.wcardinal.controller.internal;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ArrayNode;
 
 import org.wcardinal.controller.PageContext;
 import org.wcardinal.util.thread.AutoCloseableReentrantLock;

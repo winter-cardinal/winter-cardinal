@@ -15,7 +15,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.annotation.AnnotationUtils;
 
-import com.fasterxml.jackson.databind.JavaType;
+import tools.jackson.databind.JavaType;
 
 import org.wcardinal.controller.annotation.Ajax;
 import org.wcardinal.controller.annotation.ReadOnly;

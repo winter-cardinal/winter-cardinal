@@ -95,7 +95,7 @@ public interface SScalar<T> extends SLockable, SVariable {
 	boolean equals( final Object value );
 
 	/**
-	 * If the value is {@link java.util.Collection}, {@link java.util.Map}, {@link com.fasterxml.jackson.databind.node.ArrayNode} or {@link com.fasterxml.jackson.databind.node.ObjectNode}, returns the its size.
+	 * If the value is {@link java.util.Collection}, {@link java.util.Map}, {@link tools.jackson.databind.node.ArrayNode} or {@link tools.jackson.databind.node.ObjectNode}, returns the its size.
 	 * If the value is an array, returns the its length.
 	 * If the value is null, returns 0.
 	 * For anything else, returns 1.
@@ -130,7 +130,7 @@ public interface SScalar<T> extends SLockable, SVariable {
 	boolean isNotNull();
 
 	/**
-	 * If the value is {@link java.util.List}, {@link com.fasterxml.jackson.databind.node.ArrayNode} or an array, returns the index of the specified value.
+	 * If the value is {@link java.util.List}, {@link tools.jackson.databind.node.ArrayNode} or an array, returns the index of the specified value.
 	 * Otherwise, returns -1.
 	 *
 	 * @param value value to search for
@@ -139,7 +139,7 @@ public interface SScalar<T> extends SLockable, SVariable {
 	int indexOf( final Object value );
 
 	/**
-	 * If the value is {@link java.util.List}, {@link com.fasterxml.jackson.databind.node.ArrayNode} or an array, returns the last index of the specified value.
+	 * If the value is {@link java.util.List}, {@link tools.jackson.databind.node.ArrayNode} or an array, returns the last index of the specified value.
 	 * Otherwise, returns -1.
 	 *
 	 * @param value value to search for

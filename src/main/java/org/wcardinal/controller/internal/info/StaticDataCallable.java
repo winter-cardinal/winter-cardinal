@@ -7,7 +7,7 @@ package org.wcardinal.controller.internal.info;
 
 import java.util.EnumSet;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 import org.wcardinal.controller.internal.Property;
 

@@ -5,12 +5,11 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
-
-import com.fasterxml.jackson.core.JsonGenerator;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
 
 public interface SPatch {
 	int getWeight();
-	void serialize( JsonGenerator gen ) throws IOException;
+	void serialize( JsonGenerator gen ) throws JacksonException;
 	boolean isReset();
 }

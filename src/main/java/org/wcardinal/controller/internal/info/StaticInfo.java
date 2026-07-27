@@ -9,7 +9,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 import org.wcardinal.controller.internal.ControllerType;
 import org.wcardinal.controller.internal.Properties;

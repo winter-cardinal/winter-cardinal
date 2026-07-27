@@ -5,20 +5,19 @@
 
 package org.wcardinal.controller.internal.info;
 
-import java.io.IOException;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.JsonToken;
+import tools.jackson.databind.DatabindException;
 
 class Deserializers {
-	static void reportWrongTokenException( JsonParser parser, JsonToken expToken ) throws JsonMappingException {
+	static void reportWrongTokenException( JsonParser parser, JsonToken expToken ) throws JacksonException {
 		final String msg = String.format( "Unexpected token (%s), expected %s",
-			parser.getCurrentToken(), expToken);
-		throw JsonMappingException.from( parser, msg );
+			parser.currentToken(), expToken);
+		throw DatabindException.from( parser, msg );
 	}
 
-	static void checkEndArray( final JsonParser parser ) throws IOException {
+	static void checkEndArray( final JsonParser parser ) throws JacksonException {
 		if( parser.nextToken() != JsonToken.END_ARRAY ) {
 			reportWrongTokenException(parser, JsonToken.END_ARRAY);
 		}

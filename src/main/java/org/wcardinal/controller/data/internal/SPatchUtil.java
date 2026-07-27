@@ -5,34 +5,33 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.JsonToken;
+import tools.jackson.core.exc.StreamReadException;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
 
 public class SPatchUtil {
 	private SPatchUtil() {}
 
-	static void throwJsonParseException( final JsonParser parser ) throws JsonParseException {
-		throw new JsonParseException( parser, "Unexpected token" );
+	static void throwJsonParseException( final JsonParser parser ) throws JacksonException {
+		throw new StreamReadException( parser, "Unexpected token" );
 	}
 
-	static void assertCurrentToken( final JsonParser parser, final JsonToken token ) throws JsonParseException {
-		if( parser.getCurrentToken() != token ) {
+	static void assertCurrentToken( final JsonParser parser, final JsonToken token ) throws JacksonException {
+		if( parser.currentToken() != token ) {
 			throwJsonParseException( parser );
 		}
 	}
 
-	static void assertNextToken( final JsonParser parser, final JsonToken token ) throws IOException {
+	static void assertNextToken( final JsonParser parser, final JsonToken token ) throws JacksonException {
 		if( parser.nextToken() != token ) {
 			throwJsonParseException( parser );
 		}
 	}
 
-	static <V> V readValue( final JsonToken token, final JsonParser parser, final DeserializationContext ctxt, JavaType valueType ) throws IOException {
+	static <V> V readValue( final JsonToken token, final JsonParser parser, final DeserializationContext ctxt, JavaType valueType ) throws JacksonException {
 		if( token == JsonToken.VALUE_NULL ) {
 			return null;
 		} else {
@@ -40,11 +39,11 @@ public class SPatchUtil {
 		}
 	}
 
-	static <V> V readCurrentValue( final JsonParser parser, final DeserializationContext ctxt, JavaType valueType ) throws IOException {
-		return readValue( parser.getCurrentToken(), parser, ctxt, valueType );
+	static <V> V readCurrentValue( final JsonParser parser, final DeserializationContext ctxt, JavaType valueType ) throws JacksonException {
+		return readValue( parser.currentToken(), parser, ctxt, valueType );
 	}
 
-	static <V> V readNextValue( final JsonParser parser, final DeserializationContext ctxt, JavaType valueType ) throws IOException {
+	static <V> V readNextValue( final JsonParser parser, final DeserializationContext ctxt, JavaType valueType ) throws JacksonException {
 		return readValue( parser.nextToken(), parser, ctxt, valueType );
 	}
 }

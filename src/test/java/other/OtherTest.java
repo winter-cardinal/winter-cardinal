@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectFactory;
 
-import com.fasterxml.jackson.databind.node.NullNode;
+import tools.jackson.databind.node.NullNode;
 
 import org.wcardinal.controller.data.SKeyOf;
 import org.wcardinal.controller.data.SMovableList;

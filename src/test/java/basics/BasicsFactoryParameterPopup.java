@@ -7,8 +7,8 @@ package basics;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
 
 import org.wcardinal.controller.AbstractPopup;
 import org.wcardinal.controller.annotation.OnCreate;

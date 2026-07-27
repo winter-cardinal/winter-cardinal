@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.google.common.io.CharSource;
 
 import org.wcardinal.configuration.WCardinalConfiguration;
@@ -92,12 +92,12 @@ public class SharedPollingEndpoint extends AbstractPollingEndpoint {
 
 			// Message
 			final JsonNode messageNode = node.get(1);
-			if( messageNode.isTextual() != true ) return false;
+			if( messageNode.isString() != true ) return false;
 
 			// Sub session
 			final JsonNode subSessionIdNode = node.get(0);
-			if( subSessionIdNode.isTextual() != true ) return false;
-			final String subSessionId  = subSessionIdNode.asText();
+			if( subSessionIdNode.isString() != true ) return false;
+			final String subSessionId  = subSessionIdNode.asString();
 			final SubSession subSession = session.getSubSession( subSessionId );
 			if( subSession == null ) return false;
 
@@ -106,7 +106,7 @@ public class SharedPollingEndpoint extends AbstractPollingEndpoint {
 			if( endpoint == null ) return false;
 
 			// Handle the message
-			endpoint.onMessage( CharSource.wrap(messageNode.asText()).openBufferedStream() );
+			endpoint.onMessage( CharSource.wrap(messageNode.asString()).openBufferedStream() );
 		} catch ( final IOException e ) {
 			logger.debug("{} {} Malformed message {}", session.getId(), request.getReader(), e);
 			return false;

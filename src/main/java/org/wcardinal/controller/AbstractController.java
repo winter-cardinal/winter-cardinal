@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ArrayNode;
 
 import org.wcardinal.exception.NotReadyException;
 import org.wcardinal.util.thread.Scheduler;

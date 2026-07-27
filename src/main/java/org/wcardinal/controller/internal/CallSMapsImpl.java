@@ -14,7 +14,7 @@ import org.wcardinal.controller.data.internal.SMapImpl;
 import org.wcardinal.util.json.Json;
 import org.wcardinal.util.thread.AutoCloseableReentrantLock;
 
-import com.fasterxml.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonGenerator;
 
 public class CallSMapsImpl implements CallSMaps {
 	private SMapImpl<CallRequest> requests;
@@ -61,7 +61,7 @@ public class CallSMapsImpl implements CallSMaps {
 		if (result instanceof StreamingResult) {
 			StringWriter stringWriter = new StringWriter();
 			try {
-				JsonGenerator generator = Json.mapper.getFactory().createGenerator(stringWriter);
+				JsonGenerator generator = Json.mapper.createGenerator(stringWriter);
 				try {
 					generator.writeStartArray();
 					((StreamingResult) result).serialize(generator);
