@@ -5,16 +5,16 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.JsonToken;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize( using=SPatchesPackedImplSerializer.class )
 @JsonDeserialize( using=SQueuePatchesPackedImplDeserializer.class )
@@ -27,7 +27,7 @@ public class SQueuePatchesPackedImpl<V> extends SQueuePatchesPacked<V, SQueuePat
 		super( startRevision, endRevision, revisionToPatch );
 	}
 
-	public static <V> SQueuePatchesPackedImpl<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType) throws IOException {
+	public static <V> SQueuePatchesPackedImpl<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws JacksonException {
 		SPatchUtil.assertCurrentToken( parser, JsonToken.START_ARRAY );
 
 		parser.nextToken();

@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.springframework.core.ResolvableType;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ArrayNode;
 
 import org.wcardinal.controller.data.SList.Update;
 import org.wcardinal.controller.data.internal.SChange;

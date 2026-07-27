@@ -16,7 +16,7 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.google.common.io.CharSource;
 
 import org.wcardinal.configuration.WCardinalConfiguration;
@@ -124,8 +124,8 @@ public class SharedWebSocketEndpoint extends AbstractWebSocketEndpoint {
 
 		// Sub session
 		final JsonNode subSessionIdNode = node.get(0);
-		if( subSessionIdNode.isTextual() != true ) return;
-		final String subSessionId  = subSessionIdNode.asText();
+		if( subSessionIdNode.isString() != true ) return;
+		final String subSessionId  = subSessionIdNode.asString();
 		final SubSession subSession = session.getSubSession( subSessionId );
 		if( subSession == null ) return;
 
@@ -138,7 +138,7 @@ public class SharedWebSocketEndpoint extends AbstractWebSocketEndpoint {
 		if( messageNode.isIntegralNumber() ){
 			endpoint.set( new SharedWebSocketEndpointSession( subSessionId, this, waitingEndpoints, endpoint ) );
 		} else {
-			final String message = messageNode.asText();
+			final String message = messageNode.asString();
 			if( message.length() <= 2 ) {
 				endpoint.touch();
 			} else {

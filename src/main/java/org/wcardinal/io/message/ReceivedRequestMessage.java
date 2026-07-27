@@ -5,7 +5,7 @@
 
 package org.wcardinal.io.message;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 public class ReceivedRequestMessage {
 	final String type;

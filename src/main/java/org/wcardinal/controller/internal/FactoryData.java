@@ -10,7 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+
+import tools.jackson.databind.node.ArrayNode;
 
 import org.wcardinal.controller.internal.info.DynamicInfo;
 import org.wcardinal.controller.internal.info.SenderIdAndDynamicInfo;
@@ -28,10 +29,10 @@ public class FactoryData {
 	@JsonCreator
 	public FactoryData(
 		@JsonProperty( "name" ) final String name,
-		@JsonProperty( "senderId" ) final long senderId,
+		@JsonProperty( "senderId" ) final Long senderId,
 		@JsonProperty( "dynamic" ) final DynamicInfo dynamic,
 		@JsonProperty( "args" ) final ArrayNode args ) {
-		this( name,  senderId, dynamic, args, null );
+		this( name, ( senderId != null ? senderId : 0 ), dynamic, args, null );
 	}
 
 	public FactoryData( final String name, final SenderIdAndDynamicInfo senderIdAndDynamicInfo, final ArrayNode args, final Object[] arguments ) {

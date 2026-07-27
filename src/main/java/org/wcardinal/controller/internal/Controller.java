@@ -34,8 +34,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.ResolvableType;
 import org.springframework.util.ReflectionUtils;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
 import com.google.common.collect.Sets;
 
 import org.wcardinal.controller.ControllerAttributes;

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 import org.jdeferred.Deferred;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 import org.wcardinal.controller.TriggerErrors;
 

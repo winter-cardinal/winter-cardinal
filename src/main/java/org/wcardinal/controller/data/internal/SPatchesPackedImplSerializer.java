@@ -5,18 +5,16 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-
-public class SPatchesPackedImplSerializer extends JsonSerializer<SPatchesPacked<?, ?>> {
+public class SPatchesPackedImplSerializer extends ValueSerializer<SPatchesPacked<?, ?>> {
 	public SPatchesPackedImplSerializer(){}
 
 	@Override
-	public void serialize( final SPatchesPacked<?, ?> value, final JsonGenerator gen, final SerializerProvider serializers ) throws IOException, JsonProcessingException {
+    public void serialize( final SPatchesPacked<?, ?> value, final JsonGenerator gen, final SerializationContext ctxt ) throws JacksonException {
 		value.serialize( gen );
 	}
 }

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 import org.wcardinal.controller.internal.info.SetDynamicInfo;
 import org.wcardinal.controller.data.SInteger;

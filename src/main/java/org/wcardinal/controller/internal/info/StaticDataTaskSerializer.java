@@ -5,18 +5,16 @@
 
 package org.wcardinal.controller.internal.info;
 
-import java.io.IOException;
-
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
 import org.wcardinal.controller.internal.Properties;
 
-public class StaticDataTaskSerializer extends JsonSerializer<StaticDataTask> {
+public class StaticDataTaskSerializer extends ValueSerializer<StaticDataTask> {
 	@Override
-	public void serialize( final StaticDataTask data, final JsonGenerator gen, final SerializerProvider serializers ) throws IOException, JsonProcessingException {
+	public void serialize( final StaticDataTask data, final JsonGenerator gen, final SerializationContext serializers ) throws JacksonException {
 		gen.writeStartArray();
 		gen.writeNumber( StaticDataType.TASK.ordinal() );
 		gen.writeNumber( Properties.toInt( data.properties ) );

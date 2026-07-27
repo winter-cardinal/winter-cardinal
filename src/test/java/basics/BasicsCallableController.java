@@ -8,8 +8,8 @@ package basics;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ObjectNode;
 
 import org.wcardinal.controller.annotation.Callable;
 import org.wcardinal.controller.annotation.Controller;
@@ -25,14 +25,14 @@ public class BasicsCallableController {
 
 	@Callable
 	ObjectNode callable( final ObjectNode data ){
-		final String name = data.get("name").asText();
+		final String name = data.get("name").asString();
 		data.put("name", name + name);
 		return data;
 	}
 
 	@Callable
 	ArrayNode callable( final ArrayNode data ){
-		final String name = data.get( 0 ).asText();
+		final String name = data.get( 0 ).asString();
 		data.add( name + name );
 		data.remove( 0 );
 		return data;
@@ -143,13 +143,13 @@ public class BasicsCallableController {
 
 	@Callable
 	boolean callable_class( final BasicsCallableArgumentClass argument ){
-		return ( argument != null && Objects.equals( argument.field, "Cardinal" ) );
+		return ( argument != null && Objects.equals( argument.field(), "Cardinal" ) );
 	}
 
 	@Callable
 	boolean callable_2_classes( final BasicsCallableArgumentClass argument0, final BasicsCallableArgumentClass argument1 ){
-		return ( argument0 != null && Objects.equals( argument0.field, "Cardinal" ) &&
-				 argument1 != null && Objects.equals( argument1.field, "Cardinal" ) );
+		return ( argument0 != null && Objects.equals( argument0.field(), "Cardinal" ) &&
+				 argument1 != null && Objects.equals( argument1.field(), "Cardinal" ) );
 	}
 
 	@Callable
@@ -157,7 +157,7 @@ public class BasicsCallableController {
 		if( arguments == null || arguments.size() != 2 ) return false;
 
 		for( BasicsCallableArgumentClass argument: arguments ) {
-			if( argument == null || Objects.equals( argument.field, "Cardinal" ) != true ) return false;
+			if( argument == null || Objects.equals( argument.field(), "Cardinal" ) != true ) return false;
 		}
 
 		return true;

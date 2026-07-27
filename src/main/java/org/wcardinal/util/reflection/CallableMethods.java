@@ -11,9 +11,9 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.ResolvableType;
-import org.springframework.lang.Nullable;
 import org.wcardinal.controller.internal.Properties;
 import org.wcardinal.controller.internal.Property;
 import org.wcardinal.controller.internal.info.StaticDataCallable;

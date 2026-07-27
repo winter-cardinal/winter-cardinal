@@ -5,24 +5,23 @@
 
 package org.wcardinal.controller.internal.info;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.JsonToken;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.ValueDeserializer;
 
-public class ReceivedDynamicInfoDeserializer extends JsonDeserializer<ReceivedDynamicInfo> {
+public class ReceivedDynamicInfoDeserializer extends ValueDeserializer<ReceivedDynamicInfo> {
 	@Override
-	public ReceivedDynamicInfo deserialize( final JsonParser parser, final DeserializationContext ctxt ) throws IOException, JsonProcessingException {
-		if( parser.getCurrentToken() == JsonToken.VALUE_NULL ) {
+	public ReceivedDynamicInfo deserialize( final JsonParser parser, final DeserializationContext ctxt ) throws JacksonException {
+		if( parser.currentToken() == JsonToken.VALUE_NULL ) {
 			return null;
 		}
 
-		if( parser.getCurrentToken() != JsonToken.START_ARRAY ) {
+		if( parser.currentToken() != JsonToken.START_ARRAY ) {
 			Deserializers.reportWrongTokenException(parser, JsonToken.START_ARRAY);
 		}
 

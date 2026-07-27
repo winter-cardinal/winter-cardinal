@@ -5,17 +5,17 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
 import java.util.NavigableMap;
 
-import com.fasterxml.jackson.core.JsonGenerator;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
 
 public interface SPatchesPacked<V, P extends SPatch> {
 	long getStartRevision();
 	long getEndRevision();
 	P getReset();
 	NavigableMap<Long, P> getRevisionToMap();
-	void serialize( JsonGenerator gen ) throws IOException;
+	void serialize( JsonGenerator gen ) throws JacksonException;
 	boolean isApplicable( long revision, boolean hasNoPatches, boolean isSoft );
 	boolean isEmpty();
 	SChange apply( final long revision, final V value );

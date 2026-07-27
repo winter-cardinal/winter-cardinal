@@ -5,7 +5,7 @@
 
 package org.wcardinal.controller.data.internal;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 import org.wcardinal.controller.data.SLockable;
 import org.wcardinal.util.thread.AutoCloseableReentrantLock;

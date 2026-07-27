@@ -5,17 +5,16 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.Objects;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
 
 import org.wcardinal.controller.data.SList.Update;
 
@@ -140,11 +139,11 @@ public class SListPatchReset<V> implements SListPatch<V> {
 	}
 
 	@Override
-	public void serialize( final JsonGenerator gen ) throws IOException {
-		gen.writeObject( values );
+	public void serialize( final JsonGenerator gen ) throws JacksonException {
+		gen.writePOJO( values );
 	}
 
-	public static <V> SListPatchReset<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws IOException, JsonProcessingException {
+	public static <V> SListPatchReset<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws JacksonException {
 		final JavaType valuesType = ctxt.getTypeFactory().constructCollectionType(List.class, valueType);
 		final List<V> values = ctxt.readValue( parser, valuesType );
 		return new SListPatchReset<V>( values );

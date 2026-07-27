@@ -5,7 +5,7 @@
 
 package org.wcardinal.controller.data;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ArrayNode;
 
 import org.wcardinal.util.doc.ThreadSafe;
 

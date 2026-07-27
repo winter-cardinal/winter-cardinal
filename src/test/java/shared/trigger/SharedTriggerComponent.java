@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 import org.wcardinal.controller.AbstractComponent;
 import org.wcardinal.controller.TriggerErrors;
@@ -47,16 +47,16 @@ public class SharedTriggerComponent extends AbstractComponent {
 			return true;
 		} else if( result.size() == 1 ) {
 			final JsonNode firstNode = result.get( 0 );
-			if( firstNode.isTextual() ) {
-				final String firstString = firstNode.textValue();
+			if( firstNode.isString() ) {
+				final String firstString = firstNode.stringValue();
 				return (firstString.equals("A") || firstString.equals("B"));
 			}
 		} else if( result.size() == 2 ) {
 			final JsonNode firstNode = result.get( 0 );
 			final JsonNode secondNode = result.get( 1 );
-			if( firstNode.isTextual() && secondNode.isTextual() ) {
-				final String firstString = firstNode.textValue();
-				final String secondString = secondNode.textValue();
+			if( firstNode.isString() && secondNode.isString() ) {
+				final String firstString = firstNode.stringValue();
+				final String secondString = secondNode.stringValue();
 				return (firstString.equals("A") && secondString.equals("B")) || (firstString.equals("B") && secondString.equals("A"));
 			}
 		}

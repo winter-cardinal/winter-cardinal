@@ -7,7 +7,7 @@ package org.wcardinal.controller.internal;
 
 import java.util.List;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ArrayNode;
 
 public interface ControllerCreator<T extends Controller> {
 	T createDynamic( final String id, final ArrayNode arguments );

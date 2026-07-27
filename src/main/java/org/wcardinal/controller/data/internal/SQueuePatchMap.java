@@ -5,17 +5,16 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.JsonToken;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
 
 public class SQueuePatchMap<V> implements SQueuePatch<V> {
 	final List<V> added;
@@ -75,18 +74,18 @@ public class SQueuePatchMap<V> implements SQueuePatch<V> {
 	}
 
 	@Override
-	public void serialize( final JsonGenerator gen ) throws IOException {
+	public void serialize( final JsonGenerator gen ) throws JacksonException {
 		// ADDED
-		gen.writeObject( added );
+		gen.writePOJO( added );
 
 		// REMOVED
-		gen.writeObject( removed );
+		gen.writePOJO( removed );
 
 		// CAPACITY
 		gen.writeNumber( capacity );
 	}
 
-	public static <V> SQueuePatchMap<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws IOException, JsonProcessingException {
+	public static <V> SQueuePatchMap<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws JacksonException {
 		// ADDED
 		SPatchUtil.assertCurrentToken( parser, JsonToken.START_ARRAY );
 		final List<V> added = new ArrayList<>();

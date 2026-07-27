@@ -5,10 +5,6 @@
 
 package basics;
 
-public class BasicsCallableArgumentClass {
-	public final String field;
-	
-	public BasicsCallableArgumentClass(){
-		this.field = null;
-	}
-}
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record BasicsCallableArgumentClass(@JsonProperty(required = true) String field) {}

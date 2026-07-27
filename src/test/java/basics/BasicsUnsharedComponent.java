@@ -10,7 +10,7 @@ import java.util.List;
 import org.jdeferred.DoneCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 import org.wcardinal.controller.AbstractComponent;
 import org.wcardinal.controller.annotation.Callable;
@@ -41,7 +41,7 @@ public class BasicsUnsharedComponent extends AbstractComponent {
 		this.triggerAndWait("foo", 3000, "A").then(new DoneCallback<List<JsonNode>>(){
 			@Override
 			public void onDone(final List<JsonNode> result) {
-				BasicsUnsharedComponent.this.trigger( "bar", result.get( 0 ).asText() + "B" );
+				BasicsUnsharedComponent.this.trigger( "bar", result.get( 0 ).asString() + "B" );
 			}
 		});
 	}

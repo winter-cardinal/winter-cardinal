@@ -6,21 +6,31 @@ import path from 'path';
 import del from 'rollup-plugin-delete';
 import copy from 'rollup-plugin-copy';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import fs from 'fs';
+import * as fse from "fs-extra";
 
 // In/out directories
 const SOURCE_DIR = 'src/main/javascript/';
 const OUTPUT_FILE = 'dist/wcardinal';
-const META_INF_DIR = 'src/main/resources/META-INF/resources/webjars/wcardinal/';
+const RESOURCES_DIR = 'src/main/resources/META-INF/resources/';
+const META_INF_DIR = `${RESOURCES_DIR}/webjars/wcardinal/`;
 const META_INF_OUTPUT = `${META_INF_DIR}${version}/`;
 
 // License header
-const LICENSE_HEADER_LINES = fs.readFileSync( './LICENSE_HEADER', 'UTF-8' ).split( '\n' );
+const LICENSE_HEADER_LINES = fse.readFileSync( './LICENSE_HEADER', 'UTF-8' ).split( '\n' );
 const LICENSE_HEADER_LINES_LENGTH = LICENSE_HEADER_LINES.length;
 if( 0 < LICENSE_HEADER_LINES_LENGTH && LICENSE_HEADER_LINES[ LICENSE_HEADER_LINES_LENGTH - 1 ].trim().length <= 0 ) {
 	LICENSE_HEADER_LINES.splice( LICENSE_HEADER_LINES_LENGTH - 1, 1 );
 }
 const LICENSE_HEADER = LICENSE_HEADER_LINES.join( '\n ' );
+
+// WebJar Locator
+console.log(`\x1b[32mcreated ${RESOURCES_DIR}/webjars-locator.properties\x1b[39m`);
+fse.emptyDirSync(RESOURCES_DIR);
+fse.ensureDirSync(RESOURCES_DIR);
+fse.writeFileSync(
+	`${RESOURCES_DIR}/webjars-locator.properties`,
+	`wcardinal.version=${version}\n`
+);
 
 // Banner
 const BANNER =

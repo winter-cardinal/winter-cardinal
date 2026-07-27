@@ -21,10 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.TextNode;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ObjectNode;
+import tools.jackson.databind.node.StringNode;
 import com.google.common.collect.ImmutableSet;
 
 import org.wcardinal.controller.AbstractController;
@@ -3400,7 +3400,7 @@ public class BasicsController extends AbstractController {
 		if( field_scalar_array_node.indexOf( "b" ) != -1 ) return false;
 
 		field_scalar_array_node.get().add("a").add("b");
-		if( field_scalar_array_node.indexOf( new TextNode( "b" ) ) != 1 ) return false;
+		if( field_scalar_array_node.indexOf( new StringNode( "b" ) ) != 1 ) return false;
 
 		// ObjectNode
 		field_scalar_object_node.set( null );
@@ -3410,7 +3410,7 @@ public class BasicsController extends AbstractController {
 		if( field_scalar_object_node.indexOf( "b" ) != -1 ) return false;
 
 		field_scalar_object_node.get().put("a", "a").put("b", "b");
-		if( field_scalar_object_node.indexOf( new TextNode( "b" ) ) != -1 ) return false;
+		if( field_scalar_object_node.indexOf( new StringNode( "b" ) ) != -1 ) return false;
 
 		// Array
 		field_scalar_array.set( null );
@@ -3467,7 +3467,7 @@ public class BasicsController extends AbstractController {
 		if( field_scalar_array_node.lastIndexOf( "a" ) != -1 ) return false;
 
 		field_scalar_array_node.get().add("a").add("b");
-		if( field_scalar_array_node.lastIndexOf( new TextNode( "a" ) ) != 0 ) return false;
+		if( field_scalar_array_node.lastIndexOf( new StringNode( "a" ) ) != 0 ) return false;
 
 		// ObjectNode
 		field_scalar_object_node.set( null );
@@ -3477,7 +3477,7 @@ public class BasicsController extends AbstractController {
 		if( field_scalar_object_node.lastIndexOf( "a" ) != -1 ) return false;
 
 		field_scalar_object_node.get().put("a", "a").put("b", "b");
-		if( field_scalar_object_node.lastIndexOf( new TextNode( "a" ) ) != -1 ) return false;
+		if( field_scalar_object_node.lastIndexOf( new StringNode( "a" ) ) != -1 ) return false;
 
 		// Array
 		field_scalar_array.set( null );
@@ -3534,7 +3534,7 @@ public class BasicsController extends AbstractController {
 		if( field_scalar_array_node.contains( "b" ) != false ) return false;
 
 		field_scalar_array_node.get().add("a").add("b");
-		if( field_scalar_array_node.contains( new TextNode( "b" ) ) != true ) return false;
+		if( field_scalar_array_node.contains( new StringNode( "b" ) ) != true ) return false;
 
 		// ObjectNode
 		field_scalar_object_node.set( null );
@@ -3544,7 +3544,7 @@ public class BasicsController extends AbstractController {
 		if( field_scalar_object_node.contains( "b" ) != false ) return false;
 
 		field_scalar_object_node.get().put("a", "a").put("b", "b");
-		if( field_scalar_object_node.contains( new TextNode( "b" ) ) != true ) return false;
+		if( field_scalar_object_node.contains( new StringNode( "b" ) ) != true ) return false;
 
 		// Array
 		field_scalar_array.set( null );
@@ -3607,7 +3607,7 @@ public class BasicsController extends AbstractController {
 		if( field_scalar_array_node.containsAll( Collections.emptyList() ) != true ) return false;
 
 		field_scalar_array_node.get().add("a").add("b");
-		if( field_scalar_array_node.containsAll( Arrays.asList(new TextNode( "a" ), new TextNode( "b" ) ) ) != true ) return false;
+		if( field_scalar_array_node.containsAll( Arrays.asList(new StringNode( "a" ), new StringNode( "b" ) ) ) != true ) return false;
 
 		// ObjectNode
 		field_scalar_object_node.set( null );
@@ -3618,7 +3618,7 @@ public class BasicsController extends AbstractController {
 		if( field_scalar_object_node.containsAll( Collections.emptyList() ) != true ) return false;
 
 		field_scalar_object_node.get().put("a", "a").put("b", "b");
-		if( field_scalar_object_node.containsAll( Arrays.asList(new TextNode( "a" ), new TextNode( "b" ) ) ) != true ) return false;
+		if( field_scalar_object_node.containsAll( Arrays.asList(new StringNode( "a" ), new StringNode( "b" ) ) ) != true ) return false;
 
 		// Array
 		field_scalar_array.set( null );

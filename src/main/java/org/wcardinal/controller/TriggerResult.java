@@ -19,7 +19,7 @@ import org.jdeferred.ProgressFilter;
 import org.jdeferred.ProgressPipe;
 import org.jdeferred.Promise;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 /**
  * Promise interface to observe a trigger result.

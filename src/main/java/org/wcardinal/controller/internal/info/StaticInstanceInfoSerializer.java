@@ -5,16 +5,14 @@
 
 package org.wcardinal.controller.internal.info;
 
-import java.io.IOException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-
-public class StaticInstanceInfoSerializer extends JsonSerializer<StaticInstanceInfo> {
+public class StaticInstanceInfoSerializer extends ValueSerializer<StaticInstanceInfo> {
 	@Override
-	public void serialize( final StaticInstanceInfo info, final JsonGenerator gen, final SerializerProvider serializers ) throws IOException, JsonProcessingException {
+	public void serialize( final StaticInstanceInfo info, final JsonGenerator gen, final SerializationContext serializers ) throws JacksonException {
 		gen.writeStartArray();
 
 		// nameToData
@@ -27,7 +25,7 @@ public class StaticInstanceInfoSerializer extends JsonSerializer<StaticInstanceI
 			gen.writeEndArray();
 			gen.writeStartArray();
 			for( final Object value: info.nameToData.values() ) {
-				gen.writeObject( value );
+				gen.writePOJO( value );
 			}
 			gen.writeEndArray();
 			gen.writeEndArray();
@@ -45,7 +43,7 @@ public class StaticInstanceInfoSerializer extends JsonSerializer<StaticInstanceI
 			gen.writeEndArray();
 			gen.writeStartArray();
 			for( final StaticInstanceInfo value: info.nameToInfo.values() ) {
-				gen.writeObject( value );
+				gen.writePOJO( value );
 			}
 			gen.writeEndArray();
 			gen.writeEndArray();
@@ -63,7 +61,7 @@ public class StaticInstanceInfoSerializer extends JsonSerializer<StaticInstanceI
 			gen.writeEndArray();
 			gen.writeStartArray();
 			for( final Object value: info.constants.values() ) {
-				gen.writeObject( value );
+				gen.writePOJO( value );
 			}
 			gen.writeEndArray();
 			gen.writeEndArray();

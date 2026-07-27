@@ -22,7 +22,7 @@ import org.jdeferred.Promise.State;
 import org.jdeferred.impl.DeferredObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 import org.wcardinal.controller.AbstractController;
 import org.wcardinal.controller.TriggerErrors;

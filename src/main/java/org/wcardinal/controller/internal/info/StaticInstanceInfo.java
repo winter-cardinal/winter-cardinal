@@ -8,7 +8,7 @@ package org.wcardinal.controller.internal.info;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize( using=StaticInstanceInfoSerializer.class )
 public class StaticInstanceInfo extends Info<Object, StaticInstanceInfo> {

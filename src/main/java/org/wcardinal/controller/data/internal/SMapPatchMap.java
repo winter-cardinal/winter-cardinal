@@ -5,19 +5,18 @@
 
 package org.wcardinal.controller.data.internal;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.NavigableSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.JsonToken;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
 
 import org.wcardinal.controller.data.SMap.Update;
 
@@ -105,20 +104,20 @@ public class SMapPatchMap<V> implements SMapPatch<V> {
 	}
 
 	@Override
-	public void serialize( final JsonGenerator gen ) throws IOException {
+	public void serialize( final JsonGenerator gen ) throws JacksonException {
 		// Added
-		gen.writeObject( added );
+		gen.writePOJO( added );
 
 		// Removed
-		gen.writeObject( removed );
+		gen.writePOJO( removed );
 	}
 
-	public static <V> SMapPatchMap<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws IOException, JsonProcessingException {
+	public static <V> SMapPatchMap<V> deserialize( final JsonParser parser, final DeserializationContext ctxt, final JavaType valueType ) throws JacksonException {
 		// ADDED
 		SPatchUtil.assertCurrentToken( parser, JsonToken.START_OBJECT );
 		final NavigableMap<String, V> added = new TreeMap<>();
 		while( parser.nextToken() != JsonToken.END_OBJECT ) {
-			final String key = parser.getText();
+			final String key = parser.getString();
 			final V value = SPatchUtil.<V>readNextValue( parser, ctxt, valueType );
 			added.put( key, value );
 		}
@@ -127,7 +126,7 @@ public class SMapPatchMap<V> implements SMapPatch<V> {
 		SPatchUtil.assertNextToken( parser, JsonToken.START_ARRAY );
 		final NavigableSet<String> removed = new TreeSet<>();
 		while( parser.nextToken() != JsonToken.END_ARRAY ) {
-			removed.add( parser.getText() );
+			removed.add( parser.getString() );
 		}
 
 		// DONE
